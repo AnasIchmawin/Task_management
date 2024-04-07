@@ -13,7 +13,7 @@
 
 .connect-button {
     -fx-width: 200px; /* Largeur minimale du bouton */
-    -fx-height: 100x; /* Hauteur minimale du bouton */
+    -fx-height: 100px; /* Hauteur minimale du bouton */
     -fx-background-radius: 50px; /* Rayon des bords du bouton */
     -fx-background-color: #3F72AF; /* Couleur de fond du bouton */
     -fx-font-size: 17px;
