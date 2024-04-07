@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "screenLogin",
+            "request": "launch",
+            "mainClass": "presentation.login.screenLogin",
+            "projectName": "Task_management_88bed8b6"
+        },
+        {
+            "type": "java",
+            "name": "ScreenLogin",
+            "request": "launch",
+            "mainClass": "presentation.login.ScreenLogin",
+            "projectName": "Task_management_88bed8b6"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
