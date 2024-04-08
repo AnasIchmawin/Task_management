@@ -15,6 +15,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+
+
+
 public class screenList extends Application {
 
     @Override
@@ -44,6 +47,7 @@ public class screenList extends Application {
         Button AjouterButton = new Button("Ajouter");
         TextField searchField = new TextField();
         searchField.setPromptText("Rechercher");
+
 
         // Appliquer le style de bouton depuis le fichier CSS
         LeftButton.getStyleClass().add("button-left-style");
@@ -94,33 +98,63 @@ public class screenList extends Application {
         searchIconView.setFitWidth(20);
         searchIconView.setFitHeight(20);
 
-        // rectangle de background
+        // rectangle de background gray
         Rectangle BkGround = new Rectangle();
         BkGround.setWidth(screenWidth - 40); // Définir la largeur du rectangle
         BkGround.setHeight(590); // Définir la hauteur du rectangle
         BkGround.setStroke(Color.BLACK); // Définir la couleur de la bordure
         BkGround.setFill(Color.rgb(240, 240, 240)); // Remplissage avec la couleur #F0F0F0
 
-        // Ajout des boutons à la barre de navigation
+        // L'ajout des boutons à la barre de navigation
         navigationBar.getChildren().addAll(LeftButton, ListesButton, ProjetsButton, ArchiveButton);
 
+
+  // probleme du style externe donc je vais le mettre ici
+        Button Liste1 = new Button("Liste 1");
+        Liste1.setStyle("-fx-background-color: #112D4E; " +
+                "-fx-background-radius: 10px; " +
+                "-fx-pref-width: 140px; " +
+                "-fx-pref-height: 45px;"+
+                "-fx-text-fill: #ffffff;"+
+                "-fx-font-size: 15px;");
+
+        try {
+            Image Liste1Icon = new Image("file:./Pictures/to-do.png");
+            ImageView Liste1IconView = new ImageView(Liste1Icon);
+            Liste1IconView.setFitWidth(20);
+            Liste1IconView.setFitHeight(20);
+            Liste1.setGraphic(Liste1IconView);
+        } catch (Exception e) {
+            System.out.println("Error loading the Liste1 icon");
+        }
+        // navbar position
         AnchorPane.setTopAnchor(navigationBar, 0.0);
         AnchorPane.setLeftAnchor(navigationBar, 20.0);
 
+        // la positions du boton ordonner
         AnchorPane.setTopAnchor(OrdonnerButton, 75.0); // Spécifiez la distance depuis le haut
         AnchorPane.setLeftAnchor(OrdonnerButton, 96.0);
 
+        // la positions du boton ajouter
         AnchorPane.setTopAnchor(AjouterButton, 600.0); // Spécifiez la distance depuis le haut
         AnchorPane.setLeftAnchor(AjouterButton, 96.0);
 
+        // la positions du search field
         AnchorPane.setTopAnchor(searchField, 75.0); // Spécifiez la distance depuis le haut
         AnchorPane.setLeftAnchor(searchField, screenWidth - 300);
 
+        // la positions du cadre gris
         AnchorPane.setTopAnchor(BkGround, 55.0); // Spécifiez la distance depuis le haut
         AnchorPane.setLeftAnchor(BkGround, 20.0);
 
+        // la positions du search icon
         AnchorPane.setTopAnchor(searchIconView, 80.0); // Spécifiez la distance depuis le haut
         AnchorPane.setLeftAnchor(searchIconView, screenWidth - 127);
+
+        // la positions du liste 1
+        AnchorPane.setTopAnchor(Liste1, 150.0); // Spécifiez la distance depuis le haut
+        AnchorPane.setLeftAnchor(Liste1, 85.0); // Spécifiez la distance depuis la gauche
+
 
         // Ajout de la barre de navigation à la racine
         root.getChildren().add(BkGround);
@@ -130,6 +164,7 @@ public class screenList extends Application {
         root.getChildren().add(AjouterButton);
         root.getChildren().add(searchField);
         root.getChildren().add(searchIconView);
+        root.getChildren().add(Liste1);
 
         Scene scene = new Scene(root, 600, 400);
         scene.getStylesheets().add(getClass().getResource("ListStyle.css").toExternalForm()); // Charger le fichier CSS
