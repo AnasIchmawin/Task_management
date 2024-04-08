@@ -109,12 +109,12 @@ public class screenList extends Application {
         navigationBar.getChildren().addAll(LeftButton, ListesButton, ProjetsButton, ArchiveButton);
 
 
-  // probleme du style externe donc je vais le mettre ici
+ // probleme du style externe donc je vais le mettre ici
         Button Liste1 = new Button("Liste 1");
         Liste1.setStyle("-fx-background-color: #112D4E; " +
                 "-fx-background-radius: 10px; " +
-                "-fx-pref-width: 140px; " +
-                "-fx-pref-height: 45px;"+
+                "-fx-pref-width: 170px; " +
+                "-fx-pref-height: 60px;"+
                 "-fx-text-fill: #ffffff;"+
                 "-fx-font-size: 15px;");
 
