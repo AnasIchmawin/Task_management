@@ -1,9 +1,9 @@
 package presentation.login;
 
-public class modele {
+public class modeleLogin {
     private String Gmail ;
 
-    public modele(String Gmail) {
+    public modeleLogin(String Gmail) {
         this.Gmail = Gmail;
     }
 
