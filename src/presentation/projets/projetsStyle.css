@@ -46,7 +46,7 @@
 
 .comboBox-style {
     -fx-background-radius: 10px;
-    -fx-pref-width: 80px;
+    -fx-pref-width: 81px;
     -fx-pref-height: 20px;
     -fx-background-color: #8e9eb2;
     -fx-text-fill: #FFFFFF;
@@ -62,4 +62,13 @@
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 13px;
     -fx-font-weight: bold;
+}
+
+.newListButton-style {
+    -fx-background-color: #112D4E;
+    -fx-background-radius: 10px;
+    -fx-min-width: 170px;
+    -fx-min-height: 60px;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18px;
 }

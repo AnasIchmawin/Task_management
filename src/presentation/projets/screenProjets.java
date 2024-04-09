@@ -2,15 +2,18 @@ package presentation.projets;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -49,12 +52,12 @@ public class screenProjets extends Application {
         searchField.setPromptText("Rechercher");
 
         ComboBox<String> comboBox = new ComboBox<>();
-        comboBox.getItems().addAll("Option 1", "Option 2", "Option 3");
-        comboBox.setPromptText("Sélectionnez une option");
+        comboBox.getItems().addAll("These", "PFE", "Cours", "Examen", "Autres");
+        comboBox.setPromptText("Type");
 
         ComboBox<String> comboBox1 = new ComboBox<>();
-        comboBox1.getItems().addAll("Option 6", "Option 7", "Option 9");
-        comboBox1.setPromptText("option");
+        comboBox1.getItems().addAll("Enseignement", "Encadrement", "Autres");
+        comboBox1.setPromptText("Categorie");
 
         Label filterLabel = new Label("     Filtrer");
 
@@ -78,6 +81,8 @@ public class screenProjets extends Application {
         HBox.setMargin(ProjetsButton, new Insets(0, 0, 0, 15));
         HBox.setMargin(ArchiveButton, new Insets(0, 0, 0, 15));
         HBox.setMargin(LeftButton, new Insets(0, 0, 0, 15));
+
+        HBox.setMargin(comboBox, new Insets(0, 0, 0, 88));
 
         try {
             Image leftIcon = new Image("file:./Pictures/left-arrow.png");
@@ -115,7 +120,10 @@ public class screenProjets extends Application {
 
         HBox filterBox = new HBox();
         filterBox.getChildren().addAll(comboBox, comboBox1);
-        filterBox.setSpacing(10); // Espace entre les éléments
+        filterBox.setSpacing(10); // Espace entre les éléments  
+        
+        filterBox.setAlignment(Pos.CENTER); // Centrer les éléments horizontalement
+
 
         stackPane.getChildren().addAll(filterLabel,filterBox);
 
@@ -129,6 +137,27 @@ public class screenProjets extends Application {
         BkGround.setFill(Color.rgb(240, 240, 240)); // Remplissage avec la couleur #F0F0F0
         BkGround.setArcWidth(15); // Définir le rayon horizontal des coins
         BkGround.setArcHeight(15); // Définir le rayon vertical des coins
+
+
+        // Le contenir des listes
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(10); // Appliquer un espacement vertical entre les éléments du GridPane
+        gridPane.setHgap(10); // Appliquer un espacement horizontal entre les éléments du GridPane
+        gridPane.setPrefWidth(screenWidth - 100);
+        gridPane.setPrefHeight(450);
+        gridPane.setStyle("-fx-background-color: #F0F0F0;");
+
+        ScrollPane scrollPane = new ScrollPane(gridPane);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Désactiver la barre de défilement horizontale
+
+        // Action du bouton Ajouter
+        AjouterButton.setOnAction(event -> {
+            ProjetsFormController.handleAjouterButtonAction(gridPane);
+        });
+
 
         // Ajout des boutons à la barre de navigation
         navigationBar.getChildren().addAll(LeftButton, ListesButton, ProjetsButton, ArchiveButton);
@@ -154,6 +183,14 @@ public class screenProjets extends Application {
         AnchorPane.setTopAnchor(stackPane, 75.0);
         AnchorPane.setRightAnchor(stackPane, 100.0);
 
+        // la positions du scrollPane
+        AnchorPane.setTopAnchor(scrollPane, 140.0); // Spécifiez la distance depuis le haut
+        AnchorPane.setLeftAnchor(scrollPane, 75.0); // Spécifiez la distance depuis la gauche
+
+        // la positions du gridPane
+        AnchorPane.setTopAnchor(gridPane, 140.0); // Spécifiez la distance depuis le haut
+        AnchorPane.setLeftAnchor(gridPane, 75.0); 
+
 
         // Ajout de la barre de navigation à la racine
         root.getChildren().add(BkGround);
@@ -163,7 +200,8 @@ public class screenProjets extends Application {
         root.getChildren().add(AjouterButton);
         root.getChildren().add(searchField);
         root.getChildren().add(searchIconView);
-        root.getChildren().add(stackPane);
+        root.getChildren().addAll(stackPane);
+        root.getChildren().add(scrollPane);
 
         Scene scene = new Scene(root, 600, 400);
         scene.getStylesheets().add(getClass().getResource("projetsStyle.css").toExternalForm()); // Charger le fichier CSS
