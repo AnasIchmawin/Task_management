@@ -26,7 +26,6 @@ public class screenList extends Application {
         AnchorPane root = new AnchorPane();
         root.setStyle("-fx-background:#ffffff"); // la color de background
 
-
         // Barre de navigation
         HBox navigationBar = new HBox();
         navigationBar.getStyleClass().add("navigationBar"); // Appliquer le style depuis le fichier CSS
@@ -56,12 +55,12 @@ public class screenList extends Application {
         AjouterButton.getStyleClass().add("button-style");
         searchField.getStyleClass().add("search-field-style");
 
-        // Appliquer une marge à gauche aux boutons sur le navbar 
+        // Appliquer une marge à gauche aux boutons sur le navbar
         HBox.setMargin(ListesButton, new Insets(0, 0, 0, 40));
         HBox.setMargin(ProjetsButton, new Insets(0, 0, 0, 15));
         HBox.setMargin(ArchiveButton, new Insets(0, 0, 0, 15));
         HBox.setMargin(LeftButton, new Insets(0, 0, 0, 15));
-        
+
         // Logo de la flèche gauche
         try {
             Image leftIcon = new Image("file:./Pictures/left-arrow.png");
@@ -72,7 +71,7 @@ public class screenList extends Application {
         } catch (Exception e) {
             System.out.println("Error loading the left arrow icon");
         }
-        
+
         // Logo de la boton ordonner
         try {
             Image OrdonnerIcon = new Image("file:./Pictures/folder.png");
@@ -126,14 +125,10 @@ public class screenList extends Application {
         AjouterButton.setOnAction(event -> {
             ListFormController.handleAjouterButtonAction(gridPane);
         });
-        
-        
 
         // L'ajout des boutons à la barre de navigation
         navigationBar.getChildren().addAll(LeftButton, ListesButton, ProjetsButton, ArchiveButton);
 
-
-        
         // navbar position
         AnchorPane.setTopAnchor(navigationBar, 0.0);
         AnchorPane.setLeftAnchor(navigationBar, 20.0);
@@ -162,14 +157,14 @@ public class screenList extends Application {
         AnchorPane.setTopAnchor(scrollPane, 140.0); // Spécifiez la distance depuis le haut
         AnchorPane.setLeftAnchor(scrollPane, 75.0); // Spécifiez la distance depuis la gauche
 
-       // la positions du gridPane
+        // la positions du gridPane
         AnchorPane.setTopAnchor(gridPane, 140.0); // Spécifiez la distance depuis le haut
         AnchorPane.setLeftAnchor(gridPane, 75.0); // Spécifiez la distance depuis la gauche
 
         // Ajout de la barre de navigation à la racine
-        
+
         root.getChildren().add(BkGround);
-     //   root.getChildren().add(gridPane);
+        // root.getChildren().add(gridPane);
         root.getChildren().add(scrollPane);
         AnchorPane.setTopAnchor(navigationBar, 0.0);
         root.getChildren().addAll(navigationBar);
