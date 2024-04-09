@@ -43,3 +43,23 @@
     -fx-prompt-text-fill: #ffffff;
     -fx-font-weight: bold;
 }
+
+.comboBox-style {
+    -fx-background-radius: 10px;
+    -fx-pref-width: 80px;
+    -fx-pref-height: 20px;
+    -fx-background-color: #8e9eb2;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.filter-label-style {
+    -fx-background-radius: 10px;
+    -fx-pref-width: 270px;
+    -fx-pref-height: 30px;
+    -fx-background-color: #3F72AF;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}

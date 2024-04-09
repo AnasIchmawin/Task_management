@@ -1,21 +1,24 @@
-package presentation.listes;
+package presentation.projets;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class screenList extends Application {
+public class screenProjets extends Application {
 
     @Override
     public void start(Stage primaryStage) {
@@ -45,14 +48,30 @@ public class screenList extends Application {
         TextField searchField = new TextField();
         searchField.setPromptText("Rechercher");
 
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll("Option 1", "Option 2", "Option 3");
+        comboBox.setPromptText("Sélectionnez une option");
+
+        ComboBox<String> comboBox1 = new ComboBox<>();
+        comboBox1.getItems().addAll("Option 6", "Option 7", "Option 9");
+        comboBox1.setPromptText("option");
+
+        Label filterLabel = new Label("     Filtrer");
+
+        StackPane stackPane = new StackPane();
+
         // Appliquer le style de bouton depuis le fichier CSS
         LeftButton.getStyleClass().add("button-left-style");
-        ListesButton.getStyleClass().add("button-clicked-style");
-        ProjetsButton.getStyleClass().add("button-style");
+        ListesButton.getStyleClass().add("button-style");
+        ProjetsButton.getStyleClass().add("button-clicked-style");
         ArchiveButton.getStyleClass().add("button-style");
         OrdonnerButton.getStyleClass().add("button-style");
         AjouterButton.getStyleClass().add("button-style");
         searchField.getStyleClass().add("search-field-style");
+        comboBox.getStyleClass().add("comboBox-style");
+        comboBox1.getStyleClass().add("comboBox-style");
+
+        filterLabel.getStyleClass().add("filter-label-style");
 
         // Appliquer une marge à gauche aux boutons
         HBox.setMargin(ListesButton, new Insets(0, 0, 0, 40));
@@ -94,6 +113,13 @@ public class screenList extends Application {
         searchIconView.setFitWidth(20);
         searchIconView.setFitHeight(20);
 
+        HBox filterBox = new HBox();
+        filterBox.getChildren().addAll(comboBox, comboBox1);
+        filterBox.setSpacing(10); // Espace entre les éléments
+
+        stackPane.getChildren().addAll(filterLabel,filterBox);
+
+
         // rectangle de background
         Rectangle BkGround = new Rectangle();
         BkGround.setWidth(screenWidth - 40); // Définir la largeur du rectangle
@@ -117,13 +143,17 @@ public class screenList extends Application {
         AnchorPane.setLeftAnchor(AjouterButton, 96.0);
 
         AnchorPane.setTopAnchor(searchField, 75.0); // Spécifiez la distance depuis le haut
-        AnchorPane.setLeftAnchor(searchField, screenWidth - 300);
+        AnchorPane.setLeftAnchor(searchField, 221.0);
 
         AnchorPane.setTopAnchor(BkGround, 55.0); // Spécifiez la distance depuis le haut
         AnchorPane.setLeftAnchor(BkGround, 20.0);
 
         AnchorPane.setTopAnchor(searchIconView, 80.0); // Spécifiez la distance depuis le haut
-        AnchorPane.setLeftAnchor(searchIconView, screenWidth - 127);
+        AnchorPane.setLeftAnchor(searchIconView, 394.0);
+
+        AnchorPane.setTopAnchor(stackPane, 75.0);
+        AnchorPane.setRightAnchor(stackPane, 100.0);
+
 
         // Ajout de la barre de navigation à la racine
         root.getChildren().add(BkGround);
@@ -133,13 +163,13 @@ public class screenList extends Application {
         root.getChildren().add(AjouterButton);
         root.getChildren().add(searchField);
         root.getChildren().add(searchIconView);
+        root.getChildren().add(stackPane);
 
         Scene scene = new Scene(root, 600, 400);
-        scene.getStylesheets().add(getClass().getResource("ListStyle.css").toExternalForm()); // Charger le fichier CSS
+        scene.getStylesheets().add(getClass().getResource("projetsStyle.css").toExternalForm()); // Charger le fichier CSS
         primaryStage.setTitle("TO DO LIST");
         primaryStage.setMaximized(true);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
 }
