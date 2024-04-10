@@ -82,12 +82,12 @@ public class screenSeance extends Application {
         Button Editer_Seance = EditerButton(0, 0);
         Button Editer_Note = EditerButton(0, 0);
 
-        //Les actions des boutons
+         //Les actions des boutons
         Editer_Seance.setOnAction(e -> {
-            SceneFormController.handleEditerButton(ZoneDescription);
+            SceanceFormController.handleEditerButton(ZoneDescription);
         });
         Editer_Note.setOnAction(e -> {
-            SceneFormController.handleEditerButton(Note);
+            SceanceFormController.handleEditerButton(Note);
         });
 
         // La date du debut et du fin YYYY-MM-DD
