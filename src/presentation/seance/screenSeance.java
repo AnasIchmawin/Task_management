@@ -47,10 +47,8 @@ public class screenSeance extends Application {
         Button ProjetsButton = createButtonWithIcon("Projets", "file:./Pictures/project.png", 20, 20, "button-style");
         Button ArchiveButton = createButtonWithIcon("Archive", "file:./Pictures/archive.png", 20, 20, "button-style");
         Button SeanceButton = createButtonWithIcon("Séance", "file:./Pictures/seance.png", 20, 20, "button-style");
-        Button AjouterdDocButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/add.png", 15, 15,
-                "Ajouter-doc-style");
-        Button AjouterTacheButton = createButtonWithIcon("Ajouter Tache", "file:./Pictures/addIcon.png", 15, 15,
-                "Ajouter-tache-style");
+        Button AjouterdDocButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/add.png", 15, 15,"Ajouter-doc-style");
+        Button AjouterTacheButton = createButtonWithIcon("Ajouter Tache", "file:./Pictures/addIcon.png", 15, 15,"Ajouter-tache-style");
 
         // Appliquer une marge à gauche aux boutons
         HBox.setMargin(ListesButton, new Insets(0, 0, 0, 40));
@@ -172,31 +170,12 @@ public class screenSeance extends Application {
         Editer_Note.setLayoutX(1178);
         Editer_Note.setLayoutY(185);
 
-        // Ajout de la barre de navigation à la racine
-        root.getChildren().add(BkGround);
-        AnchorPane.setTopAnchor(navigationBar, 0.0);
-        root.getChildren().addAll(navigationBar);
-        root.getChildren().add(SeanceButton);
-        root.getChildren().add(AjouterdDocButton);
-        root.getChildren().add(TitreDescription);
-        root.getChildren().add(ZoneDescription);
-        root.getChildren().add(ZoneDesTaches);
-        root.getChildren().add(DateDebutLabel);
-        root.getChildren().add(DateDebut);
-        root.getChildren().addAll(TempsDebut);
-        root.getChildren().add(DateFinLabel);
-        root.getChildren().add(DateFin);
-        root.getChildren().addAll(TempsFin);
-        root.getChildren().add(Note);
-        root.getChildren().add(NoteLabel);
-        root.getChildren().add(Editer_Seance);
-        root.getChildren().add(Editer_Note);
-        root.getChildren().add(ZoneDocuments);
-        root.getChildren().add(DocLabel);
+        root.getChildren().addAll(BkGround, navigationBar, SeanceButton, AjouterdDocButton, TitreDescription, ZoneDescription,
+                ZoneDesTaches, DateDebutLabel, DateDebut, TempsDebut, DateFinLabel, DateFin, TempsFin, Note, NoteLabel,
+                Editer_Seance, Editer_Note, ZoneDocuments, DocLabel);
 
         Scene scene = new Scene(root, 600, 400);
         scene.getStylesheets().add(getClass().getResource("SeanceStyle.css").toExternalForm()); // Charger le fichier
-                                                                                                // CSS
         primaryStage.setTitle("TO DO LIST");
         primaryStage.setMaximized(true);
         primaryStage.setScene(scene);
@@ -294,6 +273,7 @@ public class screenSeance extends Application {
         date.promptTextProperty().set("YYYY-MM-DD");
         return date;
     }
+
     private TextField createTextField(double width, double height, String promptText, String style) {
         TextField text = new TextField();
         text.setPrefWidth(width);
