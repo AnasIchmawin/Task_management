@@ -9,10 +9,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // screenList list = new screenList(); 
-        // screenLogin login = new screenLogin();
+        screenList list = new screenList(); 
+        screenLogin login = new screenLogin();
         screenProjets projets = new screenProjets();
-        // screenArchive archive = new screenArchive();
+        screenArchive archive = new screenArchive();
         // login.start(primaryStage); // Appelez la méthode start()
         projets.start(primaryStage); // Appelez la méthode start()
         // list.start(primaryStage); // Appelez la méthode start()

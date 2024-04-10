@@ -22,7 +22,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class screenProjets extends Application {
-
     @Override
     public void start(Stage primaryStage) {
         // le racine
@@ -38,8 +37,8 @@ public class screenProjets extends Application {
         navigationBar.setPrefHeight(40); // Hauteur de la barre de navigation
         navigationBar.setPrefWidth(screenWidth - 40); // Largeur de la barre de navigation
 
-        Button OrdonnerButton = createButtonWithIcon("Ordonner","file:./Pictures/folder.png", 20, 20);
-        Button AjouterButton = createButtonWithIcon("Ajouter","file:./Pictures/add.png", 15, 15);
+        Button OrdonnerButton = createButtonWithIcon("Ordonner","file:./Pictures/folder.png", 20, 20, 75, 96);
+        Button AjouterButton = createButtonWithIcon("Ajouter","file:./Pictures/add.png", 15, 15, 600, 96);
 
         TextField searchField = new TextField();
         searchField.setPromptText("Rechercher");
@@ -53,8 +52,6 @@ public class screenProjets extends Application {
         StackPane stackPane = new StackPane();
 
         // Appliquer le style de bouton depuis le fichier CSS
-        OrdonnerButton.getStyleClass().add("button-style");
-        AjouterButton.getStyleClass().add("button-style");
         searchField.getStyleClass().add("search-field-style");
         filterLabel.getStyleClass().add("filter-label-style");
 
@@ -72,19 +69,14 @@ public class screenProjets extends Application {
         // rectangle de background
         Rectangle BkGround = createBackgroundRectangle(screenWidth);
 
-        GridPane gridPane = creategridPane(screenWidth);
+        GridPane gridPane = createGridPane(screenWidth);
+        
         ScrollPane scrollPane = createScrollPane(gridPane);
 
         // Action du bouton Ajouter
         AjouterButton.setOnAction(event -> {
             ProjetsFormController.handleAjouterButtonAction(gridPane);
         });
-
-        AnchorPane.setTopAnchor(OrdonnerButton, 75.0);
-        AnchorPane.setLeftAnchor(OrdonnerButton, 96.0);
-
-        AnchorPane.setTopAnchor(AjouterButton, 600.0);
-        AnchorPane.setLeftAnchor(AjouterButton, 96.0);
 
         AnchorPane.setTopAnchor(searchField, 75.0);
         AnchorPane.setLeftAnchor(searchField, 221.0);
@@ -102,7 +94,7 @@ public class screenProjets extends Application {
         primaryStage.show();
     }
 
-    private Button createButtonWithIcon(String name,String string, int i, int j) {
+    private Button createButtonWithIcon(String name,String string, int i, int j, double k, double l) {
         Button Button = new Button(name);
         try {
             Image Icon = new Image(string);
@@ -113,6 +105,10 @@ public class screenProjets extends Application {
         } catch (Exception e) {
             System.out.println("Error loading the Ordonner icon");
         }
+        Button.getStyleClass().add("button-style");
+
+        AnchorPane.setTopAnchor(Button, k);
+        AnchorPane.setLeftAnchor(Button, l);
         return Button;
     }
 
@@ -123,7 +119,7 @@ public class screenProjets extends Application {
         Button listesButton = new Button("Listes");
         Button projetsButton = new Button("Projets");
         Button archiveButton = new Button("Archive");
-        Button LeftButton = createButtonWithIcon("","file:./Pictures/left-arrow.png", 33, 33);
+        Button LeftButton = createButtonWithIcon("","file:./Pictures/left-arrow.png", 33, 33, 0, 0);
 
         listesButton.getStyleClass().add("button-style");
         projetsButton.getStyleClass().add("button-clicked-style");
@@ -175,7 +171,8 @@ public class screenProjets extends Application {
         return searchIconView;
     }
 
-    private GridPane creategridPane(double width) {
+    // Créer un GridPane pour afficher les projets
+    private GridPane createGridPane(double width) {
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(10);
@@ -187,6 +184,7 @@ public class screenProjets extends Application {
         return gridPane;
     }
 
+    // Créer un ScrollPane pour afficher les projets
     private ScrollPane createScrollPane(GridPane gridPane) {
         ScrollPane scrollPane = new ScrollPane(gridPane);
         scrollPane.setFitToWidth(true);

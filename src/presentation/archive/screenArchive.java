@@ -26,8 +26,7 @@ public class screenArchive extends Application {
 
         // Barre de navigation
 
-        HBox navigationBar = new HBox();
-        navigationBar.getStyleClass().add("navigationBar"); // Appliquer le style depuis le fichier CSS
+        HBox navigationBar = createNavigationBar();
 
         // recuperer la taille de l'ecran
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getBounds();
@@ -35,104 +34,25 @@ public class screenArchive extends Application {
         navigationBar.setPrefHeight(40); // Hauteur de la barre de navigation
         navigationBar.setPrefWidth(screenWidth - 40); // Largeur de la barre de navigation
 
-        // Ajout de boutons à la barre de navigation
-        Button LeftButton = new Button();
-        Button ListesButton = new Button("Listes");
-        Button ProjetsButton = new Button("Projets");
-        Button ArchiveButton = new Button("Archive");
-        Button OrdonnerButton = new Button("Ordonner");
-        Button FiltrerButton = new Button("Filtrer");
+        Button OrdonnerButton = createButtonWithIcon("Ordonner", "file:./Pictures/folder.png", 20, 20, 75, 96);
+        Button FiltrerButton = createButtonWithIcon("Filtrer", "file:./Pictures/folder.png", 20, 20, 75, 221);
         TextField searchField = new TextField();
         searchField.setPromptText("Rechercher");
 
-        // Appliquer le style de bouton depuis le fichier CSS
-        LeftButton.getStyleClass().add("button-left-style");
-        ListesButton.getStyleClass().add("button-style");
-        ProjetsButton.getStyleClass().add("button-style");
-        ArchiveButton.getStyleClass().add("button-clicked-style");
         OrdonnerButton.getStyleClass().add("button-style");
-        FiltrerButton.getStyleClass().add("button-style");
         searchField.getStyleClass().add("search-field-style");
 
-        // Appliquer une marge à gauche aux boutons
-        HBox.setMargin(ListesButton, new Insets(0, 0, 0, 40));
-        HBox.setMargin(ProjetsButton, new Insets(0, 0, 0, 15));
-        HBox.setMargin(ArchiveButton, new Insets(0, 0, 0, 15));
-        HBox.setMargin(LeftButton, new Insets(0, 0, 0, 15));
 
-        try {
-            Image leftIcon = new Image("file:./Pictures/left-arrow.png");
-            ImageView leftIconView = new ImageView(leftIcon);
-            leftIconView.setFitWidth(33);
-            leftIconView.setFitHeight(33);
-            LeftButton.setGraphic(leftIconView);
-        } catch (Exception e) {
-            System.out.println("Error loading the left arrow icon");
-        }
+        ImageView searchIconView = createIcon("file:./Pictures/loupe.png", 20, 20, 80, 519);
 
-        try {
-            Image OrdonnerIcon = new Image("file:./Pictures/folder.png");
-            ImageView OrdonnerIconView = new ImageView(OrdonnerIcon);
-            OrdonnerIconView.setFitWidth(20);
-            OrdonnerIconView.setFitHeight(20);
-            OrdonnerButton.setGraphic(OrdonnerIconView);
-        } catch (Exception e) {
-            System.out.println("Error loading the Ordonner icon");
-        }
-
-        Image searchIcon = new Image("file:./Pictures/loupe.png");
-        ImageView searchIconView = new ImageView(searchIcon);
-        searchIconView.setFitWidth(20);
-        searchIconView.setFitHeight(20);
-
-        Image RecycleIcon = new Image("file:./Pictures/recycle.png");
-        ImageView RecycleIconView = new ImageView(RecycleIcon);
-        RecycleIconView.setFitWidth(130);
-        RecycleIconView.setFitHeight(54);
-
-        // rectangle de background
-        Rectangle BkGround = new Rectangle();
-        BkGround.setWidth(screenWidth - 40); // Définir la largeur du rectangle
-        BkGround.setHeight(590); // Définir la hauteur du rectangle
-        BkGround.setStroke(Color.web("#112D4E")); // Définir la couleur de la bordure
-        BkGround.setStrokeWidth(2.0); // Définir la largeur de la bordure
-        BkGround.setFill(Color.rgb(240, 240, 240)); // Remplissage avec la couleur #F0F0F0
-        BkGround.setArcWidth(15); // Définir le rayon horizontal des coins
-        BkGround.setArcHeight(15); // Définir le rayon vertical des coins
-
-        // Ajout des boutons à la barre de navigation
-        navigationBar.getChildren().addAll(LeftButton, ListesButton, ProjetsButton, ArchiveButton);
-
-        AnchorPane.setTopAnchor(navigationBar, 0.0);
-        AnchorPane.setLeftAnchor(navigationBar, 20.0);
-
-        AnchorPane.setTopAnchor(OrdonnerButton, 75.0); // Spécifiez la distance depuis le haut
-        AnchorPane.setLeftAnchor(OrdonnerButton, 96.0);
-
-        AnchorPane.setTopAnchor(FiltrerButton, 75.0); // Spécifiez la distance depuis le haut
-        AnchorPane.setLeftAnchor(FiltrerButton, 221.0); // 15 entre les deux boutons
+        ImageView RecycleIconView = createIcon("file:./Pictures/recycle.png", 130, 54, 70, screenWidth - 150);
+        
+        Rectangle BkGround = createBackgroundRectangle(screenWidth);
 
         AnchorPane.setTopAnchor(searchField, 75.0); // Spécifiez la distance depuis le haut
         AnchorPane.setLeftAnchor(searchField, 346.0);
 
-        AnchorPane.setTopAnchor(BkGround, 55.0); // Spécifiez la distance depuis le haut
-        AnchorPane.setLeftAnchor(BkGround, 20.0);
-
-        AnchorPane.setTopAnchor(searchIconView, 80.0); // Spécifiez la distance depuis le haut
-        AnchorPane.setLeftAnchor(searchIconView, 519.0);
-
-        AnchorPane.setTopAnchor(RecycleIconView, 70.0); // Spécifiez la distance depuis le haut
-        AnchorPane.setLeftAnchor(RecycleIconView, screenWidth - 150);
-
-        // Ajout de la barre de navigation à la racine
-        root.getChildren().add(BkGround);
-        AnchorPane.setTopAnchor(navigationBar, 0.0);
-        root.getChildren().addAll(navigationBar);
-        root.getChildren().add(OrdonnerButton);
-        root.getChildren().add(FiltrerButton);
-        root.getChildren().add(searchField);
-        root.getChildren().add(searchIconView);
-        root.getChildren().add(RecycleIconView);
+        root.getChildren().addAll(BkGround, navigationBar, OrdonnerButton, FiltrerButton, searchField, searchIconView, RecycleIconView);
 
         Scene scene = new Scene(root, 600, 400);
         scene.getStylesheets().add(getClass().getResource("ArchiveStyle.css").toExternalForm()); // Charger le fichier CSS
@@ -140,6 +60,75 @@ public class screenArchive extends Application {
         primaryStage.setMaximized(true);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private HBox createNavigationBar() {
+        HBox navigationBar = new HBox();
+        navigationBar.getStyleClass().add("navigationBar");
+
+        Button listesButton = new Button("Listes");
+        Button projetsButton = new Button("Projets");
+        Button archiveButton = new Button("Archive");
+        Button LeftButton = createButtonWithIcon("","file:./Pictures/left-arrow.png", 33, 33, 0, 0);
+
+        listesButton.getStyleClass().add("button-style");
+        projetsButton.getStyleClass().add("button-clicked-style");
+        archiveButton.getStyleClass().add("button-style");
+        LeftButton.getStyleClass().add("button-left-style");
+
+        HBox.setMargin(listesButton, new Insets(0, 0, 0, 40));
+        HBox.setMargin(projetsButton, new Insets(0, 0, 0, 15));
+        HBox.setMargin(archiveButton, new Insets(0, 0, 0, 15));
+        HBox.setMargin(LeftButton, new Insets(0, 0, 0, 15));
+
+        AnchorPane.setTopAnchor(navigationBar, 0.0);
+        AnchorPane.setLeftAnchor(navigationBar, 20.0);
+
+        navigationBar.getChildren().addAll(LeftButton, listesButton, projetsButton, archiveButton);
+
+        return navigationBar;
+    }
+
+    private Rectangle createBackgroundRectangle(double width) {
+        Rectangle background = new Rectangle();
+        background.setWidth(width - 40);
+        background.setHeight(590);
+        background.setStroke(Color.web("#112D4E"));
+        background.setStrokeWidth(2.0);
+        background.setFill(Color.rgb(240, 240, 240));
+        background.setArcWidth(15);
+        background.setArcHeight(15);
+        AnchorPane.setTopAnchor(background, 55.0);
+        AnchorPane.setLeftAnchor(background, 20.0);
+        return background;
+    }
+
+    private ImageView createIcon(String string, int i, int j, double k, double l) {
+        Image searchIcon = new Image(string);
+        ImageView searchIconView = new ImageView(searchIcon);
+        searchIconView.setFitWidth(i);
+        searchIconView.setFitHeight(j);
+        AnchorPane.setTopAnchor(searchIconView, k);
+        AnchorPane.setLeftAnchor(searchIconView, l);
+        return searchIconView;
+    }
+
+    private Button createButtonWithIcon(String name,String string, int i, int j, double k, double l) {
+        Button Button = new Button(name);
+        try {
+            Image Icon = new Image(string);
+            ImageView IconView = new ImageView(Icon);
+            IconView.setFitWidth(i);
+            IconView.setFitHeight(j);
+            Button.setGraphic(IconView);
+        } catch (Exception e) {
+            System.out.println("Error loading the Ordonner icon");
+        }
+        Button.getStyleClass().add("button-style");
+
+        AnchorPane.setTopAnchor(Button, k);
+        AnchorPane.setLeftAnchor(Button, l);
+        return Button;
     }
 }
 
