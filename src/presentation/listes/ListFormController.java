@@ -1,6 +1,7 @@
 package presentation.listes;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -33,4 +34,27 @@ public class ListFormController {
             System.out.println("Erreur de charger l'icône de la liste");
         }
     }
+    public static void handleEditerButton(Button saveButton,TextArea ZoneDescription){
+        ZoneDescription.setEditable(true);
+        saveButton.setVisible(true);
+
+    };
+    
+    public static void handleSaveButton(Button button1,Button button2,Button button3,Button button4 ,
+     TextArea ZoneDescription){
+        ZoneDescription.setEditable(false);
+            button1.setVisible(true);
+            button2.setVisible(false);
+            button3.setVisible(false);
+            button4.setVisible(false);
+
+    };
+
+        //handleModifierButton
+        public static void handleModifierButton(Button button1, Button button2, Button button3,Button button4){
+            button1.setVisible(false);
+            button2.setVisible(true);
+            button3.setVisible(true);
+            button4.setVisible(true);
+    };
 }
