@@ -1,5 +1,12 @@
+import java.lang.reflect.Array;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
+import persistence.DBConnection;
+import persistence.DAO.document;
+import persistence.DAO.tache;
 import presentation.archive.screenArchive;
 import presentation.listes.screenList;
 import presentation.login.screenLogin;
@@ -10,19 +17,22 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        screenList list = new screenList(); 
-        screenLogin login = new screenLogin();
-        screenProjets projets = new screenProjets();
-        screenArchive archive = new screenArchive();
-        screenSeance seance = new screenSeance();
-        // login.start(primaryStage); // Appelez la méthode start()
-        // projets.start(primaryStage); // Appelez la méthode start()
-        // list.start(primaryStage); // Appelez la méthode start()
-        // archive.start(primaryStage); // Appelez la méthode start()
-        seance.start(primaryStage); // Appelez la méthode start()
+
+        screenList list = new screenList();
+        list.start(primaryStage); // Appelez la méthode start()
+
     }
 
     public static void main(String[] args) {
+        try {
+            // Connexion à la base de données
+            DBConnection dbConnection = DBConnection.getInstance();
+            System.out.println("Connexion à la base de données réussie");
+
+        } catch (Exception e) {
+            System.out.println("Erreur de connexion à la base de données");
+        }
+        // Lancer l'application
         launch(args);
     }
 }
