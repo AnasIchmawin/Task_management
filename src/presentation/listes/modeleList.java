@@ -1,22 +1,23 @@
 package presentation.listes;
-// ajouter les donnees utilise dans cette interface et les getters et setters
 
 import java.util.ArrayList;
-
 import persistence.DAO.liste;
 
 public class modeleList {
     private String searchField;
     private ArrayList<liste> listes;
+    private String description;
 
     public modeleList() {
         this.searchField = "";
+        this.description = "";
         this.listes = new ArrayList<>();
     }
 
-    public modeleList(String searchField, ArrayList<liste> listes) {
+    public modeleList(String searchField, ArrayList<liste> listes, String description) {
         this.searchField = searchField;
         this.listes = listes;
+        this.description = description;
     }
 
     public String getSearchField() {
@@ -30,5 +31,11 @@ public class modeleList {
     }
     public void setListes(ArrayList<liste> listes) {
         this.listes = listes;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
