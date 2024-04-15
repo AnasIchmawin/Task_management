@@ -102,7 +102,7 @@ public class seance {
     // create seance
     public void create() {
         MongoCollection<Document> collection = DBConnection.getInstance()
-                .getCollection("seance");
+                .getCollection("seances");
         Document doc = new Document();
         doc.append("id", id)
                 .append("description", description)

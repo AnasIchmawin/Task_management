@@ -193,8 +193,8 @@ public class projet {
 
     // Update 
     public void update() {
-        // Récupérer la collection "taches"
-        MongoCollection<Document> collection = DBConnection.getInstance().getCollection("taches");
+        // Récupérer la collection "projets"
+        MongoCollection<Document> collection = DBConnection.getInstance().getCollection("projets");
 
         // Créer les mises à jour à appliquer
         List<Document> updates = new ArrayList<>();
