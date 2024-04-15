@@ -1,5 +1,5 @@
 package presentation.document_ajoute;
 
-public class modele {
+public class modeleDocument {
 
 }
