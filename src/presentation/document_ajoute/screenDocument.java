@@ -66,13 +66,13 @@ public class screenDocument {
      Button Editer_document = EditerButton(0, 0);
 
      //Les actions des boutons
-     Editer_document.setOnAction(e -> {
-    	 DocumentFormcontroleur.handleEditerButton(ZoneDescription);});
+    //  Editer_document.setOnAction(e -> {
+    //	 DocumentFormcontroleur.handleEditerButton(ZoneDescription);});
      
          
-     SaveButton.setOnAction(e -> {
-    	    DocumentFormcontroleur.handleSaveButton(ZoneDescription);
-    	});
+    // SaveButton.setOnAction(e -> {
+    //	    DocumentFormcontroleur.handleSaveButton(ZoneDescription);
+    //	});
          
          GridPane ZoneDesDocuments = Grid(screenWidth - 600, 200);
          GridPane.setConstraints(AjouterdDocButton, 0, 20, 1, 1);
