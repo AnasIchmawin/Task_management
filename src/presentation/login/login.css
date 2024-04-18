@@ -1,22 +1,35 @@
-.root {
+/* style Border Pane */
+.BorderPane-style {
+    -fx-background-color: #112D4E;
+    -fx-background-radius: 13px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,1), 15, 0, 0, 0);
+}
+
+.Horizontal-Pane-style {
     -fx-background-color: white;
 }
 
-
-.text-field {
-    -fx-pref-width: 300px;
-    -fx-pref-height: 35px; 
-    -fx-background-radius: 15px;
-    -fx-font-size: 15px;
-    -fx-prompt-text-fill: #808080;
+.Vertical-Pane-style {
+    -fx-background-color: white;
+    -fx-min-height: 90px;
 }
 
+.Email-Input-style{
+    -fx-min-width: 270px;
+    -fx-max-width: 300px;
+    -fx-max-height: 35px;
+    -fx-font-size: 16px;
+    -fx-prompt-text-fill: gray;
+    -fx-background-radius: 13px;
+    -fx-focus-color: transparent;
+}
 
-.connect-button {
-    -fx-width: 200px; /* Largeur minimale du bouton */
-    -fx-height: 100px; /* Hauteur minimale du bouton */
-    -fx-background-radius: 50px; /* Rayon des bords du bouton */
-    -fx-background-color: #3F72AF; /* Couleur de fond du bouton */
-    -fx-font-size: 17px;
+.Button-style {
+    -fx-background-color: #3F72AF;
     -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-background-radius: 13px;
+    -fx-min-width: 100px;
+    -fx-max-width: 100px;
+    -fx-max-height: 30px;
 }
