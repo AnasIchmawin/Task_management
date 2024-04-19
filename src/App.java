@@ -1,26 +1,19 @@
-import java.lang.reflect.Array;
-import java.time.LocalDateTime;
-import java.util.Arrays;
+
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 import persistence.DBConnection;
-import persistence.DAO.document;
-import persistence.DAO.tache;
-import presentation.archive.screenArchive;
-import presentation.listes.screenList;
-import presentation.login.screenLogin;
-import presentation.projets.screenProjets;
-import presentation.seance.screenSeance;
+
+import presentation.login.*;;
 
 public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
-        screenList list = new screenList();        
-        list.start(primaryStage); // Appelez la méthode start()
-
+        // Initialiser le contrôleur et la vue
+        LoginController controller = new LoginController();
+        LoginFormView view = new LoginFormView(controller);
+        view.start(primaryStage);
     }
 
     public static void main(String[] args) {
