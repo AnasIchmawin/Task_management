@@ -3,7 +3,8 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
 import persistence.DBConnection;
-
+import presentation.archive.screenArchive;
+import presentation.listes.screenList;
 import presentation.login.*;;
 
 public class App extends Application {
@@ -11,9 +12,14 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         // Initialiser le contrôleur et la vue
-        LoginController controller = new LoginController();
-        LoginFormView view = new LoginFormView(controller);
-        view.start(primaryStage);
+        // LoginController controller = new LoginController();
+        // LoginFormView view = new LoginFormView(controller);
+        // view.start(primaryStage);
+        screenArchive archive = new screenArchive();
+        archive.start(primaryStage);
+
+        // screenList list = new screenList();
+        // list.start(primaryStage);
     }
 
     public static void main(String[] args) {

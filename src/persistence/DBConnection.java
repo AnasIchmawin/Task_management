@@ -36,4 +36,9 @@ public class DBConnection {
     public void createCollection(String nomCollection) {
         database.createCollection(nomCollection);
     }
+
+    // Supprimer une collection
+    public void dropCollection(String nomCollection) {
+        database.getCollection(nomCollection).drop();
+    }
 }
