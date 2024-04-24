@@ -27,11 +27,11 @@ public class ListeFormView extends Application {
     private Button searchButton;
     private Button ajouterButton;
     private TextField searchField;
-    private ListFormController controller;
+    private ListeFormController controller;
     private BorderPane root;
 
     // Constructor
-    public ListeFormView(ListFormController controller) {
+    public ListeFormView(ListeFormController controller) {
         this.controller = controller;
         init();
         style();
@@ -110,7 +110,7 @@ public class ListeFormView extends Application {
         // Create HBox for adding the "Ajouter" button
         HBox buttonContainer = new HBox();
         buttonContainer.getChildren().add(ajouterButton);
-        HBox.setMargin(ajouterButton, new Insets(90, 0, 0, 70));
+        HBox.setMargin(ajouterButton, new Insets(50, 0, 0, 70));
 
         mainContentContainer.getChildren().addAll(topContainer, Listes, buttonContainer); // Add top container and
                                                                                           // Listes
@@ -133,7 +133,7 @@ public class ListeFormView extends Application {
         GridPane gridPane = new GridPane();
         gridPane.setVgap(30);
         gridPane.setHgap(20);
-        gridPane.setPrefHeight(300);
+        gridPane.setPrefHeight(350);
         gridPane.setStyle("-fx-background-color: #F0F0F0;");
         return gridPane;
     }
