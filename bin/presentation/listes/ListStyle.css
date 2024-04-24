@@ -1,36 +1,25 @@
-.navigationBar {
-    -fx-background-color: #112D4E;
-    -fx-background-radius: 10px;
-    -fx-padding: 8px;
-}
-
 .button-style {
     -fx-background-radius: 10px;
-    -fx-pref-width: 110px;
-    -fx-pref-height: 30px;
+    -fx-pref-width: 100px;
     -fx-background-color: #3F72AF;
-    -fx-text-fill: #FFFFFF;
-    -fx-font-size: 13px;
-    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-weight: bold; 
+    -fx-font-size: 13px; 
 }
 
-.button-clicked-style {
-    -fx-background-radius: 10px;
-    -fx-pref-width: 110px;
-    -fx-pref-height: 30px;
-    -fx-background-color: #8e9eb2;
-    -fx-text-fill: #FFFFFF;
-    -fx-font-size: 13px;
-    -fx-font-weight: bold;
-}
-
-.button-left-style {
+.left-btn-style {
     -fx-background-color: #8E9EB2;
     -fx-min-width: 30px;
     -fx-min-height: 30px;
     -fx-max-width: 30px;
     -fx-max-height: 30px;
     -fx-background-radius: 30px;
+}
+
+.navbar {
+    -fx-pref-width: 50px; /* Largeur préférée de la barre de navigation */
+    -fx-background-color: #112D4E; /* Couleur de fond de la barre de navigation */
+    -fx-background-radius: 10px;
 }
 
 .search-field-style {
@@ -44,29 +33,35 @@
     -fx-font-weight: bold;
 }
 
-.description-style{
-    -fx-pref-width: 1070px;
-    -fx-pref-height: 140px;
-    -fx-font-size: 16px;
-    -fx-border-width: 0px; 
-    -fx-focus-color: transparent;
-}
-
-.description-label-style{
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #000000;
-    -fx-underline: true;
-
-
-}
-.button-save-style{
+.ordonner-btn-style {
     -fx-background-radius: 10px;
-    -fx-pref-width: 140px;
-    -fx-pref-height: 30px;
+    -fx-pref-width: 110px;
     -fx-background-color: #3F72AF;
-    -fx-text-fill: #FFFFFF;
-    -fx-font-size: 13px;
-    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-weight: bold; 
+    -fx-font-size: 13px; 
+}
+
+
+.text-area {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-size: 15px; 
+}
+
+.container{
+
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #112D4E;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
 
 }
+
+.desc{
+    -fx-pref-height: 150px;
+}
+
+
+
+
