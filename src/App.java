@@ -3,7 +3,7 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import persistence.DBConnection;
-import presentation.listes.ListFormController;
+import presentation.listes.ListeFormController;
 import presentation.listes.ListeFormView;
 import presentation.login.*;
 import presentation.projet_detail.screen;
@@ -13,7 +13,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        ListFormController controller = new ListFormController();
+        ListeFormController controller = new ListeFormController();
         ListeFormView listView = new ListeFormView(controller);
         listView.start(primaryStage);
     }
