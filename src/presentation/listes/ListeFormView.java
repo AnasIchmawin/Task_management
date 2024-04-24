@@ -110,7 +110,7 @@ public class ListeFormView extends Application {
         // Create HBox for adding the "Ajouter" button
         HBox buttonContainer = new HBox();
         buttonContainer.getChildren().add(ajouterButton);
-        HBox.setMargin(ajouterButton, new Insets(50, 0, 0, 70));
+        HBox.setMargin(ajouterButton, new Insets(40, 0, 20, 70));
 
         mainContentContainer.getChildren().addAll(topContainer, Listes, buttonContainer); // Add top container and
                                                                                           // Listes
