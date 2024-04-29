@@ -1,5 +1,7 @@
 package presentation.login;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,7 +30,6 @@ public class LoginFormView extends Application {
     private Pane rightPane;
     private Pane topPane;
     private Pane bottomPane;
-    
 
     public LoginFormView(LoginController controller) {
         this.controller = controller;
@@ -36,11 +37,11 @@ public class LoginFormView extends Application {
         // Créer les éléments de la vue
         emailField = createEmailField();
         connectButton = createConnectButton();
-       
+
         // Créer le BorderPane
         Formulaire = createBorderPane(emailField, connectButton);
         verticalPane = initialize();
- 
+
     }
 
     @Override
@@ -50,7 +51,7 @@ public class LoginFormView extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("LoginForm");
         primaryStage.show();
-        
+
         // Gestion de la taille minimale de la fenêtre
         scene.widthProperty().addListener((obs, oldWidth, newWidth) -> {
             double minWidth = MIN_WIDTH + 150;
@@ -117,7 +118,7 @@ public class LoginFormView extends Application {
         return pane;
     }
 
-    private VBox createVBox(int spacing, Pos alignment, 
+    private VBox createVBox(int spacing, Pos alignment,
             Node... nodes) {
         VBox vbox = new VBox(spacing);
         vbox.setAlignment(alignment);
@@ -136,7 +137,13 @@ public class LoginFormView extends Application {
     private Button createConnectButton() {
         Button button = new Button("Connexion");
         button.getStyleClass().add("Button-style");
-        button.setOnAction(event -> controller.handleLoginButtonClick());
+        button.setOnAction(event -> {
+            try {
+                controller.handleLoginButtonClick(event, emailField.getText());
+            } catch (IOException e) {
+                System.out.println("Erreur f l view ");
+            }
+        });
         return button;
     }
 
@@ -148,7 +155,6 @@ public class LoginFormView extends Application {
         HBox horizontalPane = new HBox(leftPane, Formulaire, rightPane);
         VBox verticalPane = new VBox(topPane, horizontalPane, bottomPane);
         VBox.setVgrow(Formulaire, javafx.scene.layout.Priority.ALWAYS);
-        return verticalPane ;
+        return verticalPane;
     }
-
 }

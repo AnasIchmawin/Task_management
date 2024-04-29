@@ -1,20 +1,24 @@
 package presentation.login;
 
-public class modeleLogin {
-    private String Gmail ;
 
-    public modeleLogin(String Gmail) {
-        this.Gmail = Gmail;
+public class modeleLogin {
+    
+    private String gmail;
+
+    public modeleLogin(String gmail) {
+        this.gmail = gmail;
     }
 
     public String getGmail() {
-        return Gmail;
+        return gmail;
     }
 
-    public void setGmail(String Gmail) {
-        this.Gmail = Gmail;
+    public void setGmail(String gmail) {
+        this.gmail = gmail;
+    }
+
+    public static boolean CheckEmail(String email) {
+        // Necessaites une implementation de la methode CheckEmail
+        return true;
     }
 }
-
-
-

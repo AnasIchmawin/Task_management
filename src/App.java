@@ -1,21 +1,19 @@
-import java.util.List;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 import persistence.DBConnection;
-import presentation.listes.ListeFormController;
-import presentation.listes.ListeFormView;
-import presentation.login.*;
-import presentation.projet_detail.screen;
-import presentation.seance.screenSeance;;
+import presentation.login.LoginController;
+import presentation.login.LoginFormView;
+import presentation.seance.SceanceFormController;
+import presentation.seance.SeanceFormView;
 
 public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        ListeFormController controller = new ListeFormController();
-        ListeFormView listView = new ListeFormView(controller);
-        listView.start(primaryStage);
+        SceanceFormController controller = new SceanceFormController();
+        SeanceFormView Seance = new SeanceFormView(controller);
+        Seance.start(primaryStage);
     }
 
     public static void main(String[] args) {
