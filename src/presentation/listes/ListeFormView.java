@@ -77,13 +77,14 @@ public class ListeFormView extends Application {
     }
 
     private StackPane createMainContent() {
-        // Le conteneur principal qui contient tous les éléments
+        //Le conteneur principal qui contient tous les éléments 
         VBox mainContentContainer = new VBox();
         mainContentContainer.setSpacing(10);
 
         // le background de la page gris
         StackPane container = new StackPane();
         container.getStyleClass().add("container");
+        
 
         // Create GridPane for list items
         GridPane ZoneListes = createGridPane();
@@ -109,7 +110,7 @@ public class ListeFormView extends Application {
         // Create HBox for adding the "Ajouter" button
         HBox buttonContainer = new HBox();
         buttonContainer.getChildren().add(ajouterButton);
-        HBox.setMargin(ajouterButton, new Insets(40, 0, 20, 70));
+        HBox.setMargin(ajouterButton, new Insets(50, 0, 0, 70));
 
         mainContentContainer.getChildren().addAll(topContainer, Listes, buttonContainer); // Add top container and
                                                                                           // Listes
@@ -164,7 +165,6 @@ public class ListeFormView extends Application {
         leftButton.getStyleClass().add("left-btn-style");
         searchButton.getStyleClass().add("left-btn-style");
         listesButton.getStyleClass().add("button-style");
-        listesButton.setStyle("-fx-background-color: #8E9EB2;");
         projectsButton.getStyleClass().add("button-style");
         archiveButton.getStyleClass().add("button-style");
         ordonnerButton.getStyleClass().add("ordonner-btn-style");

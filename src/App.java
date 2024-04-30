@@ -2,6 +2,8 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
 import persistence.DBConnection;
+import presentation.listes.ListeFormController;
+import presentation.listes.ListeFormView;
 import presentation.login.LoginController;
 import presentation.login.LoginFormView;
 import presentation.seance.SceanceFormController;
@@ -11,8 +13,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        SceanceFormController controller = new SceanceFormController();
-        SeanceFormView Seance = new SeanceFormView(controller);
+        ListeFormController controller = new ListeFormController();
+        ListeFormView Seance = new ListeFormView(controller);
         Seance.start(primaryStage);
     }
 
