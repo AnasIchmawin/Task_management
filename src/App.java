@@ -1,4 +1,6 @@
 
+import java.util.List;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import persistence.DBConnection;
@@ -6,6 +8,8 @@ import presentation.listes.ListeFormController;
 import presentation.listes.ListeFormView;
 import presentation.login.LoginController;
 import presentation.login.LoginFormView;
+import presentation.projets.ProjetsFormController;
+import presentation.projets.screenProjets;
 import presentation.seance.SceanceFormController;
 import presentation.seance.SeanceFormView;
 

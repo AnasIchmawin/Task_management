@@ -15,7 +15,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class screenArchive extends Application {
+public class ArchiveFormView extends Application {
 
     @Override
     public void start(Stage primaryStage) {
