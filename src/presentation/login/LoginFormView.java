@@ -1,7 +1,5 @@
 package presentation.login;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -140,8 +138,8 @@ public class LoginFormView extends Application {
         button.setOnAction(event -> {
             try {
                 controller.handleLoginButtonClick(event, emailField.getText());
-            } catch (IOException e) {
-                System.out.println("Erreur f l view ");
+            } catch (Exception e) {
+                System.out.println("Erreur pendant le clic : " + e.getMessage());
             }
         });
         return button;
