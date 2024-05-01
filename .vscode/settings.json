@@ -1,5 +1,7 @@
 {
-    "java.project.sourcePaths": ["src"],
+    "java.project.sourcePaths": [
+        "src"
+    ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
@@ -11,6 +13,12 @@
         "c:\\Program Files\\Java\\javafx-sdk-21.0.2\\lib\\javafx.swing.jar",
         "c:\\Program Files\\Java\\javafx-sdk-21.0.2\\lib\\javafx.web.jar",
         "c:\\Program Files\\Java\\javafx-sdk-21.0.2\\lib\\javafx-swt.jar",
-        "c:\\Program Files\\Java\\javafx-sdk-21.0.2\\lib\\mongo-java-driver-3.12.14.jar"
+        "c:\\Program Files\\Java\\javafx-sdk-21.0.2\\lib\\mongo-java-driver-3.12.14.jar",
+        "c:\\Program Files\\Java\\javafx-sdk-21.0.2\\lib\\json-20240303.jar",
+        "c:\\Program Files\\Java\\javafx-sdk-21.0.2\\lib\\json-simple-1.1.1.jar",
+        "c:\\Program Files\\Java\\javafx-sdk-21.0.2\\lib\\httpclient-4.5.13.jar",
+        "c:\\Program Files\\Java\\javafx-sdk-21.0.2\\lib\\httpcore-4.4.13.jar",
+        "c:\\Program Files\\Java\\javafx-sdk-21.0.2\\lib\\commons-codec-1.11.jar",
+        "c:\\Program Files\\Java\\javafx-sdk-21.0.2\\lib\\commons-logging-1.2.jar",
     ]
 }

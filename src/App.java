@@ -1,31 +1,24 @@
 
-import java.util.List;
+import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 import persistence.DBConnection;
-import presentation.listes.ListeFormController;
-import presentation.listes.ListeFormView;
 import presentation.login.LoginController;
 import presentation.login.LoginFormView;
-import presentation.projets.ProjetsFormController;
-import presentation.projets.screenProjets;
-import presentation.seance.SceanceFormController;
-import presentation.seance.SeanceFormView;
 
 public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        ListeFormController controller = new ListeFormController();
-        ListeFormView Seance = new ListeFormView(controller);
-        Seance.start(primaryStage);
+        LoginController controller = new LoginController();
+        LoginFormView login = new LoginFormView(controller);
+        login.start(primaryStage);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         try {
-            // Connexion à la base de données
-            DBConnection dbConnection = DBConnection.getInstance();
+            DBConnection.getInstance();
             System.out.println("Connexion à la base de données réussie");
 
         } catch (Exception e) {
