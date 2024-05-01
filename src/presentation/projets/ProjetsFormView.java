@@ -1,14 +1,17 @@
-package presentation.listes;
+package presentation.projets;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -18,7 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class ListeFormView extends Application {
+public class ProjetsFormView extends Application {
     private Button leftButton;
     private Button listesButton;
     private Button projectsButton;
@@ -27,11 +30,14 @@ public class ListeFormView extends Application {
     private Button searchButton;
     private Button ajouterButton;
     private TextField searchField;
-    private ListeFormController controller;
+    private ProjetsFormController controller;
     private BorderPane root;
+    private ComboBox<String> comboBox1;
+    private ComboBox<String> comboBox2;
+    private Label filterLabel;
 
     // Constructor
-    public ListeFormView(ListeFormController controller) {
+    public ProjetsFormView(ProjetsFormController controller) {
         this.controller = controller;
         init();
         style();
@@ -48,7 +54,7 @@ public class ListeFormView extends Application {
         // Create the scene
         Scene scene = new Scene(root, 1160, 652);
         // Add the CSS file
-        scene.getStylesheets().add(getClass().getResource("ListStyle.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("projetsStyle.css").toExternalForm());
         // Set the scene
         primaryStage.setScene(scene);
         primaryStage.setTitle("Responsive Page with Navbar");
@@ -99,13 +105,24 @@ public class ListeFormView extends Application {
         searchPane.setAlignment(Pos.TOP_RIGHT);
         searchPane.getChildren().addAll(searchField, searchButton);
 
+        StackPane stackPane = new StackPane();
+        HBox.setMargin(comboBox1, new Insets(0, 0, 0, 88));
+        HBox filterBox = new HBox();
+        filterBox.getChildren().addAll(comboBox1, comboBox2);
+        filterBox.setSpacing(10); // Espace entre les éléments    
+        filterBox.setAlignment(Pos.CENTER); // Centrer les éléments horizontalement
+
+        stackPane.getChildren().addAll(filterLabel,filterBox);
+        HBox.setMargin(stackPane, new Insets(30, 40, 30, 70));
+
         HBox topContainer = new HBox();
         topContainer.setAlignment(Pos.TOP_LEFT); // Align elements at top left
-        topContainer.getChildren().add(ordonnerButton); // Add "Ordonner" button
+        topContainer.getChildren().addAll(ordonnerButton,searchPane); // Add "Ordonner" button
+        
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS); // Make spacer grow as much as possible
         topContainer.getChildren().add(spacer);
-        topContainer.getChildren().add(searchPane); // Add StackPane containing search field and search button
+        topContainer.getChildren().add(stackPane); // Add StackPane containing search field and search button
 
         // Create HBox for adding the "Ajouter" button
         HBox buttonContainer = new HBox();
@@ -159,6 +176,9 @@ public class ListeFormView extends Application {
         ajouterButton = createButtonWithIcon("Ajouter", "file:./Pictures/add.png", 20, 20);
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
+        comboBox1 = createComboBox("Type", "These", "PFE", "Cours", "Examen", "Autres");
+        comboBox2 = createComboBox("Categorie", "Enseignement", "Encadrement", "Autres");
+        filterLabel = new Label("     Filtrer");
     }
 
     private void style() {
@@ -170,6 +190,8 @@ public class ListeFormView extends Application {
         ordonnerButton.getStyleClass().add("ordonner-btn-style");
         ajouterButton.getStyleClass().add("button-style");
         searchField.getStyleClass().add("search-field-style");
+        filterLabel.getStyleClass().add("filter-label-style");
+
     }
 
     private Button createButtonWithIcon(String name, String string, int i, int j) {
@@ -184,6 +206,14 @@ public class ListeFormView extends Application {
             System.out.println("Error loading the icon: " + e.getMessage());
         }
         return button;
+    }
+
+    private ComboBox<String> createComboBox(String prompt, String... items) {
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll(items);
+        comboBox.setPromptText(prompt);
+        comboBox.getStyleClass().add("comboBox-style");
+        return comboBox;
     }
 
     // Action for AjouterButton

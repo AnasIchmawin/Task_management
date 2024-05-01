@@ -7,14 +7,18 @@ import javafx.scene.layout.GridPane;
 
 public class ProjetsFormController {
 
+    public ProjetsFormController() {
+        super();
+    }
+
     public static void handleAjouterButtonAction(GridPane gridPane) {
 
         Button newListButton = new Button("  Projet  ");
         
         newListButton.getStyleClass().add("newListButton-style");
 
-        int colIndex = gridPane.getChildren().size() % 6; // Calcul de la colonne
-        int rowIndex = gridPane.getChildren().size() / 6; // Calcul de la ligne
+        int colIndex = gridPane.getChildren().size() % 5; // Calcul de la colonne
+        int rowIndex = gridPane.getChildren().size() / 5; // Calcul de la ligne
 
         // Charger l'icône de la liste
         try {
@@ -26,7 +30,7 @@ public class ProjetsFormController {
             gridPane.add(newListButton, colIndex, rowIndex);
             
         } catch (Exception e) {
-            System.out.println("Erreur de charger l'icône de la liste");
+            System.out.println("Erreur de chargement de l'icône de la liste : " + e.getMessage());
         }
     }
 }
