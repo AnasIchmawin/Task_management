@@ -6,22 +6,15 @@
     "configurations": [
         {
             "type": "java",
-            "name": "App",
-            "request": "launch",
-            "mainClass": "App",
-            "projectName": "Task_management_117e3073"
-        },
-        {
-            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
         },
         {
             "type": "java",
-            "name": "Main",
+            "name": "App",
             "request": "launch",
-            "mainClass": "Main",
+            "mainClass": "App",
             "projectName": "Task_management_117e3073",
             "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-21.0.2/lib\" --add-modules javafx.controls,javafx.fxml"
         }
