@@ -23,8 +23,8 @@ public class App extends Application {
         // ListeFormView Seance = new ListeFormView(controller);
         // Seance.start(primaryStage);
 
-        SceanceFormController controller = new SceanceFormController();
-        SeanceFormView projets = new SeanceFormView(controller);
+        ListeFormController controller = new ListeFormController();
+        ListeFormView projets = new ListeFormView(controller);
         projets.start(primaryStage);
 
         // ArchiveFormController controller = new ArchiveFormController();
