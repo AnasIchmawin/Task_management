@@ -1,19 +1,15 @@
 {
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
             "type": "java",
-            "name": "screenLogin",
+            "name": "App",
             "request": "launch",
-            "mainClass": "presentation.login.screenLogin",
-            "projectName": "Task_management_88bed8b6"
-        },
-        {
-            "type": "java",
-            "name": "ScreenLogin",
-            "request": "launch",
-            "mainClass": "presentation.login.ScreenLogin",
-            "projectName": "Task_management_88bed8b6"
+            "mainClass": "App",
+            "projectName": "Task_management_117e3073"
         },
         {
             "type": "java",
@@ -23,10 +19,10 @@
         },
         {
             "type": "java",
-            "name": "App",
+            "name": "Main",
             "request": "launch",
-            "mainClass": "App",
-            "projectName": "Task_management_88bed8b6",
+            "mainClass": "Main",
+            "projectName": "Task_management_117e3073",
             "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-21.0.2/lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
