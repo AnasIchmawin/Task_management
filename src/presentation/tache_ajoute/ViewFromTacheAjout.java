@@ -1,180 +1,198 @@
 package presentation.tache_ajoute;
 
-
+import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.Cursor;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
+import javafx.stage.Stage;
 
 
 public class ViewFromTacheAjout {
 
-    private AnchorPane view;
+	private static final Pos TOP_CENTER = Pos.TOP_CENTER;
+    private static final Pos TOP_LEFT = Pos.TOP_LEFT;
+    private static final Pos CENTER_LEFT = Pos.CENTER_LEFT;
+    private Button leftButton;
+    private Button listesButton;
+    private Button projectsButton;
+    private Button archiveButton;
+    private Button ajouterDocButton;
+    private ControllerFromTacheAjout controller;
+    private BorderPane root;
 
-    public ViewFromTacheAjout() {
-        view = new AnchorPane();
-        createUI();
-    }
-
-    private void createUI() {
-    	// Set background color for the root AnchorPane
-        view.setStyle("-fx-background-color: #f0f0f0;");
-
-        HBox navigationBar = createNavigationBar();
-        HBox bottomBar = createBottomBar();
-         
-        Label titleLabel = new Label("Titre de ma tache");
-        titleLabel.getStyleClass().add("titleLabel"); 
-        
-        TextField titleField = new TextField();
-        titleField.getStyleClass().add("titleField"); 
-        
-        Label descreptionLabel = new Label("Descreption");
-        descreptionLabel.getStyleClass().add("descriptionLabel");
-        
-        TextArea descreptionField = new TextArea();
-        descreptionField.getStyleClass().add("descriptionField");
-        
-        // Create container for title label and input
-        VBox titleContainer = new VBox();
-        titleContainer.getChildren().addAll(titleLabel, titleField,descreptionLabel,descreptionField);
-        titleContainer.setSpacing(5); 
-        Label docLabel = new Label("Documents");
-        docLabel.getStyleClass().add("titleLabel");
-        Button docsButton = createButton("Document 1", "docs-button-style");
-
-        // Create HBox to contain description field and the button
-        VBox descriptionContainer = new VBox();
-        descriptionContainer.getChildren().addAll( docLabel,docsButton);
-        descriptionContainer.setSpacing(10);
-        
-        HBox dateCategoryContainer = createDateCategoryContainer();
-        
-        AnchorPane.setTopAnchor(dateCategoryContainer, 70.0);
-        AnchorPane.setRightAnchor(dateCategoryContainer, 20.0);
-        // Add title container under navigation bar
-        AnchorPane.setTopAnchor(titleContainer, 70.0); // Adjust top anchor as needed
-        AnchorPane.setLeftAnchor(titleContainer, 20.0); // Adjust left anchor as needed
-        AnchorPane.setRightAnchor(titleContainer, 20.0); // Adjust right anchor as needed
-        
-        AnchorPane.setTopAnchor(descriptionContainer, 380.0); // Adjust top anchor as needed
-        AnchorPane.setLeftAnchor(descriptionContainer, 20.0); // Adjust left anchor as needed
-        AnchorPane.setRightAnchor(descriptionContainer, 20.0);
-        // Add navigation bar to the top of the root
-        AnchorPane.setTopAnchor(navigationBar, 0.0);
-        AnchorPane.setLeftAnchor(navigationBar, 0.0);
-        AnchorPane.setRightAnchor(navigationBar, 0.0);
-
-        // Add bottom bar to the bottom of the root
-        AnchorPane.setBottomAnchor(bottomBar,  10.0);
-        AnchorPane.setLeftAnchor(bottomBar, 10.0);
-        AnchorPane.setRightAnchor(bottomBar, 0.0);
-
-        view.getChildren().addAll(titleContainer,navigationBar, bottomBar,descriptionContainer,dateCategoryContainer);
-    }
-
-    private HBox createNavigationBar() {
-        HBox navigationBar = new HBox();
-        navigationBar.getStyleClass().add("navigationBar"); 
-        navigationBar.setPadding(new Insets(8)); 
-        navigationBar.setSpacing(10);
-
-        Button backButton = new Button();
-        backButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
-        backButton.getStyleClass().add("button-left-style");
-        Button tachesButton = createButton("Taches", "button-style");
-        Button projectsButton = createButton("Projects", "button-style");
-        Button archiveButton = createButton("Archive","button-style");
-
-        
-        navigationBar.getChildren().addAll(backButton,tachesButton, projectsButton, archiveButton);
-        
-        return navigationBar;
+    public ViewFromTacheAjout(ControllerFromTacheAjout controller) {
+        this.controller = controller;
+        init();
+        style();
     }
     
-    private HBox createDateCategoryContainer() {
-        HBox container = new HBox();
-        container.setSpacing(10);
-
-        // Label and DatePicker for "Début"
-        Label debutLabel = new Label("Début:");
-        debutLabel.getStyleClass().add("titleLabel");
-        DatePicker debutDatePicker = new DatePicker();
-        debutDatePicker.getStyleClass().add("");
-        debutDatePicker.setPrefWidth(150);
-
-        // Label and DatePicker for "Fin"
-        Label finLabel = new Label("Fin:");
-        finLabel.getStyleClass().add("titleLabel");
-        DatePicker finDatePicker = new DatePicker();
-        finDatePicker.getStyleClass().add("");
-        finDatePicker.setPrefWidth(150);
-
-        // Label and ComboBox for "Catégorie"
-        Label categorieLabel = new Label("Catégorie:");
-        categorieLabel.getStyleClass().add("titleLabel");
-        ComboBox<String> categorieComboBox = new ComboBox<>();
-        categorieComboBox.getItems().addAll("Encadrement", "Enseignement", "Autre");
-        categorieComboBox.getStyleClass().add("comboBox-style");
-        categorieComboBox.setPrefWidth(150);
-
-        container.getChildren().addAll(debutLabel, debutDatePicker, finLabel, finDatePicker, categorieLabel, categorieComboBox);
-        return container;
+    public void start(Stage primaryStage) {
+        // Create the nnavigation bar
+        VBox navbarContainer = createNavbarContainer();
+        // Create the main content
+        StackPane container = createMainContent();
+        // Create the root layout
+        root = createBorderPane(navbarContainer, container);
+        // Create the scene
+        Scene scene = new Scene(root, 1160, 652);
+        // Add the CSS file
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        // Set the scene
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Responsive Page with Navbar");
+        primaryStage.show();
     }
-
-    private HBox createBottomBar() {
-        HBox bottomBar = new HBox();
-        bottomBar.setAlignment(Pos.BASELINE_LEFT); // Align buttons to the left in a horizontal line
-        bottomBar.setSpacing(10);
-
-        // Create buttons
-        Button ajouterButton = createButtonWithIcon("Ajouter", "file:./Pictures/add.png", 20, 20);
-        ajouterButton.getStyleClass().add("button-style");
-        Button saveButton = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 20, 20);
-        saveButton.getStyleClass().add("button-style");
-        Button annulerButton = createButton("Annuler", "button-style");
-
-        // Add buttons to the bottom bar
-        bottomBar.getChildren().addAll(ajouterButton, saveButton, annulerButton);
-
-        return bottomBar;
+    
+    private BorderPane createBorderPane(VBox navbarContainer, StackPane container) {
+        BorderPane root = new BorderPane();
+        root.setStyle("-fx-background-color: white;");
+        BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 20));
+        root.setTop(navbarContainer);
+        BorderPane.setMargin(container, new Insets(20, 20, 20, 20));
+        root.setCenter(container);
+        return root;
     }
+    
+    private VBox createNavbarContainer() {
+        HBox buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
+        HBox leftButtonBox = new HBox(20, leftButton);
+        HBox navbar = new HBox(30, leftButtonBox, buttonsBar);
+        navbar.setPadding(new Insets(10, 20, 10, 20)); // 20px padding left and right, 10px padding top and bottom
+        navbar.getStyleClass().add("navbar");
+        VBox navbarContainer = new VBox(navbar);
+        navbarContainer.getStyleClass().add("navbar-container");
+        return navbarContainer;
+    }
+    
+    private StackPane createMainContent() {
+    	// le background de la page gris
+        StackPane container = new StackPane();
+        container.getStyleClass().add("container");
+        container.setPadding(new Insets(15, 70, 20, 55)); // 15px padding top, 70px padding right,
+                                                          // 20px padding bottom, 55px padding left
+        TextField TempsDebut = createTextField();
+        TextField TempsFin = createTextField();
+        
+        VBox mainContentContainer = CreateVbox(10, TOP_CENTER);
+        
+        HBox topContainer = CreateHbox(10, TOP_LEFT);
+        
+        Region Space_Dates = CreateSPace(50);
+        
+        Region Space_Btn_Dates = CreateSPace(50);
+        
+        HBox DateDebutComplet = CreateHbox(5, TOP_CENTER);
+        DatePicker dateDebut = DateSeance();
+        Label labelDebut = createLabel("Date de début");
+        
+        VBox dateDebutContainer = createVboxDates(DateDebutComplet, dateDebut, TempsDebut, labelDebut, Space_Dates);
+        
+     // Date picker pour la date de fin
+        HBox DateFinComplet = CreateHbox(5, TOP_CENTER);
+        DatePicker dateFin = DateSeance();
+        Label labelFin = createLabel("Date de fin");
 
-    private Button createButton(String text, String styleClass) {
-        Button button = new Button(text);
-        button.getStyleClass().add(styleClass);
+        // Creer un conteneur VBox pour la date de fin
+        VBox dateFinContainer = createVboxDates(DateFinComplet, dateFin, TempsFin, labelFin, Space_Dates);
         
-       
-        button.setOnMousePressed(event -> button.getStyleClass().add("button-clicked-style"));
+        HBox Dates = new HBox();
+        Dates.getChildren().addAll(dateDebutContainer, Space_Dates, dateFinContainer);
         
+        HBox.setMargin(Dates, new Insets(0, 50, 0, 0)); // Margin (top, right, bottom, left)
         
-        button.setOnMouseReleased(event -> button.getStyleClass().remove("button-clicked-style"));
+        topContainer.getChildren().addAll(Space_Btn_Dates, Dates);
         
-        button.setOnMouseEntered(event -> button.setCursor(Cursor.HAND));
-        button.setOnMouseExited(event -> button.setCursor(Cursor.DEFAULT));
+        mainContentContainer.getChildren().addAll(topContainer); // Add top container and
         
-        button.setOnMouseEntered(event -> {
-            button.getStyleClass().add("button-clicked-style");
-            button.setCursor(Cursor.HAND);
-        });
+        HBox centerContainer = CreateHbox(50, CENTER_LEFT);
         
-        button.setOnMouseExited(event -> {
-            button.getStyleClass().remove("button-clicked-style");
-            button.setCursor(Cursor.DEFAULT);
-        });
+        VBox leftBox = CreateVbox(15, TOP_LEFT);
         
-        return button;
+        Label labelTitre = createLabel("Titre de ma tache");
+        
+        TextArea ZoneTitre = createTextArea("", "ZoneTitre-Style");
+        
+        Label labelDescription = createLabel("Discription");
+        
+        TextArea ZoneDescription = createTextArea("Description", "ZoneDescription-Style");
+        
+        Label labelDocs = createLabel("Documents Ajoutés");
+
+        // create vbox Contenaire Documents
+        VBox ContenaireDocuments = createDocumentsSection();
+        
+        Button Ajouter = new Button("Ajouter");
+        Ajouter.getStyleClass().add("footBtn-style");
+        
+        Button Enregistrer = new Button("Enregistrer");
+        Enregistrer.getStyleClass().add("footBtn-style");
+        
+        Button Annuler = new Button("Annuler");
+        Annuler.getStyleClass().add("footBtn-style");
+        
+        leftBox.getChildren().add(labelTitre);
+        leftBox.getChildren().add(ZoneTitre);
+        leftBox.getChildren().add(labelDescription);
+        leftBox.getChildren().add(ZoneDescription);
+        leftBox.getChildren().add(labelDocs);
+        leftBox.getChildren().addAll(ContenaireDocuments, Ajouter , Enregistrer , Annuler );
+        
+        centerContainer.getChildren().addAll(leftBox);
+        
+        mainContentContainer.getChildren().add(centerContainer);
+        
+        container.getChildren().addAll(mainContentContainer);
+        
+        return container;}
+    
+    private GridPane creatZoneDocs() {
+        GridPane grid = new GridPane();
+        // grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setVgap(8);
+        grid.setHgap(10);
+        grid.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
+        return grid;
+    }
+    
+    private ScrollPane createScrollPane(GridPane gridPane) {
+        ScrollPane scrollPane = new ScrollPane(gridPane);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide vertical scrollbar
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide horizontal scrollbar
+        return scrollPane;
+    }
+    
+    public void init() {
+        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
+        listesButton = new Button("Listes");
+        projectsButton = new Button("Projets");
+        archiveButton = new Button("Archive");
+        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/add.png", 20, 20);
+    }
+    
+    private void style() {
+        leftButton.getStyleClass().add("left-btn-style");
+        listesButton.getStyleClass().add("button-style");
+        projectsButton.getStyleClass().add("button-style");
+        archiveButton.getStyleClass().add("button-style");
+        ajouterDocButton.getStyleClass().add("AjoutDoc-style");
     }
     private Button createButtonWithIcon(String name, String string, int i, int j) {
         Button button = new Button(name);
@@ -184,32 +202,98 @@ public class ViewFromTacheAjout {
             iconView.setFitWidth(i);
             iconView.setFitHeight(j);
             button.setGraphic(iconView);
-            button.setOnMousePressed(event -> button.getStyleClass().add("button-clicked-style"));
-            
-            
-            button.setOnMouseReleased(event -> button.getStyleClass().remove("button-clicked-style"));
-            
-            button.setOnMouseEntered(event -> button.setCursor(Cursor.HAND));
-            button.setOnMouseExited(event -> button.setCursor(Cursor.DEFAULT));
-            
-            button.setOnMouseEntered(event -> {
-                button.getStyleClass().add("button-clicked-style");
-                button.setCursor(Cursor.HAND);
-            });
-            
-            button.setOnMouseExited(event -> {
-                button.getStyleClass().remove("button-clicked-style");
-                button.setCursor(Cursor.DEFAULT);
-            });
         } catch (Exception e) {
             System.out.println("Error loading the icon: " + e.getMessage());
         }
         return button;
+    }
+    private Label createLabel(String text) {
+        Label label = new Label(text);
+        label.getStyleClass().add("Label-style");
+        return label;
+    }
+    private DatePicker DateSeance() {
+        DatePicker date = new DatePicker();
+        date.getStyleClass().add("date-picker");
+        date.promptTextProperty().set("YYYY-MM-DD");
+        return date;
+    }
+    private TextArea createTextArea(String promptText, String style) {
+        TextArea Zone = new TextArea();
+        Zone.setWrapText(true);
+        Zone.setPromptText(promptText);
+        Zone.getStyleClass().add(style);
+
+        return Zone;
+    }
+    private TextField createTextField() {
+        TextField text = new TextField();
+        text.setPromptText("HH:MM");
+        text.getStyleClass().add("Hour-Minute-Style");
+        return text;
+    }
+    @SuppressWarnings("unused")
+    private void handleSaveButton(GridPane gridPane) {
+        controller.handleSaveButton(gridPane);
+    }
+    private void handleAjouterButtonAction(GridPane gridPane) {
+        controller.handleAjouterButtonAction(gridPane);
+    }
+    private void handleAnnulerButtonAction(GridPane gridPane) {
+        controller.handleAnnulererButtonAction(gridPane);
+    }
+    private VBox CreateVbox(int Spacing, Pos position) {
+        VBox vbox = new VBox();
+        vbox.setSpacing(Spacing);
+        vbox.setAlignment(position);
+        return vbox;
+    }
+    private HBox CreateHbox(int Spacing, Pos position) {
+        HBox hbox = new HBox();
+        hbox.setSpacing(Spacing);
+        hbox.setAlignment(position);
+        return hbox;
+    }
+    private Region CreateSPace(int width) {
+        Region spacer = new Region();
+        spacer.setPrefWidth(width);
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        return spacer;
+    }
+    private VBox createVboxDates(HBox myBox, DatePicker date, TextField temps, Label label, Region Space_Dates) {
+        myBox.getChildren().addAll(date, temps);
+        VBox vbox = new VBox();
+        HBox.setHgrow(Space_Dates, Priority.ALWAYS); // Make spacer grow as much as possible
+        vbox.getChildren().addAll(label, myBox);
+        return vbox;
+    }
+    private VBox createDocumentsSection() {
+        // Créer le GridPane pour les documents
+        GridPane ZoneDocuments = creatZoneDocs();
+        ScrollPane scrollDocs = createScrollPane(ZoneDocuments);
+        scrollDocs.getStyleClass().add("Docs-Style");
+
+        // Créer le bouton "Ajouter Document"
+        Button ajouterDocsButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/addIcon.png", 20, 20);
+        ajouterDocsButton.getStyleClass().add("AjouterTache-style");
+
+        // Créer la VBox contenant les documents
+        VBox contenaireDocuments = CreateVbox(5, Pos.TOP_LEFT);
+        contenaireDocuments.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
+
+        // Ajouter les éléments à la VBox
+        contenaireDocuments.getChildren().addAll(scrollDocs, ajouterDocsButton);
+        contenaireDocuments.setPadding(new Insets(10, 10, 10, 10));
+
+        return contenaireDocuments;
+    }
+        
+        
+        
+        
+        
+        
+        
         
     }
-
-
-    public AnchorPane getView() {
-        return view;
-    }
-}
+    
