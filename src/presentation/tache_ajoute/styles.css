@@ -106,3 +106,8 @@
     -fx-font-size: 15px;
     -fx-font-weight: bold;
 }
+.category-combobox-style {
+    -fx-font-size: 14px;
+    -fx-pref-width: 150px; /* Adjust the width as needed */
+    -fx-padding: 5px; /* Adjust the padding as needed */
+}
