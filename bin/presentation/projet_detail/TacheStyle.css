@@ -7,6 +7,16 @@
     -fx-font-size: 13px;
 }
 
+.AjouterSeance-Style{
+    -fx-background-color: #BDBDBD;
+    -fx-background-radius: 8px;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 500px;
+    -fx-text-fill: #FFFFFF;
+}
+
+
 .left-btn-style {
     -fx-background-color: #8E9EB2;
     -fx-min-width: 30px;

@@ -1,40 +1,24 @@
 package presentation.projet_detail;
 
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 public class controleur {
 
-    public void handleAjouterButtonAction(HBox gridPane) {
-    }
+    
     public void handleAjouterButtonAction(GridPane gridPane) {
-        
-        Button newListButton = new Button("Liste");
-        newListButton.setStyle("-fx-background-color: #112D4E; " +
-                "-fx-background-radius: 10px; " +
-                "-fx-min-width: 70px; " +
-                "-fx-min-height: 40px;" +
-                "-fx-text-fill: #ffffff;" +
-                "-fx-font-size: 10px;");
-                int colIndex = gridPane.getChildren().size() % 3; // Calculating column index
-                int rowIndex = gridPane.getChildren().size() / 3; // Calculating row index
+        Button newListButton = new Button("Seance  1");
+        newListButton.getStyleClass().add("AjouterSeance-Style");
+        GridPane.setHgrow(newListButton, Priority.ALWAYS); // Définir la croissance horizontale pour occuper toute la
+                                                           // largeur disponible
 
-                // Load list icon
-                try {
-                    Image listIcon = new Image("file:./Pictures/to-do.png");
-                    ImageView listIconView = new ImageView(listIcon);
-                    listIconView.setFitWidth(15);
-                    listIconView.setFitHeight(15);
-                    newListButton.setGraphic(listIconView);
-                    gridPane.add(newListButton, colIndex, rowIndex);
+        int colIndex = gridPane.getChildren().size() % 1; // Calcul de l'indice de colonne
+        int rowIndex = gridPane.getChildren().size() / 1; // Calcul de l'indice de ligne
 
-                } catch (Exception e) {
-                    System.out.println("Erreur de chargement de l'icône de la liste : " + e.getMessage());
-                }
-            }
+        gridPane.add(newListButton, colIndex, rowIndex);
+    }
+
     public void handleSaveButton(GridPane gridPane) {
         // Save button;
     }

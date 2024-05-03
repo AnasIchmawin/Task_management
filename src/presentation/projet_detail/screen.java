@@ -14,9 +14,13 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class screen extends Application {
@@ -26,6 +30,7 @@ public class screen extends Application {
     private Button archiveButton;
     private BorderPane root;
     private Label descriptionLabel;
+    private controleur controller;
 
     // Constructor
     public screen(controleur controller) {
@@ -95,10 +100,66 @@ public class screen extends Application {
     private HBox Descr_Seances() {
         HBox hbox = new HBox(20);
         VBox vbox1 = BoxDescription("on cont  la bureautiquela bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautiquela bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautiquela bureautique");
-        VBox DocSection = DocumentSection();
-        hbox.getChildren().addAll(vbox1, DocSection);
+        VBox Seances = createSeanceBox();
+        hbox.getChildren().addAll(vbox1, Seances);
         return hbox;
     }
+
+    private VBox createSeanceBox() {
+
+        VBox contenaireSeances = new VBox();
+        contenaireSeances.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
+        contenaireSeances.setSpacing(5);
+        contenaireSeances.setAlignment(Pos.TOP_CENTER);
+
+        GridPane zoneDesSeances = creatZoneDocs();
+        ScrollPane scrollTache = createScrollPane(zoneDesSeances);
+        scrollTache.getStyleClass().add("Docs-Style");
+
+        Button ajouterSeanceButton = new Button();
+        ajouterSeanceButton.getStyleClass().add("AjouterSeance-Style");
+
+        // Créer une icône pour le bouton
+        ImageView icon = new ImageView(new Image("file:./Pictures/addIcon.png"));
+        icon.setFitWidth(20); // Ajuster la largeur de l'icône selon vos besoins
+        icon.setFitHeight(20); // Ajuster la hauteur de l'icône selon vos besoins
+
+        // Créer le texte pour le bouton
+        Text buttonText = new Text("Ajouter Seance");
+        buttonText.setFill(Color.WHITE);
+
+        // Mettre l'icône et le texte dans une HBox
+        HBox buttonContent = new HBox(buttonText, icon);
+        buttonContent.setAlignment(Pos.CENTER); // Aligner le contenu à gauche
+        buttonContent.setSpacing(30);
+
+        // Ajouter la HBox au bouton
+        ajouterSeanceButton.setGraphic(buttonContent);
+        HBox.setHgrow(ajouterSeanceButton, Priority.ALWAYS);
+
+        contenaireSeances.setPadding(new Insets(8, 8, 8, 8));
+
+        // Action for AjouterButton
+        ajouterSeanceButton.setOnAction(event -> {
+            controller.handleAjouterButtonAction(zoneDesSeances);
+        });
+
+        contenaireSeances.getChildren().addAll(scrollTache, ajouterSeanceButton);
+
+        return contenaireSeances;
+    } 
+
+    private GridPane creatZoneDocs() {
+        GridPane grid = new GridPane();
+        // grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setVgap(8);
+        grid.setHgap(10);
+        grid.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
+        return grid;
+    }
+
+
+
 
     private HBox Taches_doc() {
         HBox hbox = new HBox(20);
@@ -106,6 +167,16 @@ public class screen extends Application {
         VBox DocSection = DocumentSection();
         hbox.getChildren().addAll(vbox1, DocSection);
         return hbox;
+    }
+
+    private ScrollPane createScrollPane(GridPane gridPane) {
+        ScrollPane scrollPane = new ScrollPane(gridPane);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide vertical scrollbar
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide horizontal scrollbar
+        return scrollPane;
     }
 
     private HBox Buttons() {
