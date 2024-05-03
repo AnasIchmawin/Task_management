@@ -14,6 +14,8 @@ import presentation.projets.ProjetsFormController;
 import presentation.projets.ProjetsFormView;
 import presentation.seance.SceanceFormController;
 import presentation.seance.SeanceFormView;
+import presentation.taches.TachesFormController;
+import presentation.taches.TachesFormView;
 
 public class App extends Application {
 
@@ -23,13 +25,17 @@ public class App extends Application {
         // ListeFormView Seance = new ListeFormView(controller);
         // Seance.start(primaryStage);
 
-        ProjetsFormController controller = new ProjetsFormController();
-        ProjetsFormView projets = new ProjetsFormView(controller);
-        projets.start(primaryStage);
+        // ProjetsFormController controller = new ProjetsFormController();
+        // ProjetsFormView projets = new ProjetsFormView(controller);
+        // projets.start(primaryStage);
 
         // ArchiveFormController controller = new ArchiveFormController();
         // ArchiveFormView archive = new ArchiveFormView(controller);
         // archive.start(primaryStage);
+
+        TachesFormController controller = new TachesFormController();
+        TachesFormView taches = new TachesFormView(controller);
+        taches.start(primaryStage);
     }
 
     public static void main(String[] args) {
