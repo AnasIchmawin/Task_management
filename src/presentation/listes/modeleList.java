@@ -1,7 +1,7 @@
 package presentation.listes;
 
 import java.util.ArrayList;
-import persistence.DAO.liste;
+import persistence.DAO.liste;;
 
 public class modeleList {
     private String searchField;
