@@ -1,20 +1,11 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
-import persistence.DBConnection;
-import presentation.archive.ArchiveFormController;
-import presentation.archive.ArchiveFormView;
-import presentation.listes.ListeFormController;
-import presentation.listes.ListeFormView;
-import presentation.login.LoginController;
-import presentation.login.LoginFormView;
-import presentation.projets.ProjetsFormController;
-import presentation.projets.ProjetsFormView;
-import presentation.seance.SceanceFormController;
-import presentation.seance.SeanceFormView;
-import presentation.tache_detail.controleur;
-import presentation.tache_detail.screen;
-import presentation.taches.TachesFormController;
-import presentation.taches.TachesFormView;
+import presentation.projet_detail.ProjetDetailController;
+import presentation.projet_detail.Projet_Detail_View;
+
+
+
+
 
 public class App extends Application {
 
@@ -36,8 +27,8 @@ public class App extends Application {
         // ArchiveFormView archive = new ArchiveFormView(controller);
         // archive.start(primaryStage);
 
-        controleur controller = new controleur();
-        screen taches = new screen(controller);
+        ProjetDetailController controller = new ProjetDetailController();
+        Projet_Detail_View taches = new Projet_Detail_View(controller);
         taches.start(primaryStage);
     }
 

@@ -4,7 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
-public class controleur {
+public class ProjetDetailController {
 
     
     public void handleAjouterButtonAction(GridPane gridPane) {

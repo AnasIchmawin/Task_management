@@ -23,17 +23,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class screen extends Application {
+public class Projet_Detail_View extends Application {
     private Button leftButton;
     private Button listesButton;
     private Button projectsButton;
     private Button archiveButton;
     private BorderPane root;
     private Label descriptionLabel;
-    private controleur controller;
+    private ProjetDetailController controller ;
 
     // Constructor
-    public screen(controleur controller) {
+    public Projet_Detail_View(ProjetDetailController controller) {
+        this.controller = controller ; 
         init();
         style();
     }
