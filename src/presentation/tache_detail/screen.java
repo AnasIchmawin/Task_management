@@ -119,7 +119,7 @@ public class screen extends Application {
 
             Systeme.setOnAction(e -> {
                 // Chemin vers le fichier PDF
-                String cheminPDF = "C:\\Users\\imani\\OneDrive - Université Sultan Moulay Slimane\\Bureau\\ppt\\presentation\\tache_detail\\systeme.pdf";
+                String cheminPDF = "C:\\Users\\hp\\Desktop\\projet java 2024\\Task_management\\src\\presentation\\tache_detail\\systeme.pdf";
 
                 // Vérifier si Desktop est pris en charge par la plateforme
                 if (Desktop.isDesktopSupported()) {

@@ -1,6 +1,3 @@
-
-import java.util.List;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import persistence.DBConnection;
@@ -14,6 +11,10 @@ import presentation.projets.ProjetsFormController;
 import presentation.projets.ProjetsFormView;
 import presentation.seance.SceanceFormController;
 import presentation.seance.SeanceFormView;
+import presentation.tache_detail.controleur;
+import presentation.tache_detail.screen;
+import presentation.taches.TachesFormController;
+import presentation.taches.TachesFormView;
 
 public class App extends Application {
 
@@ -23,25 +24,24 @@ public class App extends Application {
         // ListeFormView Seance = new ListeFormView(controller);
         // Seance.start(primaryStage);
 
-        ListeFormController controller = new ListeFormController();
-        ListeFormView projets = new ListeFormView(controller);
-        projets.start(primaryStage);
+        // ProjetsFormController controller = new ProjetsFormController();
+        // ProjetsFormView projets = new ProjetsFormView(controller);
+        // projets.start(primaryStage);
+
+        // ListeFormController controller = new ListeFormController();
+        // ListeFormView projets = new ListeFormView(controller);
+        // projets.start(primaryStage);
 
         // ArchiveFormController controller = new ArchiveFormController();
         // ArchiveFormView archive = new ArchiveFormView(controller);
         // archive.start(primaryStage);
+
+        controleur controller = new controleur();
+        screen taches = new screen(controller);
+        taches.start(primaryStage);
     }
 
     public static void main(String[] args) {
-        try {
-            // Connexion à la base de données
-            DBConnection dbConnection = DBConnection.getInstance();
-            System.out.println("Connexion à la base de données réussie");
-
-        } catch (Exception e) {
-            System.out.println("Erreur de connexion à la base de données");
-        }
-        // Lancer l'application
         launch(args);
     }
 }
