@@ -6,7 +6,7 @@ import com.mongodb.client.model.Filters;
 import persistence.DBConnection;
 import java.util.List;
 
-public class liste {
+public class DAOListe {
 
         // Create
         public void create(Integer id, String description, List<Document> taches) {
