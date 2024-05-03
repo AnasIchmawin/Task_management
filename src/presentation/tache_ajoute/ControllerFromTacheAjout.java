@@ -1,5 +1,17 @@
 package presentation.tache_ajoute;
 
+import javafx.scene.layout.GridPane;
+
 public class ControllerFromTacheAjout {
-    // You can add event handling logic here if needed
+
+    public void handleAjouterButtonAction(GridPane gridPane) {
+    }
+
+    public void handleSaveButton(GridPane gridPane) {
+        // Save button;
+    }
+    public void handleAnnulererButtonAction(GridPane gridPane) {
+        // Save button;
+    }
+
 }
