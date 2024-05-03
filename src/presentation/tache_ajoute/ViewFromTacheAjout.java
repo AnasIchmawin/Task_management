@@ -20,6 +20,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.control.ComboBox;
 
 
 public class ViewFromTacheAjout {
@@ -109,9 +110,16 @@ public class ViewFromTacheAjout {
 
         // Creer un conteneur VBox pour la date de fin
         VBox dateFinContainer = createVboxDates(DateFinComplet, dateFin, TempsFin, labelFin, Space_Dates);
+	    
+        ComboBox<String> categoryComboBox = new ComboBox<>();
+        categoryComboBox.getItems().addAll("Enseignement", "Encadrement", "Autre");
+        categoryComboBox.setPromptText("Catégorie");
+        categoryComboBox.getStyleClass().add("category-combobox-style");
+
         
+        // Créer un conteneur HBox pour les deux dates
         HBox Dates = new HBox();
-        Dates.getChildren().addAll(dateDebutContainer, Space_Dates, dateFinContainer);
+        Dates.getChildren().addAll(dateDebutContainer, Space_Dates, dateFinContainer , Space_Dates, categoryComboBox);
         
         HBox.setMargin(Dates, new Insets(0, 50, 0, 0)); // Margin (top, right, bottom, left)
         
