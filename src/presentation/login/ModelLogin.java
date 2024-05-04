@@ -4,11 +4,11 @@ import java.io.IOException;
 import org.json.simple.parser.ParseException;
 import metier.service;
 
-public class modeleLogin {
+public class ModelLogin {
 
     private String gmail;
 
-    public modeleLogin(String gmail) {
+    public ModelLogin(String gmail) {
         this.gmail = gmail;
     }
 

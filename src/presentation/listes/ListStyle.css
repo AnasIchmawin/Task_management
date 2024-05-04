@@ -3,8 +3,8 @@
     -fx-pref-width: 100px;
     -fx-background-color: #3F72AF;
     -fx-text-fill: white;
-    -fx-font-weight: bold; 
-    -fx-font-size: 13px; 
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
 }
 
 .left-btn-style {
@@ -17,8 +17,10 @@
 }
 
 .navbar {
-    -fx-pref-width: 50px; /* Largeur préférée de la barre de navigation */
-    -fx-background-color: #112D4E; /* Couleur de fond de la barre de navigation */
+    -fx-pref-width: 50px;
+    /* Largeur préférée de la barre de navigation */
+    -fx-background-color: #112D4E;
+    /* Couleur de fond de la barre de navigation */
     -fx-background-radius: 10px;
 }
 
@@ -38,18 +40,12 @@
     -fx-pref-width: 110px;
     -fx-background-color: #3F72AF;
     -fx-text-fill: white;
-    -fx-font-weight: bold; 
-    -fx-font-size: 13px; 
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
 }
 
 
-.text-area {
-    -fx-background-color: transparent;
-    -fx-text-fill: black;
-    -fx-font-size: 15px; 
-}
-
-.container{
+.container {
 
     -fx-background-color: #f0f0f0;
     -fx-border-color: #112D4E;
@@ -58,6 +54,11 @@
 
 }
 
-.desc{
-    -fx-pref-height: 150px;
+.root {
+    -fx-background-color: white;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
 }

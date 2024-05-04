@@ -2,44 +2,80 @@
 package presentation.NewList;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import org.bson.Document;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import persistence.DAO.DAOListe;
 import presentation.GetTasks.GetTasksController;
 import presentation.GetTasks.GetTasksView;
 
-
 public class AddListController {
-    private GetTasksController getTasksController;
-    private GetTasksView getTasksView;
+     private DAOListe daoListe;
 
-    public AddListController(){
-        super() ;
+    public AddListController() {
+        super();
+        daoListe = new DAOListe() ;
     }
 
-    public AddListController(GetTasksController getTasksController, GetTasksView getTasksView) {
-        this.getTasksController = getTasksController;
-        this.getTasksView = getTasksView;
+    public void saveInfosListe(AddListModel addListModel) {
+        List<Document> tachesDocuments = convertToDocumentList(addListModel.getTitreSelectionnes());
+        daoListe.create(addListModel.getTitre() , addListModel.getDiscription(), tachesDocuments);
+    }
+
+    private List<Document> convertToDocumentList(List<String> taches) {
+        List<Document> tachesDocuments = new ArrayList<>();
+        for (String tache : taches) {
+            Document tacheDocument = new Document("titre", tache);
+            tachesDocuments.add(tacheDocument);
+        }
+        return tachesDocuments;
     }
 
 
-    public void handleAjouterButtonAction() {
-        System.out.println("enregeistrer");
-    }
 
-    public void saveInfosListe(String titre, String description, ArrayList<String> taches) {
-        System.out.println("saver les donner dans la base de donnees .");
-    }
 
-    public void getTasksView(ActionEvent event) {
-        // Créer une instance de GetTasksView
-        getTasksView = new GetTasksView(this.getTasksController);
-        // Récupérer la fenêtre actuelle
+    public void getTasksView(ActionEvent event, AddListModel addListModel) {
+        GetTasksController controller = new GetTasksController(addListModel);
+        GetTasksView view = new GetTasksView(controller);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        // Afficher GetTasksView
-        getTasksView.showView(stage, event);
+        view.start(stage);
     }
-    
 
+    public void AfficherTaches(List<String> list , GridPane gridPane) {
+        List<String> mestaches = new ArrayList<>(list);
+
+        for (String title : mestaches) {
+            Button newListButton = new Button(title);
+            newListButton.setStyle("-fx-background-color: #112D4E; " +
+                    "-fx-background-radius: 10px; " +
+                    "-fx-min-width: 50px; " +
+                    "-fx-max-height: 20px;" +
+                    "-fx-text-fill: #ffffff;" +
+                    "-fx-font-size: 18px;");
+
+            int colIndex = gridPane.getChildren().size() % 6; // Calculating column index
+            int rowIndex = gridPane.getChildren().size() / 6; // Calculating row index
+
+            // Load list icon
+            try {
+                Image listIcon = new Image("file:./Pictures/to-do.png");
+                ImageView listIconView = new ImageView(listIcon);
+                listIconView.setFitWidth(15);
+                listIconView.setFitHeight(15);
+                newListButton.setGraphic(listIconView);
+                gridPane.add(newListButton, colIndex, rowIndex);
+
+            } catch (Exception e) {
+                System.out.println("Erreur de chargement de l'icône de la liste : " + e.getMessage());
+            }
+        }
+    }
 }

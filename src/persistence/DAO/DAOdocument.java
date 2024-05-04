@@ -17,6 +17,10 @@ public class DAOdocument {
         return Id ;
     }
 
+    public static void setId(Integer id) {
+        Id = id;
+    }
+
     // Create
     public void create(String titre, String description, String path, LocalDateTime dateAjout) {
         try {
@@ -25,8 +29,9 @@ public class DAOdocument {
                     .getCollection("documents");
 
             // Ajouter les attributs du document
+            setId(Id + 1);
             Document doc = new Document();
-            doc.append("id", getId() + 1)
+            doc.append("id", getId())
                     .append("titre", titre)
                     .append("description", description)
                     .append("path", path)

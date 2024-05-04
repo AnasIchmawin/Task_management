@@ -40,8 +40,9 @@ public class App extends Application {
         // ArchiveFormView archive = new ArchiveFormView(controller);
         // archive.start(primaryStage);
 
-        LoginFormView view = new LoginFormView(primaryStage ) ;
-        view.start(primaryStage);
+
+        ListeFormView view = new ListeFormView() ; 
+       view.start(primaryStage);
 
     }
 

@@ -14,15 +14,19 @@ public class DAOSeance {
     private static int getId() {
         return Id ;
     }
-
+    public static void setId(Integer id) {
+        Id = id;
+    }
     // Create a seance
     public void create(String description, LocalDateTime dateDebut, LocalDateTime dateFin, double note,
             List<Document> documents, Document projet) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("seances");
+
+            setId(Id + 1);
             Document doc = new Document();
-            doc.append("id", getId() + 1)
+            doc.append("id", getId())
                     .append("description", description)
                     .append("dateDebut", dateDebut)
                     .append("dateFin", dateFin)

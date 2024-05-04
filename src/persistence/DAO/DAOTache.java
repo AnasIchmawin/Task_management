@@ -19,6 +19,9 @@ public class DAOTache {
     private static int getId() {
         return Id ;
     }
+    public static void setId(Integer id) {
+        Id = id;
+    }
 
 
     // Create
@@ -32,8 +35,9 @@ public class DAOTache {
                     .getCollection("taches");
 
             // Ajouter les attributs du document
+           setId( Id + 1);
             Document doc = new Document();
-            doc.append("id", getId() + 1)
+            doc.append("id", getId())
                     .append("titre", titre)
                     .append("categorie", categorie)
                     .append("description", description)

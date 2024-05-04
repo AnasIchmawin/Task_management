@@ -10,18 +10,24 @@ public class DAOListe {
         private static Integer Id = 0;
 
         private static int getId() {
-            return Id ;
+                return Id;
+        }
+
+        public static void setId(Integer id) {
+                Id = id;
         }
 
         // Create
-        public void create(String description, List<Document> taches) {
+        public void create(String Titre, String description, List<Document> taches) {
                 try {
                         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                                         .getCollection("listes");
 
                         // Ajouter les attributs du document
+                        setId(Id + 1);
                         Document doc = new Document();
-                        doc.append("id",getId() + 1)
+                        doc.append("id", getId())
+                                        .append("titre", Titre)
                                         .append("description", description);
                         if (taches != null) {
                                 doc.append("taches", taches);
@@ -46,11 +52,14 @@ public class DAOListe {
         }
 
         // Update
-        public void update(Integer id, String description, List<Document> taches) {
+        public void update(Integer id, String Titre ,String description, List<Document> taches) {
                 try {
                         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                                         .getCollection("listes");
                         Document doc = new Document();
+                        if (Titre != null) {
+                                doc.append("titre", Titre);
+                        }
                         if (description != null) {
                                 doc.append("description", description);
                         }

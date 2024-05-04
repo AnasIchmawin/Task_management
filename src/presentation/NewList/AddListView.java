@@ -19,8 +19,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import presentation.GetTasks.GetTasksController;
-import presentation.GetTasks.GetTasksView;
 
 public class AddListView {
 
@@ -38,26 +36,33 @@ public class AddListView {
     private TextField TitreField;
     private TextArea ZoneDescription;
     private GridPane ZoneTaches;
-    private GetTasksController getTasksController;
-    private GetTasksView getTasksView;
+    private AddListModel addListModel ;
 
     public AddListView() {
+        addListModel = new AddListModel("","",new ArrayList<>()) ;
         init();
         style();
         action();
     }
+    public AddListView(AddListModel addmodel) {
+        this.addListModel = new AddListModel(addmodel.getTitre() , addmodel.getDiscription(),
+        addmodel.getTitreSelectionnes()) ;
+
+        init();
+        style();
+        action();
+        this.controleur.AfficherTaches(this.addListModel.getTitreSelectionnes() , this.ZoneTaches) ;
+    }
+    
 
     public void start(Stage primaryStage) {
         StackPane containerContent = createMainContent();
-        // Create the root layout
         root = createBorderPane(containerContent);
-        Scene scene = new Scene(root, 550, 500);
-        // Add the CSS file
+
+        Scene scene = new Scene(root, 550, 520);
         scene.getStylesheets().add(getClass().getResource("AddListStyle.css").toExternalForm());
-        // Set the scene
         primaryStage.setScene(scene);
         primaryStage.setTitle("Formulaire d'une liste");
-        // primaryStage.initStyle(StageStyle.UNDECORATED); // Supprimer les boutons de
         primaryStage.setResizable(false);
         primaryStage.show();
     }
@@ -71,12 +76,13 @@ public class AddListView {
         Annuler = createButtonWithIcon("Annuler", "file:./Pictures/annuler.png", 20, 20);
         Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 13, 13);
         TitreField = createTextField("");
+        TitreField.setText(this.addListModel.getTitre());
         ZoneDescription = createTextArea("", "ZoneDescription-Style");
+        ZoneDescription.setText(this.addListModel.getDiscription());
         ajouterTacheButton = createButtonWithIcon("Ajouter Tache", "file:./Pictures/addIcon.png", 20, 20);
         ZoneTaches = creatZoneTaches();
-        getTasksController = new GetTasksController();
-        getTasksView = new GetTasksView(getTasksController);
-        this.controleur = new AddListController(getTasksController, getTasksView);
+        this.controleur = new AddListController();
+     
     }
 
     private void style() {
@@ -155,7 +161,7 @@ public class AddListView {
         GridPane grid = new GridPane();
         grid.setVgap(8);
         grid.setHgap(10);
-        grid.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 15px;");
+        grid.getStyleClass().addAll("Zone-taches") ;
         return grid;
     }
 
@@ -163,8 +169,7 @@ public class AddListView {
         ScrollPane scrollPane = new ScrollPane(gridPane);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
-        scrollPane.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide horizontal scrollbar
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide horizontal scrollbar
         return scrollPane;
     }
 
@@ -220,15 +225,15 @@ public class AddListView {
 
     private VBox createTacheBox() {
         ScrollPane scrollTask = createScrollPane(ZoneTaches);
-        scrollTask.getStyleClass().add("Docs-Style");
+        scrollTask.getStyleClass().add("scroll-Style");
 
         // Créer la VBox contenant les documents
         VBox contenaireTaches = CreateVbox(5, Pos.TOP_LEFT);
-        contenaireTaches.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
+        contenaireTaches.getStyleClass().add("contenaire-taches") ;
 
         // Ajouter les éléments à la VBox
         contenaireTaches.getChildren().addAll(scrollTask, ajouterTacheButton);
-        contenaireTaches.setPadding(new Insets(10, 10, 10, 10));
+        contenaireTaches.setPadding(new Insets(10, 10, 5, 10));
 
         return contenaireTaches;
     }
@@ -246,8 +251,7 @@ public class AddListView {
 
         Enregistrer.setOnAction(event -> {
             try {
-                String Titre = TitreField.getText();
-                String Description = ZoneDescription.getText();
+                System.out.println(addListModel.getTitre());
                 ArrayList<String> Taches = new ArrayList<>();
 
                 // Accéder aux boutons dans le GridPane
@@ -255,27 +259,23 @@ public class AddListView {
                     if (node instanceof Button) {
                         Button button = (Button) node;
                         String tachesAssocie = button.getText();
-                        // Utilisez le titre du bouton comme nécessaire
-                        System.out.println("Titre du bouton : " + tachesAssocie);
                         Taches.add(tachesAssocie);
                     }
                 }
 
-                this.controleur.saveInfosListe(Titre, Description, Taches);
+                this.controleur.saveInfosListe(addListModel);
 
             } catch (Exception e) {
                 System.out.println("Erreur pendant la fermeture  : " + e.getMessage());
             }
         });
         ajouterTacheButton.setOnAction(event -> {
-            this.controleur.getTasksView(event);
+            addListModel.setTitre(TitreField.getText());
+            addListModel.setDiscription(ZoneDescription.getText());
+
+            this.controleur.getTasksView(event , addListModel);
         });
 
     }
-
-    public void showView() {
-        Stage stage = new Stage();
-        start(stage);
-    }
-
 }
+

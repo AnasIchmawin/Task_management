@@ -17,7 +17,9 @@ public class DAOProjet {
     private static int getId() {
         return Id;
     }
-
+    public static void setId(Integer id) {
+        Id = id;
+    }
     // Create
     public void create(String titre, String categorie, String type, String description,
             LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> seances,
@@ -28,6 +30,7 @@ public class DAOProjet {
                     .getCollection("projets");
 
             // Ajouter les attributs du document
+            setId( Id + 1);
             Document doc = new Document();
             doc.append("id", getId() + 1)
                     .append("titre", titre)

@@ -1,13 +1,11 @@
 package presentation.GetTasks;
 
-import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -20,16 +18,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-
 public class GetTasksView {
 
     private GetTasksController controller;
     private Label titleLabel;
     private BorderPane root;
-    private ArrayList<String> tasksList;
     private Button confirmButton;
     private Button cancelButton;
     private ScrollPane scrollPane;
+    GridPane ZoneTasks ; 
 
     public GetTasksView(GetTasksController getTasksController) {
         this.controller = getTasksController;
@@ -58,7 +55,7 @@ public class GetTasksView {
         // Applying margins to button container
         BorderPane.setMargin(buttonContainer, buttonMargin);
 
-        Scene scene = new Scene(root, 550, 500);
+        Scene scene = new Scene(root, 550, 520);
         scene.getStylesheets().add(getClass().getResource("GetTaskStyle.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Liste des tâches");
@@ -68,7 +65,6 @@ public class GetTasksView {
     private void init() {
         titleLabel = new Label("Liste des tâches");
         root = new BorderPane();
-        tasksList = new ArrayList<>(this.controller.getTaskTitles());
         confirmButton = createButton("Confirmer", "file:./Pictures/confirmer.png", 16, 16);
         cancelButton = createButton("Annuler", "file:./Pictures/annuler.png", 20, 20);
         scrollPane = createScrollPane(createTaskGridPane());
@@ -87,31 +83,15 @@ public class GetTasksView {
     }
 
     private GridPane createTaskGridPane() {
-        GridPane gridPane = new GridPane();
-        gridPane.getStyleClass().add("scroll-pane-style");
-        gridPane.setAlignment(Pos.TOP_CENTER);
-        gridPane.setHgap(20);
-        gridPane.setVgap(15);
-        gridPane.setPadding(new Insets(20));
+        ZoneTasks  = new GridPane();
+        ZoneTasks.getStyleClass().add("scroll-pane-style");
+        ZoneTasks.setAlignment(Pos.TOP_CENTER);
+        ZoneTasks.setHgap(20);
+        ZoneTasks.setVgap(15);
+        ZoneTasks.setPadding(new Insets(20));
+        this.controller.AfficherTasks(this.ZoneTasks) ;
 
-        int colCount = 0;
-        int rowCount = 0;
-        for (String task : tasksList) {
-            CheckBox checkBox = new CheckBox(task);
-            checkBox.setTextFill(Color.WHITE);
-            checkBox.getStyleClass().add("task-checkbox-style");
-            checkBox.setStyle("-fx-focus-color: transparent;");
-
-            gridPane.add(checkBox, colCount, rowCount);
-
-            colCount++;
-            if (colCount == 4) {
-                colCount = 0;
-                rowCount++;
-            }
-        }
-
-        return gridPane;
+        return this.ZoneTasks;
     }
 
     private VBox createVBox(int spacing, Pos position) {
@@ -147,17 +127,6 @@ public class GetTasksView {
         return newButton;
     }
 
-    private void action() {
-        confirmButton.setOnAction(event -> {
-
-        });
-
-        cancelButton.setOnAction(event -> {
-            this.controller.handleCancelButton(event);
-        });
-
-    }
-
     private ScrollPane createScrollPane(GridPane content) {
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(content);
@@ -166,4 +135,16 @@ public class GetTasksView {
 
         return scrollPane;
     }
+
+    private void action() {
+        confirmButton.setOnAction(event -> {
+            this.controller.handleConfirmButton(this.ZoneTasks , event) ;
+        });
+
+        cancelButton.setOnAction(event -> {
+            this.controller.handleCancelButton(event);
+        });
+
+    }
+
 }

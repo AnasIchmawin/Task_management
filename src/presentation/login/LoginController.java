@@ -12,13 +12,13 @@ import javafx.stage.Stage;
 import presentation.listes.ListeFormView;
 
 public class LoginController {
-    private modeleLogin LoginModel ;
+    private ModelLogin LoginModel ;
 
     public LoginController() {
         super() ;
     }
 
-    public LoginController(modeleLogin modelelogin) {
+    public LoginController(ModelLogin modelelogin) {
         this.LoginModel = modelelogin;
     }
 

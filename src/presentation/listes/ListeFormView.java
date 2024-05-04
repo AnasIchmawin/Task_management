@@ -16,8 +16,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import presentation.NewList.AddListView;
 
 public class ListeFormView extends Application {
     private Button leftButton;
@@ -30,115 +31,106 @@ public class ListeFormView extends Application {
     private TextField searchField;
     private ListeFormController controller;
     private BorderPane root;
-    private AddListView addListView;
-    private GridPane ZoneListes ;
+    private GridPane ZoneListes;
+    private HBox buttonsBar;
+    private HBox leftButtonBox;
+    private HBox navbar;
+    private VBox navbarContainer;
+    private VBox mainContentContainer;
+    private StackPane container;
+    private ScrollPane scrollPane;
+    private VBox Listes;
+    private StackPane searchPane;
+    private HBox topContainer;
+    private Region spacer;
+    private HBox buttonContainer;
 
-    // Constructor
     public ListeFormView() {
-        init();
-        style();
-        Action() ;
+        Initialiser();
+        Styler();
+        Dessiner();
+        Action();
     }
 
     @Override
     public void start(Stage primaryStage) {
-        // Create the navigation bar
-        VBox navbarContainer = createNavbarContainer();
-        // Create the main content
-        StackPane container = createMainContent();
-        // Create the root layout
-        root = createBorderPane(navbarContainer, container);
-        // Create the scene
         Scene scene = new Scene(root, 1160, 652);
-        // Add the CSS file
         scene.getStylesheets().add(getClass().getResource("ListStyle.css").toExternalForm());
-        // Set the scene
         primaryStage.setScene(scene);
         primaryStage.setTitle("Responsive Page with Navbar");
         primaryStage.show();
     }
 
-    public void init() {
-        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
+    private void Initialiser() {
+        leftButton = createButton("", "file:./Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
-        ordonnerButton = createButtonWithIcon("Ordonner", "file:./Pictures/folder.png", 20, 20);
-        searchButton = createButtonWithIcon("", "file:./Pictures/loupe.png", 20, 20);
-        ajouterButton = createButtonWithIcon("Ajouter une Liste", "file:./Pictures/add.png", 20, 20);
+        ordonnerButton = createButton("Ordonner", "file:./Pictures/folder.png", 20, 20);
+        searchButton = createButton("", "file:./Pictures/loupe.png", 20, 20);
+        ajouterButton = createButton("Ajouter une Liste", "file:./Pictures/add.png", 20, 20);
+        buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
+        leftButtonBox = new HBox(20, leftButton);
+        navbar = new HBox(30, leftButtonBox, buttonsBar);
+        navbarContainer = new VBox(navbar);
+        mainContentContainer = new VBox();
+        mainContentContainer.setSpacing(10);
+        container = new StackPane();
+        ZoneListes = createGridPane();
+        scrollPane = createScrollPane(ZoneListes);
+        Listes = new VBox();
+        Listes.setSpacing(15);
+        searchPane = new StackPane();
+        topContainer = new HBox();
+        spacer = new Region();
+        buttonContainer = new HBox();
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
-        addListView = new AddListView();
-        this.controller = new ListeFormController(addListView);
-        ZoneListes  =  createGridPane();
+        // addListView = new AddListView();
+        root = new BorderPane();
+        this.controller = new ListeFormController();
     }
 
-    private BorderPane createBorderPane(VBox navbarContainer, StackPane container) {
-        BorderPane root = new BorderPane();
-        root.setStyle("-fx-background-color: white;");
-        BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 20));
-        root.setTop(navbarContainer);
-        BorderPane.setMargin(container, new Insets(20, 20, 20, 20));
-        root.setCenter(container);
-        return root;
-    }
-
-    private VBox createNavbarContainer() {
-        HBox buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
-        HBox leftButtonBox = new HBox(20, leftButton);
-        HBox navbar = new HBox(30, leftButtonBox, buttonsBar);
-        navbar.setPadding(new Insets(10, 20, 10, 20)); // 20px padding left and right, 10px padding top and bottom
+    private void Styler() {
+        root.getStyleClass().add("root");
+        leftButton.getStyleClass().add("left-btn-style");
+        searchButton.getStyleClass().add("left-btn-style");
+        listesButton.getStyleClass().add("button-style");
+        projectsButton.getStyleClass().add("button-style");
+        archiveButton.getStyleClass().add("button-style");
+        ordonnerButton.getStyleClass().add("ordonner-btn-style");
+        ajouterButton.getStyleClass().add("button-style");
+        ajouterButton.setStyle("-fx-pref-width : 150px ;");
+        searchField.getStyleClass().add("search-field-style");
         navbar.getStyleClass().add("navbar");
-        VBox navbarContainer = new VBox(navbar);
         navbarContainer.getStyleClass().add("navbar-container");
-        return navbarContainer;
+        container.getStyleClass().add("container");
+        scrollPane.getStyleClass().add("scroll-pane");
     }
 
-    private StackPane createMainContent() {
-        // Le conteneur principal qui contient tous les éléments
-        VBox mainContentContainer = new VBox();
-        mainContentContainer.setSpacing(10);
-
-        // le background de la page gris
-        StackPane container = new StackPane();
-        container.getStyleClass().add("container");
-
-        // Create GridPane for list items
-       ZoneListes = createGridPane();
-        ScrollPane scrollPane = createScrollPane(ZoneListes);
-
-        VBox Listes = new VBox();
-        Listes.setSpacing(15);
-        Listes.getChildren().addAll(scrollPane); // Add description area
-        Listes.setPadding(new Insets(0, 40, 0, 40)); // Set padding for description area
-
-        StackPane searchPane = new StackPane();
+    private void Dessiner() {
+        navbar.setPadding(new Insets(10, 20, 10, 20));
+        BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 20));
+        container.getChildren().addAll(mainContentContainer);
+        BorderPane.setMargin(container, new Insets(20, 20, 20, 20));
+        scrollPane.setPadding(new Insets(0, 50, 0, 50));
+        Listes.getChildren().addAll(scrollPane);
+        Listes.setPadding(new Insets(0, 40, 0, 40));
         searchPane.setAlignment(Pos.TOP_RIGHT);
         searchPane.getChildren().addAll(searchField, searchButton);
-
-        HBox topContainer = new HBox();
-        topContainer.setAlignment(Pos.TOP_LEFT); // Align elements at top left
-        topContainer.getChildren().add(ordonnerButton); // Add "Ordonner" button
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS); // Make spacer grow as much as possible
+        topContainer.setAlignment(Pos.TOP_LEFT);
+        topContainer.getChildren().add(ordonnerButton);
+        HBox.setHgrow(spacer, Priority.ALWAYS);
         topContainer.getChildren().add(spacer);
-        topContainer.getChildren().add(searchPane); // Add StackPane containing search field and search button
-
-        // Create HBox for adding the "Ajouter" button
-        HBox buttonContainer = new HBox();
+        topContainer.getChildren().add(searchPane);
         buttonContainer.getChildren().add(ajouterButton);
         HBox.setMargin(ajouterButton, new Insets(50, 0, 0, 70));
-
-        mainContentContainer.getChildren().addAll(topContainer, Listes, buttonContainer); // Add top container and
-                                                                                          // Listes
-
-        // Add les éléments à la StackPane
-        container.getChildren().addAll(mainContentContainer);
-
+        mainContentContainer.getChildren().addAll(topContainer, Listes, buttonContainer);
         HBox.setMargin(ordonnerButton, new Insets(30, 20, 20, 70));
         HBox.setMargin(searchPane, new Insets(30, 70, 20, 20));
+        root.setTop(navbarContainer);
+        root.setCenter(container);
 
-        return container;
     }
 
     private GridPane createGridPane() {
@@ -151,52 +143,32 @@ public class ListeFormView extends Application {
     }
 
     private ScrollPane createScrollPane(GridPane gridPane) {
-        ScrollPane scrollPane = new ScrollPane(gridPane);
+        scrollPane = new ScrollPane(gridPane);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
-        scrollPane.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide vertical scrollbar
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide horizontal scrollbar
-        scrollPane.setPadding(new Insets(0, 50, 0, 50));
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
         return scrollPane;
     }
 
-    private void style() {
-        leftButton.getStyleClass().add("left-btn-style");
-        searchButton.getStyleClass().add("left-btn-style");
-        listesButton.getStyleClass().add("button-style");
-        projectsButton.getStyleClass().add("button-style");
-        archiveButton.getStyleClass().add("button-style");
-        ordonnerButton.getStyleClass().add("ordonner-btn-style");
-        ajouterButton.getStyleClass().add("button-style");
-        ajouterButton.setStyle("-fx-pref-width : 150px ;");
-        searchField.getStyleClass().add("search-field-style");
+    private Button createButton(String name, String path, int width, int height) {
+        Button newButton = new Button();
+        ImageView icon = new ImageView(new Image(path));
+        icon.setFitWidth(width);
+        icon.setFitHeight(height);
+        Text buttonText = new Text(name);
+        buttonText.setFill(Color.WHITE);
+        HBox buttonContent = new HBox(buttonText, icon);
+        buttonContent.setAlignment(Pos.CENTER);
+        buttonContent.setSpacing(4);
+        newButton.setGraphic(buttonContent);
+        return newButton;
     }
 
-    private Button createButtonWithIcon(String name, String string, int i, int j) {
-        Button button = new Button(name);
-        try {
-            Image icon = new Image(string);
-            ImageView iconView = new ImageView(icon);
-            iconView.setFitWidth(i);
-            iconView.setFitHeight(j);
-            button.setGraphic(iconView);
-        } catch (Exception e) {
-            System.out.println("Error loading the icon: " + e.getMessage());
-        }
-        return button;
-    }
-
-    // Action for AjouterButton
     private void Action() {
         ajouterButton.setOnAction(event -> {
-            controller.handleAjouterButtonAction(ZoneListes);
+            this.controller.handleAjouterButtonAction(ZoneListes);
         });
     }
-
-    public void showView() {
-        Stage stage = new Stage();
-        start(stage);
-    }
-
 }

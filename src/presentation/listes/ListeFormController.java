@@ -1,21 +1,20 @@
 package presentation.listes;
 
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import presentation.NewList.AddListView;
 
 public class ListeFormController {
-
-    private AddListView addListView;
-
+    
     public ListeFormController() {
         super();
     }
 
-    public ListeFormController(AddListView addListView) {
-        this.addListView = addListView;
-    }
 
     public void handleAjouterButtonAction(GridPane gridPane) {
-        addListView.showView();
+        AddListView NewListFormulaire = new AddListView() ;
+        Stage stage  = new Stage() ;
+        NewListFormulaire.start(stage);
+
     }
 }

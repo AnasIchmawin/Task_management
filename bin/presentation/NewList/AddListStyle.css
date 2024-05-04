@@ -45,7 +45,7 @@
     -fx-border-width: 0px;
     -fx-focus-color: transparent;
     -fx-pref-width: 750px;
-    -fx-max-height: 300px;
+    -fx-max-height: 140px;
 }
 
 .container {
@@ -77,7 +77,7 @@
 
 }
 
-.Docs-Style {
+.task-Style {
     -fx-border-width: 0px;
     -fx-focus-color: transparent;
     -fx-pref-width: 100px;
@@ -89,4 +89,26 @@
     -fx-background-radius: 15px;
     -fx-font-size: 15px;
     -fx-font-weight: bold;
+}
+
+.root {
+    -fx-background-color: #fff;
+}
+
+.contenaire-taches {
+    -fx-background-color: #8E9EB2;
+    -fx-background-radius: 20px;
+    -fx-min-height: 110px;
+}
+
+.scroll-Style {
+    -fx-min-height: 50px;
+    -fx-background-color: transparent;
+}
+
+
+.Zone-taches {
+    -fx-background-color: #8E9EB2;
+    /* -fx-background-radius: 15px; */
+    -fx-max-height: 50px;
 }
