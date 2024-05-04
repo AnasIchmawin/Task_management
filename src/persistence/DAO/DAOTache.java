@@ -1,5 +1,6 @@
 package persistence.DAO;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
@@ -13,9 +14,15 @@ import java.util.List;
 
 public class DAOTache {
 
+    private static Integer Id = 0;
+
+    private static int getId() {
+        return Id ;
+    }
+
 
     // Create
-    public void create(Integer id, String titre, String categorie, String description,
+    public void create (String titre, String categorie, String description,
                        LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
                        Document projet, Document liste) {
 
@@ -26,7 +33,7 @@ public class DAOTache {
 
             // Ajouter les attributs du document
             Document doc = new Document();
-            doc.append("id", id)
+            doc.append("id", getId() + 1)
                     .append("titre", titre)
                     .append("categorie", categorie)
                     .append("description", description)
@@ -45,7 +52,7 @@ public class DAOTache {
 
 
     // Read
-    public static Document read(Integer id) {
+    public Document read(Integer id) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("taches");
@@ -111,6 +118,17 @@ public class DAOTache {
             collection.deleteOne(Filters.eq("id", id));
         } catch (Exception e) {
             System.err.println("Erreur lors de la suppression de la tâche : " + e.getMessage());
+        }
+    }
+
+    // GetAllTache : 
+    public FindIterable<Document> getAllTache() {
+        try {
+            // Récupérer la collection "taches"
+            return DBConnection.getInstance().getDatabase().getCollection("taches").find();
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération de toutes les tâches : " + e.getMessage());
+            return null;
         }
     }
 }

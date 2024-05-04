@@ -7,16 +7,21 @@ import persistence.DBConnection;
 import java.util.List;
 
 public class DAOListe {
+        private static Integer Id = 0;
+
+        private static int getId() {
+            return Id ;
+        }
 
         // Create
-        public void create(Integer id, String description, List<Document> taches) {
+        public void create(String description, List<Document> taches) {
                 try {
                         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                                         .getCollection("listes");
 
                         // Ajouter les attributs du document
                         Document doc = new Document();
-                        doc.append("id", id)
+                        doc.append("id",getId() + 1)
                                         .append("description", description);
                         if (taches != null) {
                                 doc.append("taches", taches);

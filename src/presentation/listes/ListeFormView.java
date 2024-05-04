@@ -17,6 +17,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import presentation.NewList.AddListView;
 
 public class ListeFormView extends Application {
     private Button leftButton;
@@ -29,12 +30,14 @@ public class ListeFormView extends Application {
     private TextField searchField;
     private ListeFormController controller;
     private BorderPane root;
+    private AddListView addListView;
+    private GridPane ZoneListes ;
 
     // Constructor
-    public ListeFormView(ListeFormController controller) {
-        this.controller = controller;
+    public ListeFormView() {
         init();
         style();
+        Action() ;
     }
 
     @Override
@@ -53,6 +56,21 @@ public class ListeFormView extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Responsive Page with Navbar");
         primaryStage.show();
+    }
+
+    public void init() {
+        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
+        listesButton = new Button("Listes");
+        projectsButton = new Button("Projets");
+        archiveButton = new Button("Archive");
+        ordonnerButton = createButtonWithIcon("Ordonner", "file:./Pictures/folder.png", 20, 20);
+        searchButton = createButtonWithIcon("", "file:./Pictures/loupe.png", 20, 20);
+        ajouterButton = createButtonWithIcon("Ajouter une Liste", "file:./Pictures/add.png", 20, 20);
+        searchField = new TextField();
+        searchField.setPromptText("Rechercher");
+        addListView = new AddListView();
+        this.controller = new ListeFormController(addListView);
+        ZoneListes  =  createGridPane();
     }
 
     private BorderPane createBorderPane(VBox navbarContainer, StackPane container) {
@@ -77,17 +95,16 @@ public class ListeFormView extends Application {
     }
 
     private StackPane createMainContent() {
-        //Le conteneur principal qui contient tous les éléments 
+        // Le conteneur principal qui contient tous les éléments
         VBox mainContentContainer = new VBox();
         mainContentContainer.setSpacing(10);
 
         // le background de la page gris
         StackPane container = new StackPane();
         container.getStyleClass().add("container");
-        
 
         // Create GridPane for list items
-        GridPane ZoneListes = createGridPane();
+       ZoneListes = createGridPane();
         ScrollPane scrollPane = createScrollPane(ZoneListes);
 
         VBox Listes = new VBox();
@@ -121,11 +138,6 @@ public class ListeFormView extends Application {
         HBox.setMargin(ordonnerButton, new Insets(30, 20, 20, 70));
         HBox.setMargin(searchPane, new Insets(30, 70, 20, 20));
 
-        // Action for AjouterButton
-        ajouterButton.setOnAction(event -> {
-            handleAjouterButtonAction(ZoneListes);
-        });
-
         return container;
     }
 
@@ -149,18 +161,6 @@ public class ListeFormView extends Application {
         return scrollPane;
     }
 
-    public void init() {
-        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
-        listesButton = new Button("Listes");
-        projectsButton = new Button("Projets");
-        archiveButton = new Button("Archive");
-        ordonnerButton = createButtonWithIcon("Ordonner", "file:./Pictures/folder.png", 20, 20);
-        searchButton = createButtonWithIcon("", "file:./Pictures/loupe.png", 20, 20);
-        ajouterButton = createButtonWithIcon("Ajouter", "file:./Pictures/add.png", 20, 20);
-        searchField = new TextField();
-        searchField.setPromptText("Rechercher");
-    }
-
     private void style() {
         leftButton.getStyleClass().add("left-btn-style");
         searchButton.getStyleClass().add("left-btn-style");
@@ -169,6 +169,7 @@ public class ListeFormView extends Application {
         archiveButton.getStyleClass().add("button-style");
         ordonnerButton.getStyleClass().add("ordonner-btn-style");
         ajouterButton.getStyleClass().add("button-style");
+        ajouterButton.setStyle("-fx-pref-width : 150px ;");
         searchField.getStyleClass().add("search-field-style");
     }
 
@@ -187,7 +188,15 @@ public class ListeFormView extends Application {
     }
 
     // Action for AjouterButton
-    private void handleAjouterButtonAction(GridPane gridPane) {
-        controller.handleAjouterButtonAction(gridPane);
+    private void Action() {
+        ajouterButton.setOnAction(event -> {
+            controller.handleAjouterButtonAction(ZoneListes);
+        });
     }
+
+    public void showView() {
+        Stage stage = new Stage();
+        start(stage);
+    }
+
 }

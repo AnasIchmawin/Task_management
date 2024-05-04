@@ -9,14 +9,20 @@ import persistence.DBConnection;
 
 public class DAOSeance {
 
+    private static Integer Id = 0;
+
+    private static int getId() {
+        return Id ;
+    }
+
     // Create a seance
-    public void create(Integer id, String description, LocalDateTime dateDebut, LocalDateTime dateFin, double note,
+    public void create(String description, LocalDateTime dateDebut, LocalDateTime dateFin, double note,
             List<Document> documents, Document projet) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("seances");
             Document doc = new Document();
-            doc.append("id", id)
+            doc.append("id", getId() + 1)
                     .append("description", description)
                     .append("dateDebut", dateDebut)
                     .append("dateFin", dateFin)

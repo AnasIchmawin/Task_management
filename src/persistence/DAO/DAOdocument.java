@@ -11,9 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAOdocument {
+    private static Integer Id = 0;
+
+    private static int getId() {
+        return Id ;
+    }
 
     // Create
-    public void create(Integer id, String titre, String description, String path, LocalDateTime dateAjout) {
+    public void create(String titre, String description, String path, LocalDateTime dateAjout) {
         try {
             // Récupérer la collection "documents"
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
@@ -21,7 +26,7 @@ public class DAOdocument {
 
             // Ajouter les attributs du document
             Document doc = new Document();
-            doc.append("id", id)
+            doc.append("id", getId() + 1)
                     .append("titre", titre)
                     .append("description", description)
                     .append("path", path)

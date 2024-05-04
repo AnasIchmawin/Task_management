@@ -12,19 +12,16 @@ import persistence.DBConnection;
 
 public class DAOProjet {
 
-    //Create
-    public void create(Integer id, String titre, String categorie, String type, String description,
+    private static Integer Id = 0;
+
+    private static int getId() {
+        return Id;
+    }
+
+    // Create
+    public void create(String titre, String categorie, String type, String description,
             LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> seances,
             List<Document> documents, List<Document> taches, boolean cloture) {
-
-        // Validation des entrées
-        if (id == null || id <= 0) {
-            throw new IllegalArgumentException("Id invalide.");
-        }
-        if (titre == null || titre.isEmpty()) {
-            throw new IllegalArgumentException("Titre invalide.");
-        }
-        // Ajoutez d'autres validations ici...
 
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
@@ -32,7 +29,7 @@ public class DAOProjet {
 
             // Ajouter les attributs du document
             Document doc = new Document();
-            doc.append("id", id)
+            doc.append("id", getId() + 1)
                     .append("titre", titre)
                     .append("categorie", categorie)
                     .append("type", type)
@@ -51,7 +48,6 @@ public class DAOProjet {
             System.err.println("Erreur lors de la création du document projet: " + e.getMessage());
         }
     }
-
 
     // Read
     public static Document read(int id) {
@@ -102,7 +98,6 @@ public class DAOProjet {
             System.err.println("Erreur lors de la mise à jour du document projet: " + e.getMessage());
         }
     }
-
 
     // Delete
     public void delete(Integer id) {

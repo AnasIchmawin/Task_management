@@ -9,7 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import presentation.listes.ListeFormController;
 import presentation.listes.ListeFormView;
 
 public class LoginController {
@@ -18,10 +17,9 @@ public class LoginController {
         // Vérifier la validité de l'e-mail
         boolean emailIsValid = modeleLogin.isValidEmailAddress(email);
         if (emailIsValid) {
-            ListeFormController controller = new ListeFormController();
-            ListeFormView view = new ListeFormView(controller);
+            ListeFormView view = new ListeFormView();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Récupérer la fenêtre actuelle
-            view.start(stage);
+            view.start(stage) ;
         } else {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Erreur");

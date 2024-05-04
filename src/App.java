@@ -1,11 +1,24 @@
+import javax.swing.text.View;
+
+import org.bson.Document;
+
+import com.mongodb.client.FindIterable;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
+import persistence.DAO.DAOTache;
+import presentation.GetTasks.GetTasksController;
+import presentation.GetTasks.GetTasksView;
+import presentation.NewList.AddListController;
+import presentation.NewList.AddListView;
+import presentation.listes.ListeFormController;
+import presentation.listes.ListeFormView;
+import presentation.login.LoginController;
+import presentation.login.LoginFormView;
 import presentation.projet_detail.ProjetDetailController;
 import presentation.projet_detail.Projet_Detail_View;
-
-
-
-
+import presentation.tache_ajoute.ControllerFromTacheAjout;
+import presentation.tache_ajoute.ViewFromTacheAjout;
 
 public class App extends Application {
 
@@ -27,9 +40,9 @@ public class App extends Application {
         // ArchiveFormView archive = new ArchiveFormView(controller);
         // archive.start(primaryStage);
 
-        ProjetDetailController controller = new ProjetDetailController();
-        Projet_Detail_View taches = new Projet_Detail_View(controller);
-        taches.start(primaryStage);
+        ListeFormView view = new ListeFormView();
+        view.start(primaryStage);
+
     }
 
     public static void main(String[] args) {
