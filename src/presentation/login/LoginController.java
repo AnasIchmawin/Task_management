@@ -12,10 +12,20 @@ import javafx.stage.Stage;
 import presentation.listes.ListeFormView;
 
 public class LoginController {
+    private modeleLogin LoginModel ;
 
-    public void handleLoginButtonClick(ActionEvent event, String email) throws IOException, ParseException {
+    public LoginController() {
+        super() ;
+    }
+
+    public LoginController(modeleLogin modelelogin) {
+        this.LoginModel = modelelogin;
+    }
+
+    public void handleLoginButtonClick(ActionEvent event) throws IOException, ParseException {
+
         // Vérifier la validité de l'e-mail
-        boolean emailIsValid = modeleLogin.isValidEmailAddress(email);
+        boolean emailIsValid = this.LoginModel.isValidEmailAddress();
         if (emailIsValid) {
             ListeFormView view = new ListeFormView();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Récupérer la fenêtre actuelle

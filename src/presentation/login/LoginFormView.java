@@ -18,28 +18,32 @@ import javafx.stage.Stage;
 public class LoginFormView extends Application {
     final static Integer MIN_WIDTH = 450;
     final static Integer MIN_HEIGHT = 450;
-    private static VBox verticalPane;
 
-    private final LoginController controller;
-    private final BorderPane Formulaire;
-    private final TextField emailField;
-    private final Button connectButton;
+    private modeleLogin  ModelLogin ;
+    private LoginController controller;
+    private BorderPane Formulaire;
+    private TextField emailField;
+    private Button connectButton;
     private Pane leftPane;
     private Pane rightPane;
     private Pane topPane;
     private Pane bottomPane;
+    private HBox horizontalPane;
+    private VBox verticalPane;
+    private ImageView logoView;
+    private VBox logoBox;
+    private ImageView welcomeView;
+    private VBox centerContainer;
+    private VBox bottomContainer;
+    private Stage primaryStage; 
 
-    public LoginFormView(LoginController controller) {
-        this.controller = controller;
-
-        // Créer les éléments de la vue
-        emailField = createEmailField();
-        connectButton = createConnectButton();
-
-        // Créer le BorderPane
-        Formulaire = createBorderPane(emailField, connectButton);
-        verticalPane = initialize();
-
+    public LoginFormView(Stage primaryStage) {
+        this.controller = new LoginController() ;
+        this.primaryStage = primaryStage;  
+        Initialiser();
+        Styler();
+        Dessiner();
+        Action();
     }
 
     @Override
@@ -65,6 +69,49 @@ public class LoginFormView extends Application {
         });
     }
 
+    // la methode Initialiser :
+    private void Initialiser() {
+        leftPane = createPane("HBox");
+        rightPane = createPane("HBox");
+        topPane = createPane("VBox");
+        bottomPane = createPane("VBox");
+        emailField = new TextField();
+        emailField.setPromptText("Example@Gmail.com");
+        connectButton = new Button("Connexion");
+        logoView = createImageView("file:./Pictures/Logo-Ensa.png", 80, 50);
+        logoBox = createVBox(10, Pos.TOP_LEFT, logoView);
+        welcomeView = createImageView("file:./Pictures/welcome.png", 350, 140);
+        centerContainer = createVBox(20, Pos.CENTER, welcomeView);
+        bottomContainer = createVBox(20, Pos.CENTER, emailField, connectButton);
+        Formulaire = new BorderPane();
+        horizontalPane = new HBox(leftPane, Formulaire, rightPane);
+        verticalPane = new VBox(topPane, horizontalPane, bottomPane);
+       
+        
+    }
+
+    // la methode styler :
+    private void Styler() {
+        leftPane.getStyleClass().add("Horizontal-Pane-style");
+        rightPane.getStyleClass().add("Horizontal-Pane-style");
+        topPane.getStyleClass().add("Vertical-Pane-style");
+        bottomPane.getStyleClass().add("Vertical-Pane-style");
+        emailField.getStyleClass().add("Email-Input-style");
+        connectButton.getStyleClass().add("Button-style");
+        Formulaire.getStyleClass().add("BorderPane-style");
+
+    }
+
+    // la methode dessiner :
+    private void Dessiner() {
+        VBox.setVgrow(Formulaire, javafx.scene.layout.Priority.ALWAYS);
+        Formulaire.setTop(logoBox);
+        Formulaire.setCenter(centerContainer);
+        BorderPane.setMargin(bottomContainer, new Insets(0, 0, 70, 0)); // Définir la marge pour le conteneur inférieur
+        Formulaire.setBottom(bottomContainer);
+    }
+
+    // creer des composants :
     private ImageView createImageView(String path, int width, int height) {
         Image image = new Image(path);
         ImageView imageView = new ImageView(image);
@@ -72,11 +119,10 @@ public class LoginFormView extends Application {
         imageView.setFitHeight(height);
         imageView.setPreserveRatio(true);
         imageView.setSmooth(true);
-        imageView.setCache(true);
         return imageView;
     }
 
-    private Pane createPane(String styleClass, String BoxType) {
+    private Pane createPane(String BoxType) {
         Pane pane;
         if (BoxType.equals("HBox")) {
             pane = new HBox();
@@ -87,32 +133,6 @@ public class LoginFormView extends Application {
         } else {
             pane = new Pane();
         }
-        pane.getStyleClass().add(styleClass);
-        return pane;
-    }
-
-    private BorderPane createBorderPane(TextField emailField, Button connectButton) {
-        BorderPane pane = new BorderPane();
-
-        // Ajouter le logo dans le panneau supérieur
-        ImageView logoView = createImageView("file:./Pictures/Logo-Ensa.png", 80, 50);
-        VBox logoBox = createVBox(10, Pos.TOP_LEFT, logoView);
-        pane.setTop(logoBox);
-
-        // Ajouter l'image de bienvenue dans le panneau central
-        ImageView welcomeView = createImageView("file:./Pictures/welcome.png", 350, 140);
-        VBox centerContainer = createVBox(20, Pos.CENTER, welcomeView);
-        pane.setCenter(centerContainer);
-
-        // Ajouter les champs email et bouton de connexion dans le panneau inférieur
-        VBox bottomContainer = createVBox(20, Pos.CENTER, emailField, connectButton);
-        BorderPane.setMargin(bottomContainer, new Insets(0, 0, 70, 0)); // Définir la marge pour le conteneur inférieur
-        pane.setBottom(bottomContainer);
-
-        // Ajouter le style de la classe BorderPaneFF
-        pane.setPrefSize(550, 400);
-        pane.getStyleClass().add("BorderPane-style");
-
         return pane;
     }
 
@@ -125,34 +145,35 @@ public class LoginFormView extends Application {
         return vbox;
     }
 
-    private TextField createEmailField() {
-        TextField field = new TextField();
-        field.setPromptText("Example@Gmail.com");
-        field.getStyleClass().add("Email-Input-style");
-        return field;
-    }
-
-    private Button createConnectButton() {
-        Button button = new Button("Connexion");
-        button.getStyleClass().add("Button-style");
-        button.setOnAction(event -> {
+    // gerer les actions
+    private void Action() {
+        connectButton.setOnAction(event -> {
             try {
-                controller.handleLoginButtonClick(event, emailField.getText());
+                ModelLogin = new modeleLogin(emailField.getText()) ;
+                this.controller = new LoginController(ModelLogin) ;
+                controller.handleLoginButtonClick(event);
             } catch (Exception e) {
                 System.out.println("Erreur pendant le clic : " + e.getMessage());
             }
         });
-        return button;
+    
+        // Gestion de la taille minimale de la fenêtre
+        Scene scene = primaryStage.getScene(); // Récupérer la scène actuelle
+        if (scene != null) { // Vérifier si la scène est définie
+            scene.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+                double minWidth = MIN_WIDTH + 150;
+                if (newWidth.doubleValue() < minWidth) {
+                    primaryStage.setWidth(MIN_WIDTH + 150);
+                }
+            });
+            scene.heightProperty().addListener((obs, oldHeight, newHeight) -> {
+                double minHeight = MIN_HEIGHT + 100;
+                if (newHeight.doubleValue() < minHeight) {
+                    primaryStage.setHeight(MIN_HEIGHT + 50);
+                }
+            });
+        }
     }
+    
 
-    private VBox initialize() {
-        leftPane = createPane("Horizontal-Pane-style", "HBox");
-        rightPane = createPane("Horizontal-Pane-style", "HBox");
-        topPane = createPane("Vertical-Pane-style", "VBox");
-        bottomPane = createPane("Vertical-Pane-style", "VBox");
-        HBox horizontalPane = new HBox(leftPane, Formulaire, rightPane);
-        VBox verticalPane = new VBox(topPane, horizontalPane, bottomPane);
-        VBox.setVgrow(Formulaire, javafx.scene.layout.Priority.ALWAYS);
-        return verticalPane;
-    }
 }

@@ -20,7 +20,8 @@ public class modeleLogin {
         this.gmail = gmail;
     }
 
-    public static boolean isValidEmailAddress(String email) throws IOException, ParseException {
-        return service.isValidEmailAddress(email);
+    // methode de verification :
+    public  boolean isValidEmailAddress() throws IOException, ParseException {
+        return service.isValidEmailAddress(this.gmail);
     }
 }
