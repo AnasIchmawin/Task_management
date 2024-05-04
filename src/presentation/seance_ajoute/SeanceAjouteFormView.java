@@ -16,11 +16,11 @@ import javafx.scene.layout.VBox;
 
 
 
-public class View {
+public class SeanceAjouteFormView{
 
     private AnchorPane view;
 
-    public View() {
+    public SeanceAjouteFormView() {
         view = new AnchorPane();
         createUI();
     }
