@@ -33,8 +33,8 @@ public class ListeFormController {
         for (Document liste : listes) {
             String titre = liste.getString("titre");
             Button newListButton = createListButton(titre);
-            int colIndex = this.listView.ZoneListes.getChildren().size() % 6; // Calculating column index
-            int rowIndex = this.listView.ZoneListes.getChildren().size() / 6; // Calculating row index
+            int colIndex = this.listView.ZoneListes.getChildren().size() % 5; // Calculating column index
+            int rowIndex = this.listView.ZoneListes.getChildren().size() / 5; // Calculating row index
             this.listView.ZoneListes.add(newListButton, colIndex, rowIndex);
         }
     }

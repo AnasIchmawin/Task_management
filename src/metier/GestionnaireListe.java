@@ -26,12 +26,31 @@ public class GestionnaireListe {
     }
 
     
+
+
+    public DAOListe getDaoListe() {
+        return daoListe;
+    }
+
+    public POJOListe getListe() {
+        return liste;
+    }
+
+
+    public void setDaoListe(DAOListe daoListe) {
+        this.daoListe = daoListe;
+    }
+
+    public void setListe(POJOListe liste) {
+        this.liste = liste;
+    }
+
     // Method to create a new list
-    public void creerListe(POJOListe liste) throws NonValidList {
+    public void creerListe() throws NonValidList {
         if (liste.getTitre().isEmpty()) {
             throw new NonValidList("La liste doit avoir un titre !");
         }
-        daoListe.create(getId(), liste.getTitre(), liste.getDescription(), liste.getTaches());
+        daoListe.create(getId(), this.liste.getTitre(), this.liste.getDescription(), this.liste.getTaches());
         setId(id + 1);
     }
 

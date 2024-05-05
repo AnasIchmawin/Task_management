@@ -31,9 +31,10 @@ public class AddListController {
         List<Document> tachesDocuments = convertToDocumentList(addListModel.getTitreSelectionnes());
         POJOListe nouvelleListe = new POJOListe(addListModel.getTitre(), addListModel.getDiscription(),
                 tachesDocuments);
+        this.gestionnaireListe.setListe(nouvelleListe);
 
         try {
-            gestionnaireListe.creerListe(nouvelleListe);
+            gestionnaireListe.creerListe();
             showAlert(Alert.AlertType.INFORMATION, "Succès", "La liste a été créée avec succès !");
 
         } catch (NonValidList e) {
