@@ -11,23 +11,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class DAOTache {
 
-    private static Integer Id = 0;
-
-    private static int getId() {
-        return Id ;
-    }
-    public static void setId(Integer id) {
-        Id = id;
-    }
-
-
     // Create
-    public void create (String titre, String categorie, String description,
-                       LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
-                       Document projet, Document liste) {
+    public void create(Integer id, String titre, String categorie, String description,
+            LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
+            Document projet, Document liste) {
 
         try {
             // Récupérer la collection "taches"
@@ -35,9 +24,8 @@ public class DAOTache {
                     .getCollection("taches");
 
             // Ajouter les attributs du document
-           setId( Id + 1);
             Document doc = new Document();
-            doc.append("id", getId())
+            doc.append("id", id)
                     .append("titre", titre)
                     .append("categorie", categorie)
                     .append("description", description)
@@ -54,7 +42,6 @@ public class DAOTache {
         }
     }
 
-
     // Read
     public Document read(Integer id) {
         try {
@@ -68,11 +55,10 @@ public class DAOTache {
         }
     }
 
-
     // Update
     public void update(Integer id, String titre, String categorie, String description,
-                       LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
-                       Document projet, Document liste) {
+            LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
+            Document projet, Document liste) {
         try {
             // Récupérer la collection "taches"
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("taches");
@@ -113,7 +99,6 @@ public class DAOTache {
         }
     }
 
-
     // Delete
     public void delete(Integer id) {
         try {
@@ -125,7 +110,7 @@ public class DAOTache {
         }
     }
 
-    // GetAllTache : 
+    // GetAllTache :
     public FindIterable<Document> getAllTache() {
         try {
             // Récupérer la collection "taches"

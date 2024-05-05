@@ -1,11 +1,8 @@
 package metier;
 
 import java.util.List;
-
 import org.bson.Document;
-
 import persistence.DAO.DAOProjet;
-import persistence.DAO.DAOdocument;
 
 public class GestionnaireProjet {
     private DAOProjet daoProjet;
@@ -15,7 +12,8 @@ public class GestionnaireProjet {
     }
 
     // Method to create a new project
-    public void creerProjet(String titre, String categorie, String type, String description, String dateDebut, String dateFin, List<Document> seances, List<Document> documents, List<Document> taches, boolean cloture) {
+    public void creerProjet(String titre, String categorie, String type, String description, String dateDebut,
+            String dateFin, List<Document> seances, List<Document> documents, List<Document> taches, boolean cloture) {
         daoProjet.create(titre, categorie, type, description, dateDebut, dateFin, seances, documents, taches, cloture);
     }
 
@@ -25,8 +23,11 @@ public class GestionnaireProjet {
     }
 
     // Method to update a project
-    public void mettreAJourProjet(int id, String titre, String categorie, String type, String description, String dateDebut, String dateFin, List<Document> seances, List<Document> documents, List<Document> taches, boolean cloture) {
-        daoProjet.update(id, titre, categorie, type, description, dateDebut, dateFin, seances, documents, taches, cloture);
+    public void mettreAJourProjet(int id, String titre, String categorie, String type, String description,
+            String dateDebut, String dateFin, List<Document> seances, List<Document> documents, List<Document> taches,
+            boolean cloture) {
+        daoProjet.update(id, titre, categorie, type, description, dateDebut, dateFin, seances, documents, taches,
+                cloture);
     }
 
     // Method to delete a project by its ID
@@ -34,7 +35,7 @@ public class GestionnaireProjet {
         daoProjet.delete(id);
     }
 
-    // Method to get all projects
+    // Methode pour recuperer les projets
     public List<Document> obtenirTousLesProjets() {
         return daoProjet.getAllProjects();
     }

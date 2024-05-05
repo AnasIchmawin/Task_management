@@ -19,7 +19,7 @@ public class LoginFormView extends Application {
     final static Integer MIN_WIDTH = 450;
     final static Integer MIN_HEIGHT = 450;
 
-    private ModelLogin  modelLogin ;
+    private ModelLogin modelLogin;
     private LoginController controller;
     private BorderPane Formulaire;
     private TextField emailField;
@@ -35,11 +35,11 @@ public class LoginFormView extends Application {
     private ImageView welcomeView;
     private VBox centerContainer;
     private VBox bottomContainer;
-    private Stage primaryStage; 
+    private Stage primaryStage;
 
     public LoginFormView(Stage primaryStage) {
-        this.controller = new LoginController() ;
-        this.primaryStage = primaryStage;  
+        this.controller = new LoginController();
+        this.primaryStage = primaryStage;
         Initialiser();
         Styler();
         Dessiner();
@@ -53,20 +53,6 @@ public class LoginFormView extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("LoginForm");
         primaryStage.show();
-
-        // Gestion de la taille minimale de la fenêtre
-        scene.widthProperty().addListener((obs, oldWidth, newWidth) -> {
-            double minWidth = MIN_WIDTH + 150;
-            if (newWidth.doubleValue() < minWidth) {
-                primaryStage.setWidth(MIN_WIDTH + 150);
-            }
-        });
-        scene.heightProperty().addListener((obs, oldHeight, newHeight) -> {
-            double minHeight = MIN_HEIGHT + 100;
-            if (newHeight.doubleValue() < minHeight) {
-                primaryStage.setHeight(MIN_HEIGHT + 50);
-            }
-        });
     }
 
     // la methode Initialiser :
@@ -86,7 +72,7 @@ public class LoginFormView extends Application {
         Formulaire = new BorderPane();
         horizontalPane = new HBox(leftPane, Formulaire, rightPane);
         verticalPane = new VBox(topPane, horizontalPane, bottomPane);
-        modelLogin = new ModelLogin("") ;    
+        modelLogin = new ModelLogin("");
     }
 
     // la methode styler :
@@ -149,13 +135,13 @@ public class LoginFormView extends Application {
         connectButton.setOnAction(event -> {
             try {
                 modelLogin.setGmail(emailField.getText());
-                this.controller = new LoginController(modelLogin) ;
+                this.controller = new LoginController(modelLogin);
                 controller.handleLoginButtonClick(event);
             } catch (Exception e) {
-                System.out.println("Erreur pendant le clic : " + e.getMessage());
+                System.out.println("Erreur pendant l'action connexion : " + e.getMessage());
             }
         });
-    
+
         // Gestion de la taille minimale de la fenêtre
         Scene scene = primaryStage.getScene(); // Récupérer la scène actuelle
         if (scene != null) { // Vérifier si la scène est définie
@@ -173,6 +159,5 @@ public class LoginFormView extends Application {
             });
         }
     }
-    
 
 }

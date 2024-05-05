@@ -2,30 +2,42 @@ package metier;
 
 import java.util.List;
 import org.bson.Document;
+
+import metier.Errors.NonValidList;
 import persistence.DAO.DAOListe;
 
 public class GestionnaireListe {
 
-    private static DAOListe daoListe;
+    private DAOListe daoListe;
+    private POJOListe liste; 
     static Integer id = 1 ;
+
+    private static int getId(){
+        return id ;
+    }
     
     private static void setId(Integer Id){
         id = Id ;
     }
 
     public GestionnaireListe() {
-        GestionnaireListe.daoListe = new DAOListe();
+        this.daoListe = new DAOListe();
+        this.liste = new POJOListe() ;
     }
 
+    
     // Method to create a new list
-    public void creerListe(String titre, String description, List<Document> taches) {
-        daoListe.create(id, titre, description, taches);
+    public void creerListe(POJOListe liste) throws NonValidList {
+        if (liste.getTitre().isEmpty()) {
+            throw new NonValidList("La liste doit avoir un titre !");
+        }
+        daoListe.create(getId(), liste.getTitre(), liste.getDescription(), liste.getTaches());
         setId(id + 1);
     }
 
     // Method to retrieve a list by its ID
     public Document lireListe(int id) {
-        return DAOListe.read(id);
+        return daoListe.read(id);
     }
 
     // Method to update a list

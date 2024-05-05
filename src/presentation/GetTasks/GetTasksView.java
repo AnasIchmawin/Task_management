@@ -1,6 +1,5 @@
 package presentation.GetTasks;
 
-
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,7 +25,7 @@ public class GetTasksView {
     private Button confirmButton;
     private Button cancelButton;
     private ScrollPane scrollPane;
-    GridPane ZoneTasks ; 
+    GridPane ZoneTasks;
 
     public GetTasksView(GetTasksController getTasksController) {
         this.controller = getTasksController;
@@ -83,13 +82,13 @@ public class GetTasksView {
     }
 
     private GridPane createTaskGridPane() {
-        ZoneTasks  = new GridPane();
+        ZoneTasks = new GridPane();
         ZoneTasks.getStyleClass().add("scroll-pane-style");
         ZoneTasks.setAlignment(Pos.TOP_CENTER);
         ZoneTasks.setHgap(20);
         ZoneTasks.setVgap(15);
         ZoneTasks.setPadding(new Insets(20));
-        this.controller.AfficherTasks(this.ZoneTasks) ;
+        this.controller.afficherTasks(this.ZoneTasks);
 
         return this.ZoneTasks;
     }
@@ -138,7 +137,7 @@ public class GetTasksView {
 
     private void action() {
         confirmButton.setOnAction(event -> {
-            this.controller.handleConfirmButton(this.ZoneTasks , event) ;
+            this.controller.handleConfirmButton(this.ZoneTasks, event);
         });
 
         cancelButton.setOnAction(event -> {

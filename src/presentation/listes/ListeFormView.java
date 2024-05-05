@@ -50,7 +50,7 @@ public class ListeFormView extends Application {
         Styler();
         Dessiner();
         Action();
-        this.controller.AfficheListes();
+        this.controller.afficheListes();
     }
 
     @Override
@@ -87,7 +87,6 @@ public class ListeFormView extends Application {
         buttonContainer = new HBox();
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
-        // addListView = new AddListView();
         root = new BorderPane();
         this.controller = new ListeFormController(this);
     }
@@ -169,7 +168,7 @@ public class ListeFormView extends Application {
 
     private void Action() {
         ajouterButton.setOnAction(event -> {
-            this.controller.handleAjouterButtonAction(this.controller);
+            this.controller.handleAjouterButtonAction();
         });
     }
 }

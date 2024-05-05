@@ -54,7 +54,7 @@ public class DAOProjet {
     }
 
     // Read
-    public static Document read(int id) {
+    public Document read(int id) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("projets");

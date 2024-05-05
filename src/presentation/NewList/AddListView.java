@@ -42,7 +42,6 @@ public class AddListView {
 
     public AddListView(ListeFormController listeFormController) {
         this.listeFormController = listeFormController;
-        System.out.println("Mon controleur est " + this.listeFormController);
         addListModel = new AddListModel("", "", new ArrayList<>());
         init();
         style();
@@ -57,7 +56,7 @@ public class AddListView {
         init();
         style();
         action();
-        this.controleur.AfficherTaches(this.addListModel.getTitreSelectionnes(), this.ZoneTaches);
+        this.controleur.afficherTaches(this.addListModel.getTitreSelectionnes(), this.ZoneTaches);
     }
 
     public void start(Stage primaryStage) {
@@ -250,7 +249,7 @@ public class AddListView {
                 Stage stage = (Stage) Annuler.getScene().getWindow();
                 stage.close();
             } catch (Exception e) {
-                System.out.println("Erreur pendant la fermeture  : " + e.getMessage());
+                System.out.println("Erreur pendant la fermeture AddList  : " + e.getMessage());
             }
         });
 
@@ -271,13 +270,13 @@ public class AddListView {
                 }
 
                 this.controleur.saveInfosListe(addListModel);
-                this.listeFormController.AfficheListes();
+                this.listeFormController.afficheListes();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Récupérer la fenêtre
                                                                                          // actuelle
                 stage.close();
 
             } catch (Exception e) {
-                System.out.println("Erreur pendant la fermeture  : " + e.getMessage());
+                System.out.println("Erreur pendant la fermeture du addlist : " + e.getMessage());
             }
         });
         ajouterTacheButton.setOnAction(event -> {

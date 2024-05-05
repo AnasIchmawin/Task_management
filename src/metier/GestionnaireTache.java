@@ -9,6 +9,17 @@ import java.util.List;
 
 public class GestionnaireTache {
     private DAOTache daoTache;
+    private POJOTache pojoTache ;
+    static Integer Id ;
+    
+
+    public static Integer getId() {
+        return Id;
+    }
+
+    public static void setId(Integer id) {
+        Id = id;
+    }
 
     public GestionnaireTache() {
         this.daoTache = new DAOTache();
@@ -18,7 +29,8 @@ public class GestionnaireTache {
     public void createTask(String titre, String categorie, String description,
             LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
             Document projet, Document liste) {
-        daoTache.create(titre, categorie, description, dateDebut, dateFin, documents, projet, liste);
+                setId(Id + 1);
+        daoTache.create(getId(), titre, categorie, description, dateDebut, dateFin, documents, projet, liste);
     }
 
     // Read

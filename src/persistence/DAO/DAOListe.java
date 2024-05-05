@@ -11,10 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAOListe {
- 
 
         // Create
-        public void create(Integer id , String Titre, String description, List<Document> taches) {
+        public void create(Integer id, String Titre, String description, List<Document> taches) {
                 try {
                         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                                         .getCollection("listes");
@@ -35,7 +34,7 @@ public class DAOListe {
         }
 
         // Read
-        public static Document read(int id) {
+        public Document read(int id) {
                 try {
                         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                                         .getCollection("listes");

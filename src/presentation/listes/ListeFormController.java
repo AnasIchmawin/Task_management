@@ -1,68 +1,62 @@
 package presentation.listes;
 
-import java.util.ArrayList;
+import metier.GestionnaireListe;
+
 import java.util.List;
 
 import org.bson.Document;
-
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import metier.GestionnaireListe;
 import presentation.NewList.AddListView;
 
 public class ListeFormController {
-    GestionnaireListe gestionnaireListe;
-    ListeFormView listView ;
+    private GestionnaireListe gestionnaireListe;
+    private ListeFormView listView;
 
     public ListeFormController(ListeFormView listeFormView) {
-        super();
         this.gestionnaireListe = new GestionnaireListe();
-        this.listView = listeFormView ;
+        this.listView = listeFormView;
     }
 
-    public void handleAjouterButtonAction(ListeFormController listeFormController) {
-        AddListView NewListFormulaire = new AddListView(listeFormController);
+    public void handleAjouterButtonAction() {
+        AddListView newListFormulaire = new AddListView(this);
         Stage stage = new Stage();
-        NewListFormulaire.start(stage);
-
+        newListFormulaire.start(stage);
     }
 
-    public void AfficheListes() {
+    public void afficheListes() {
         this.listView.ZoneListes.getChildren().clear();
         List<Document> listes = gestionnaireListe.obtenirToutesLesListes();
-        List<String> titresListes = new ArrayList<>();
 
         for (Document liste : listes) {
             String titre = liste.getString("titre");
-            titresListes.add(titre);
-        }
-        for (String title : titresListes) {
-            Button newListButton = new Button(title);
-            newListButton.setStyle("-fx-background-color: #112D4E; " +
-                    "-fx-background-radius: 10px; " +
-                    "-fx-min-width: 170px; " +
-                    "-fx-min-height: 60px;" +
-                    "-fx-text-fill: #ffffff;" +
-                    "-fx-font-size: 18px;");
-
+            Button newListButton = createListButton(titre);
             int colIndex = this.listView.ZoneListes.getChildren().size() % 6; // Calculating column index
             int rowIndex = this.listView.ZoneListes.getChildren().size() / 6; // Calculating row index
-
-            // Load list icon
-            try {
-                Image listIcon = new Image("file:./Pictures/to-do.png");
-                ImageView listIconView = new ImageView(listIcon);
-                listIconView.setFitWidth(15);
-                listIconView.setFitHeight(15);
-                newListButton.setGraphic(listIconView);
-                this.listView.ZoneListes.add(newListButton, colIndex, rowIndex);
-
-            } catch (Exception e) {
-                System.out.println("Erreur de chargement de l'icône de la liste : " + e.getMessage());
-            }
+            this.listView.ZoneListes.add(newListButton, colIndex, rowIndex);
         }
     }
 
+    private Button createListButton(String title) {
+        Button newListButton = new Button(title);
+        newListButton.setStyle("-fx-background-color: #112D4E; " +
+                "-fx-background-radius: 10px; " +
+                "-fx-min-width: 170px; " +
+                "-fx-min-height: 60px;" +
+                "-fx-text-fill: #ffffff;" +
+                "-fx-font-size: 18px;");
+
+        try {
+            Image listIcon = new Image("file:./Pictures/to-do.png");
+            ImageView listIconView = new ImageView(listIcon);
+            listIconView.setFitWidth(15);
+            listIconView.setFitHeight(15);
+            newListButton.setGraphic(listIconView);
+        } catch (Exception e) {
+            System.out.println("Erreur de chargement de l'icône de la liste : " + e.getMessage());
+        }
+        return newListButton;
+    }
 }
