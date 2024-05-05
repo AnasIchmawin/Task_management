@@ -42,21 +42,12 @@ public class App extends Application {
         // ArchiveFormView archive = new ArchiveFormView(controller);
         // archive.start(primaryStage);
 
-<<<<<<< HEAD
+
 
         ListeFormView view = new ListeFormView() ; 
        view.start(primaryStage);
-=======
-        // LoginFormView view = new LoginFormView(primaryStage ) ;
-        // view.start(primaryStage);
-
-        ProjetDetailController controller = new ProjetDetailController();
-        Projet_Detail_View view = new Projet_Detail_View(controller);
-        view.start(primaryStage);
->>>>>>> 800bd40f950dd4a152980dbfdfb31059445deb92
 
     }
-
     public static void main(String[] args) {
         launch(args);
     }

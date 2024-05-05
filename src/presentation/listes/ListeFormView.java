@@ -50,6 +50,7 @@ public class ListeFormView extends Application {
         Styler();
         Dessiner();
         Action();
+        this.controller.AfficheListes(this.ZoneListes);
     }
 
     @Override

@@ -1,9 +1,13 @@
 package persistence.DAO;
 
 import org.bson.Document;
+
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import persistence.DBConnection;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class DAOListe {
@@ -52,7 +56,7 @@ public class DAOListe {
         }
 
         // Update
-        public void update(Integer id, String Titre ,String description, List<Document> taches) {
+        public void update(Integer id, String Titre, String description, List<Document> taches) {
                 try {
                         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                                         .getCollection("listes");
@@ -81,5 +85,21 @@ public class DAOListe {
                 } catch (Exception e) {
                         System.err.println("Erreur lors de la suppression de la liste : " + e.getMessage());
                 }
+        }
+
+        public List<Document> getAllLists() {
+                List<Document> allLists = new ArrayList<>();
+                try {
+                        MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                                        .getCollection("listes");
+                        FindIterable<Document> cursor = collection.find();
+
+                        for (Document document : cursor) {
+                                allLists.add(document);
+                        }
+                } catch (Exception e) {
+                        System.err.println("Erreur lors de la récupération de toutes les listes : " + e.getMessage());
+                }
+                return allLists;
         }
 }
