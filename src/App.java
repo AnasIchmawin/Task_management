@@ -33,8 +33,8 @@ public class App extends Application {
         // ListeFormView Seance = new ListeFormView(controller);
         // Seance.start(primaryStage);
 
-        ProjetsFormView projets = new ProjetsFormView();
-        projets.start(primaryStage);
+        // ProjetsFormView projets = new ProjetsFormView();
+        // projets.start(primaryStage);
 
         // ListeFormController controller = new ListeFormController();
         // ListeFormView projets = new ListeFormView(controller);
@@ -46,8 +46,8 @@ public class App extends Application {
 
 
 
-        // ListeFormView view = new ListeFormView() ; 
-        // view.start(primaryStage);
+        ListeFormView view = new ListeFormView() ; 
+        view.start(primaryStage);
 
     }
     public static void main(String[] args) {

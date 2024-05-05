@@ -8,27 +8,29 @@ import org.bson.Document;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import metier.GestionnaireListe;
 import presentation.NewList.AddListView;
 
 public class ListeFormController {
     GestionnaireListe gestionnaireListe;
+    ListeFormView listView ;
 
-    public ListeFormController() {
+    public ListeFormController(ListeFormView listeFormView) {
         super();
         this.gestionnaireListe = new GestionnaireListe();
+        this.listView = listeFormView ;
     }
 
-    public void handleAjouterButtonAction(GridPane gridPane) {
-        AddListView NewListFormulaire = new AddListView();
+    public void handleAjouterButtonAction(ListeFormController listeFormController) {
+        AddListView NewListFormulaire = new AddListView(listeFormController);
         Stage stage = new Stage();
         NewListFormulaire.start(stage);
 
     }
 
-    public void AfficheListes(GridPane gridPane) {
+    public void AfficheListes() {
+        this.listView.ZoneListes.getChildren().clear();
         List<Document> listes = gestionnaireListe.obtenirToutesLesListes();
         List<String> titresListes = new ArrayList<>();
 
@@ -45,8 +47,8 @@ public class ListeFormController {
                     "-fx-text-fill: #ffffff;" +
                     "-fx-font-size: 18px;");
 
-            int colIndex = gridPane.getChildren().size() % 6; // Calculating column index
-            int rowIndex = gridPane.getChildren().size() / 6; // Calculating row index
+            int colIndex = this.listView.ZoneListes.getChildren().size() % 6; // Calculating column index
+            int rowIndex = this.listView.ZoneListes.getChildren().size() / 6; // Calculating row index
 
             // Load list icon
             try {
@@ -55,7 +57,7 @@ public class ListeFormController {
                 listIconView.setFitWidth(15);
                 listIconView.setFitHeight(15);
                 newListButton.setGraphic(listIconView);
-                gridPane.add(newListButton, colIndex, rowIndex);
+                this.listView.ZoneListes.add(newListButton, colIndex, rowIndex);
 
             } catch (Exception e) {
                 System.out.println("Erreur de chargement de l'icône de la liste : " + e.getMessage());

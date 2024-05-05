@@ -11,26 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAOListe {
-        private static Integer Id = 0;
-
-        private static int getId() {
-                return Id;
-        }
-
-        public static void setId(Integer id) {
-                Id = id;
-        }
+ 
 
         // Create
-        public void create(String Titre, String description, List<Document> taches) {
+        public void create(Integer id , String Titre, String description, List<Document> taches) {
                 try {
                         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                                         .getCollection("listes");
 
                         // Ajouter les attributs du document
-                        setId(Id + 1);
                         Document doc = new Document();
-                        doc.append("id", getId())
+                        doc.append("id", id)
                                         .append("titre", Titre)
                                         .append("description", description);
                         if (taches != null) {

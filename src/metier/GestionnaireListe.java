@@ -6,20 +6,26 @@ import persistence.DAO.DAOListe;
 
 public class GestionnaireListe {
 
-    private DAOListe daoListe;
+    private static DAOListe daoListe;
+    static Integer id = 1 ;
+    
+    private static void setId(Integer Id){
+        id = Id ;
+    }
 
     public GestionnaireListe() {
-        this.daoListe = new DAOListe();
+        GestionnaireListe.daoListe = new DAOListe();
     }
 
     // Method to create a new list
     public void creerListe(String titre, String description, List<Document> taches) {
-        daoListe.create(titre, description, taches);
+        daoListe.create(id, titre, description, taches);
+        setId(id + 1);
     }
 
     // Method to retrieve a list by its ID
     public Document lireListe(int id) {
-        return daoListe.read(id);
+        return DAOListe.read(id);
     }
 
     // Method to update a list

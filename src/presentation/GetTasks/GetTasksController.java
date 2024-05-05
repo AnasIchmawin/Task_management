@@ -14,21 +14,24 @@ import javafx.stage.Stage;
 import metier.GestionnaireTache;
 import presentation.NewList.AddListModel;
 import presentation.NewList.AddListView;
+import presentation.listes.ListeFormController;
 
 public class GetTasksController {
 
 
     private GestionnaireTache gestionnaireTache;
     private AddListModel addListModel;
+    private ListeFormController listeFormController ;
 
     public GetTasksController() {
         this.gestionnaireTache = new GestionnaireTache();
         this.addListModel = new AddListModel("", "", new ArrayList<>()) ;
     }
 
-    public GetTasksController(AddListModel addListModel) {
+    public GetTasksController(AddListModel addListModel , ListeFormController listeFormController) {
         this.gestionnaireTache = new GestionnaireTache();
         this.addListModel = addListModel;
+        this.listeFormController = listeFormController ;
     }
 
     // recupere les titres des taches :
@@ -42,7 +45,7 @@ public class GetTasksController {
     }
 
     public void handleCancelButton(ActionEvent eventAddList) {
-        AddListView view = new AddListView(this.addListModel);
+        AddListView view = new AddListView(this.addListModel ,this.listeFormController);
         Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow(); // Récupérer la fenêtre actuelle
         view.start(stage);
 
@@ -85,7 +88,7 @@ public class GetTasksController {
        
         this.addListModel.setTitreSelectionnes(selectedTitles);
         
-        AddListView view = new AddListView(this.addListModel);
+        AddListView view = new AddListView(this.addListModel ,this.listeFormController);
         Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow(); // Récupérer la fenêtre actuelle
         view.start(stage);
         

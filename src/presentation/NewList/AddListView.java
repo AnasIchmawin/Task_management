@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import presentation.listes.ListeFormController;
 
 public class AddListView {
 
@@ -36,24 +37,28 @@ public class AddListView {
     private TextField TitreField;
     private TextArea ZoneDescription;
     private GridPane ZoneTaches;
-    private AddListModel addListModel ;
+    private AddListModel addListModel;
+    private ListeFormController listeFormController;
 
-    public AddListView() {
-        addListModel = new AddListModel("","",new ArrayList<>()) ;
+    public AddListView(ListeFormController listeFormController) {
+        this.listeFormController = listeFormController;
+        System.out.println("Mon controleur est " + this.listeFormController);
+        addListModel = new AddListModel("", "", new ArrayList<>());
         init();
         style();
         action();
     }
-    public AddListView(AddListModel addmodel) {
-        this.addListModel = new AddListModel(addmodel.getTitre() , addmodel.getDiscription(),
-        addmodel.getTitreSelectionnes()) ;
+
+    public AddListView(AddListModel addmodel, ListeFormController listeFormController) {
+        this.listeFormController = listeFormController;
+        this.addListModel = new AddListModel(addmodel.getTitre(), addmodel.getDiscription(),
+                addmodel.getTitreSelectionnes());
 
         init();
         style();
         action();
-        this.controleur.AfficherTaches(this.addListModel.getTitreSelectionnes() , this.ZoneTaches) ;
+        this.controleur.AfficherTaches(this.addListModel.getTitreSelectionnes(), this.ZoneTaches);
     }
-    
 
     public void start(Stage primaryStage) {
         StackPane containerContent = createMainContent();
@@ -82,7 +87,7 @@ public class AddListView {
         ajouterTacheButton = createButtonWithIcon("Ajouter Tache", "file:./Pictures/addIcon.png", 20, 20);
         ZoneTaches = creatZoneTaches();
         this.controleur = new AddListController();
-     
+
     }
 
     private void style() {
@@ -161,7 +166,7 @@ public class AddListView {
         GridPane grid = new GridPane();
         grid.setVgap(8);
         grid.setHgap(10);
-        grid.getStyleClass().addAll("Zone-taches") ;
+        grid.getStyleClass().addAll("Zone-taches");
         return grid;
     }
 
@@ -229,7 +234,7 @@ public class AddListView {
 
         // Créer la VBox contenant les documents
         VBox contenaireTaches = CreateVbox(5, Pos.TOP_LEFT);
-        contenaireTaches.getStyleClass().add("contenaire-taches") ;
+        contenaireTaches.getStyleClass().add("contenaire-taches");
 
         // Ajouter les éléments à la VBox
         contenaireTaches.getChildren().addAll(scrollTask, ajouterTacheButton);
@@ -251,7 +256,9 @@ public class AddListView {
 
         Enregistrer.setOnAction(event -> {
             try {
-                System.out.println(addListModel.getTitre());
+
+                addListModel.setTitre(TitreField.getText());
+                addListModel.setDiscription(ZoneDescription.getText());
                 ArrayList<String> Taches = new ArrayList<>();
 
                 // Accéder aux boutons dans le GridPane
@@ -264,6 +271,10 @@ public class AddListView {
                 }
 
                 this.controleur.saveInfosListe(addListModel);
+                this.listeFormController.AfficheListes();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Récupérer la fenêtre
+                                                                                         // actuelle
+                stage.close();
 
             } catch (Exception e) {
                 System.out.println("Erreur pendant la fermeture  : " + e.getMessage());
@@ -273,9 +284,8 @@ public class AddListView {
             addListModel.setTitre(TitreField.getText());
             addListModel.setDiscription(ZoneDescription.getText());
 
-            this.controleur.getTasksView(event , addListModel);
+            this.controleur.getTasksView(event, addListModel, this.listeFormController);
         });
 
     }
 }
-

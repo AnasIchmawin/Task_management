@@ -13,21 +13,22 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import persistence.DAO.DAOListe;
+import metier.GestionnaireListe;
 import presentation.GetTasks.GetTasksController;
 import presentation.GetTasks.GetTasksView;
+import presentation.listes.ListeFormController;
 
 public class AddListController {
-     private DAOListe daoListe;
+     private GestionnaireListe gestionnaireListe ;
 
     public AddListController() {
         super();
-        daoListe = new DAOListe() ;
+        this.gestionnaireListe = new GestionnaireListe() ;
     }
 
     public void saveInfosListe(AddListModel addListModel) {
         List<Document> tachesDocuments = convertToDocumentList(addListModel.getTitreSelectionnes());
-        daoListe.create(addListModel.getTitre() , addListModel.getDiscription(), tachesDocuments);
+        this.gestionnaireListe.creerListe(addListModel.getTitre() , addListModel.getDiscription(), tachesDocuments);
     }
 
     private List<Document> convertToDocumentList(List<String> taches) {
@@ -42,8 +43,8 @@ public class AddListController {
 
 
 
-    public void getTasksView(ActionEvent event, AddListModel addListModel) {
-        GetTasksController controller = new GetTasksController(addListModel);
+    public void getTasksView(ActionEvent event, AddListModel addListModel , ListeFormController listeFormController) {
+        GetTasksController controller = new GetTasksController(addListModel , listeFormController);
         GetTasksView view = new GetTasksView(controller);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         view.start(stage);
