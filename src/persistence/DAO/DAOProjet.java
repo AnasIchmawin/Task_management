@@ -1,6 +1,7 @@
 package persistence.DAO;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
 import com.mongodb.MongoException;
@@ -22,7 +23,7 @@ public class DAOProjet {
     }
     // Create
     public void create(String titre, String categorie, String type, String description,
-            LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> seances,
+            String dateDebut, String dateFin, List<Document> seances,
             List<Document> documents, List<Document> taches, boolean cloture) {
 
         try {
@@ -71,36 +72,6 @@ public class DAOProjet {
         }
     }
 
-    public void update(Integer id, String titre, String categorie, String description,
-            LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
-            List<Document> seances, List<Document> taches, boolean cloture) {
-
-        // Validation des entrées
-        if (id == null || id <= 0) {
-            throw new IllegalArgumentException("Id invalide.");
-        }
-
-        try {
-            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                    .getCollection("projets");
-
-            Document doc = new Document();
-            doc.append("titre", titre);
-            doc.append("categorie", categorie);
-            doc.append("description", description);
-            doc.append("dateDebut", dateDebut);
-            doc.append("dateFin", dateFin);
-            doc.append("documents", documents);
-            doc.append("seances", seances);
-            doc.append("taches", taches);
-            doc.append("cloture", cloture);
-            collection.updateOne(Filters.eq("id", id), new Document("$set", doc));
-        } catch (MongoException e) {
-            // Gérer l'exception ici (par exemple, enregistrer l'erreur et/ou quitter le
-            // programme)
-            System.err.println("Erreur lors de la mise à jour du document projet: " + e.getMessage());
-        }
-    }
 
     // Delete
     public void delete(Integer id) {
@@ -118,6 +89,62 @@ public class DAOProjet {
             // Gérer l'exception ici (par exemple, enregistrer l'erreur et/ou quitter le
             // programme)
             System.err.println("Erreur lors de la suppression du document projet: " + e.getMessage());
+        }
+    }
+    public void update(int id2, String titre, String categorie, String type, String description, String dateDebut,
+            String dateFin, List<Document> seances, List<Document> documents, List<Document> taches, boolean cloture) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("projets");
+            Document doc = new Document();
+            if (titre != null) {
+                doc.append("titre", titre);
+            }
+            if (categorie != null) {
+                doc.append("categorie", categorie);
+            }
+            if (type != null) {
+                doc.append("type", type);
+            }
+            if (description != null) {
+                doc.append("description", description);
+            }
+            if (dateDebut != null) {
+                doc.append("dateDebut", dateDebut);
+            }
+            if (dateFin != null) {
+                doc.append("dateFin", dateFin);
+            }
+            if (seances != null) {
+                doc.append("seances", seances);
+            }
+            if (documents != null) {
+                doc.append("documents", documents);
+            }
+            if (taches != null) {
+                doc.append("taches", taches);
+            }
+            if (cloture) {
+                doc.append("cloture", cloture);
+            }
+            collection.updateOne(Filters.eq("id", id2), new Document("$set", doc));
+        } catch (MongoException e) {
+            // Gérer l'exception ici (par exemple, enregistrer l'erreur et/ou quitter le
+            // programme)
+            System.err.println("Erreur lors de la mise à jour du document projet: " + e.getMessage());
+        }
+    }
+    
+    public List<Document> getAllProjects() {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("projets");
+            return collection.find().into(new ArrayList<Document>());
+        } catch (MongoException e) {
+            // Gérer l'exception ici (par exemple, enregistrer l'erreur et/ou quitter le
+            // programme)
+            System.err.println("Erreur lors de la lecture de tous les documents projet: " + e.getMessage());
+            return null;
         }
     }
 
