@@ -221,8 +221,5 @@ public class ProjetsFormView extends Application {
             this.controller.handleAjouterButtonAction(ZoneListes);
         });
     }
-    // Action for AjouterButton
-    private void handleAjouterButtonAction(GridPane gridPane) {
-        controller.handleAjouterButtonAction(gridPane);
-    }
+    
 }

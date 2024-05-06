@@ -21,6 +21,7 @@ import presentation.projet_detail.ProjetDetailController;
 import presentation.projet_detail.Projet_Detail_View;
 import presentation.projets.ProjetsFormController;
 import presentation.projets.ProjetsFormView;
+import presentation.seance_ajoute.SeanceAjouteFormController;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
 import presentation.tache_ajoute.ViewFromTacheAjout;
 
@@ -44,8 +45,15 @@ public class App extends Application {
         // archive.start(primaryStage);
         
 
-        ListeFormView view = new ListeFormView() ; 
-        view.start(primaryStage);
+        // ListeFormView view = new ListeFormView() ; 
+        // view.start(primaryStage);
+
+        LoginFormView loginFormView = new LoginFormView(primaryStage);
+        loginFormView.start(primaryStage);
+
+        // ControllerFromTacheAjout controller = new ControllerFromTacheAjout();
+        // ViewFromTacheAjout view = new ViewFromTacheAjout(controller);
+        // view.start(primaryStage);
   
 
     }

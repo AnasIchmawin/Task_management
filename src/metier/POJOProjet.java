@@ -1,11 +1,11 @@
 package metier;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
 
 public class POJOProjet {
-    private Integer id;
     private String titre;
     private String categorie;
     private String type;
@@ -17,14 +17,23 @@ public class POJOProjet {
     private List<Document> taches;
     private boolean cloture;
 
-    // Getters and Setters
-    public Integer getId() {
-        return id;
+    public POJOProjet() {
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public POJOProjet(String titre, String categorie, String type, String description, String dateDebut,
+            String dateFin, List<Document> seances, List<Document> documents, List<Document> taches, boolean cloture) {
+        this.titre = titre;
+        this.categorie = categorie;
+        this.type = type;
+        this.description = description;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.seances = seances;
+        this.documents = documents;
+        this.taches = taches;
+        this.cloture = cloture;
     }
+
 
     public String getTitre() {
         return titre;
@@ -106,10 +115,15 @@ public class POJOProjet {
         this.cloture = cloture;
     }
 
+    public boolean getCloture() {
+        return cloture;
+    }
+
     @Override
     public String toString() {
-        return "POJOProjet [id=" + id + ", titre=" + titre + ", categorie=" + categorie + ", type=" + type
+        return "POJOProjet [titre=" + titre + ", categorie=" + categorie + ", type=" + type
                 + ", description=" + description + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", seances="
                 + seances + ", documents=" + documents + ", taches=" + taches + ", cloture=" + cloture + "]";
     }
+
 }
