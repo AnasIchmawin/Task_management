@@ -27,7 +27,7 @@ public class AddListController {
         this.gestionnaireListe = new GestionnaireListe();
     }
 
-    public void saveInfosListe(AddListModel addListModel) {
+    public void saveInfosListe(AddListModel addListModel , ActionEvent event) {
         List<Document> tachesDocuments = convertToDocumentList(addListModel.getTitreSelectionnes());
         POJOListe nouvelleListe = new POJOListe(addListModel.getTitre(), addListModel.getDiscription(),
                 tachesDocuments);
@@ -35,7 +35,10 @@ public class AddListController {
 
         try {
             gestionnaireListe.creerListe();
-            showAlert(Alert.AlertType.INFORMATION, "Succès", "La liste a été créée avec succès !");
+            // cloeser la fenetre
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Récupérer la fenêtre
+            // actuelle
+            stage.close();
 
         } catch (NonValidList e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", e.getMessage());

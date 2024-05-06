@@ -73,4 +73,11 @@ public class GestionnaireListe {
     public List<Document> obtenirToutesLesListes() {
         return daoListe.getAllLists();
     }
+
+    public List<String> sortedLists(List<String> listes) {
+       if(listes.size() == 0){
+           return null ;
+       }
+      return this.daoListe.sortList(listes);
+    }
 }

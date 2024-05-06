@@ -3,7 +3,6 @@ package presentation.login;
 import java.io.IOException;
 
 import org.json.simple.parser.ParseException;
-
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -12,24 +11,23 @@ import javafx.stage.Stage;
 import presentation.listes.ListeFormView;
 
 public class LoginController {
-    private ModelLogin LoginModel ;
+    private LoginFormView loginFormView;
+    private ModelLogin modelLogin;
 
-    public LoginController() {
-        super() ;
-    }
-
-    public LoginController(ModelLogin modelelogin) {
-        this.LoginModel = modelelogin;
+    public LoginController(LoginFormView loginFormView) {
+        super();
+        this.loginFormView = loginFormView;
     }
 
     public void handleLoginButtonClick(ActionEvent event) throws IOException, ParseException {
 
         // Vérifier la validité de l'e-mail
-        boolean emailIsValid = this.LoginModel.isValidEmailAddress();
+        modelLogin = new ModelLogin(loginFormView.getEmailField());
+        boolean emailIsValid = modelLogin.isValidEmailAddress();
         if (emailIsValid) {
             ListeFormView view = new ListeFormView();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Récupérer la fenêtre actuelle
-            view.start(stage) ;
+            view.start(stage);
         } else {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Erreur");

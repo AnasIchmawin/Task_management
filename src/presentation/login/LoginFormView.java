@@ -19,7 +19,6 @@ public class LoginFormView extends Application {
     final static Integer MIN_WIDTH = 450;
     final static Integer MIN_HEIGHT = 450;
 
-    private ModelLogin modelLogin;
     private LoginController controller;
     private BorderPane Formulaire;
     private TextField emailField;
@@ -38,7 +37,6 @@ public class LoginFormView extends Application {
     private Stage primaryStage;
 
     public LoginFormView(Stage primaryStage) {
-        this.controller = new LoginController();
         this.primaryStage = primaryStage;
         Initialiser();
         Styler();
@@ -72,7 +70,7 @@ public class LoginFormView extends Application {
         Formulaire = new BorderPane();
         horizontalPane = new HBox(leftPane, Formulaire, rightPane);
         verticalPane = new VBox(topPane, horizontalPane, bottomPane);
-        modelLogin = new ModelLogin("");
+        this.controller = new LoginController(this);
     }
 
     // la methode styler :
@@ -130,12 +128,15 @@ public class LoginFormView extends Application {
         return vbox;
     }
 
+    // getEmailField
+    public String getEmailField() {
+        return emailField.getText();
+    }
+
     // gerer les actions
     private void Action() {
         connectButton.setOnAction(event -> {
             try {
-                modelLogin.setGmail(emailField.getText());
-                this.controller = new LoginController(modelLogin);
                 controller.handleLoginButtonClick(event);
             } catch (Exception e) {
                 System.out.println("Erreur pendant l'action connexion : " + e.getMessage());

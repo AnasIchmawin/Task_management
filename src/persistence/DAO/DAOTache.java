@@ -110,13 +110,19 @@ public class DAOTache {
         }
     }
 
-    // GetAllTache :
-    public FindIterable<Document> getAllTache() {
+    // GetAllTache return Map value and titre : 
+    public List<Document> getAllTaches() {
         try {
-            // Récupérer la collection "taches"
-            return DBConnection.getInstance().getDatabase().getCollection("taches").find();
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            FindIterable<Document> iterDoc = collection.find();
+            List<Document> taches = new ArrayList<>();
+            for (Document doc : iterDoc) {
+                taches.add(doc);
+            }
+            return taches;
         } catch (Exception e) {
-            System.err.println("Erreur lors de la récupération de toutes les tâches : " + e.getMessage());
+            System.err.println("Erreur lors de la récupération des tâches au niveau de Dao: " + e.getMessage());
             return null;
         }
     }

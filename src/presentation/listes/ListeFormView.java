@@ -44,6 +44,7 @@ public class ListeFormView extends Application {
     private HBox topContainer;
     private Region spacer;
     private HBox buttonContainer;
+   
 
     public ListeFormView() {
         Initialiser();
@@ -166,9 +167,14 @@ public class ListeFormView extends Application {
         return newButton;
     }
 
+
+    // Action des boutons
     private void Action() {
         ajouterButton.setOnAction(event -> {
             this.controller.handleAjouterButtonAction();
+        });
+        ordonnerButton.setOnAction(event -> {
+            this.controller.handleOrdonnerButton() ;
         });
     }
 }

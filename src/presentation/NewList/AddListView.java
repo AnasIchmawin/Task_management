@@ -269,11 +269,9 @@ public class AddListView {
                     }
                 }
 
-                this.controleur.saveInfosListe(addListModel);
+                this.controleur.saveInfosListe(addListModel , event);
                 this.listeFormController.afficheListes();
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Récupérer la fenêtre
-                                                                                         // actuelle
-                stage.close();
+
 
             } catch (Exception e) {
                 System.out.println("Erreur pendant la fermeture du addlist : " + e.getMessage());

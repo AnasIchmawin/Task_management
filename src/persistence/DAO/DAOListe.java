@@ -92,4 +92,18 @@ public class DAOListe {
                 }
                 return allLists;
         }
+
+        public List<String> sortList(List<String> listes) {
+                List<String> sortedList = new ArrayList<>();
+                try {
+                        for (String liste : listes) {
+                                sortedList.add(liste);
+                        }
+                        sortedList.sort(String::compareToIgnoreCase);
+                } catch (Exception e) {
+                        System.err.println("Erreur lors du tri des listes : " + e.getMessage());
+                }
+                return sortedList;
+              
+        }
 }

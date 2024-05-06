@@ -1,7 +1,7 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-
+import org.apache.commons.logging.Log;
 import org.bson.Document;
 
 import com.mongodb.client.FindIterable;
@@ -43,8 +43,7 @@ public class App extends Application {
         // ArchiveFormView archive = new ArchiveFormView(controller);
         // archive.start(primaryStage);
         
-
-        ListeFormView view = new ListeFormView() ; 
+      ListeFormView view = new ListeFormView()  ;
         view.start(primaryStage);
   
 

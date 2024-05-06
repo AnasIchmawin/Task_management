@@ -2,8 +2,7 @@ package presentation.GetTasks;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bson.Document;
+import java.util.Map;
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
 import javafx.scene.control.CheckBox;
@@ -31,13 +30,9 @@ public class GetTasksController {
         this.listeFormController = listeFormController;
     }
 
-    public List<String> getTaskTitles() {
-        List<Document> tasks = gestionnaireTache.getAllTasks();
-        List<String> titles = new ArrayList<>();
-        for (Document task : tasks) {
-            titles.add(task.getString("titre"));
-        }
-        return titles;
+    public Map<String, String> getTask() {
+        Map<String, String> tasks = gestionnaireTache.getAllTasks_Id_Title();
+        return tasks;
     }
 
     public void handleCancelButton(ActionEvent eventAddList) {
@@ -49,7 +44,16 @@ public class GetTasksController {
     public void afficherTasks(GridPane gridPane) {
         int colCount = 0;
         int rowCount = 0;
-        ArrayList<String> tasksList = new ArrayList<>(this.getTaskTitles());
+        ArrayList<String> tasksList = new ArrayList<>();
+        //affichage 
+        for (Map.Entry<String, String> entry : getTask().entrySet()) {
+            tasksList.add(entry.getValue());
+        }
+        for(String title : tasksList){
+            System.out.println(title);
+        }
+
+
         for (String task : tasksList) {
             CheckBox checkBox = creerCheckBox(task);
             gridPane.add(checkBox, colCount, rowCount);
