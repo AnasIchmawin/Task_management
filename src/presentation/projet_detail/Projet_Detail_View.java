@@ -93,7 +93,7 @@ public class Projet_Detail_View extends Application {
 
         // Création du VBox
         VBox vbox = new VBox(30); // Espacement vertical entre les HBox
-        vbox.getChildren().addAll(HeadBox, Descr_Seances,Taches_doc, Buttons);
+        vbox.getChildren().addAll(HeadBox, Descr_Seances,Taches_doc);
         container.getChildren().add(vbox);
         return container;
     }
@@ -146,6 +146,8 @@ public class Projet_Detail_View extends Application {
         });
 
         contenaireSeances.getChildren().addAll(scrollTache, ajouterSeanceButton);
+        contenaireSeances.setMinHeight(110);
+        contenaireSeances.setMinWidth(300);
 
         return contenaireSeances;
     } 
@@ -195,7 +197,8 @@ public class Projet_Detail_View extends Application {
     private VBox DocumentSection() {
         VBox DocSection = new VBox(20);
         HBox hboxContainer = new HBox(); // Utiliser HBox pour disposer les VBox horizontalement
-        ScrollPane Documentsplat = createScrollPaneWithButton(hboxContainer); // Créer le ScrollPane avec le HBox
+        ScrollPane Documentsplat = createScrollPaneWithButton(hboxContainer); 
+        Documentsplat.setMinSize(400, 220);// Créer le ScrollPane avec le HBox
         Documentsplat.getStyleClass().add("scroll-pane-style");
         // container
         // definir la hauteur de la scrollPane
