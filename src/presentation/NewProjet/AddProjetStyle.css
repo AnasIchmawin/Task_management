@@ -1,0 +1,114 @@
+.button-style {
+    -fx-background-radius: 10px;
+    -fx-pref-width: 100px;
+    -fx-background-color: #3F72AF;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.footBtn-style {
+    -fx-background-radius: 10px;
+    -fx-pref-width: 170px;
+    -fx-background-color: #3F72AF;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.left-btn-style {
+    -fx-background-color: #8E9EB2;
+    -fx-min-width: 30px;
+    -fx-min-height: 30px;
+    -fx-max-width: 30px;
+    -fx-max-height: 30px;
+    -fx-background-radius: 30px;
+}
+
+.navbar {
+    -fx-pref-width: 50px;
+    -fx-background-color: #112D4E;
+    -fx-background-radius: 10px;
+}
+
+.seance-btn-style {
+    -fx-background-radius: 10px;
+    -fx-pref-width: 110px;
+    -fx-background-color: #3F72AF;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.ZoneDescription-Style {
+    -fx-font-size: 16px;
+    -fx-border-width: 0px;
+    -fx-focus-color: transparent;
+    -fx-pref-width: 750px;
+    -fx-max-height: 140px;
+}
+
+.container {
+    -fx-background-color: #112D4E;
+    -fx-border-color: #112D4E;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+}
+
+.Label-style {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+    -fx-underline: true;
+}
+
+
+
+.ZoneTitre-Style {
+    -fx-font-size: 16px;
+    /* Taille de la police */
+    -fx-pref-width: 300px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #ccc;
+    /* Couleur de la bordure */
+    -fx-border-width: 1px;
+    /* Largeur de la bordure */
+    -fx-background-radius: 8px;
+
+}
+
+.task-Style {
+    -fx-border-width: 0px;
+    -fx-focus-color: transparent;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 150px;
+}
+
+.AjouterTache-style {
+    -fx-background-color: #e2e2e2;
+    -fx-background-radius: 15px;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.root {
+    -fx-background-color: #fff;
+}
+
+.contenaire-taches {
+    -fx-background-color: #8E9EB2;
+    -fx-background-radius: 20px;
+    -fx-min-height: 110px;
+}
+
+.scroll-Style {
+    -fx-min-height: 50px;
+    -fx-background-color: transparent;
+}
+
+
+.Zone-taches {
+    -fx-background-color: #8E9EB2;
+    /* -fx-background-radius: 15px; */
+    -fx-max-height: 50px;
+}
