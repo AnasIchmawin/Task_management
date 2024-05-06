@@ -9,31 +9,29 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
 
+import metier.POJOProjet;
 import persistence.DBConnection;
 
 public class DAOProjet {
 
     private static Integer Id = 0;
 
-    private static int getId() {
+    public int getId() {
         return Id;
     }
     public static void setId(Integer id) {
         Id = id;
     }
     // Create
-    public void create(String titre, String categorie, String type, String description,
-            String dateDebut, String dateFin, List<Document> seances,
-            List<Document> documents, List<Document> taches, boolean cloture) {
-
+    public void create(int id, String titre, String categorie, String type, String description, String dateDebut,
+            String dateFin, List<Document> seances, List<Document> documents, List<Document> taches, boolean cloture) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("projets");
 
             // Ajouter les attributs du document
-            setId( Id + 1);
             Document doc = new Document();
-            doc.append("id", getId() + 1)
+            doc.append("id", id)
                     .append("titre", titre)
                     .append("categorie", categorie)
                     .append("type", type)
@@ -44,7 +42,7 @@ public class DAOProjet {
                     .append("documents", documents)
                     .append("taches", taches)
                     .append("cloture", cloture);
-
+            // Insert the document
             collection.insertOne(doc);
         } catch (MongoException e) {
             // Gérer l'exception ici (par exemple, enregistrer l'erreur et/ou quitter le
@@ -146,6 +144,32 @@ public class DAOProjet {
             System.err.println("Erreur lors de la lecture de tous les documents projet: " + e.getMessage());
             return null;
         }
+    }
+
+    public void setProjet(Document projet) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("projets");
+            collection.insertOne(projet);
+        } catch (MongoException e) {
+            // Gérer l'exception ici (par exemple, enregistrer l'erreur et/ou quitter le
+            // programme)
+            System.err.println("Erreur lors de la création du document projet: " + e.getMessage());
+        }
+    }
+    public POJOProjet getProjet() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getProjet'");
+    }
+    public void update(int id2, String nom, String description, String dateDebut, String dateFin, String chefProjet,
+            String client, String etat) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    }
+    public void create(int id2, String nom, String description, String dateDebut, String dateFin, String chefProjet,
+            String client, String etat) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'create'");
     }
 
 }

@@ -6,16 +6,26 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Current File",
+            "name": "screenLogin",
             "request": "launch",
-            "mainClass": "${file}"
+            "mainClass": "presentation.login.screenLogin",
+            "projectName": "Task_management_88bed8b6"
         },
         {
             "type": "java",
+            "name": "ScreenLogin",
+            "request": "launch",
+            "mainClass": "presentation.login.ScreenLogin",
+            "projectName": "Task_management_88bed8b6"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
             "name": "App",
             "request": "launch",
             "mainClass": "App",
-            "projectName": "Task_management_117e3073",
+            "projectName": "Task_management_a40117e1",
+            "projectName": "Task_management_88bed8b6",
             "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-21.0.2/lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]

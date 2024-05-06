@@ -1,5 +1,6 @@
 package presentation.listes;
 
+<<<<<<< HEAD
 import java.util.List;
 
 public class modeleList {
@@ -20,4 +21,8 @@ public class modeleList {
     public void setListes(List<String> Listes) {
         this.Listes = Listes;
     }
+=======
+public class modeleList {
+    
+>>>>>>> 794ce5a7c9332c0d35ff3162d22bfc845fdc0bc4
 }

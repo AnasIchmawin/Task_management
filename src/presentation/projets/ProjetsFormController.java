@@ -23,13 +23,13 @@ public class ProjetsFormController {
     }
 
     public static void handleAjouterButtonAction(GridPane gridPane) {
-        AddListView newProjectForm = new AddListView();
+        AddListView newProjectForm = new AddListView(null);
         Stage stage = new Stage();
         newProjectForm.start(stage);
     }
 
     public void AfficheProjets(GridPane gridPane) {
-        List<Document> projets = gestionnaireProjet.obtenirTousLesProjets();
+        List<Document> projets = gestionnaireProjet.obtenirToutesLesProjets();
         List<String> titresProjets = new ArrayList<>();
 
         for (Document projet : projets) {

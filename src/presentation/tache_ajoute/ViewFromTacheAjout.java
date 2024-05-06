@@ -153,12 +153,14 @@ public class ViewFromTacheAjout {
         Button Annuler = new Button("Annuler");
         Annuler.getStyleClass().add("footBtn-style");
 
+        HBox buttons = new HBox(10, Ajouter, Enregistrer, Annuler);
+
         leftBox.getChildren().add(labelTitre);
         leftBox.getChildren().add(ZoneTitre);
         leftBox.getChildren().add(labelDescription);
         leftBox.getChildren().add(ZoneDescription);
         leftBox.getChildren().add(labelDocs);
-        leftBox.getChildren().addAll(ContenaireDocuments, Ajouter, Enregistrer, Annuler);
+        leftBox.getChildren().addAll(ContenaireDocuments, buttons);
 
         centerContainer.getChildren().addAll(leftBox);
 

@@ -12,11 +12,14 @@ import javafx.stage.Stage;
 import metier.GestionnaireTache;
 import presentation.NewList.AddListModel;
 import presentation.NewList.AddListView;
+import presentation.NewProjet.AddProjetModel;
+import presentation.NewProjet.AddProjetView;
 import presentation.listes.ListeFormController;
 
 public class GetTasksController {
     private GestionnaireTache gestionnaireTache;
     private AddListModel addListModel;
+    private AddProjetModel addProjetModel;
     private ListeFormController listeFormController;
 
     public GetTasksController() {
@@ -24,9 +27,15 @@ public class GetTasksController {
         this.addListModel = new AddListModel("", "", new ArrayList<>());
     }
 
-    public GetTasksController(AddListModel addListModel, ListeFormController listeFormController) {
+    public GetTasksController(AddListModel addListModel2, ListeFormController listeFormController) {
         this.gestionnaireTache = new GestionnaireTache();
-        this.addListModel = addListModel;
+        this.addListModel = addListModel2;
+        this.listeFormController = listeFormController;
+    }
+
+    public GetTasksController(AddProjetModel addProjetModel2, ListeFormController listeFormController) {
+        this.gestionnaireTache = new GestionnaireTache();
+        this.addProjetModel = addProjetModel2;
         this.listeFormController = listeFormController;
     }
 

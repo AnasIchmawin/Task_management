@@ -3,7 +3,6 @@ package presentation.tache_detail;
 import java.io.File;
 import java.io.IOException;
 import java.awt.Desktop;
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,6 +17,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import presentation.taches.*;
+
 
 public class screen extends Application {
     private Button leftButton;
@@ -26,9 +27,10 @@ public class screen extends Application {
     private Button archiveButton;
     private BorderPane root;
     private Label descriptionLabel;
+    private controleur controller;
 
     // Constructor
-    public screen(controleur controller) {
+    public screen() {
         init();
         style();
     }
@@ -278,4 +280,5 @@ public class screen extends Application {
         }
         return button;
     }
+
 }
