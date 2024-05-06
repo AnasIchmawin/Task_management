@@ -23,13 +23,8 @@ public class ProjetsFormController {
     }
 
     public static void handleAjouterButtonAction(GridPane gridPane) {
-<<<<<<< HEAD
-        AddListView newProjectForm = new AddListView();
-        Stage stage = new Stage(); 
-=======
         AddListView newProjectForm = new AddListView(null);
         Stage stage = new Stage();
->>>>>>> 8464fee6d028b84c20e2f30c8a8eed57a2269363
         newProjectForm.start(stage);
     }
 

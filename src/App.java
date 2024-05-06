@@ -1,9 +1,6 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
-<<<<<<< HEAD
 import presentation.projet_detail.*;
-
-=======
 import persistence.DAO.DAOTache;
 import presentation.GetTasks.GetTasksController;
 import presentation.GetTasks.GetTasksView;
@@ -20,14 +17,11 @@ import presentation.projets.ProjetsFormView;
 import presentation.seance_ajoute.SeanceAjouteFormController;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
 import presentation.tache_ajoute.ViewFromTacheAjout;
->>>>>>> 8464fee6d028b84c20e2f30c8a8eed57a2269363
 
 public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-<<<<<<< HEAD
-=======
         // ListeFormController controller = new ListeFormController();
         // ListeFormView Seance = new ListeFormView(controller);
         // Seance.start(primaryStage);
@@ -53,8 +47,6 @@ public class App extends Application {
         // ControllerFromTacheAjout controller = new ControllerFromTacheAjout();
         // ViewFromTacheAjout view = new ViewFromTacheAjout(controller);
         // view.start(primaryStage);
-  
->>>>>>> 8464fee6d028b84c20e2f30c8a8eed57a2269363
 
         ProjetDetailController controller = new ProjetDetailController();
         Projet_Detail_View projets = new Projet_Detail_View(controller);
