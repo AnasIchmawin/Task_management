@@ -1,5 +1,8 @@
 package metier;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.bson.Document;
 
@@ -9,24 +12,12 @@ import persistence.DAO.DAOListe;
 public class GestionnaireListe {
 
     private DAOListe daoListe;
-    private POJOListe liste; 
-    static Integer id = 1 ;
-
-    private static int getId(){
-        return id ;
-    }
-    
-    private static void setId(Integer Id){
-        id = Id ;
-    }
+    private POJOListe liste;
 
     public GestionnaireListe() {
         this.daoListe = new DAOListe();
-        this.liste = new POJOListe() ;
+        this.liste = new POJOListe();
     }
-
-    
-
 
     public DAOListe getDaoListe() {
         return daoListe;
@@ -35,7 +26,6 @@ public class GestionnaireListe {
     public POJOListe getListe() {
         return liste;
     }
-
 
     public void setDaoListe(DAOListe daoListe) {
         this.daoListe = daoListe;
@@ -50,22 +40,21 @@ public class GestionnaireListe {
         if (liste.getTitre().isEmpty()) {
             throw new NonValidList("La liste doit avoir un titre !");
         }
-        daoListe.create(getId(), this.liste.getTitre(), this.liste.getDescription(), this.liste.getTaches());
-        setId(id + 1);
+        daoListe.create(this.liste.getTitre(), this.liste.getDescription(), this.liste.getTaches());
     }
 
     // Method to retrieve a list by its ID
-    public Document lireListe(int id) {
+    public Document lireListe(String id) {
         return daoListe.read(id);
     }
 
     // Method to update a list
-    public void mettreAJourListe(int id, String titre, String description, List<Document> taches) {
+    public void mettreAJourListe(String id, String titre, String description, List<Document> taches) {
         daoListe.update(id, titre, description, taches);
     }
 
     // Method to delete a list by its ID
-    public void supprimerListe(int id) {
+    public void supprimerListe(String id) {
         daoListe.delete(id);
     }
 
@@ -74,10 +63,15 @@ public class GestionnaireListe {
         return daoListe.getAllLists();
     }
 
-    public List<String> sortedLists(List<String> listes) {
-       if(listes.size() == 0){
-           return null ;
-       }
-      return this.daoListe.sortList(listes);
+    public List<Document> sortedLists(List<Document> listes) {
+       try {
+            List<Document> sortedList = new ArrayList<>(listes);
+            Collections.sort(sortedList, Comparator.comparing(doc -> doc.getString("titre")));
+
+            return sortedList;
+       } catch (NullPointerException e) {
+            System.out.println("Erreur lors du tri des listes : " + e.getMessage());
+            return null;
+        }
     }
 }

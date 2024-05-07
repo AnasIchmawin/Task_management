@@ -1,10 +1,12 @@
 package presentation.listes;
 import java.util.List;
 
-public class modeleList {
-    private List<String> Listes;
+import org.bson.Document;
 
-    public modeleList(List<String> Listes) {
+public class modeleList {
+    private List<Document> Listes;
+
+    public modeleList(List<Document> Listes) {
         this.Listes = Listes;
     }
 
@@ -12,11 +14,11 @@ public class modeleList {
         // TODO Auto-generated constructor stub
     }
 
-    public List<String> getListes() {
+    public List<Document> getListes() {
         return Listes;
     }
 
-    public void setListes(List<String> Listes) {
+    public void setListes(List<Document> Listes) {
         this.Listes = Listes;
     }
 }

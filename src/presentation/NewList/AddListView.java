@@ -1,6 +1,7 @@
 package presentation.NewList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import presentation.GetTasks.GetTasksController;
 import presentation.listes.ListeFormController;
 
 public class AddListView {
@@ -32,32 +34,32 @@ public class AddListView {
     private Button Enregistrer;
     private Button ajouterTacheButton;
     private Button Annuler;
-    private AddListController controleur;
     private BorderPane root;
     private TextField TitreField;
     private TextArea ZoneDescription;
     private GridPane ZoneTaches;
-    private AddListModel addListModel;
     private ListeFormController listeFormController;
+    private GetTasksController getTasksController;
+    private AddListController controleur;
+
+    public AddListView(GetTasksController getTasksController , ListeFormController listeFormController) {
+        this.listeFormController = listeFormController;
+        this.getTasksController = getTasksController;
+
+        init();
+        style();
+        action();
+    }
 
     public AddListView(ListeFormController listeFormController) {
         this.listeFormController = listeFormController;
-        addListModel = new AddListModel("", "", new ArrayList<>());
         init();
         style();
         action();
+      //  this.controleur.afficherTaches(this.ZoneTaches);
     }
 
-    public AddListView(AddListModel addmodel, ListeFormController listeFormController) {
-        this.listeFormController = listeFormController;
-        this.addListModel = new AddListModel(addmodel.getTitre(), addmodel.getDiscription(),
-                addmodel.getTitreSelectionnes());
 
-        init();
-        style();
-        action();
-        this.controleur.afficherTaches(this.addListModel.getTitreSelectionnes(), this.ZoneTaches);
-    }
 
     public void start(Stage primaryStage) {
         StackPane containerContent = createMainContent();
@@ -80,12 +82,10 @@ public class AddListView {
         Annuler = createButtonWithIcon("Annuler", "file:./Pictures/annuler.png", 20, 20);
         Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 13, 13);
         TitreField = createTextField("");
-        TitreField.setText(this.addListModel.getTitre());
         ZoneDescription = createTextArea("", "ZoneDescription-Style");
-        ZoneDescription.setText(this.addListModel.getDiscription());
         ajouterTacheButton = createButtonWithIcon("Ajouter Tache", "file:./Pictures/addIcon.png", 20, 20);
         ZoneTaches = creatZoneTaches();
-        this.controleur = new AddListController();
+        this.controleur = new AddListController(this);
 
     }
 
@@ -256,8 +256,8 @@ public class AddListView {
         Enregistrer.setOnAction(event -> {
             try {
 
-                addListModel.setTitre(TitreField.getText());
-                addListModel.setDiscription(ZoneDescription.getText());
+              //  addListModel.setTitre(TitreField.getText());
+             //   addListModel.setDiscription(ZoneDescription.getText());
                 ArrayList<String> Taches = new ArrayList<>();
 
                 // Accéder aux boutons dans le GridPane
@@ -269,7 +269,7 @@ public class AddListView {
                     }
                 }
 
-                this.controleur.saveInfosListe(addListModel , event);
+              //  this.controleur.saveInfosListe(event);
                 this.listeFormController.afficheListes();
 
 
@@ -277,12 +277,57 @@ public class AddListView {
                 System.out.println("Erreur pendant la fermeture du addlist : " + e.getMessage());
             }
         });
-        ajouterTacheButton.setOnAction(event -> {
-            addListModel.setTitre(TitreField.getText());
-            addListModel.setDiscription(ZoneDescription.getText());
 
-            this.controleur.getTasksView(event, addListModel, this.listeFormController);
+        // action ajouter tache button
+        ajouterTacheButton.setOnAction(event -> {
+            this.controleur.getTasksView(event);
         });
 
+    }
+
+    //method get and set titre field : 
+    public String getTitre()
+    {
+        return TitreField.getText();
+    }
+
+    public void setTitre(String newTitle)
+    {
+        TitreField.setText(newTitle);
+    }
+
+
+
+    // method get and set description field :
+    public String getDescription()
+    {
+        return ZoneDescription.getText();
+    }
+
+    public void setDescription(String newDescription)
+    {
+        ZoneDescription.setText(newDescription);
+    }
+
+    // method get and set ZoneTaches field :
+    public GridPane getZoneTaches()
+    {
+        return ZoneTaches;
+    }
+
+    public void setZoneTaches(GridPane newZoneTaches)
+    {
+        ZoneTaches = newZoneTaches;
+    }
+
+    public List<String> getTitreSelectionnes() {
+        List<String> taches = new ArrayList<>();
+        for (Node node : ZoneTaches.getChildren()) {
+            if (node instanceof Button) {
+                Button button = (Button) node;
+                taches.add(button.getText());
+            }
+        }
+        return taches;
     }
 }

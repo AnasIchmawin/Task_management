@@ -53,24 +53,29 @@ public class GestionnaireTache {
     }
 
     // GetAllTask saus dorm map<Integer _id and String titre>
-    public Map<String, String> getAllTasks_Id_Title() {
-        try {
-            Map<String, String> tasks = new HashMap<>();
-            List<Document> documents = daoTache.getAllTaches();
-            for (Document document : documents) {
-                ObjectId objectId = document.getObjectId("_id");
-                String taskId = objectId.toString(); // Convertir ObjectId en String
-                String taskTitle = document.getString("titre");
-                tasks.put(taskId, taskTitle);
-            }
-            for (Map.Entry<String, String> entry : tasks.entrySet()) {
-                System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-            }
-            return tasks;
-        } catch (Exception e) {
-            System.err.println("Erreur lors de la récupération des tâches au niveau gestion : " + e.getMessage());
-            return null;
-        }
+    // public Map<String, String> getAllTasks_Id_Title() {
+    //     try {
+    //         Map<String, String> tasks = new HashMap<>();
+    //         List<Document> documents = daoTache.getAllTaches();
+    //         for (Document document : documents) {
+    //             ObjectId objectId = document.getObjectId("_id");
+    //             String taskId = objectId.toString(); // Convertir ObjectId en String
+    //             String taskTitle = document.getString("titre");
+    //             tasks.put(taskId, taskTitle);
+    //         }
+    //         for (Map.Entry<String, String> entry : tasks.entrySet()) {
+    //             System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+    //         }
+    //         return tasks;
+    //     } catch (Exception e) {
+    //         System.err.println("Erreur lors de la récupération des tâches au niveau gestion : " + e.getMessage());
+    //         return null;
+    //     }
+    // }
+
+    // GetAllTask
+    public List<Document> getAllTasks() {
+        return daoTache.getAllTaches();
     }
 
 }

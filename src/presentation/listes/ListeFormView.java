@@ -44,7 +44,6 @@ public class ListeFormView extends Application {
     private HBox topContainer;
     private Region spacer;
     private HBox buttonContainer;
-   
 
     public ListeFormView() {
         Initialiser();
@@ -89,6 +88,11 @@ public class ListeFormView extends Application {
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
         root = new BorderPane();
+        SurveillerButton(listesButton , "100px" , "40px" , "#3F72AF");
+        SurveillerButton(projectsButton , "100px" , "40px" , "#3F72AF");
+        SurveillerButton(archiveButton, "100px" , "40px" , "#3F72AF");
+        SurveillerButton(ordonnerButton , "100px" , "40px" , "#3F72AF");
+        SurveillerButton(ajouterButton , "150px" , "40px" , "#3F72AF");
         this.controller = new ListeFormController(this);
     }
 
@@ -96,7 +100,7 @@ public class ListeFormView extends Application {
         root.getStyleClass().add("root");
         leftButton.getStyleClass().add("left-btn-style");
         searchButton.getStyleClass().add("left-btn-style");
-        listesButton.getStyleClass().add("button-style");
+        listesButton.getStyleClass().add("button-clicked-style");
         projectsButton.getStyleClass().add("button-style");
         archiveButton.getStyleClass().add("button-style");
         ordonnerButton.getStyleClass().add("ordonner-btn-style");
@@ -167,14 +171,36 @@ public class ListeFormView extends Application {
         return newButton;
     }
 
-
     // Action des boutons
     private void Action() {
         ajouterButton.setOnAction(event -> {
             this.controller.handleAjouterButtonAction();
         });
         ordonnerButton.setOnAction(event -> {
-            this.controller.handleOrdonnerButton() ;
+            this.controller.handleOrdonnerButton();
         });
     }
+
+    public void SurveillerButton(Button button ,String width , String height , String color) {
+        button.setOnMouseEntered(event -> {
+            button.setStyle("-fx-background-radius: 10px; " +
+                    "-fx-pref-width:"+width+"; " +
+                    "-fx-background-color: #8E9EB2; " +
+                    "-fx-text-fill: white; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 13px;");
+            button.setCursor(javafx.scene.Cursor.HAND);
+        });   
+        button.setOnMouseExited(event -> {
+            button.setStyle("-fx-background-radius: 10px; " +
+                    "-fx-pref-width:"+width+"; " +
+                    "-fx-background-color: "+color+";"+
+                    "-fx-text-fill: white; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 13px;");
+            button.setCursor(javafx.scene.Cursor.DEFAULT);
+        });
+    }
+
+    
 }

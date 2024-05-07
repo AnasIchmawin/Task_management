@@ -34,7 +34,7 @@ public class GetTasksView {
         action();
     }
 
-    @SuppressWarnings("static-access")
+
     public void start(Stage primaryStage) {
         VBox taskContainer = createVBox(5, Pos.TOP_CENTER);
         taskContainer.setPadding(new Insets(20, 0, 0, 20));
@@ -47,7 +47,7 @@ public class GetTasksView {
 
         root.setTop(titleLabel);
         root.setBottom(buttonContainer);
-        root.setAlignment(titleLabel, Pos.CENTER);
+        BorderPane.setAlignment(titleLabel, Pos.CENTER);
 
         Insets buttonMargin = new Insets(0, 0, 20, 0);
 

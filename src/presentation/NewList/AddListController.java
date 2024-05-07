@@ -1,7 +1,9 @@
 package presentation.NewList;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bson.Document;
 
@@ -17,19 +19,42 @@ import metier.GestionnaireListe;
 import metier.POJOListe;
 import metier.Errors.NonValidList;
 import presentation.GetTasks.GetTasksController;
+import presentation.GetTasks.GetTasksModel;
 import presentation.GetTasks.GetTasksView;
 import presentation.listes.ListeFormController;
 
 public class AddListController {
     private GestionnaireListe gestionnaireListe;
+    private AddListView addListView;
+    private AddListModel addListModel;
 
     public AddListController() {
         this.gestionnaireListe = new GestionnaireListe();
     }
 
-    public void saveInfosListe(AddListModel addListModel , ActionEvent event) {
-        List<Document> tachesDocuments = convertToDocumentList(addListModel.getTitreSelectionnes());
-        POJOListe nouvelleListe = new POJOListe(addListModel.getTitre(), addListModel.getDiscription(),
+    public AddListController(AddListView addListView) {
+        this.gestionnaireListe = new GestionnaireListe();
+        this.addListView = addListView;
+    }
+
+    public AddListController(AddListModel addListModel, List<String> tasks) {
+        this.gestionnaireListe = new GestionnaireListe();
+        this.addListModel = addListModel(addListModel.getTitre() , addListModel.getDescription() , tasks);
+        setTitleAndDescription(this.addListModel.getTitre(), this.addListModel.getDescription());
+    }
+
+    public AddListController(AddListModel addListModel2, Map<String, String> selectedTasks) {
+        //TODO Auto-generated constructor stub
+    }
+
+    private AddListModel addListModel(String titre, String desc, List<String> tasks) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addListModel'");
+    }
+
+    public void saveInfosListe(AddListModel addListModel, ActionEvent event) {
+        List<Document> tachesDocuments = convertToDocument(addListModel.getTitreSelectionnes());
+        POJOListe nouvelleListe = new POJOListe(addListModel.getTitre(), addListModel.getDescription(),
                 tachesDocuments);
         this.gestionnaireListe.setListe(nouvelleListe);
 
@@ -53,17 +78,23 @@ public class AddListController {
         alert.showAndWait();
     }
 
-    private List<Document> convertToDocumentList(List<String> taches) {
+    private List<Document> convertToDocument(HashMap<String ,String> tacheList) {
         List<Document> tachesDocuments = new ArrayList<>();
-        for (String tache : taches) {
-            Document tacheDocument = new Document("titre", tache);
-            tachesDocuments.add(tacheDocument);
+        for (Map.Entry<String, String> entry : tacheList.entrySet()) {
+            Document tache = new Document();
+            tache.append("id", entry.getKey());
+            tache.append("titre", entry.getValue());
+            tachesDocuments.add(tache);
         }
         return tachesDocuments;
     }
 
-    public void getTasksView(ActionEvent event, AddListModel addListModel, ListeFormController listeFormController) {
-        GetTasksController controller = new GetTasksController(addListModel, listeFormController);
+    public void getTasksView(ActionEvent event) {
+        String titre = this.addListView.getTitre();
+        String discription = this.addListView.getDescription();
+        this.addListModel = new AddListModel(titre, discription, new HashMap<>());
+
+        GetTasksController controller = new GetTasksController(this);
         GetTasksView view = new GetTasksView(controller);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         view.start(stage);
@@ -78,6 +109,11 @@ public class AddListController {
             int rowIndex = gridPane.getChildren().size() / 6; // Calculating row index
             gridPane.add(newListButton, colIndex, rowIndex);
         }
+    }
+
+    public void setTitleAndDescription(String titre, String description) {
+        this.addListView.setTitre(titre);
+        this.addListView.setDescription(description);
     }
 
     private Button creerBouton(String title) {
@@ -101,4 +137,7 @@ public class AddListController {
 
         return newListButton;
     }
+   public AddListModel  getAddListModel(){
+       return this.addListModel;
+   }
 }

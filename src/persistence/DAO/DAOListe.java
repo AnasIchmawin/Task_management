@@ -13,15 +13,14 @@ import java.util.List;
 public class DAOListe {
 
         // Create
-        public void create(Integer id, String Titre, String description, List<Document> taches) {
+        public void create(String Titre, String description, List<Document> taches) {
                 try {
                         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                                         .getCollection("listes");
 
                         // Ajouter les attributs du document
                         Document doc = new Document();
-                        doc.append("id", id)
-                                        .append("titre", Titre)
+                        doc.append("titre", Titre)
                                         .append("description", description);
                         if (taches != null) {
                                 doc.append("taches", taches);
@@ -34,7 +33,7 @@ public class DAOListe {
         }
 
         // Read
-        public Document read(int id) {
+        public Document read(String id) {
                 try {
                         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                                         .getCollection("listes");
@@ -46,7 +45,7 @@ public class DAOListe {
         }
 
         // Update
-        public void update(Integer id, String Titre, String description, List<Document> taches) {
+        public void update(String id, String Titre, String description, List<Document> taches) {
                 try {
                         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                                         .getCollection("listes");
@@ -67,7 +66,7 @@ public class DAOListe {
         }
 
         // Delete
-        public void delete(Integer id) {
+        public void delete(String id) {
                 try {
                         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                                         .getCollection("listes");
@@ -91,19 +90,5 @@ public class DAOListe {
                         System.err.println("Erreur lors de la récupération de toutes les listes : " + e.getMessage());
                 }
                 return allLists;
-        }
-
-        public List<String> sortList(List<String> listes) {
-                List<String> sortedList = new ArrayList<>();
-                try {
-                        for (String liste : listes) {
-                                sortedList.add(liste);
-                        }
-                        sortedList.sort(String::compareToIgnoreCase);
-                } catch (Exception e) {
-                        System.err.println("Erreur lors du tri des listes : " + e.getMessage());
-                }
-                return sortedList;
-              
         }
 }
