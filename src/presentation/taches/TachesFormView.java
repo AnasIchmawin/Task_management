@@ -140,7 +140,11 @@ public class TachesFormView extends Application {
 
         // Action for AjouterButton
         ajouterButton.setOnAction(event -> {
-            handleAjouterButtonAction(ZoneListes);
+            controller.handleAjouterButtonAction(ZoneListes,"Task"+(ZoneListes.getRowCount()));
+        });
+
+        searchButton.setOnAction(event -> {
+            controller.handleSearchButtonAction(ZoneListes,searchField.getText());
         });
 
         return container;
@@ -216,8 +220,4 @@ public class TachesFormView extends Application {
         return comboBox;
     }
 
-    // Action for AjouterButton
-    private void handleAjouterButtonAction(GridPane gridPane) {
-        controller.handleAjouterButtonAction(gridPane);
-    }
 }
