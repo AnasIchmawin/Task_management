@@ -19,6 +19,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class ListeFormView extends Application {
     private Button leftButton;
@@ -178,6 +180,9 @@ public class ListeFormView extends Application {
         ordonnerButton.setOnAction(event -> {
             this.controller.handleOrdonnerButton();
         });
+        projectsButton.setOnAction(event -> {
+            this.controller.handleProjectsButton();
+        });
     }
 
     public void SurveillerButton(Button button ,String width , String height , String color) {
@@ -199,10 +204,20 @@ public class ListeFormView extends Application {
                     "-fx-font-size: 13px;");
             button.setCursor(javafx.scene.Cursor.DEFAULT);
         });
+        searchField.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    controller.filterButtons(newValue);
+                }
+            });
     }
 
     public GridPane getZoneListes() {
         return ZoneListes;
+    }
+
+    public String getSearchFieldText() {
+        return searchField.getText();
     }
 
     
