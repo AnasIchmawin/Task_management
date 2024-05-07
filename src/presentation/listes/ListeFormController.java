@@ -1,7 +1,9 @@
 package presentation.listes;
 
 import metier.GestionnaireListe;
+import java.util.LinkedHashMap;
 
+import java.util.HashMap;
 import java.util.List;
 import org.bson.Document;
 import javafx.scene.control.Button;
@@ -13,12 +15,13 @@ import presentation.NewList.AddListView;
 public class ListeFormController {
     private GestionnaireListe gestionnaireListe;
     private ListeFormView listView;
-    private modeleList modeleList;
+    private ListModel listModel;
+    private HashMap<List<Integer>, List<String>> gridCaseInfos;
 
     public ListeFormController(ListeFormView listeFormView) {
         this.gestionnaireListe = new GestionnaireListe();
         this.listView = listeFormView;
-        this.modeleList = new modeleList();
+        this.listModel = new ListModel(getListMap());
     }
 
     // Affiche le formulaire d'ajout de liste
@@ -30,27 +33,64 @@ public class ListeFormController {
 
     // Affiche les listes triées
     public void handleOrdonnerButton() {
-        List<Document> listes = gestionnaireListe.sortedLists(this.modeleList.getListes());
-        afficheListesEnGrid(listes);
+        this.displayLists(true);
     }
 
     // Affiche les listes dans la vue liste
-    public void afficheListes() {
-        List<Document> listes = gestionnaireListe.obtenirToutesLesListes();
-        this.modeleList.setListes(listes);
-        afficheListesEnGrid(this.modeleList.getListes());
+    public void displayLists(boolean isSorted) {
+        listModel.setLists(getListMap());
+        if(isSorted) {
+            listModel.sortLists();
+        }
+        this.listView.getZoneListes().getChildren().clear();
+        gridCaseInfos = new LinkedHashMap<>(); // Utilisation de LinkedHashMap
+        int colCount = 0;
+        int rowCount = 0;
+        if (this.listModel.getLists() == null) {
+            return;
+        }
+        for (java.util.Map.Entry<String, String> entry : this.listModel.getLists().entrySet()) {
+            // Tester si une node existe déjà
+            Button newListButton = createListButton(entry.getValue());
+            while (this.listView.getZoneListes().getChildren().contains(newListButton)) {
+                colCount++;
+                if (colCount == 5) {
+                    colCount = 0;
+                    rowCount++;
+                }
+                newListButton = createListButton(entry.getValue());
+            }
+            this.listView.getZoneListes().add(newListButton, colCount, rowCount);
+            gridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), entry.getValue()));
+            colCount++;
+            if (colCount == 5) {
+                colCount = 0;
+                rowCount++;
+            }
+        }
     }
 
-    // Affiche les listes dans la vue
-    private void afficheListesEnGrid(List<Document> listes) {
-        this.listView.ZoneListes.getChildren().clear();
+    // Method to get all tasks
+    public LinkedHashMap<String, String> getListsMap() {
+        List<Document> listes = gestionnaireListe.obtenirToutesLesListes();
+        LinkedHashMap<String, String> listAvailable = new LinkedHashMap<>();
         for (Document liste : listes) {
+            String id = liste.getObjectId("_id").toString();
             String titre = liste.getString("titre");
-            Button newListButton = createListButton(titre);
-            int colIndex = this.listView.ZoneListes.getChildren().size() % 5; // Calculating column index
-            int rowIndex = this.listView.ZoneListes.getChildren().size() / 5; // Calculating row index
-            this.listView.ZoneListes.add(newListButton, colIndex, rowIndex);
+            listAvailable.put(id, titre);
         }
+        return listAvailable;
+    }
+
+    private LinkedHashMap<String, String> getListMap() {
+        List<Document> listes = gestionnaireListe.obtenirToutesLesListes();
+        LinkedHashMap<String, String> listMap = new LinkedHashMap<>();
+        for (Document liste : listes) {
+            String id = liste.getObjectId("_id").toString();
+            String titre = liste.getString("titre");
+            listMap.put(id, titre);
+        }
+        return listMap;
     }
 
     // Crée un bouton pour une liste
@@ -92,4 +132,5 @@ public class ListeFormController {
         }
         return newListButton;
     }
+
 }

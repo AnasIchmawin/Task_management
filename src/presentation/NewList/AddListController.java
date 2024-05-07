@@ -1,14 +1,10 @@
 package presentation.NewList;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.bson.Document;
-
-import javafx.scene.Node;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -19,55 +15,37 @@ import metier.GestionnaireListe;
 import metier.POJOListe;
 import metier.Errors.NonValidList;
 import presentation.GetTasks.GetTasksController;
-import presentation.GetTasks.GetTasksModel;
 import presentation.GetTasks.GetTasksView;
 import presentation.listes.ListeFormController;
 
 public class AddListController {
-    private GestionnaireListe gestionnaireListe;
-    private AddListView addListView;
-    private AddListModel addListModel;
-
-    public AddListController() {
-        this.gestionnaireListe = new GestionnaireListe();
-    }
+    private final GestionnaireListe gestionnaireListe;
+    private final AddListView addListView;
+    private final AddListModel addListModel;
 
     public AddListController(AddListView addListView) {
         this.gestionnaireListe = new GestionnaireListe();
         this.addListView = addListView;
+        this.addListModel = new AddListModel("", "",new LinkedHashMap<>());
     }
 
-    public AddListController(AddListModel addListModel, List<String> tasks) {
-        this.gestionnaireListe = new GestionnaireListe();
-        this.addListModel = addListModel(addListModel.getTitre() , addListModel.getDescription() , tasks);
-        setTitleAndDescription(this.addListModel.getTitre(), this.addListModel.getDescription());
-    }
+    public void saveInfosListe(ActionEvent event) {
+        if (!addListView.getTitre().isEmpty()) {
+            updateListModel();
+            POJOListe nouvelleListe = new POJOListe(this.addListModel);
+            this.gestionnaireListe.setListe(nouvelleListe);
 
-    public AddListController(AddListModel addListModel2, Map<String, String> selectedTasks) {
-        //TODO Auto-generated constructor stub
-    }
-
-    private AddListModel addListModel(String titre, String desc, List<String> tasks) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addListModel'");
-    }
-
-    public void saveInfosListe(AddListModel addListModel, ActionEvent event) {
-        List<Document> tachesDocuments = convertToDocument(addListModel.getTitreSelectionnes());
-        POJOListe nouvelleListe = new POJOListe(addListModel.getTitre(), addListModel.getDescription(),
-                tachesDocuments);
-        this.gestionnaireListe.setListe(nouvelleListe);
-
-        try {
-            gestionnaireListe.creerListe();
-            // cloeser la fenetre
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Récupérer la fenêtre
-            // actuelle
-            stage.close();
-
-        } catch (NonValidList e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", e.getMessage());
+            try {
+                gestionnaireListe.creerListe();
+            } catch (NonValidList e) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", e.getMessage());
+            }
         }
+    }
+
+    private void updateListModel() {
+        addListModel.setTitre(addListView.getTitre());
+        addListModel.setDescription(addListView.getDescription());
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {
@@ -78,47 +56,54 @@ public class AddListController {
         alert.showAndWait();
     }
 
-    private List<Document> convertToDocument(HashMap<String ,String> tacheList) {
-        List<Document> tachesDocuments = new ArrayList<>();
-        for (Map.Entry<String, String> entry : tacheList.entrySet()) {
-            Document tache = new Document();
-            tache.append("id", entry.getKey());
-            tache.append("titre", entry.getValue());
-            tachesDocuments.add(tache);
-        }
-        return tachesDocuments;
-    }
+    public void getTasksView(ActionEvent event, ListeFormController listeFormController) {
+        String titre = addListView.getTitre();
+        String description = addListView.getDescription();
+        this.addListModel.setTitre(titre);
+        this.addListModel.setDescription(description);
 
-    public void getTasksView(ActionEvent event) {
-        String titre = this.addListView.getTitre();
-        String discription = this.addListView.getDescription();
-        this.addListModel = new AddListModel(titre, discription, new HashMap<>());
-
-        GetTasksController controller = new GetTasksController(this);
+        GetTasksController controller = new GetTasksController(this, listeFormController);
         GetTasksView view = new GetTasksView(controller);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         view.start(stage);
     }
 
-    public void afficherTaches(List<String> list, GridPane gridPane) {
-        List<String> mestaches = new ArrayList<>(list);
+    public void displayTasks(GridPane gridPane) {
+        List<String> mesTaches = new ArrayList<>(getTasksTitles());
 
-        for (String title : mestaches) {
-            Button newListButton = creerBouton(title);
+        for (String title : mesTaches) {
+            Button newTaskButton = createTaskButton(title);
             int colIndex = gridPane.getChildren().size() % 6; // Calculating column index
             int rowIndex = gridPane.getChildren().size() / 6; // Calculating row index
-            gridPane.add(newListButton, colIndex, rowIndex);
+            gridPane.add(newTaskButton, colIndex, rowIndex);
         }
     }
 
-    public void setTitleAndDescription(String titre, String description) {
-        this.addListView.setTitre(titre);
-        this.addListView.setDescription(description);
+    private List<String> getTasksTitles() {
+        return new ArrayList<>(this.addListModel.getTachesSelectionnees().values());
     }
 
-    private Button creerBouton(String title) {
-        Button newListButton = new Button(title);
-        newListButton.setStyle("-fx-background-color: #112D4E; " +
+    public void updateView(AddListView view) {
+        view.setTitre(this.addListModel.getTitre());
+        view.setDescription(this.addListModel.getDescription());
+    }
+
+    public AddListModel getAddListModel() {
+        return this.addListModel;
+    }
+
+    public void addTaskToList(String id, String task) {
+        this.addListModel.addTask(id, task);
+    }
+
+    public void closerWindow(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    private Button createTaskButton(String title) {
+        Button newTaskButton = new Button(title);
+        newTaskButton.setStyle("-fx-background-color: #112D4E; " +
                 "-fx-background-radius: 10px; " +
                 "-fx-min-width: 50px; " +
                 "-fx-max-height: 20px;" +
@@ -130,14 +115,11 @@ public class AddListController {
             ImageView listIconView = new ImageView(listIcon);
             listIconView.setFitWidth(15);
             listIconView.setFitHeight(15);
-            newListButton.setGraphic(listIconView);
+            newTaskButton.setGraphic(listIconView);
         } catch (Exception e) {
             System.out.println("Erreur de chargement de l'icône de la liste : " + e.getMessage());
         }
 
-        return newListButton;
+        return newTaskButton;
     }
-   public AddListModel  getAddListModel(){
-       return this.addListModel;
-   }
 }

@@ -34,7 +34,6 @@ public class GetTasksView {
         action();
     }
 
-
     public void start(Stage primaryStage) {
         VBox taskContainer = createVBox(5, Pos.TOP_CENTER);
         taskContainer.setPadding(new Insets(20, 0, 0, 20));
@@ -88,7 +87,7 @@ public class GetTasksView {
         ZoneTasks.setHgap(20);
         ZoneTasks.setVgap(15);
         ZoneTasks.setPadding(new Insets(20));
-        this.controller.afficherTasks(this.ZoneTasks);
+        this.controller.displayTasks(ZoneTasks);
 
         return this.ZoneTasks;
     }
