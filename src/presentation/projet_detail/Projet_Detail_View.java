@@ -5,10 +5,14 @@ import java.io.IOException;
 import java.awt.Desktop;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -89,7 +93,6 @@ public class Projet_Detail_View extends Application {
         HBox HeadBox = BoxHead("la tache de la famille des taches", "12/21/2021", "13/12/2023", "Encadrement", "PFE");
         HBox Descr_Seances = Descr_Seances();
         HBox Taches_doc = Taches_doc();
-        HBox Buttons = Buttons();
 
         // Création du VBox
         VBox vbox = new VBox(30); // Espacement vertical entre les HBox
@@ -99,31 +102,33 @@ public class Projet_Detail_View extends Application {
     }
 
     private HBox Descr_Seances() {
-        HBox hbox = new HBox(20);
+        HBox hbox = new HBox(200);
         VBox vbox1 = BoxDescription("on cont  la bureautiquela bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautiquela bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautiquela bureautique");
-        VBox Seances = createSeanceBox();
+        VBox Seances = createSeancesBox();
         hbox.getChildren().addAll(vbox1, Seances);
         return hbox;
     }
 
-    private VBox createSeanceBox() {
+    private VBox createSeancesBox() {
+        GridPane gridPane = creatZoneDocs();
+        VBox contenaire = new VBox();
+        contenaire.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
 
-        VBox contenaireSeances = new VBox();
-        contenaireSeances.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
-        contenaireSeances.setSpacing(5);
-        contenaireSeances.setAlignment(Pos.TOP_CENTER);
+        VBox contenaireSeances = new VBox(30);    
+        contenaireSeances.setSpacing(20);
 
-        GridPane zoneDesSeances = creatZoneDocs();
-        ScrollPane scrollTache = createScrollPane(zoneDesSeances);
-        scrollTache.getStyleClass().add("Docs-Style");
+        VBox contenaireButton = new VBox();
+
+        ScrollPane scrollSeance = createScrollPane(gridPane);
+        scrollSeance.getStyleClass().add("Docs-Style");
 
         Button ajouterSeanceButton = new Button();
-        ajouterSeanceButton.getStyleClass().add("AjouterSeance-Style");
+        ajouterSeanceButton.getStyleClass().add("ajout-style");
 
         // Créer une icône pour le bouton
         ImageView icon = new ImageView(new Image("file:./Pictures/addIcon.png"));
-        icon.setFitWidth(20); // Ajuster la largeur de l'icône selon vos besoins
-        icon.setFitHeight(20); // Ajuster la hauteur de l'icône selon vos besoins
+        icon.setFitWidth(20);
+        icon.setFitHeight(20);
 
         // Créer le texte pour le bouton
         Text buttonText = new Text("Ajouter Seance");
@@ -138,25 +143,32 @@ public class Projet_Detail_View extends Application {
         ajouterSeanceButton.setGraphic(buttonContent);
         HBox.setHgrow(ajouterSeanceButton, Priority.ALWAYS);
 
+        contenaireButton.getChildren().add(ajouterSeanceButton);
+        contenaireButton.setAlignment(Pos.BOTTOM_CENTER);
+
         contenaireSeances.setPadding(new Insets(8, 8, 8, 8));
 
         // Action for AjouterButton
         ajouterSeanceButton.setOnAction(event -> {
-            controller.handleAjouterButtonAction(zoneDesSeances);
+            controller.handleAjouterButtonAction(gridPane);
         });
 
-        contenaireSeances.getChildren().addAll(scrollTache, ajouterSeanceButton);
-        contenaireSeances.setMinHeight(110);
-        contenaireSeances.setMinWidth(300);
+        contenaireSeances.getChildren().addAll(scrollSeance);
+        contenaireSeances.setPrefHeight(120);
 
-        return contenaireSeances;
+        contenaire.setMinWidth(300);
+        contenaire.setMinHeight(160);
+
+        contenaire.getChildren().addAll(contenaireSeances, contenaireButton);
+
+        return contenaire;
     } 
 
     private GridPane creatZoneDocs() {
         GridPane grid = new GridPane();
         // grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(8);
-        grid.setHgap(10);
+        grid.setHgap(1);
         grid.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
         return grid;
     }
@@ -165,11 +177,69 @@ public class Projet_Detail_View extends Application {
 
 
     private HBox Taches_doc() {
-        HBox hbox = new HBox(20);
-        VBox vbox1 = BoxDescription("la bureautique informatique, sans que son cont  la bureautiquela bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautiquela bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautiquela bureautique informatique, sans que son cont  la bureautique informatique");
+        HBox hbox = new HBox(200);
+        VBox vbox1 = creatTasksbox();
         VBox DocSection = DocumentSection();
+        DocSection.setAlignment(Pos.TOP_RIGHT);
         hbox.getChildren().addAll(vbox1, DocSection);
         return hbox;
+    }
+
+    private VBox creatTasksbox() {
+        GridPane gridPane = creatZoneDocs();
+        VBox contenaire = new VBox();
+        contenaire.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
+
+        VBox contenaireTaches = new VBox(40);
+
+        HBox contenaireButton = new HBox();
+
+        // contenaireTaches.setAlignment(Pos.TOP_CENTER);
+
+        ScrollPane scrollTache = createScrollPane(gridPane);
+        scrollTache.getStyleClass().add("Docs-Style");
+
+        Button ajouterTacheButton = new Button();
+        ajouterTacheButton.getStyleClass().add("ajout-style");
+
+        // Créer une icône pour le bouton
+        ImageView icon = new ImageView(new Image("file:./Pictures/addIcon.png"));
+        icon.setFitWidth(20); 
+        icon.setFitHeight(20); 
+
+        // Créer le texte pour le bouton
+        Text buttonText = new Text("Ajouter Tache");
+        buttonText.setFill(Color.WHITE);
+
+        // Mettre l'icône et le texte dans une HBox
+        HBox buttonContent = new HBox(buttonText, icon);
+        buttonContent.setAlignment(Pos.CENTER); // Aligner le contenu à gauche
+        buttonContent.setSpacing(30);
+
+        
+        // Ajouter la HBox au bouton
+        ajouterTacheButton.setGraphic(buttonContent);
+        HBox.setHgrow(ajouterTacheButton, Priority.ALWAYS);
+
+        contenaireButton.getChildren().add(ajouterTacheButton);
+        contenaireButton.setAlignment(Pos.BOTTOM_CENTER);
+
+        contenaireTaches.setPadding(new Insets(8, 8, 8, 8));
+
+        // Action for AjouterButton
+        ajouterTacheButton.setOnAction(event -> {
+            controller.handleAjouterTacheButtonAction(gridPane);
+        });
+        contenaireTaches.setSpacing(20);
+        contenaireTaches.getChildren().addAll(scrollTache);
+        contenaireTaches.setPrefHeight(235);
+
+        contenaire.setMinWidth(500);
+        contenaire.setMinHeight(250);
+
+        contenaire.getChildren().addAll(contenaireTaches, contenaireButton);
+
+        return contenaire;
     }
 
     private ScrollPane createScrollPane(GridPane gridPane) {

@@ -65,6 +65,7 @@ public class TachesFormController {
         gridPane.add(cloneButton, 4, row);
         gridPane.add(taskCheckBox, 5, row);
 
+        
         taskCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             //change color checkbox and thier buttons when checked
             @Override
@@ -112,6 +113,11 @@ public class TachesFormController {
                 }
             }
         });
+    }
+
+    //handleAjouterSeanceButtonAction
+    public static void handleAjouterSeanceButtonAction(GridPane gridPane) {
+
     }
 
     //handle the search button

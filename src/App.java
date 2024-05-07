@@ -44,12 +44,16 @@ public class App extends Application {
         // ArchiveFormView archive = new ArchiveFormView(controller);
         // archive.start(primaryStage);
         
-        ListeFormView liste = new ListeFormView();
-        liste.start(primaryStage);
+        // ListeFormView liste = new ListeFormView();
+        // liste.start(primaryStage);
       
         // ControllerFromTacheAjout controller = new ControllerFromTacheAjout();
         // ViewFromTacheAjout view = new ViewFromTacheAjout(controller);
         // view.start(primaryStage);
+
+        ProjetDetailController controller = new ProjetDetailController();
+        Projet_Detail_View view = new Projet_Detail_View(controller);
+        view.start(primaryStage);
   
 
     }

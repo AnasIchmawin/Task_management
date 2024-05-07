@@ -50,6 +50,10 @@ public class GetTasksController {
     // this.listeFormController = listeFormController;
     // }
 
+    public GetTasksController(AddProjetModel addListModel, ListeFormController listeFormController2) {
+        //TODO Auto-generated constructor stub
+    }
+
     // Method to get all tasks
     public Map<String, String> getTask() {
         List<Document> tasks = gestionnaireTache.getAllTasks();
