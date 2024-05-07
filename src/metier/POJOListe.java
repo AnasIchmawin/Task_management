@@ -1,44 +1,51 @@
 package metier;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.bson.Document;
+import presentation.NewList.AddListModel;
 
 public class POJOListe {
-    private String titre ;
-    private String description ;
-    private List<Document> Taches ;
+    private String titre;
+    private String description;
+    private List<String> Taches;
 
     public POJOListe() {
     }
-    public POJOListe(String titre, String description, List<Document> taches) {
-        this.titre = titre;
-        this.description = description;
-        Taches = taches;
-        
+
+    public POJOListe(AddListModel addListModel) {
+        this.titre = addListModel.getTitre();
+        this.description = addListModel.getDescription();
+        this.Taches = new ArrayList<>(addListModel.getTachesSelectionnees().keySet());
     }
+
     public String getTitre() {
         return titre;
     }
+
     public String getDescription() {
         return description;
     }
-    public List<Document> getTaches() {
+
+    public List<String> getTaches() {
         return Taches;
     }
+
     public void setTitre(String titre) {
         this.titre = titre;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
-    public void setTaches(List<Document> taches) {
+
+    public void setTaches(List<String> taches) {
         Taches = taches;
     }
+
     @Override
     public String toString() {
         return "POJOListe [titre=" + titre + ", description=" + description + ", Taches=" + Taches + "]";
     }
-    
 
 }

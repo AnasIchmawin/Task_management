@@ -1,8 +1,6 @@
 package metier;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+
 import java.util.List;
 import org.bson.Document;
 
@@ -33,6 +31,7 @@ public class GestionnaireListe {
 
     public void setListe(POJOListe liste) {
         this.liste = liste;
+        System.out.println("Liste dans setListe dans le gestionnaire : " + liste);
     }
 
     // Method to create a new list
@@ -61,17 +60,5 @@ public class GestionnaireListe {
     // Method to get all lists
     public List<Document> obtenirToutesLesListes() {
         return daoListe.getAllLists();
-    }
-
-    public List<Document> sortedLists(List<Document> listes) {
-       try {
-            List<Document> sortedList = new ArrayList<>(listes);
-            Collections.sort(sortedList, Comparator.comparing(doc -> doc.getString("titre")));
-
-            return sortedList;
-       } catch (NullPointerException e) {
-            System.out.println("Erreur lors du tri des listes : " + e.getMessage());
-            return null;
-        }
     }
 }

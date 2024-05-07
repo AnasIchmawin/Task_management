@@ -50,7 +50,7 @@ public class ListeFormView extends Application {
         Styler();
         Dessiner();
         Action();
-        this.controller.afficheListes();
+        this.controller.displayLists(false);
     }
 
     @Override
@@ -88,7 +88,6 @@ public class ListeFormView extends Application {
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
         root = new BorderPane();
-        SurveillerButton(listesButton , "100px" , "40px" , "#3F72AF");
         SurveillerButton(projectsButton , "100px" , "40px" , "#3F72AF");
         SurveillerButton(archiveButton, "100px" , "40px" , "#3F72AF");
         SurveillerButton(ordonnerButton , "100px" , "40px" , "#3F72AF");
@@ -200,6 +199,10 @@ public class ListeFormView extends Application {
                     "-fx-font-size: 13px;");
             button.setCursor(javafx.scene.Cursor.DEFAULT);
         });
+    }
+
+    public GridPane getZoneListes() {
+        return ZoneListes;
     }
 
     

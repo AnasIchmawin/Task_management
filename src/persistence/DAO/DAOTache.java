@@ -14,7 +14,7 @@ import java.util.List;
 public class DAOTache {
 
     // Create
-    public void create(Integer id, String titre, String categorie, String description,
+    public void create(String titre, String categorie, String description,
             LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
             Document projet, Document liste) {
 
@@ -25,8 +25,7 @@ public class DAOTache {
 
             // Ajouter les attributs du document
             Document doc = new Document();
-            doc.append("id", id)
-                    .append("titre", titre)
+                    doc.append("titre", titre)
                     .append("categorie", categorie)
                     .append("description", description)
                     .append("dateDebut", dateDebut)

@@ -13,7 +13,7 @@ import java.util.List;
 public class DAOListe {
 
         // Create
-        public void create(String Titre, String description, List<Document> taches) {
+        public void create(String Titre, String description, List<String> list) {
                 try {
                         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                                         .getCollection("listes");
@@ -22,10 +22,19 @@ public class DAOListe {
                         Document doc = new Document();
                         doc.append("titre", Titre)
                                         .append("description", description);
-                        if (taches != null) {
-                                doc.append("taches", taches);
+                        // covenvertit list to document
+                        if(list != null){
+                            List<Document> taches = new ArrayList<>();
+                            for (String id_tache : list) {
+                                    Document tacheDoc = new Document();
+                                    tacheDoc.append("id", id_tache);
+                                    taches.add(tacheDoc);
+                            }
+                            doc.append("taches", taches);
                         }
-                        // Insert the document
+                        else{
+                            doc.append("taches", null);
+                        }
                         collection.insertOne(doc);
                 } catch (Exception e) {
                         System.err.println("Erreur lors de la création de la liste : " + e.getMessage());
