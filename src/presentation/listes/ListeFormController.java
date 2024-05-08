@@ -5,12 +5,16 @@ import java.util.LinkedHashMap;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.bson.Document;
+
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import presentation.NewList.AddListView;
+import presentation.projets.ProjetsFormView;
 
 public class ListeFormController {
     private GestionnaireListe gestionnaireListe;
@@ -39,7 +43,7 @@ public class ListeFormController {
     // Affiche les listes dans la vue liste
     public void displayLists(boolean isSorted) {
         listModel.setLists(getListMap());
-        if(isSorted) {
+        if (isSorted) {
             listModel.sortLists();
         }
         this.listView.getZoneListes().getChildren().clear();
@@ -60,7 +64,7 @@ public class ListeFormController {
                 }
                 newListButton = createListButton(entry.getValue());
             }
-            this.listView.getZoneListes().add(newListButton, colCount, rowCount);
+            addListButton(newListButton, colCount, rowCount);
             gridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), entry.getValue()));
             colCount++;
             if (colCount == 5) {
@@ -68,6 +72,10 @@ public class ListeFormController {
                 rowCount++;
             }
         }
+    }
+
+    private void addListButton(Button newListButton, int colCount, int rowCount) {
+        this.listView.getZoneListes().add(newListButton, colCount, rowCount);
     }
 
     // Method to get all tasks
@@ -131,6 +139,38 @@ public class ListeFormController {
             System.out.println("Erreur de chargement de l'icône de la liste : " + e.getMessage());
         }
         return newListButton;
+    }
+
+    public void handleProjectsButton() {
+        Stage stage = (Stage) listView.getZoneListes().getScene().getWindow();
+        ProjetsFormView projets = new ProjetsFormView();
+        projets.start(stage);
+    }
+
+    public void filterButtons(String searchText) {
+        // Réinitialisation des compteurs de colonnes et de lignes
+        int colCount = 0;
+        int rowCount = 0;
+
+        listView.getZoneListes().getChildren().clear();
+
+        // Parcourir toutes les entrées de la liste
+        for (Map.Entry<String, String> entry : listModel.getLists().entrySet()) {
+            String buttonTitle = entry.getValue().toLowerCase();
+            // Vérifier si le titre du bouton contient le texte de recherche
+            if (buttonTitle.contains(searchText.toLowerCase())) {
+                // Créer un nouveau bouton avec le titre approprié
+                Button button = createListButton(entry.getValue());
+                addListButton(button, colCount, rowCount);
+
+                // Mettre à jour les compteurs de colonnes et de lignes
+                colCount++;
+                if (colCount == 5) {
+                    colCount = 0;
+                    rowCount++;
+                }
+            }
+        }
     }
 
 }
