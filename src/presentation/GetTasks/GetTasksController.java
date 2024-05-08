@@ -24,12 +24,10 @@ public class GetTasksController {
     private AddListController addListController;
     private AddProjetController addProjetController;
     private ListeFormController listeFormController;
-<<<<<<< HEAD
     private LinkedHashMap<List<Integer>, List<String>> GridCaseInfos;
-=======
     private ProjetsFormController projetsFormController;
-    private HashMap<List<Integer>, List<String>> GridCaseInfos;
->>>>>>> 47e33531f6699a54e28d9660067b0822ce4d10b8
+
+
 
     public GetTasksController(AddListController addListController, ListeFormController listeFormController) {
         this.gestionnaireTache = new GestionnaireTache();

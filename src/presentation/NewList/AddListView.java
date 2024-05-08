@@ -45,7 +45,7 @@ public class AddListView {
         action();
         this.controleur.updateView(this);
         this.controleur.displayTasks(ZoneTaches);
-        
+
     }
 
     public void start(Stage primaryStage) {

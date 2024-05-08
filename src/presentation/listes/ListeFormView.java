@@ -46,7 +46,7 @@ public class ListeFormView extends Application {
     private HBox topContainer;
     private Region spacer;
     private HBox buttonContainer;
-    private Button supprimerButton ;
+    private Button supprimerButton;
 
     public ListeFormView() {
         Initialiser();
@@ -92,11 +92,11 @@ public class ListeFormView extends Application {
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
         root = new BorderPane();
-        SurveillerButton(projectsButton , "100px" , "40px" , "#3F72AF");
-        SurveillerButton(archiveButton, "100px" , "40px" , "#3F72AF");
-        SurveillerButton(ordonnerButton , "100px" , "40px" , "#3F72AF");
-        SurveillerButton(ajouterButton , "150px" , "40px" , "#3F72AF");
-        SurveillerButton(supprimerButton , "150px" , "40px" , "#3F72AF");
+        SurveillerButton(projectsButton, "100px", "40px", "#3F72AF");
+        SurveillerButton(archiveButton, "100px", "40px", "#3F72AF");
+        SurveillerButton(ordonnerButton, "100px", "40px", "#3F72AF");
+        SurveillerButton(ajouterButton, "150px", "40px", "#3F72AF");
+        SurveillerButton(supprimerButton, "150px", "40px", "#3F72AF");
         this.controller = new ListeFormController(this);
     }
 
@@ -134,7 +134,7 @@ public class ListeFormView extends Application {
         HBox.setHgrow(spacer, Priority.ALWAYS);
         topContainer.getChildren().add(spacer);
         topContainer.getChildren().add(searchPane);
-        buttonContainer.getChildren().addAll(ajouterButton , supprimerButton);
+        buttonContainer.getChildren().addAll(ajouterButton, supprimerButton);
         HBox.setMargin(ajouterButton, new Insets(50, 0, 0, 70));
         HBox.setMargin(supprimerButton, new Insets(50, 0, 0, 25));
         mainContentContainer.getChildren().addAll(topContainer, Listes, buttonContainer);
@@ -178,6 +178,41 @@ public class ListeFormView extends Application {
         return newButton;
     }
 
+    public GridPane getZoneListes() {
+        return ZoneListes;
+    }
+
+    public String getSearchFieldText() {
+        return searchField.getText();
+    }
+
+    public void SurveillerButton(Button button, String width, String height, String color) {
+        button.setOnMouseEntered(event -> {
+            button.setStyle("-fx-background-radius: 10px; " +
+                    "-fx-pref-width:" + width + "; " +
+                    "-fx-background-color: #8E9EB2; " +
+                    "-fx-text-fill: white; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 13px;");
+            button.setCursor(javafx.scene.Cursor.HAND);
+        });
+        button.setOnMouseExited(event -> {
+            button.setStyle("-fx-background-radius: 10px; " +
+                    "-fx-pref-width:" + width + "; " +
+                    "-fx-background-color: " + color + ";" +
+                    "-fx-text-fill: white; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 13px;");
+            button.setCursor(javafx.scene.Cursor.DEFAULT);
+        });
+        searchField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                controller.searchList(newValue);
+            }
+        });
+    }
+
     // Action des boutons
     private void Action() {
         ajouterButton.setOnAction(event -> {
@@ -194,44 +229,7 @@ public class ListeFormView extends Application {
         });
         archiveButton.setOnAction(event -> {
             this.controller.handleArchiveButton();
-        }
-        );
-    }
-
-    public void SurveillerButton(Button button ,String width , String height , String color) {
-        button.setOnMouseEntered(event -> {
-            button.setStyle("-fx-background-radius: 10px; " +
-                    "-fx-pref-width:"+width+"; " +
-                    "-fx-background-color: #8E9EB2; " +
-                    "-fx-text-fill: white; " +
-                    "-fx-font-weight: bold; " +
-                    "-fx-font-size: 13px;");
-            button.setCursor(javafx.scene.Cursor.HAND);
-        });   
-        button.setOnMouseExited(event -> {
-            button.setStyle("-fx-background-radius: 10px; " +
-                    "-fx-pref-width:"+width+"; " +
-                    "-fx-background-color: "+color+";"+
-                    "-fx-text-fill: white; " +
-                    "-fx-font-weight: bold; " +
-                    "-fx-font-size: 13px;");
-            button.setCursor(javafx.scene.Cursor.DEFAULT);
         });
-        searchField.textProperty().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    controller.SearchList(newValue);
-                }
-            });
     }
 
-    public GridPane getZoneListes() {
-        return ZoneListes;
-    }
-
-    public String getSearchFieldText() {
-        return searchField.getText();
-    }
-
-    
 }

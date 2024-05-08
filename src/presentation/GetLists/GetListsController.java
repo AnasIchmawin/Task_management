@@ -12,10 +12,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.web.WebHistory.Entry;
 import javafx.stage.Stage;
 import metier.GestionnaireListe;
-import metier.POJOListe;
 import presentation.listes.ListeFormController;
 
 public class GetListsController {
@@ -25,13 +23,13 @@ public class GetListsController {
     private GetListsView getListsView;
     private GetListsModel getListsModel;
 
-    public GetListsController(){
-        super() ;
+    public GetListsController() {
+        super();
     }
 
-    public GetListsController(GetListsView getListsView  ,ListeFormController listeFormController) {
+    public GetListsController(GetListsView getListsView, ListeFormController listeFormController) {
         this.gestionnaireListe = new GestionnaireListe();
-        this.getListsView = getListsView ;
+        this.getListsView = getListsView;
         this.getListsModel = new GetListsModel();
         this.listeFormController = listeFormController;
         this.getListsView.createListGridPane(this);
@@ -42,16 +40,14 @@ public class GetListsController {
         this.getListsView.start(stage);
     }
 
-    public void handleConfirmButton(ActionEvent event) { 
-        System.out.println("Selected Lists: " + getSelectedLists());
-       this.getListsModel.setListDeleted(getSelectedLists());
-       this.gestionnaireListe.supprimerListe(this.getListsModel.getListDeleted());
-       // recuperer le ids de git list map 
-    List<String> listIds = new ArrayList<>();
-    for(java.util.Map.Entry<String, String> entry : getListsMap().entrySet()){
-        listIds.add(entry.getKey());
-    }
-      this.getListsModel.setListDeleted(listIds);
+    public void handleConfirmButton(ActionEvent event) {
+        this.getListsModel.setListDeleted(getSelectedLists());
+        this.gestionnaireListe.supprimerListe(this.getListsModel.getListDeleted());
+        List<String> listIds = new ArrayList<>();
+        for (java.util.Map.Entry<String, String> entry : getListsMap().entrySet()) {
+            listIds.add(entry.getKey());
+        }
+        this.getListsModel.setListDeleted(listIds);
         getListsView.getZoneLists().getChildren().clear();
         this.listeFormController.displayLists(false);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -65,12 +61,10 @@ public class GetListsController {
 
     public void displayLists(GridPane zoneLists) {
         GridCaseInfos = new LinkedHashMap<>();
-
         if (getListsMap().isEmpty()) {
             System.out.println("No Lists available");
             return;
         }
-
         int colCount = 0;
         int rowCount = 0;
 
@@ -125,8 +119,7 @@ public class GetListsController {
     }
 
     public void setview(GetListsView getListsView2) {
-        this.getListsView = getListsView2 ;
+        this.getListsView = getListsView2;
     }
-    
 
 }

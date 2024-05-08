@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.bson.Document;
+
 
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
@@ -15,13 +15,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import metier.GestionnaireProjet;
-import metier.GestionnaireProjet;
-import metier.POJOListe;
 import metier.POJOProjet;
 import metier.Errors.NonValidList;
 import presentation.GetTasks.GetTasksController;
 import presentation.GetTasks.GetTasksView;
-import presentation.listes.ListeFormController;
 import presentation.projets.ProjetsFormController;
 
 public class AddProjetController {

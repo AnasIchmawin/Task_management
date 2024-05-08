@@ -140,6 +140,9 @@ public class GetListsView {
 
         return scrollPane;
     }
+    public GridPane getZoneLists() {
+        return ZoneLists;
+    }
 
     private void action() {
         confirmButton.setOnAction(event -> {
@@ -152,8 +155,6 @@ public class GetListsView {
 
     }
 
-    public GridPane getZoneLists() {
-        return ZoneLists;
-    }
+   
 
 }
