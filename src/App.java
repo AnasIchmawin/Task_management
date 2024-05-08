@@ -33,8 +33,8 @@ public class App extends Application {
         // ListeFormView Seance = new ListeFormView(controller);
         // Seance.start(primaryStage);
 
-        // ProjetsFormView projets = new ProjetsFormView();
-        // projets.start(primaryStage);
+        ProjetsFormView projets = new ProjetsFormView();
+        projets.start(primaryStage);
 
         // ListeFormController controller = new ListeFormController();
         // ListeFormView projets = new ListeFormView(controller);
@@ -44,8 +44,7 @@ public class App extends Application {
         // ArchiveFormView archive = new ArchiveFormView(controller);
         // archive.start(primaryStage);
         
-        ListeFormView liste = new ListeFormView();
-        liste.start(primaryStage);
+       
 
         // LoginFormView login = new LoginFormView(primaryStage);
         // login.start(primaryStage);
