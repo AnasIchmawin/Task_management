@@ -270,7 +270,7 @@ public class AddProjetView {
                 }
 
                 this.controleur.saveInfosProjet(addListModel);
-                this.listeFormController.afficheListes();
+                this.ProjetsFormController.afficherProjets();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Récupérer la fenêtre
                                                                                          // actuelle
                 stage.close();
