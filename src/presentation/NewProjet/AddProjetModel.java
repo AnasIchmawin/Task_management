@@ -1,79 +1,43 @@
 package presentation.NewProjet;
 
-import java.util.List;
+import java.util.LinkedHashMap;
 
 public class AddProjetModel {
-    private String titre;
-    private String categorie;
-    private String type;
-    private String description;
-    private String dateDebut;
-    private String dateFin;
-    private List<String> titreSelectionnes;
+    private String Titre;
+    private String Description;
+    private LinkedHashMap<String, String> TachesSelectionnees;
 
-    public AddProjetModel(String titre, String categorie, String type, String description, String dateDebut, String dateFin, List<String> titreSelectionnes) {
-        this.titre = titre;
-        this.categorie = categorie;
-        this.type = type;
-        this.description = description;
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
-        this.titreSelectionnes = titreSelectionnes;
+    public AddProjetModel(String titre, String description, LinkedHashMap<String, String> tachesSelectionnees) {
+        Titre = titre;
+        Description = description;
+        this.TachesSelectionnees = tachesSelectionnees;
     }
 
     public String getTitre() {
-        return titre;
-    }
-
-    public String getCategorie() {
-        return categorie;
-    }
-
-    public String getType() {
-        return type;
+        return Titre;
     }
 
     public String getDescription() {
-        return description;
+        return Description;
     }
 
-    public String getDateDebut() {
-        return dateDebut;
-    }
-
-    public String getDateFin() {
-        return dateFin;
-    }
-
-    public List<String> getTitreSelectionnes() {
-        return titreSelectionnes;
+    public LinkedHashMap<String, String> getTachesSelectionnees() {
+        return TachesSelectionnees;
     }
 
     public void setTitre(String titre) {
-        this.titre = titre;
-    }
-
-    public void setCategorie(String categorie) {
-        this.categorie = categorie;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+        Titre = titre;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        Description = description;
     }
 
-    public void setDateDebut(String dateDebut) {
-        this.dateDebut = dateDebut;
+    public void setTachesSelectionnees(LinkedHashMap<String, String> tachesSelectionnees) {
+        this.TachesSelectionnees = tachesSelectionnees;
     }
 
-    public void setDateFin(String dateFin) {
-        this.dateFin = dateFin;
-    }
-
-    public void setTitreSelectionnes(List<String> titreSelectionnes) {
-        this.titreSelectionnes = titreSelectionnes;
+    public void addTask(String id, String titre) {
+        TachesSelectionnees.put(id, titre);
     }
 }

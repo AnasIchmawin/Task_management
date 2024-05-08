@@ -16,18 +16,28 @@ import javafx.stage.Stage;
 import metier.GestionnaireTache;
 import presentation.NewList.AddListController;
 import presentation.NewList.AddListView;
+import presentation.NewProjet.AddProjetController;
 import presentation.listes.ListeFormController;
+import presentation.projets.ProjetsFormController;
 
 public class GetTasksController {
     private GestionnaireTache gestionnaireTache;
     private AddListController addListController;
+    private AddProjetController addProjetController;
     private ListeFormController listeFormController;
+    private ProjetsFormController projetsFormController;
     private HashMap<List<Integer>, List<String>> GridCaseInfos;
 
     public GetTasksController(AddListController addListController, ListeFormController listeFormController) {
         this.gestionnaireTache = new GestionnaireTache();
         this.addListController = addListController;
         this.listeFormController = listeFormController;
+    }
+
+    public GetTasksController(AddProjetController addProjetController, ProjetsFormController projetsFormController) {
+        this.gestionnaireTache = new GestionnaireTache();
+        this.addProjetController = addProjetController;
+        this.projetsFormController = projetsFormController;
     }
 
     // Method to get all tasks
@@ -93,6 +103,7 @@ public class GetTasksController {
         Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
         view.start(stage);
     }
+
 
     // Method to create a checkbox
     private CheckBox createCheckBox(String task) {

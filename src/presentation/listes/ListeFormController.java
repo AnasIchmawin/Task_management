@@ -79,17 +79,6 @@ public class ListeFormController {
     }
 
     // Method to get all tasks
-    public LinkedHashMap<String, String> getListsMap() {
-        List<Document> listes = gestionnaireListe.obtenirToutesLesListes();
-        LinkedHashMap<String, String> listAvailable = new LinkedHashMap<>();
-        for (Document liste : listes) {
-            String id = liste.getObjectId("_id").toString();
-            String titre = liste.getString("titre");
-            listAvailable.put(id, titre);
-        }
-        return listAvailable;
-    }
-
     private LinkedHashMap<String, String> getListMap() {
         List<Document> listes = gestionnaireListe.obtenirToutesLesListes();
         LinkedHashMap<String, String> listMap = new LinkedHashMap<>();
@@ -147,7 +136,7 @@ public class ListeFormController {
         projets.start(stage);
     }
 
-    public void filterButtons(String searchText) {
+    public void SearchList(String searchText) {
         // Réinitialisation des compteurs de colonnes et de lignes
         int colCount = 0;
         int rowCount = 0;

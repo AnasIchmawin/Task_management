@@ -1,5 +1,7 @@
 package presentation.projets;
 
+import java.util.*;
+
 public class ProjetsModel {
     private LinkedHashMap<String, String> projets;
 

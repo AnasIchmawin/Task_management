@@ -207,7 +207,7 @@ public class ListeFormView extends Application {
         searchField.textProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    controller.filterButtons(newValue);
+                    controller.SearchList(newValue);
                 }
             });
     }

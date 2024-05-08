@@ -1,6 +1,7 @@
 package presentation.NewProjet;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.bson.Document;
@@ -21,28 +22,36 @@ import metier.Errors.NonValidList;
 import presentation.GetTasks.GetTasksController;
 import presentation.GetTasks.GetTasksView;
 import presentation.listes.ListeFormController;
+import presentation.projets.ProjetsFormController;
 
 public class AddProjetController {
-    private GestionnaireProjet gestionnaireProjet;
+    private final GestionnaireProjet gestionnaireProjet;
+    private final AddProjetView addProjetView;
+    private final AddProjetModel addProjetModel;
 
-    public AddProjetController() {
+    public AddProjetController(AddProjetView addProjetView) {
         this.gestionnaireProjet = new GestionnaireProjet();
+        this.addProjetView = addProjetView;
+        this.addProjetModel = new AddProjetModel("", "",new LinkedHashMap<>());
     }
 
-    public void saveInfosProjet(AddProjetModel addProjetModel) {
-        List<Document> tachesDocuments = convertToDocumentList(addProjetModel.getTitreSelectionnes());
-        POJOProjet nouveauProjet = new POJOProjet(addProjetModel.getTitre(), addProjetModel.getCategorie(),
-                addProjetModel.getType(), addProjetModel.getDescription(), addProjetModel.getDateDebut(),
-                addProjetModel.getDateFin(), new ArrayList<>(), new ArrayList<>(), tachesDocuments, false);
-        this.gestionnaireProjet.setProjet(nouveauProjet);
+    public void saveInfosProjet(ActionEvent event) {
+        if (!addProjetView.getTitre().isEmpty()) {
+            updateProjetModel();
+            POJOProjet nouveauProjet = new POJOProjet(this.addProjetModel);
+            this.gestionnaireProjet.setProjet(nouveauProjet);
 
-        try {
-            gestionnaireProjet.creerProjet();
-            showAlert(Alert.AlertType.INFORMATION, "Succès", "Le projet a été créé avec succès !");
-
-        } catch (NonValidList e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", e.getMessage());
+            try {
+                gestionnaireProjet.creerProjet();
+            } catch (NonValidList e) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", e.getMessage());
+            }
         }
+    }
+
+    private void updateProjetModel() {
+        addProjetModel.setTitre(addProjetView.getTitre());
+        addProjetModel.setDescription(addProjetView.getDescription());
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {
@@ -53,52 +62,72 @@ public class AddProjetController {
         alert.showAndWait();
     }
 
-    private List<Document> convertToDocumentList(List<String> taches) {
-        List<Document> tachesDocuments = new ArrayList<>();
-        for (String tache : taches) {
-            Document tacheDocument = new Document("titre", tache);
-            tachesDocuments.add(tacheDocument);
-        }
-        return tachesDocuments;
-    }
+    public void getTasksView(ActionEvent event, ProjetsFormController projetFormController) {
+        String titre = addProjetView.getTitre();
+        String description = addProjetView.getDescription();
+        this.addProjetModel.setTitre(titre);
+        this.addProjetModel.setDescription(description);
 
-    public void getTasksView(ActionEvent event, AddProjetModel addListModel, ListeFormController listeFormController) {
-        GetTasksController controller = new GetTasksController(addListModel, listeFormController);
-        GetTasksView view = new GetTasksView(controller);
+        GetTasksController Controller = new GetTasksController(this, projetFormController);
+        GetTasksView View = new GetTasksView(Controller);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        view.start(stage);
+        View.start(stage);
     }
 
-    public void afficherTaches(List<String> list, GridPane gridPane) {
-        List<String> mestaches = new ArrayList<>(list);
+    public void displayTasks(GridPane gridPane) {
+        List<String> mesTaches = new ArrayList<>(getTasksTitles());
 
-        for (String title : mestaches) {
-            Button newListButton = creerBouton(title);
+        for (String title : mesTaches) {
+            Button newTaskButton = createTaskButton(title);
             int colIndex = gridPane.getChildren().size() % 6; // Calculating column index
             int rowIndex = gridPane.getChildren().size() / 6; // Calculating row index
-            gridPane.add(newListButton, colIndex, rowIndex);
+            gridPane.add(newTaskButton, colIndex, rowIndex); 
         }
     }
 
-    private Button creerBouton(String title) {
-        Button newListButton = new Button(title);
-        newListButton.setStyle("-fx-background-color: #112D4E; " +
-                "-fx-background-radius: 10px; " +
-                "-fx-min-width: 50px; " +
-                "-fx-max-height: 20px;" +
-                "-fx-text-fill: #ffffff;" +
-                "-fx-font-size: 18px;");
+    private List<String> getTasksTitles() {
+        return new ArrayList<>(this.addProjetModel.getTachesSelectionnees().values());
+    }
 
-        try {
-            Image listIcon = new Image("file:./Pictures/to-do.png");
-            ImageView listIconView = new ImageView(listIcon);
-            listIconView.setFitWidth(15);
-            listIconView.setFitHeight(15);
-            newListButton.setGraphic(listIconView);
-        } catch (Exception e) {
-            System.out.println("Erreur de chargement de l'icône dU Projet : " + e.getMessage());
-        }
+    public void updateView(AddProjetView view) {
+        view.setTitre(this.addProjetModel.getTitre());
+        view.setDescription(this.addProjetModel.getDescription());
+    }
 
-        return newListButton;
+    public AddProjetModel getAddProjetModel(){
+        return this.addProjetModel;
+    }
+
+    //addTaskToList
+    public void addTaskToList(String id, String task) {
+        this.addProjetModel.addTask(id, task);
+    }
+
+    //closerWindow
+    public void closerWindow(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    private Button createTaskButton(String title) {
+        Button newTaskButton = new Button(title);
+        newTaskButton.setStyle("-fx-background-color: #112D4E; " +
+            "-fx-background-radius: 10px; " +
+            "-fx-min-width: 50px; " +
+            "-fx-max-height: 20px;" +
+            "-fx-text-fill: #ffffff;" +
+            "-fx-font-size: 18px;");
+
+            try {
+                Image listIcon = new Image("file:./Pictures/to-do.png");
+                ImageView listIconView = new ImageView(listIcon);
+                listIconView.setFitWidth(15);
+                listIconView.setFitHeight(15);
+                newTaskButton.setGraphic(listIconView);
+            } catch (Exception e) {
+                System.out.println("Erreur de chargement de l'icône de la liste : " + e.getMessage());
+            }
+    
+        return newTaskButton;
     }
 }
