@@ -1,10 +1,10 @@
 .titleLabel-style{
-    -fx-font-size: 40px;
+    -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-text-fill: #fff;
-    -fx-alignment: center;
+    /* faire wrap  */
+    -fx-wrap-text: true;
 }
-
 
 .root-style {
     -fx-background-color : #112D4E ;

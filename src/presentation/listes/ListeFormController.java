@@ -13,7 +13,11 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import presentation.GetLists.GetListsController;
+import presentation.GetLists.GetListsView;
 import presentation.NewList.AddListView;
+import presentation.archive.ArchiveFormController;
+import presentation.archive.ArchiveFormView;
 import presentation.projets.ProjetsFormView;
 
 public class ListeFormController {
@@ -78,18 +82,6 @@ public class ListeFormController {
         this.listView.getZoneListes().add(newListButton, colCount, rowCount);
     }
 
-    // Method to get all tasks
-    public LinkedHashMap<String, String> getListsMap() {
-        List<Document> listes = gestionnaireListe.obtenirToutesLesListes();
-        LinkedHashMap<String, String> listAvailable = new LinkedHashMap<>();
-        for (Document liste : listes) {
-            String id = liste.getObjectId("_id").toString();
-            String titre = liste.getString("titre");
-            listAvailable.put(id, titre);
-        }
-        return listAvailable;
-    }
-
     private LinkedHashMap<String, String> getListMap() {
         List<Document> listes = gestionnaireListe.obtenirToutesLesListes();
         LinkedHashMap<String, String> listMap = new LinkedHashMap<>();
@@ -147,7 +139,7 @@ public class ListeFormController {
         projets.start(stage);
     }
 
-    public void filterButtons(String searchText) {
+    public void SearchList(String searchText) {
         // Réinitialisation des compteurs de colonnes et de lignes
         int colCount = 0;
         int rowCount = 0;
@@ -162,7 +154,7 @@ public class ListeFormController {
                 // Créer un nouveau bouton avec le titre approprié
                 Button button = createListButton(entry.getValue());
                 addListButton(button, colCount, rowCount);
-
+                gridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), entry.getValue()));
                 // Mettre à jour les compteurs de colonnes et de lignes
                 colCount++;
                 if (colCount == 5) {
@@ -171,6 +163,18 @@ public class ListeFormController {
                 }
             }
         }
+    }
+
+    public void handleSupprimerButtonAction() {
+        GetListsView getListview = new GetListsView(this);
+        getListview.start(new Stage());
+    }
+
+    public void handleArchiveButton() {
+        Stage stage = (Stage) listView.getZoneListes().getScene().getWindow();
+        ArchiveFormController archiveCon = new ArchiveFormController();
+        ArchiveFormView archiveFormView = new ArchiveFormView(archiveCon);
+        archiveFormView.start(stage);
     }
 
 }

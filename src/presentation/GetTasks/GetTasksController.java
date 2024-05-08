@@ -1,6 +1,5 @@
 package presentation.GetTasks;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,7 @@ public class GetTasksController {
     private GestionnaireTache gestionnaireTache;
     private AddListController addListController;
     private ListeFormController listeFormController;
-    private HashMap<List<Integer>, List<String>> GridCaseInfos;
+    private LinkedHashMap<List<Integer>, List<String>> GridCaseInfos;
 
     public GetTasksController(AddListController addListController, ListeFormController listeFormController) {
         this.gestionnaireTache = new GestionnaireTache();
@@ -51,7 +50,7 @@ public class GetTasksController {
 
     // Method to display tasks
     public void displayTasks(GridPane gridPane) {
-        GridCaseInfos = new HashMap<>();
+        GridCaseInfos = new LinkedHashMap<>();
 
         if (getTasksMap().isEmpty()) {
             System.out.println("No tasks available");

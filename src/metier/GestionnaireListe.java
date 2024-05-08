@@ -1,6 +1,5 @@
 package metier;
 
-
 import java.util.List;
 import org.bson.Document;
 
@@ -53,8 +52,13 @@ public class GestionnaireListe {
     }
 
     // Method to delete a list by its ID
-    public void supprimerListe(String id) {
-        daoListe.delete(id);
+    public void supprimerListe(List<String> ids) {
+        try {
+            for (String id : ids)
+                daoListe.delete(id);
+        } catch (Exception e) {
+            System.out.println("Supression failed");
+        }
     }
 
     // Method to get all lists

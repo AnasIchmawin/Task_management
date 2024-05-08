@@ -1,6 +1,7 @@
 package persistence.DAO;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -79,7 +80,8 @@ public class DAOListe {
                 try {
                         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                                         .getCollection("listes");
-                        collection.deleteOne(Filters.eq("id", id));
+                         ObjectId objId = new ObjectId(id);
+                        collection.deleteOne(Filters.eq("_id", objId));
                 } catch (Exception e) {
                         System.err.println("Erreur lors de la suppression de la liste : " + e.getMessage());
                 }

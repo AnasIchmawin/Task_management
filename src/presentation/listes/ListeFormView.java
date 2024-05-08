@@ -46,6 +46,7 @@ public class ListeFormView extends Application {
     private HBox topContainer;
     private Region spacer;
     private HBox buttonContainer;
+    private Button supprimerButton ;
 
     public ListeFormView() {
         Initialiser();
@@ -72,6 +73,7 @@ public class ListeFormView extends Application {
         ordonnerButton = createButton("Ordonner", "file:./Pictures/folder.png", 20, 20);
         searchButton = createButton("", "file:./Pictures/loupe.png", 20, 20);
         ajouterButton = createButton("Ajouter une Liste", "file:./Pictures/add.png", 20, 20);
+        supprimerButton = createButton("Supprimer une Liste", "file:./Pictures/delete.png", 20, 20);
         buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
         leftButtonBox = new HBox(20, leftButton);
         navbar = new HBox(30, leftButtonBox, buttonsBar);
@@ -94,6 +96,7 @@ public class ListeFormView extends Application {
         SurveillerButton(archiveButton, "100px" , "40px" , "#3F72AF");
         SurveillerButton(ordonnerButton , "100px" , "40px" , "#3F72AF");
         SurveillerButton(ajouterButton , "150px" , "40px" , "#3F72AF");
+        SurveillerButton(supprimerButton , "150px" , "40px" , "#3F72AF");
         this.controller = new ListeFormController(this);
     }
 
@@ -107,6 +110,8 @@ public class ListeFormView extends Application {
         ordonnerButton.getStyleClass().add("ordonner-btn-style");
         ajouterButton.getStyleClass().add("button-style");
         ajouterButton.setStyle("-fx-pref-width : 150px ;");
+        supprimerButton.getStyleClass().add("button-style");
+        supprimerButton.setStyle("-fx-pref-width : 150px ;");
         searchField.getStyleClass().add("search-field-style");
         navbar.getStyleClass().add("navbar");
         navbarContainer.getStyleClass().add("navbar-container");
@@ -129,8 +134,9 @@ public class ListeFormView extends Application {
         HBox.setHgrow(spacer, Priority.ALWAYS);
         topContainer.getChildren().add(spacer);
         topContainer.getChildren().add(searchPane);
-        buttonContainer.getChildren().add(ajouterButton);
+        buttonContainer.getChildren().addAll(ajouterButton , supprimerButton);
         HBox.setMargin(ajouterButton, new Insets(50, 0, 0, 70));
+        HBox.setMargin(supprimerButton, new Insets(50, 0, 0, 25));
         mainContentContainer.getChildren().addAll(topContainer, Listes, buttonContainer);
         HBox.setMargin(ordonnerButton, new Insets(30, 20, 20, 70));
         HBox.setMargin(searchPane, new Insets(30, 70, 20, 20));
@@ -183,6 +189,13 @@ public class ListeFormView extends Application {
         projectsButton.setOnAction(event -> {
             this.controller.handleProjectsButton();
         });
+        supprimerButton.setOnAction(event -> {
+            this.controller.handleSupprimerButtonAction();
+        });
+        archiveButton.setOnAction(event -> {
+            this.controller.handleArchiveButton();
+        }
+        );
     }
 
     public void SurveillerButton(Button button ,String width , String height , String color) {
@@ -207,7 +220,7 @@ public class ListeFormView extends Application {
         searchField.textProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    controller.filterButtons(newValue);
+                    controller.SearchList(newValue);
                 }
             });
     }

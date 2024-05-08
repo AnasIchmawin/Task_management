@@ -1,7 +1,5 @@
 package presentation.login;
 
-import java.io.IOException;
-import org.json.simple.parser.ParseException;
 import metier.service;
 
 public class ModelLogin {
@@ -21,7 +19,12 @@ public class ModelLogin {
     }
 
     // methode de verification :
-    public  boolean isValidEmailAddress() throws IOException, ParseException {
-        return service.isValidEmailAddress(this.gmail);
+    public boolean isValidEmailAddress() {
+        try {
+            return service.isValidEmailAddress(this.gmail);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

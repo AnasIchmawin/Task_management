@@ -16,8 +16,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LoginFormView extends Application {
-    final static Integer MIN_WIDTH = 450;
-    final static Integer MIN_HEIGHT = 450;
+    private static final int MIN_WIDTH = 1160;
+    private static final int MIN_HEIGHT = 652;
 
     private LoginController controller;
     private BorderPane Formulaire;
@@ -46,8 +46,14 @@ public class LoginFormView extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Scene scene = new Scene(verticalPane, 1160, 652);
+        // Création de la scène avec des dimensions minimales définies par les
+        // constantes
+        Scene scene = new Scene(verticalPane, MIN_WIDTH, MIN_HEIGHT);
+
+        // Chargement du fichier CSS externe pour le style
         scene.getStylesheets().add(getClass().getResource("login.css").toExternalForm());
+
+        // Configuration de la scène et affichage de la fenêtre
         primaryStage.setScene(scene);
         primaryStage.setTitle("LoginForm");
         primaryStage.show();
