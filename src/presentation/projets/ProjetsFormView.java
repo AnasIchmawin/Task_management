@@ -1,6 +1,8 @@
 package presentation.projets;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -41,22 +43,21 @@ public class ProjetsFormView extends Application {
     private VBox mainContentContainer;
     private StackPane container;
     private ScrollPane scrollPane;
-    private VBox Listes;
+    private VBox Projets;
     private StackPane searchPane;
     private HBox topContainer;
     private Region spacer;
     private HBox buttonContainer;
-    private GridPane ZoneListes;
+    private GridPane ZoneProjets;
     private StackPane stackPane;
     private HBox filterBox;
 
     public ProjetsFormView() {
-        this.controller = new ProjetsFormController();
         Initialiser();
         Styler();
         Dessiner();
         Action();
-        this.controller.AfficheProjets(this.ZoneListes);        
+        this.controller.displayProjets(false);
     }
 
     @Override
@@ -86,17 +87,20 @@ public class ProjetsFormView extends Application {
         navbarContainer = new VBox(navbar);
         mainContentContainer = new VBox();
         container = new StackPane();
-        ZoneListes = createGridPane();
-        scrollPane = createScrollPane(ZoneListes);
+        ZoneProjets = createGridPane();
+        scrollPane = createScrollPane(ZoneProjets);
         stackPane = new StackPane();
-        Listes = new VBox();
+        Projets = new VBox();
         searchPane = new StackPane();
         topContainer = new HBox();
         spacer = new Region();
         buttonContainer = new HBox();
         filterBox = new HBox();
-
-        
+        SurveillerButton(projectsButton,"100px","40px","#3F72AF");
+        SurveillerButton(archiveButton,"100px","40px","#3F72AF");
+        SurveillerButton(ordonnerButton,"100px","40px","#3F72AF");
+        SurveillerButton(ajouterButton,"150px","40px","#3F72AF");
+        this.controller = new ProjetsFormController(this);
     }
 
     private void Styler() {
@@ -113,7 +117,7 @@ public class ProjetsFormView extends Application {
         navbarContainer.getStyleClass().add("navbar-container");
         container.getStyleClass().add("container");
         scrollPane.getStyleClass().add("scroll-pane");
-        Listes.getStyleClass().add("listes");
+        Projets.getStyleClass().add("listes");
         searchPane.getStyleClass().add("search-pane");
         topContainer.getStyleClass().add("top-container");
         buttonContainer.getStyleClass().add("button-container");
@@ -126,13 +130,13 @@ public class ProjetsFormView extends Application {
         topContainer.setAlignment(Pos.TOP_LEFT); 
         scrollPane.setPadding(new Insets(0, 50, 0, 50));
     
-        Listes.getChildren().addAll(scrollPane);
-        Listes.setPadding(new Insets(0, 40, 0, 40));
-        Listes.setSpacing(15); 
+        Projets.getChildren().addAll(scrollPane);
+        Projets.setPadding(new Insets(0, 40, 0, 40));
+        Projets.setSpacing(15); 
         HBox.setMargin(ajouterButton, new Insets(50, 0, 0, 70));
     
         buttonContainer.getChildren().add(ajouterButton);
-        mainContentContainer.getChildren().addAll(topContainer, Listes, buttonContainer);
+        mainContentContainer.getChildren().addAll(topContainer, Projets, buttonContainer);
         mainContentContainer.setSpacing(10);
         container.getChildren().addAll(mainContentContainer);
         BorderPane.setMargin(container, new Insets(20, 20, 20, 20));
@@ -218,8 +222,49 @@ public class ProjetsFormView extends Application {
 
     private void Action() {
         ajouterButton.setOnAction(event -> {
-            this.controller.handleAjouterButtonAction(ZoneListes);
+            this.controller.handleAjouterButtonAction();
+        });
+        ordonnerButton.setOnAction(event -> {
+            this.controller.handleOrdonnerButton();
+        });
+        listesButton.setOnAction(event -> {
+            this.controller.handleListesButton();
         });
     }
     
+    public void SurveillerButton(Button button ,String width ,String heitht ,String color) {
+        button.setOnMouseEntered(event -> {
+            button.setStyle("-fx-background-radius: 10px; " +
+                    "-fx-pref-width:"+width+"; " +
+                    "-fx-background-color: #8E9EB2; " +
+                    "-fx-text-fill: white; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 13px;");
+            button.setCursor(javafx.scene.Cursor.HAND);
+        });
+        button.setOnMouseExited(event -> {
+            button.setStyle("-fx-background-radius: 10px; " +
+                    "-fx-pref-width:"+width+"; " +
+                    "-fx-background-color: "+color+";"+
+                    "-fx-text-fill: white; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 13px;");
+            button.setCursor(javafx.scene.Cursor.DEFAULT);
+        });
+
+        searchField.textProperty().addListener(new ChangeListener<String>(){
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    controller.SearchProjet(newValue);
+            }
+        });
+    }
+
+    public GridPane getZoneProjets() {
+        return ZoneProjets;
+    }
+
+    public String getSearchFieldText() {
+        return searchField.getText();
+    }
 }

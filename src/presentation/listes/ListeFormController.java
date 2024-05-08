@@ -82,6 +82,10 @@ public class ListeFormController {
         this.listView.getZoneListes().add(newListButton, colCount, rowCount);
     }
 
+<<<<<<< HEAD
+=======
+    // Method to get all tasks
+>>>>>>> 47e33531f6699a54e28d9660067b0822ce4d10b8
     private LinkedHashMap<String, String> getListMap() {
         List<Document> listes = gestionnaireListe.obtenirToutesLesListes();
         LinkedHashMap<String, String> listMap = new LinkedHashMap<>();
