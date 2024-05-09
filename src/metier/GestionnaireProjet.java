@@ -50,8 +50,13 @@ public class GestionnaireProjet {
     }
 
     // supprimerProjet
-    public void supprimerProjet(String id) {
-        this.daoProjet.delete(id);
+    public void supprimerProjet(List<String> ids) {
+        try {
+            for (String id : ids)
+                this.daoProjet.delete(id);
+        } catch (Exception e) {
+            System.out.println("Supression failed");
+        }
     }
 
     // obtenirToutesLesProjets

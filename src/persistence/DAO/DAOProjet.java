@@ -3,6 +3,8 @@ package persistence.DAO;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
 import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -73,10 +75,12 @@ public class DAOProjet {
     // Delete
     public void delete(String id) {
         try {
-            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
-            collection.deleteOne(Filters.eq("id", id));
-        } catch (MongoException e) {
-            System.err.println("Erreur lors de la suppression du projet : " + e.getMessage());
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                            .getCollection("projets");
+            ObjectId objId = new ObjectId(id);
+            collection.deleteOne(Filters.eq("_id", objId));
+        } catch (Exception e) {
+                System.err.println("Erreur lors de la suppression de la liste : " + e.getMessage());
         }
     }
 
