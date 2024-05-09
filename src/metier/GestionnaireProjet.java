@@ -53,7 +53,7 @@ public class GestionnaireProjet {
     public void supprimerProjet(List<String> ids) {
         try {
             for (String id : ids)
-                this.daoProjet.delete(id);
+                daoProjet.delete(id);
         } catch (Exception e) {
             System.out.println("Supression failed");
         }

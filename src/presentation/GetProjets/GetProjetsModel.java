@@ -6,7 +6,7 @@ public class GetProjetsModel {
     List<String> ProjetDeleted;
 
     public GetProjetsModel(List<String> projetDeleted) {
-        projetDeleted = projetDeleted;
+        this.ProjetDeleted = projetDeleted;
     }
 
     public GetProjetsModel() {

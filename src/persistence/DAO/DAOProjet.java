@@ -80,7 +80,7 @@ public class DAOProjet {
             ObjectId objId = new ObjectId(id);
             collection.deleteOne(Filters.eq("_id", objId));
         } catch (Exception e) {
-                System.err.println("Erreur lors de la suppression de la liste : " + e.getMessage());
+                System.err.println("Erreur lors de la suppression de la projet : " + e.getMessage());
         }
     }
 
