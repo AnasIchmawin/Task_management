@@ -20,8 +20,12 @@ import presentation.projet_detail.ProjetDetailController;
 import presentation.projet_detail.Projet_Detail_View;
 import presentation.projets.ProjetsFormController;
 import presentation.projets.ProjetsFormView;
+import presentation.seance.SceanceFormController;
+import presentation.seance.SeanceFormView;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
 import presentation.tache_ajoute.ViewFromTacheAjout;
+import presentation.taches.TachesFormController;
+import presentation.taches.TachesFormView;
 
 @SuppressWarnings("unused")
 public class App extends Application {
@@ -32,18 +36,15 @@ public class App extends Application {
         // ListeFormView Seance = new ListeFormView(controller);
         // Seance.start(primaryStage);
 
-        ProjetsFormView projets = new ProjetsFormView();
-        projets.start(primaryStage);
+        // ProjetsFormView projets = new ProjetsFormView();
+        // projets.start(primaryStage);
 
-        // ListeFormController controller = new ListeFormController();
-        // ListeFormView projets = new ListeFormView(controller);
+        // ListeFormView projets = new ListeFormView();
         // projets.start(primaryStage);
 
         // ArchiveFormController controller = new ArchiveFormController();
         // ArchiveFormView archive = new ArchiveFormView(controller);
         // archive.start(primaryStage);
-        
-       
 
         // LoginFormView login = new LoginFormView(primaryStage);
         // login.start(primaryStage);
@@ -56,6 +57,13 @@ public class App extends Application {
         // Projet_Detail_View view = new Projet_Detail_View(con) ;
         // view.start(primaryStage) ;
 
+        TachesFormController con = new TachesFormController() ;
+        TachesFormView view = new TachesFormView(con) ;
+        view.start(primaryStage) ;
+
+        // SceanceFormController con = new SceanceFormController() ;
+        // SeanceFormView view = new SeanceFormView(con) ;
+        // view.start(primaryStage) ;
   
 
     }
