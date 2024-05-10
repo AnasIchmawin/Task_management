@@ -76,7 +76,6 @@ import java.util.List;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import presentation.GetDocument.GetDocModel;
 import presentation.GetDocument.GetDocView;
@@ -86,14 +85,6 @@ import presentation.listes.ListeFormView;
 import presentation.projets.ProjetsFormView;
 
 public class SceanceAjouteController {
-    private static final int BUTTON_WIDTH = 170;
-    private static final int BUTTON_HEIGHT = 60;
-    private static final String BUTTON_STYLE = "-fx-background-color: #112D4E; "
-            + "-fx-background-radius: 10px; "
-            + "-fx-min-width: " + BUTTON_WIDTH + "px; "
-            + "-fx-min-height: " + BUTTON_HEIGHT + "px; "
-            + "-fx-text-fill: #ffffff; "
-            + "-fx-font-size: 18px;";
     private SceanceAjouteView seanceAjouteView;
     private GetDocModel model;
 
@@ -133,9 +124,9 @@ public class SceanceAjouteController {
     }
 
     public void displayDocuments() {
-        List<String> mesTaches = new ArrayList<>(this.model.getListOfDocuments().values());
+        List<String> mesDocs = new ArrayList<>(this.model.getListOfDocuments().values());
 
-        for (String doc : this.model.getListOfDocuments().values()) {
+        for (String doc : mesDocs) {
             Button newTaskButton = createDocButton(doc);
             int colIndex = this.seanceAjouteView.getZoneDocuments().getChildren().size() % 6; // Calculating column
                                                                                               // index

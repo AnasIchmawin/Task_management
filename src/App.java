@@ -29,7 +29,7 @@ import presentation.tache_ajoute.ViewFromTacheAjout;
 import presentation.taches.TachesFormController;
 import presentation.taches.TachesFormView;
 
-@SuppressWarnings("unused")
+
 public class App extends Application {
 
     @Override
@@ -72,8 +72,8 @@ public class App extends Application {
         // Projet_Detail_View view = new Projet_Detail_View(con);
         // view.start(primaryStage);
 
-        // SceanceAjouteView view = new SceanceAjouteView();
-        // view.start(primaryStage);
+        SceanceAjouteView view = new SceanceAjouteView();
+        view.start(primaryStage);
         
         // TachesFormController con = new TachesFormController() ;
         // TachesFormView view = new TachesFormView(con) ;

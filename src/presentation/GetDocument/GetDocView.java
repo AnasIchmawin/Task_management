@@ -1,6 +1,5 @@
 package presentation.GetDocument;
 
-import java.io.PrintStream;
 
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;

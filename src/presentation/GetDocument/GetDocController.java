@@ -13,25 +13,20 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import metier.GestionnaireDocument;
-import presentation.NewList.AddListView;
-import presentation.NewProjet.AddProjetView;
 import presentation.seance_ajoute.SceanceAjouteController;
 
 public class GetDocController {
     private GetDocView getDocView;
-    private GetDocModel model;
     private SceanceAjouteController sceanceAjouteController;
     private GestionnaireDocument gestionnaireDocument;
-    private LinkedHashMap GridCaseInfos;
+    private LinkedHashMap<List<Integer>, List<String>> GridCaseInfos;
 
     public GetDocController(GetDocView view, SceanceAjouteController sceanceAjouteController) {
         this.getDocView = view;
-        this.model = new GetDocModel();
         this.sceanceAjouteController = sceanceAjouteController;
         this.gestionnaireDocument = new GestionnaireDocument();
     }
 
-    @SuppressWarnings("unchecked")
     public void diplayDocs() {
         GridCaseInfos = new LinkedHashMap<>();
 
@@ -94,7 +89,7 @@ public class GetDocController {
                 }
             }
         }
-        this.sceanceAjouteController.displayDocuments() ;
+        this.sceanceAjouteController.displayDocuments();
         this.closeWindow(eventAddList);
 
     }

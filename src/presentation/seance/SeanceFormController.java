@@ -1,6 +1,5 @@
 package presentation.seance;
 
-
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.Stage;
@@ -41,7 +40,7 @@ public class SeanceFormController {
     }
 
     public void goToAjoutDoc(ActionEvent event) {
-    //
+        //
     }
 
 }
