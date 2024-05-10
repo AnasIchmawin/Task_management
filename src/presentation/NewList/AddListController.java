@@ -92,7 +92,7 @@ public class AddListController {
         return this.addListModel;
     }
 
-    public void addTaskToList(String id, String task) {
+    public void addSeanceToList(String id, String task) {
         this.addListModel.addTask(id, task);
     }
 

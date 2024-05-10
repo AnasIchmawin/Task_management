@@ -1,4 +1,4 @@
-package presentation.GetTasks;
+package presentation.GetSeances;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,7 +12,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import metier.GestionnaireTache;
+import metier.GestionnaireSeance;
 import presentation.NewList.AddListController;
 import presentation.NewList.AddListView;
 import presentation.NewProjet.AddProjetController;
@@ -20,36 +20,36 @@ import presentation.NewProjet.AddProjetView;
 import presentation.listes.ListeFormController;
 import presentation.projets.ProjetsFormController;
 
-public class GetTasksController {
-    private GestionnaireTache gestionnaireTache;
+public class GetSeancesController {
+    private GestionnaireSeance gestionnaireSeance;
     private AddListController addListController;
     private AddProjetController addProjetController;
     private ListeFormController listeFormController;
     private LinkedHashMap<List<Integer>, List<String>> GridCaseInfos;
     private ProjetsFormController projetsFormController;
 
-    public GetTasksController(AddListController addListController, ListeFormController listeFormController) {
-        this.gestionnaireTache = new GestionnaireTache();
+    public GetSeancesController(AddListController addListController, ListeFormController listeFormController) {
+        this.gestionnaireSeance = new GestionnaireSeance();
         this.addListController = addListController;
         this.listeFormController = listeFormController;
     }
 
-    public GetTasksController(AddProjetController addProjetController, ProjetsFormController projetsFormController) {
-        this.gestionnaireTache = new GestionnaireTache();
+    public GetSeancesController(AddProjetController addProjetController, ProjetsFormController projetsFormController) {
+        this.gestionnaireSeance = new GestionnaireSeance();
         this.addProjetController = addProjetController;
         this.projetsFormController = projetsFormController;
     }
 
-    // Method to get all tasks
-    public LinkedHashMap<String, String> getTasksMap() {
-        List<Document> tasks = gestionnaireTache.getAllTasks();
-        LinkedHashMap<String, String> taches_Disponibles = new LinkedHashMap<>();
-        for (Document task : tasks) {
-            String id = task.getObjectId("_id").toString();
-            String titre = task.getString("titre");
-            taches_Disponibles.put(id, titre);
+    // Method to get all seances
+    public LinkedHashMap<String, String> getSeancesMap() {
+        List<Document> seances = gestionnaireSeance.obtenirToutesLesSceances();
+        LinkedHashMap<String, String> seancesDisponibles = new LinkedHashMap<>();
+        for (Document seance : seances) {
+            String id = seance.getObjectId("_id").toString();
+            String titre = seance.getString("titre");
+            seancesDisponibles.put(id, titre);
         }
-        return taches_Disponibles;
+        return seancesDisponibles;
     }
 
     // Method to handle cancel button
@@ -65,25 +65,25 @@ public class GetTasksController {
         }
     }
 
-    // Method to display tasks
-    public void displayTasks(GridPane gridPane) {
+    // Method to display seances
+    public void displaySeances(GridPane gridPane) {
         GridCaseInfos = new LinkedHashMap<>();
 
-        if (getTasksMap().isEmpty()) {
-            System.out.println("No tasks available");
+        if (getSeancesMap().isEmpty()) {
+            System.out.println("No seances available");
             return;
         }
 
         int colCount = 0;
         int rowCount = 0;
 
-        for (Map.Entry<String, String> entry : getTasksMap().entrySet()) {
-            String taskTitle = entry.getValue();
+        for (Map.Entry<String, String> entry : getSeancesMap().entrySet()) {
+            String seanceTitle = entry.getValue();
 
-            CheckBox checkBox = createCheckBox(taskTitle);
+            CheckBox checkBox = createCheckBox(seanceTitle);
             gridPane.add(checkBox, colCount, rowCount);
 
-            GridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), taskTitle));
+            GridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), seanceTitle));
             colCount++;
             if (colCount == 4) {
                 colCount = 0;
@@ -98,13 +98,13 @@ public class GetTasksController {
             if (node instanceof CheckBox) {
                 CheckBox checkBox = (CheckBox) node;
                 if (checkBox.isSelected()) {
-                    String task = checkBox.getText();
+                    String seance = checkBox.getText();
                     String id = getIdFromMap(GridCaseInfos, GridPane.getRowIndex(node), GridPane.getColumnIndex(node));
-                    System.out.println("Task selected: " + task + " with id: " + id);
+                    System.out.println("Seance selected: " + seance + " with id: " + id);
                     if (this.addListController != null)
-                        this.addListController.addSeanceToList(id, task);
+                        this.addListController.addSeanceToList(id, seance);
                     else {
-                        this.addProjetController.addSeanceToList(id, task);
+                        this.addProjetController.addSeanceToList(id, seance);
                     }
                 }
             }
@@ -121,10 +121,10 @@ public class GetTasksController {
     }
 
     // Method to create a checkbox
-    private CheckBox createCheckBox(String task) {
-        CheckBox checkBox = new CheckBox(task);
+    private CheckBox createCheckBox(String seance) {
+        CheckBox checkBox = new CheckBox(seance);
         checkBox.setTextFill(Color.WHITE);
-        checkBox.getStyleClass().add("task-checkbox-style");
+        checkBox.getStyleClass().add("seance-checkbox-style");
         checkBox.setStyle("-fx-focus-color: transparent;");
         return checkBox;
     }

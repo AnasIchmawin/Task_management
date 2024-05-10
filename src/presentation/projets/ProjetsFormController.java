@@ -14,11 +14,22 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import metier.GestionnaireProjet;
-import presentation.NewList.AddListView;
+import presentation.GetProjets.GetProjetsView;
+import presentation.NewProjet.AddProjetView;
 import presentation.NewProjet.AddProjetView;
 import presentation.listes.ListeFormView;
 
 public class ProjetsFormController {
+    private static final int MAX_COLUMNS = 5;
+    private static final int BUTTON_WIDTH = 170;
+    private static final int BUTTON_HEIGHT = 60;
+    private static final String BUTTON_STYLE = "-fx-background-color: #112D4E; "
+            + "-fx-background-radius: 10px; "
+            + "-fx-min-width: " + BUTTON_WIDTH + "px; "
+            + "-fx-min-height: " + BUTTON_HEIGHT + "px; "
+            + "-fx-text-fill: #ffffff; "
+            + "-fx-font-size: 18px;";
+            
     private GestionnaireProjet gestionnaireProjet;
     private ProjetsFormView projetView;
     private ProjetsModel projetsModel;
@@ -37,6 +48,11 @@ public class ProjetsFormController {
         newProjectFormulaire.start(stage);
     }
 
+    public void handleSupprimerButtonAction() {
+        GetProjetsView getProjetView = new GetProjetsView(this);
+        getProjetView.start(new Stage());
+    }
+
     // Affiche les projets triés
     public void handleOrdonnerButton() {
         this.displayProjets(true);
@@ -52,18 +68,12 @@ public class ProjetsFormController {
         gridCaseInfos = new HashMap<>();
         int colCount = 0;
         int rowCount = 0;
-        if (this.projetsModel.getProjets() == null) {
-            return;
-        }
-        for (String id : this.projetsModel.getProjets().keySet()) {
-            Button projetButton = createProjectButton(this.projetsModel.getProjets().get(id));
-            projetView.getZoneProjets().add(projetButton, colCount, rowCount);
-            List<Integer> gridCase = new ArrayList<>();
-            gridCase.add(colCount);
-            gridCase.add(rowCount);
-            gridCaseInfos.put(gridCase, List.of(id, this.projetsModel.getProjets().get(id)));
+        
+        for (Map.Entry<String, String> entry : projetsModel.getProjets().entrySet()) {
+            Button button = createProjectButton(entry.getValue());
+            addProjetButton(button, colCount, rowCount);
             colCount++;
-            if (colCount == 5) {
+            if (colCount == MAX_COLUMNS) {
                 colCount = 0;
                 rowCount++;
             }
@@ -88,41 +98,35 @@ public class ProjetsFormController {
 
     // Method to create a project button
     public Button createProjectButton(String titre) {
-        Button newProjectButton = new Button(titre);
-        newProjectButton.setStyle("-fx-background-color: #112D4E; " +
-        "-fx-background-radius: 10px; " +
-        "-fx-min-width: 170px; " +
-        "-fx-min-height: 60px;" +
-        "-fx-text-fill: #ffffff;" +
-        "-fx-font-size: 18px;");
-        newProjectButton.setOnMouseEntered(event -> {
-            newProjectButton.setStyle("-fx-background-color: #8E9EB2; " +
-            "-fx-background-radius: 10px; " +
-            "-fx-min-width: 170px; " +
-            "-fx-min-height: 60px;" +
-            "-fx-text-fill: #ffffff;" +
-            "-fx-font-size: 18px;");
-            newProjectButton.setCursor(javafx.scene.Cursor.HAND);
+        Button newProjetButton = new Button(titre);
+        newProjetButton.setStyle(BUTTON_STYLE);
+
+        newProjetButton.setOnMouseEntered(event -> {
+            newProjetButton.setStyle("-fx-background-color: #8E9EB2; "
+            + "-fx-background-radius: 10px; "
+            + "-fx-min-width: " + BUTTON_WIDTH + "px; "
+            + "-fx-min-height: " + BUTTON_HEIGHT + "px; "
+            + "-fx-text-fill: #ffffff; "
+            + "-fx-font-size: 18px;");
+            newProjetButton.setCursor(javafx.scene.Cursor.HAND);
         });
 
-        newProjectButton.setOnMouseExited(event -> {
-            newProjectButton.setStyle("-fx-background-color: #112D4E; " +
-            "-fx-background-radius: 10px; " +
-            "-fx-min-width: 170px; " +
-            "-fx-min-height: 60px;" +
-            "-fx-text-fill: #ffffff;" +
-            "-fx-font-size: 18px;");
+        newProjetButton.setOnMouseExited(event -> {
+            newProjetButton.setStyle(BUTTON_STYLE);
+            newProjetButton.setCursor(javafx.scene.Cursor.DEFAULT);
         });
+
         try {
             Image projetIcon = new Image("file:./Pictures/to-do.png");
             ImageView projetIconView = new ImageView(projetIcon);
-            projetIconView.setFitHeight(15);
             projetIconView.setFitWidth(15);
-            newProjectButton.setGraphic(projetIconView);
+            projetIconView.setFitHeight(15);
+            newProjetButton.setGraphic(projetIconView);
         } catch (Exception e) {
-            System.out.println("Erreur de chargement de l'icône du projet : " + e.getMessage());
+            System.out.println("Erreur de chargement de l'icône du Projet : " + e.getMessage());
         }
-        return newProjectButton;
+
+        return newProjetButton;
     }
 
     public void handleListesButton() {
@@ -138,18 +142,14 @@ public class ProjetsFormController {
 
         projetView.getZoneProjets().getChildren().clear();
 
-        // Parcourir toutes les entrées du projet
         for (Map.Entry<String, String> entry : projetsModel.getProjets().entrySet()) {
             String buttonTitle = entry.getValue().toLowerCase();
-            // Vérifier si le titre du bouton contient le texte de recherche
             if (buttonTitle.contains(searchText.toLowerCase())) {
-                // Créer un nouveau bouton avec le titre approprié
                 Button button = createProjectButton(entry.getValue());
                 addProjetButton(button, colCount, rowCount);
-
-                // Mettre à jour les compteurs de colonnes et de lignes
+                gridCaseInfos.put(List.of(colCount, rowCount), List.of(entry.getKey(), entry.getValue()));
                 colCount++;
-                if (colCount == 5) {
+                if (colCount == MAX_COLUMNS) {
                     colCount = 0;
                     rowCount++;
                 }

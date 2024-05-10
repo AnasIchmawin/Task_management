@@ -56,10 +56,9 @@
 }
 
 .Label-style {
-    -fx-font-size: 20px;
+    -fx-font-size: 15px;
     -fx-font-weight: bold;
     -fx-text-fill: #fff;
-    -fx-underline: true;
 }
 
 

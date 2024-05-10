@@ -21,6 +21,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
@@ -51,6 +53,7 @@ public class ProjetsFormView extends Application {
     private GridPane ZoneProjets;
     private StackPane stackPane;
     private HBox filterBox;
+    private Button supprimerButton;
 
     public ProjetsFormView() {
         Initialiser();
@@ -71,13 +74,14 @@ public class ProjetsFormView extends Application {
     }
 
     private void Initialiser() {
-        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
+        leftButton = createButton("", "file:./Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
-        ordonnerButton = createButtonWithIcon("Ordonner", "file:./Pictures/folder.png", 20, 20);
-        searchButton = createButtonWithIcon("", "file:./Pictures/loupe.png", 20, 20);
-        ajouterButton = createButtonWithIcon("Ajouter", "file:./Pictures/add.png", 20, 20);
+        ordonnerButton = createButton("Ordonner", "file:./Pictures/folder.png", 20, 20);
+        searchButton = createButton("", "file:./Pictures/loupe.png", 20, 20);
+        ajouterButton = createButton("Ajouter", "file:./Pictures/add.png", 20, 20);
+        supprimerButton = createButton("Supprimer un Projet", "file:./Pictures/delete.png", 20, 20);
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
         comboBox1 = createComboBox("Type", "These", "PFE", "Cours", "Examen", "Autres");
@@ -100,6 +104,7 @@ public class ProjetsFormView extends Application {
         SurveillerButton(archiveButton,"100px","40px","#3F72AF");
         SurveillerButton(ordonnerButton,"100px","40px","#3F72AF");
         SurveillerButton(ajouterButton,"150px","40px","#3F72AF");
+        SurveillerButton(supprimerButton,"150px","40px","#3F72AF");
         this.controller = new ProjetsFormController(this);
     }
 
@@ -111,6 +116,8 @@ public class ProjetsFormView extends Application {
         archiveButton.getStyleClass().add("button-style");
         ordonnerButton.getStyleClass().add("ordonner-btn-style");
         ajouterButton.getStyleClass().add("button-style");
+        supprimerButton.getStyleClass().add("button-style");
+        supprimerButton.setStyle("-fx-pref-width : 150px ;");
         searchField.getStyleClass().add("search-field-style");
         filterLabel.getStyleClass().add("filter-label-style");
         navbar.getStyleClass().add("navbar");
@@ -135,7 +142,9 @@ public class ProjetsFormView extends Application {
         Projets.setSpacing(15); 
         HBox.setMargin(ajouterButton, new Insets(50, 0, 0, 70));
     
-        buttonContainer.getChildren().add(ajouterButton);
+        buttonContainer.getChildren().addAll(ajouterButton, supprimerButton);
+        HBox.setMargin(ajouterButton, new Insets(50, 0, 0, 70));
+        HBox.setMargin(supprimerButton, new Insets(50, 0, 0, 25));
         mainContentContainer.getChildren().addAll(topContainer, Projets, buttonContainer);
         mainContentContainer.setSpacing(10);
         container.getChildren().addAll(mainContentContainer);
@@ -198,18 +207,18 @@ public class ProjetsFormView extends Application {
         return scrollPane;
     }
 
-    private Button createButtonWithIcon(String name, String string, int i, int j) {
-        Button button = new Button(name);
-        try {
-            Image icon = new Image(string);
-            ImageView iconView = new ImageView(icon);
-            iconView.setFitWidth(i);
-            iconView.setFitHeight(j);
-            button.setGraphic(iconView);
-        } catch (Exception e) {
-            System.out.println("Error loading the icon: " + e.getMessage());
-        }
-        return button;
+    private Button createButton(String name, String path, int width, int height) {
+        Button newButton = new Button();
+        ImageView icon = new ImageView(new Image(path));
+        icon.setFitWidth(width);
+        icon.setFitHeight(height);
+        Text buttonText = new Text(name);
+        buttonText.setFill(Color.WHITE);
+        HBox buttonContent = new HBox(buttonText, icon);
+        buttonContent.setAlignment(Pos.CENTER);
+        buttonContent.setSpacing(4);
+        newButton.setGraphic(buttonContent);
+        return newButton;
     }
 
     private ComboBox<String> createComboBox(String prompt, String... items) {
@@ -229,6 +238,9 @@ public class ProjetsFormView extends Application {
         });
         listesButton.setOnAction(event -> {
             this.controller.handleListesButton();
+        });
+        supprimerButton.setOnAction(event -> {
+            this.controller.handleSupprimerButtonAction();
         });
     }
     
