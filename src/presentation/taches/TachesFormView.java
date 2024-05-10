@@ -22,6 +22,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class TachesFormView extends Application {
     private Button leftButton;
@@ -37,12 +39,14 @@ public class TachesFormView extends Application {
     private ComboBox<String> comboBox1;
     private ComboBox<String> comboBox2;
     private Label filterLabel;
+    private GridPane ZoneListes;
 
     // Constructor
-    public TachesFormView(TachesFormController controller) {
-        this.controller = controller;
+    public TachesFormView() {
+        // this.controller = controller;
         init();
         style();
+        this.controller.displayTaches(false);
     }
 
     @Override
@@ -94,7 +98,6 @@ public class TachesFormView extends Application {
         
 
         // Create GridPane for list items
-        GridPane ZoneListes = createGridPane();
         ScrollPane scrollPane = createScrollPane(ZoneListes);
 
         VBox Tasks = new VBox();
@@ -158,8 +161,8 @@ public class TachesFormView extends Application {
             controller.handleAjouterButtonAction(ZoneListes,"Task"+(ZoneListes.getRowCount()));
         });
 
-        searchButton.setOnAction(event -> {
-            controller.handleSearchButtonAction(ZoneListes,searchField.getText());
+        ordonnerButton.setOnAction(event -> {
+            controller.handleOrdonnerButtonAction();
         });
 
         return container;
@@ -198,6 +201,16 @@ public class TachesFormView extends Application {
         comboBox1 = createComboBox("Type", "These", "PFE", "Cours", "Examen", "Autres");
         comboBox2 = createComboBox("Categorie", "Enseignement", "Encadrement", "Autres");
         filterLabel = new Label("     Filtrer");
+        SurveillerButton(projectsButton, "100px", "40px", "#3F72AF");
+        SurveillerButton(archiveButton, "100px", "40px", "#3F72AF");
+        SurveillerButton(ordonnerButton, "100px", "40px", "#3F72AF");
+        SurveillerButton(ajouterButton, "150px", "40px", "#3F72AF");
+        ZoneListes = createGridPane();
+
+
+
+
+        this.controller = new TachesFormController(this);
     }
 
     private void style() {
@@ -250,5 +263,37 @@ public class TachesFormView extends Application {
         VBox vbox = new VBox();
         vbox.getChildren().addAll(descriptionLabel);
         return vbox;
+    }
+
+    //getZoneTaches
+    public GridPane getZoneTaches() {
+        return ZoneListes;
+    }
+
+    public void SurveillerButton(Button button, String width, String height, String color) {
+        button.setOnMouseEntered(event -> {
+            button.setStyle("-fx-background-radius: 10px; " +
+                    "-fx-pref-width:" + width + "; " +
+                    "-fx-background-color: #8E9EB2; " +
+                    "-fx-text-fill: white; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 13px;");
+            button.setCursor(javafx.scene.Cursor.HAND);
+        });
+        button.setOnMouseExited(event -> {
+            button.setStyle("-fx-background-radius: 10px; " +
+                    "-fx-pref-width:" + width + "; " +
+                    "-fx-background-color: " + color + ";" +
+                    "-fx-text-fill: white; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 13px;");
+            button.setCursor(javafx.scene.Cursor.DEFAULT);
+        });
+        searchField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                controller.searchTache(newValue);
+            }
+        });
     }
 }

@@ -15,16 +15,72 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import metier.GestionnaireListe;
+import metier.GestionnaireTache;
+
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import org.bson.Document;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 public class TachesFormController {
+    private TachesFormView tacheView;
+    private TachesFormModel tacheModel;
+    private GestionnaireTache gestionnaireTache;
+    private GestionnaireListe gestionnaireListe;
+    private Map<List<Integer>, List<String>> gridCaseInfos;
+    private String listId = "66378f5d9173b3209a52c28c";
 
     public TachesFormController() {
         super();
     }
 
+    public TachesFormController(TachesFormView tacheView) {
+        this.gestionnaireTache = new GestionnaireTache();
+        this.gestionnaireListe = new GestionnaireListe();
+        this.tacheView = tacheView;
+        this.tacheModel = new TachesFormModel(getTacheMap());
+    }
+
     public static void handleAjouterButtonAction(GridPane gridPane,String taskName) {
+        createTask(gridPane, taskName);
+        //save in database
+    }
+
+    //handleOrdonnerButtonAction
+    public void handleOrdonnerButtonAction() {
+        displayTaches(true);
+    }
+
+    //displayTaches
+    public void displayTaches(boolean isSorted) {
+        tacheModel.setTaches(getTacheMap());
+        if (isSorted) {
+            tacheModel.sortTaches();
+        }
+        tacheView.getZoneTaches().getChildren().clear();
+        gridCaseInfos = new LinkedHashMap<>();
+        int colCount = 0;
+        int rowCount = 0;
+
+        for (Map.Entry<String, String>  entry : tacheModel.getTaches().entrySet()) {
+            createTask(tacheView.getZoneTaches(), entry.getValue());
+            gridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), entry.getValue()));
+
+            if (++colCount == 3) {
+                colCount = 0;
+                rowCount++;
+            }
+        }
+    } 
+
+    //create task
+    public static void createTask(GridPane gridPane, String taskName) {
         Button cloneButton = new Button("");
         Button deleteButton = new Button("");
         Button taskButton = new Button("");
@@ -63,7 +119,7 @@ public class TachesFormController {
                 "-fx-font-size: 13px;");
         //clonner la tache normale et tack checker
         cloneButton.setOnAction(e -> {
-            handleAjouterButtonAction(gridPane,taskName);
+            createTask(gridPane, taskCheckBox.getText());
         });
 
         taskButton.setStyle("-fx-background-color: transparent; " +
@@ -72,28 +128,26 @@ public class TachesFormController {
         "-fx-min-height: 30px;" +
         "-fx-text-fill: #ffffff;" +
         "-fx-font-size: 13px;");
-
         int row = gridPane.getRowCount();
         gridPane.add(deleteButton, 3, row);
         gridPane.add(cloneButton, 4, row);
         gridPane.add(taskCheckBox, 5, row);
         gridPane.add(taskButton, 5, row);
         GridPane.setHalignment(taskButton, HPos.RIGHT);
-
-
+        
         taskButton.setOnAction(e -> {
-    // Création d'une nouvelle fenêtre de dialogue
-    Stage dialogStage = new Stage();
-    dialogStage.initModality(Modality.APPLICATION_MODAL);
-    dialogStage.setTitle("Message");
-    VBox dialogVbox = new VBox(20);
-    dialogVbox.setAlignment(Pos.CENTER);
-    dialogVbox.getChildren().add(new Text("Ach ban lik a mourad 😎😛"));
-    dialogVbox.setStyle("-fx-font-size: 20px;");
-    Scene dialogScene = new Scene(dialogVbox, 400, 200);
-    dialogStage.setScene(dialogScene);
-    dialogStage.show();
-});
+            // Création d'une nouvelle fenêtre de dialogue
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setTitle("Message");
+            VBox dialogVbox = new VBox(20);
+            dialogVbox.setAlignment(Pos.CENTER);
+            dialogVbox.getChildren().add(new Text("Ach ban lik a mourad 😎😛"));
+            dialogVbox.setStyle("-fx-font-size: 20px;");
+            Scene dialogScene = new Scene(dialogVbox, 400, 200);
+            dialogStage.setScene(dialogScene);
+            dialogStage.show();
+        });
 
         taskCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             //change color checkbox and thier buttons when checked
@@ -144,13 +198,32 @@ public class TachesFormController {
         });
     }
 
-    //handleAjouterSeanceButtonAction
-    public static void handleAjouterSeanceButtonAction(GridPane gridPane) {
+    public void searchTache(String searchText){
+        int colCount = 5;
+        int rowCount = 0;
 
+        tacheView.getZoneTaches().getChildren().clear();
+
+        for (Map.Entry<String, String> entry : tacheModel.getTaches().entrySet()) {
+            String taskName = entry.getValue().toLowerCase();
+            if (taskName.contains(searchText.toLowerCase())) {
+                createTask(tacheView.getZoneTaches(), taskName);
+                gridCaseInfos.put(List.of(rowCount, colCount), List.of(taskName, entry.getKey()));
+                rowCount++;
+            }
+        }
+        
     }
 
-    //handle the search button
-    public static void handleSearchButtonAction(GridPane gridPane, String taskName) {
-        
+    //getTacheMap
+    private LinkedHashMap<String, String> getTacheMap() {
+        LinkedHashMap<String,Boolean> taches = gestionnaireListe.getTaches(listId);
+
+        LinkedHashMap<String, String> tacheMap = new LinkedHashMap<>();
+        for (String tacheId : taches.keySet()) {
+            String tacheTitle = gestionnaireTache.getTitle(tacheId);
+            tacheMap.put(tacheId, tacheTitle);
+        }
+        return tacheMap;
     }
 }

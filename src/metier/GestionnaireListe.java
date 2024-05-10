@@ -1,5 +1,6 @@
 package metier;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import org.bson.Document;
 
@@ -22,6 +23,11 @@ public class GestionnaireListe {
 
     public POJOListe getListe() {
         return liste;
+    }
+
+    //getTaches
+    public LinkedHashMap<String,Boolean> getTaches(String listeId) {
+        return daoListe.getTaches(listeId);
     }
 
     public void setDaoListe(DAOListe daoListe) {

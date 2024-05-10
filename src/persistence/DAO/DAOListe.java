@@ -9,6 +9,7 @@ import com.mongodb.client.model.Filters;
 import persistence.DBConnection;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class DAOListe {
@@ -102,4 +103,30 @@ public class DAOListe {
                 }
                 return allLists;
         }
+
+        public LinkedHashMap<String,Boolean> getTaches(String listeId) {
+                LinkedHashMap<String,Boolean> taches = new LinkedHashMap<>();
+                try {
+                    MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                            .getCollection("listes");
+                    
+                    // Convert listeId to ObjectId
+                    ObjectId objectId = new ObjectId(listeId);
+                    
+                    Document liste = collection.find(Filters.eq("_id", objectId)).first();
+                    if (liste != null) {
+                        List<Document> tachesList = (List<Document>) liste.get("taches");
+                        if (tachesList != null) {
+                            for (Document tache : tachesList) {
+                                taches.put(tache.getString("id"), tache.getBoolean("checked"));
+                            }
+                        }
+                    } else {
+                        System.err.println("Liste not found with ID: " + listeId);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error retrieving tasks from the list: " + e.getMessage());
+                }
+                return taches;
+            }
 }

@@ -22,6 +22,7 @@ import presentation.projets.ProjetsFormController;
 import presentation.projets.ProjetsFormView;
 import presentation.seance.SeanceFormController;
 import presentation.seance.SeanceFormView;
+import presentation.seance_ajoute.SceanceAjouteController;
 import presentation.seance_ajoute.SceanceAjouteView;
 import presentation.seance.SeanceFormView;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
@@ -68,16 +69,15 @@ public class App extends Application {
         // SeanceFormView view = new SeanceFormView();
         // view.start(primaryStage);
 
-        //     ProjetDetailController con = new ProjetDetailController();
+        // ProjetDetailController con = new ProjetDetailController();
         // Projet_Detail_View view = new Projet_Detail_View(con);
         // view.start(primaryStage);
 
-        SceanceAjouteView view = new SceanceAjouteView();
-        view.start(primaryStage);
+        // SceanceAjouteView view = new SceanceAjouteView();
+        // view.start(primaryStage);
         
-        // TachesFormController con = new TachesFormController() ;
-        // TachesFormView view = new TachesFormView(con) ;
-        // view.start(primaryStage) ;
+        TachesFormView view = new TachesFormView() ;
+        view.start(primaryStage) ;
 
         // SceanceFormController con = new SceanceFormController() ;
         // SeanceFormView view = new SeanceFormView(con) ;

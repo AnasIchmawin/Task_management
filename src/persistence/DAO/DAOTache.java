@@ -5,6 +5,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
 import persistence.DBConnection;
 
 import java.time.LocalDateTime;
@@ -125,4 +127,26 @@ public class DAOTache {
             return null;
         }
     }
+
+    // GetTitre
+    public String getTitre(String tacheId) {
+    try {
+        MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                .getCollection("taches");
+        
+        // Convert tacheId to ObjectId
+        ObjectId objectId = new ObjectId(tacheId);
+        
+        Document tache = collection.find(Filters.eq("_id", objectId)).first();
+        if (tache != null) {
+            return tache.getString("titre");
+        } else {
+            System.err.println("Task not found with ID: " + tacheId);
+            return null;
+        }
+    } catch (Exception e) {
+        System.err.println("Error retrieving the title of the task: " + e.getMessage());
+        return null;
+    }
+}
 }

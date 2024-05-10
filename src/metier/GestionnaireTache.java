@@ -42,4 +42,8 @@ public class GestionnaireTache {
         return daoTache.getAllTaches();
     }
 
+    // getTitle
+    public String getTitle(String tacheId) {
+        return daoTache.getTitre(tacheId);
+    }
 }
