@@ -30,6 +30,7 @@ public class SceanceAjouteView extends Application {
     private Button projectsButton;
     private Button archiveButton;
     private Button ajouterDocButton;
+    private Button sauvegarderButton;
     private SceanceAjouteController controller;
     private BorderPane root;
     private TextField titreField;
@@ -59,6 +60,32 @@ public class SceanceAjouteView extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Formulaire de Séance");
         primaryStage.show();
+    }
+
+    public void init() {
+        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
+        listesButton = new Button("Listes");
+        projectsButton = new Button("Projets");
+        archiveButton = new Button("Archive");
+        titreField = new TextField();
+        titreField.setPromptText("Entrer le titre de la séance");
+        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/addIcon.png", 20, 20);
+        sauvegarderButton = new Button("Sauvegarder");
+
+    }
+
+    private void style() {
+        leftButton.getStyleClass().add("left-btn-style");
+        listesButton.getStyleClass().add("button-style");
+        projectsButton.getStyleClass().add("button-style");
+        archiveButton.getStyleClass().add("button-style");
+        ajouterDocButton.getStyleClass().add("AjoutDoc-style");
+        SurveillerButton(listesButton, "100px", "40px", "#3F72AF");
+        SurveillerButton(projectsButton, "100px", "40px", "#3F72AF");
+        SurveillerButton(archiveButton, "100px", "40px", "#3F72AF");
+        SurveillerButton(leftButton, "60", "40px", "#3F72AF");
+        titreField.getStyleClass().add("Titre-style");
+        sauvegarderButton.getStyleClass().add("footBtn-style");
     }
 
     private BorderPane createBorderPane(VBox navbarContainer, StackPane container) {
@@ -135,8 +162,6 @@ public class SceanceAjouteView extends Application {
         VBox ZoneDocuments = createDocumentsSection();
         contenaireDocuments.getChildren().addAll(labelDocs, ZoneDocuments);
 
-        Button sauvegarderButton = new Button("Sauvegarder");
-        sauvegarderButton.getStyleClass().add("footBtn-style");
         ContainerDescription.getChildren().addAll(labelDescription, ZoneDescription);
         leftBox.getChildren().addAll(ContainerDescription);
         leftBox.getChildren().addAll(contenaireDocuments, sauvegarderButton);
@@ -167,29 +192,6 @@ public class SceanceAjouteView extends Application {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide vertical scrollbar
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide horizontal scrollbar
         return scrollPane;
-    }
-
-    public void init() {
-        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
-        listesButton = new Button("Listes");
-        projectsButton = new Button("Projets");
-        archiveButton = new Button("Archive");
-        titreField = new TextField();
-        titreField.setPromptText("Entrer le titre de la séance");
-        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/addIcon.png", 20, 20);
-    }
-
-    private void style() {
-        leftButton.getStyleClass().add("left-btn-style");
-        listesButton.getStyleClass().add("button-style");
-        projectsButton.getStyleClass().add("button-style");
-        archiveButton.getStyleClass().add("button-style");
-        ajouterDocButton.getStyleClass().add("AjoutDoc-style");
-        SurveillerButton(listesButton, "100px", "40px", "#3F72AF");
-        SurveillerButton(projectsButton, "100px", "40px", "#3F72AF");
-        SurveillerButton(archiveButton, "100px", "40px", "#3F72AF");
-        SurveillerButton(leftButton, "60", "40px", "#3F72AF");
-        titreField.getStyleClass().add("Titre-style");
     }
 
     private Button createButtonWithIcon(String name, String string, int i, int j) {
@@ -316,9 +318,10 @@ public class SceanceAjouteView extends Application {
         ajouterDocButton.setOnAction(event -> {
             this.controller.handleAjouterButtonAction();
         });
-
+        sauvegarderButton.setOnAction(event -> {
+            this.controller.handleSauvegarderButtonAction();
+        });
     }
-
     public String getTitre() {
         return titreField.getText();
     }
