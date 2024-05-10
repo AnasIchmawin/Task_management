@@ -3,18 +3,18 @@ package metier;
 import java.time.LocalDateTime;
 
 public class POJODocument {
-    private Integer id;
+    private String id;
     private String titre;
     private String description;
     private String path;
     private LocalDateTime dateAjout;
 
     // Getters and Setters
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
