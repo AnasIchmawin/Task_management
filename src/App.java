@@ -20,14 +20,10 @@ import presentation.projet_detail.ProjetDetailController;
 import presentation.projet_detail.Projet_Detail_View;
 import presentation.projets.ProjetsFormController;
 import presentation.projets.ProjetsFormView;
-<<<<<<< HEAD
 import presentation.seance.SeanceFormController;
 import presentation.seance.SeanceFormView;
 import presentation.seance_ajoute.SceanceAjouteView;
-=======
-import presentation.seance.SceanceFormController;
 import presentation.seance.SeanceFormView;
->>>>>>> 5a0cb963255a6830b58583335fdbbc1f45cdbd0e
 import presentation.tache_ajoute.ControllerFromTacheAjout;
 import presentation.tache_ajoute.ViewFromTacheAjout;
 import presentation.taches.TachesFormController;
@@ -45,10 +41,8 @@ public class App extends Application {
         // ProjetsFormView projets = new ProjetsFormView();
         // projets.start(primaryStage);
 
-<<<<<<< HEAD
         // ListeFormController controller = new ListeFormController();
-=======
->>>>>>> 5a0cb963255a6830b58583335fdbbc1f45cdbd0e
+
         // ListeFormView projets = new ListeFormView();
         // projets.start(primaryStage);
 
@@ -78,12 +72,12 @@ public class App extends Application {
         // Projet_Detail_View view = new Projet_Detail_View(con);
         // view.start(primaryStage);
 
-        SceanceAjouteView view = new SceanceAjouteView();
-        view.start(primaryStage);
+        // SceanceAjouteView view = new SceanceAjouteView();
+        // view.start(primaryStage);
         
-        TachesFormController con = new TachesFormController() ;
-        TachesFormView view = new TachesFormView(con) ;
-        view.start(primaryStage) ;
+        // TachesFormController con = new TachesFormController() ;
+        // TachesFormView view = new TachesFormView(con) ;
+        // view.start(primaryStage) ;
 
         // SceanceFormController con = new SceanceFormController() ;
         // SeanceFormView view = new SeanceFormView(con) ;
