@@ -21,6 +21,9 @@ import presentation.projet_detail.ProjetDetailController;
 import presentation.projet_detail.Projet_Detail_View;
 import presentation.projets.ProjetsFormController;
 import presentation.projets.ProjetsFormView;
+import presentation.seance.SeanceFormController;
+import presentation.seance.SeanceFormView;
+import presentation.seance_ajoute.SceanceAjouteView;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
 import presentation.tache_ajoute.ViewFromTacheAjout;
 
@@ -30,36 +33,47 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // ListeFormController controller = new ListeFormController();
-        // ListeFormView Seance = new ListeFormView(controller);
+        // ListeFormView Seance = new ListeFormView();
         // Seance.start(primaryStage);
 
-        ProjetsFormView projets = new ProjetsFormView();
-        projets.start(primaryStage);
+        // ProjetsFormView projets = new ProjetsFormView();
+        // projets.start(primaryStage);
 
         // ListeFormController controller = new ListeFormController();
-        // ListeFormView projets = new ListeFormView(controller);
+        // ListeFormView projets = new ListeFormView();
         // projets.start(primaryStage);
 
         // ArchiveFormController controller = new ArchiveFormController();
         // ArchiveFormView archive = new ArchiveFormView(controller);
         // archive.start(primaryStage);
-        
-       
 
         // LoginFormView login = new LoginFormView(primaryStage);
         // login.start(primaryStage);
-      
+
         // ControllerFromTacheAjout controller = new ControllerFromTacheAjout();
         // ViewFromTacheAjout view = new ViewFromTacheAjout(controller);
         // view.start(primaryStage);
 
-        // ProjetDetailController con = new ProjetDetailController()  ;
+        // ProjetDetailController con = new ProjetDetailController() ;
         // Projet_Detail_View view = new Projet_Detail_View(con) ;
         // view.start(primaryStage) ;
 
-  
+        // SeanceFormView seance = new SeanceFormView();
+        // seance.start(primaryStage);
+
+        // SeanceFormView view = new SeanceFormView();
+        // view.start(primaryStage);
+
+        //     ProjetDetailController con = new ProjetDetailController();
+        // Projet_Detail_View view = new Projet_Detail_View(con);
+        // view.start(primaryStage);
+
+        SceanceAjouteView view = new SceanceAjouteView();
+        view.start(primaryStage);
+        
 
     }
+
     public static void main(String[] args) {
         launch(args);
     }

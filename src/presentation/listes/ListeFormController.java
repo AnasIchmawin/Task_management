@@ -1,6 +1,8 @@
 package presentation.listes;
 
 import metier.GestionnaireListe;
+
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,7 @@ public class ListeFormController {
             + "-fx-text-fill: #ffffff; "
             + "-fx-font-size: 18px;";
 
+    private String buttonclickedInfos ;
     private GestionnaireListe gestionnaireListe;
     private ListeFormView listView;
     private ListModel listModel;
@@ -79,6 +82,7 @@ public class ListeFormController {
 
         for (Map.Entry<String, String> entry : listModel.getLists().entrySet()) {
             Button newListButton = createListButton(entry.getValue());
+            newListButton.setOnAction(event -> handleButtoListnAction(newListButton));
             addListButton(newListButton, colCount, rowCount);
             gridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), entry.getValue()));
 
@@ -87,6 +91,14 @@ public class ListeFormController {
                 rowCount++;
             }
         }
+    }
+
+    //recuperer les informations du bouton cliqué (ID de la liste)
+    private void handleButtoListnAction(Button newListButton) {
+        List<String> listInfos = gridCaseInfos.get(List.of(this.listView.getZoneListes().getRowIndex(newListButton), this.listView.getZoneListes().getColumnIndex(newListButton)));
+        String Id = listInfos.get(0);
+        buttonclickedInfos = Id ;
+        System.out.println("Button clicked : " + Id); ;
     }
 
     private Button createListButton(String title) {
