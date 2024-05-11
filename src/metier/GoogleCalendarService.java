@@ -131,9 +131,6 @@ public class GoogleCalendarService {
                     System.out.println("Titre : " + summary);
                     System.out.println("Date de début : " + startDate);
                     System.out.println("Date de fin : " + endDate);
-                    // Ajoutez ici d'autres propriétés de l'événement que vous souhaitez afficher
-
-                    // Afficher une ligne vide entre les événements
                     System.out.println();
                 }
             }
