@@ -33,11 +33,11 @@ public class AddDocumentView extends Application {
     private LocalDate dateInsertion;
     private String idProjet;
     private String idTache;
+    private String idSeance;
 
     @Override
     public void start(Stage primaryStage) {
-        controller = new AddDocumentController("MyDatabas", "document");
-
+        controller = new AddDocumentController(this);
         root = new BorderPane();
         VBox mainBox = createMainBox();
         mainBox.setStyle("-fx-background-color: #112D4E;");
@@ -51,17 +51,18 @@ public class AddDocumentView extends Application {
     }
 
     public AddDocumentView(ProjetDetailController controller, String idProjet) {
-        this.controller = new AddDocumentController("MyDatabas", "document");
         this.idProjet = idProjet;
     }
 
     public AddDocumentView(controleur controller, String idTache) {
-        this.controller = new AddDocumentController("MyDatabas", "document");
         this.idTache = idTache;
     }
 
+    public AddDocumentView(String idSeance){
+        this.idSeance = idSeance;
+    }
+
     public AddDocumentView() {
-        this.controller = new AddDocumentController("MyDatabas", "document");
     }
 
     private VBox createMainBox() {
@@ -80,7 +81,7 @@ public class AddDocumentView extends Application {
         ZoneDescription = new TextArea();
 
         save = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 10, 10);
-        save.setOnAction(e -> saveDocument());
+        save.setOnAction(e -> this.controller.saveDocument());
         mainBox.getChildren().addAll(
                 labelTitre, TitreField,
                 labelURL, createURLBox(),
@@ -141,15 +142,6 @@ public class AddDocumentView extends Application {
         return button;
     }
 
-    private void saveDocument() {
-        dateInsertion = LocalDate.now();
-        String titre = TitreField.getText();
-        String url = URL.getText();
-        String description = ZoneDescription.getText();
-
-        DocumentModel documentModel = new DocumentModel(titre, url, description, dateInsertion, idProjet, idTache);
-        controller.saveDocument(documentModel);
-    }
 
     private void style() {
         save.getStyleClass().add("button-style");
@@ -160,4 +152,43 @@ public class AddDocumentView extends Application {
         labelURL.getStyleClass().add("label-style");
         labelDescription.getStyleClass().add("label-style");
     }
+
+    public String getTitreField() {
+        return TitreField.getText();
+    }
+
+    public String getURL() {
+        return URL.getText();
+    }
+
+    public String getDescription() {
+        return ZoneDescription.getText();
+    }
+
+    public String getDateInsertion() {
+        //convertire date en string
+        return dateInsertion.toString();
+    }   
+
+    public void setDateInsertion(LocalDate dateInsertion) {
+        this.dateInsertion = dateInsertion;
+    }
+
+    public String getIdProjet() {
+        return idProjet;
+    }
+
+    public String getIdTache() {
+        return idTache;
+    }
+
+    public String getIdSeance() {
+        return idSeance;
+    }
+
+    public void close() {
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.close();
+    }
+    
 }

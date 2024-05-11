@@ -5,21 +5,19 @@ import java.util.List;
 import org.bson.Document;
 
 import persistence.DAO.DAODocument;
-
-import persistence.DAO.DAODocument;
+import metier.POJODocument;
 
 public class GestionnaireDocument {
-    DAODocument daoDocument ;
+    private DAODocument daoDocument;
+    private POJODocument pojoDocument;
 
-       public GestionnaireDocument() {
+       public void GestionnaireDocument() {
         this.daoDocument = new DAODocument();
     }
 
     public List<Document> getAllDocuments() {
         return daoDocument.getAllDocuments();
     }
-    private DAODocument daoDocument;
-    private POJODocument pojoDocument;
 
     public GestionnaireDocument() {
         this.daoDocument = new DAODocument();
@@ -34,21 +32,15 @@ public class GestionnaireDocument {
         return pojoDocument;
     }
 
-    public void setDaoDocument(DAODocument daoDocument) {
-        this.daoDocument = daoDocument;
-    }
+
 
     public void setPojoDocument(POJODocument pojoDocument) {
         this.pojoDocument = pojoDocument;
     }
 
-    public List<Document> getAllDocuments() {
-        return daoDocument.getAllDocuments();
-    }
-
     // Method to create a new document
     public void creerDocument() {
-        daoDocument.create(this.pojoDocument.getTitre(), this.pojoDocument.getDescription(), this.pojoDocument.getURL(), this.pojoDocument.getDateAjout());
+        daoDocument.create(this.pojoDocument.getTitre(), this.pojoDocument.getDescription(), this.pojoDocument.getURL(), this.pojoDocument.getDateAjout(), this.pojoDocument.getIdProjet(), this.pojoDocument.getIdTache(), this.pojoDocument.getIdSeance());
     }
     
 }
