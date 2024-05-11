@@ -2,6 +2,8 @@ package presentation.tache_ajoute;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,6 +22,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import presentation.listes.ListeFormController;
 import javafx.scene.control.ComboBox;
 
 public class ViewFromTacheAjout {
@@ -27,6 +30,7 @@ public class ViewFromTacheAjout {
     private static final Pos TOP_CENTER = Pos.TOP_CENTER;
     private static final Pos TOP_LEFT = Pos.TOP_LEFT;
     private static final Pos CENTER_LEFT = Pos.CENTER_LEFT;
+    private static final ListeFormController ControllerFromTacheAjout = null;
     private Button leftButton;
     private Button listesButton;
     private Button projectsButton;
@@ -56,6 +60,7 @@ public class ViewFromTacheAjout {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Responsive Page with Navbar");
         primaryStage.show();
+        
     }
 
     private BorderPane createBorderPane(VBox navbarContainer, StackPane container) {
@@ -93,8 +98,12 @@ public class ViewFromTacheAjout {
         HBox topContainer = CreateHbox(10, TOP_LEFT);
 
         Region Space_Dates = CreateSPace(50);
+        Region Space_element = CreateSPace(50);
 
         Region Space_Btn_Dates = CreateSPace(50);
+        Region verticalSpace = createVerticalSpace(50);
+        Region verticalSpace1 = createVerticalSpace(20);
+        Region verticalSpace2 = createVerticalSpace(20);
 
         HBox DateDebutComplet = CreateHbox(5, TOP_CENTER);
         DatePicker dateDebut = DateSeance();
@@ -110,15 +119,20 @@ public class ViewFromTacheAjout {
         // Creer un conteneur VBox pour la date de fin
         VBox dateFinContainer = createVboxDates(DateFinComplet, dateFin, TempsFin, labelFin, Space_Dates);
 
+        Label labelCategorie = createLabel("Catégorie");
+
         ComboBox<String> categoryComboBox = new ComboBox<>();
         categoryComboBox.getItems().addAll("Enseignement", "Encadrement", "Autre");
-        categoryComboBox.setPromptText("Catégorie");
+        categoryComboBox.setPromptText("select");
         categoryComboBox.getStyleClass().add("category-combobox-style");
+
+        VBox catgContainer = new VBox();
+        catgContainer.getChildren().addAll(labelCategorie,categoryComboBox);
 
         // Créer un conteneur HBox pour les deux dates
         HBox Dates = new HBox();
       //  Dates.getChildren().addAll(dateDebutContainer, Space_Dates, dateFinContainer, Space_Dates, categoryComboBox);
-        Dates.getChildren().addAll(dateDebutContainer, Space_Dates, dateFinContainer, categoryComboBox);
+        Dates.getChildren().addAll(dateDebutContainer, Space_Dates, dateFinContainer,Space_element, catgContainer);
 
 
         HBox.setMargin(Dates, new Insets(0, 50, 0, 0)); // Margin (top, right, bottom, left)
@@ -129,11 +143,11 @@ public class ViewFromTacheAjout {
 
         HBox centerContainer = CreateHbox(50, CENTER_LEFT);
 
-        VBox leftBox = CreateVbox(15, TOP_LEFT);
+        VBox leftBox = CreateVbox(3, TOP_LEFT);
 
         Label labelTitre = createLabel("Titre de ma tache");
 
-        TextArea ZoneTitre = createTextArea("", "ZoneTitre-Style");
+        TextArea ZoneTitre = createTextArea("Titre", "ZoneTitre-Style");
 
         Label labelDescription = createLabel("Discription");
 
@@ -145,22 +159,32 @@ public class ViewFromTacheAjout {
         VBox ContenaireDocuments = createDocumentsSection();
 
         Button Ajouter = new Button("Ajouter");
+        Ajouter = createButtonWithIcon("Ajouter", "file:./Pictures/add.png", 20, 20);
         Ajouter.getStyleClass().add("footBtn-style");
+        
+
+
+
 
         Button Enregistrer = new Button("Enregistrer");
+        Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 20, 20);
         Enregistrer.getStyleClass().add("footBtn-style");
 
         Button Annuler = new Button("Annuler");
+        Annuler = createButtonWithIcon("Annuler", "file:./Pictures/annuler.png", 20, 20);
         Annuler.getStyleClass().add("footBtn-style");
+
 
         HBox buttons = new HBox(10, Ajouter, Enregistrer, Annuler);
 
         leftBox.getChildren().add(labelTitre);
         leftBox.getChildren().add(ZoneTitre);
+        leftBox.getChildren().add(verticalSpace2);
         leftBox.getChildren().add(labelDescription);
         leftBox.getChildren().add(ZoneDescription);
+        leftBox.getChildren().add(verticalSpace1);
         leftBox.getChildren().add(labelDocs);
-        leftBox.getChildren().addAll(ContenaireDocuments, buttons);
+        leftBox.getChildren().addAll(ContenaireDocuments,verticalSpace, buttons);
 
         centerContainer.getChildren().addAll(leftBox);
 
@@ -189,13 +213,23 @@ public class ViewFromTacheAjout {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide horizontal scrollbar
         return scrollPane;
     }
-
+    Enregistrer.setOnAction(event -> {
+        try {
+            this.controller.saveInfosProjet(moduleFromTacheAjout);
+            this.controller.closerWindow(event);
+        } catch (Exception e) {
+            System.out.println("Erreur pendant la fermeture du addlist : " + e.getMessage());
+        }
+    });
+    
     public void init() {
         leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
-        listesButton = new Button("Listes");
-        projectsButton = new Button("Projets");
-        archiveButton = new Button("Archive");
+        listesButton = createButton("Listes");
+        projectsButton = createButton("Projets");
+        archiveButton = createButton("Archive");
         ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/add.png", 20, 20);
+        
+        
     }
 
     private void style() {
@@ -203,7 +237,7 @@ public class ViewFromTacheAjout {
         listesButton.getStyleClass().add("button-style");
         projectsButton.getStyleClass().add("button-style");
         archiveButton.getStyleClass().add("button-style");
-        ajouterDocButton.getStyleClass().add("AjoutDoc-style");
+        ajouterDocButton.getStyleClass().add("Docs-Style");
     }
 
     private Button createButtonWithIcon(String name, String string, int i, int j) {
@@ -214,6 +248,8 @@ public class ViewFromTacheAjout {
             iconView.setFitWidth(i);
             iconView.setFitHeight(j);
             button.setGraphic(iconView);
+            button.setOnMouseEntered(event -> button.setCursor(Cursor.HAND));
+            button.setOnMouseExited(event -> button.setCursor(Cursor.DEFAULT));
         } catch (Exception e) {
             System.out.println("Error loading the icon: " + e.getMessage());
         }
@@ -248,19 +284,23 @@ public class ViewFromTacheAjout {
         text.getStyleClass().add("Hour-Minute-Style");
         return text;
     }
+    
+    // private void handleAjouterDocButton() {
+    //     // Call the corresponding method in the controller
+    //     controller.handleAjouterDocButtonAction();
+    // }
 
-    @SuppressWarnings("unused")
-    private void handleSaveButton(GridPane gridPane) {
-        controller.handleSaveButton(gridPane);
-    }
+    // // Method to handle "Enregistrer" button click
+    // private void handleEnregistrerButton() {
+    //     // Call the corresponding method in the controller
+    //     controller.handleEnregistrerButtonAction();
+    // }
 
-    private void handleAjouterButtonAction(GridPane gridPane) {
-        controller.handleAjouterButtonAction(gridPane);
-    }
-
-    private void handleAnnulerButtonAction(GridPane gridPane) {
-        controller.handleAnnulererButtonAction(gridPane);
-    }
+    // // Method to handle "Annuler" button click
+    // private void handleAnnulerButton() {
+    //     // Call the corresponding method in the controller
+    //     controller.handleAnnulerButtonAction();
+    // }
 
     private VBox CreateVbox(int Spacing, Pos position) {
         VBox vbox = new VBox();
@@ -282,11 +322,17 @@ public class ViewFromTacheAjout {
         HBox.setHgrow(spacer, Priority.ALWAYS);
         return spacer;
     }
+    private Region createVerticalSpace(int height) {
+        Region spacer = new Region();
+        VBox.setVgrow(spacer, Priority.ALWAYS);
+        spacer.setMinHeight(height);
+        return spacer;
+    }
 
     private VBox createVboxDates(HBox myBox, DatePicker date, TextField temps, Label label, Region Space_Dates) {
         myBox.getChildren().addAll(date, temps);
         VBox vbox = new VBox();
-        HBox.setHgrow(Space_Dates, Priority.ALWAYS); // Make spacer grow as much as possible
+        HBox.setHgrow(Space_Dates, Priority.ALWAYS);
         vbox.getChildren().addAll(label, myBox);
         return vbox;
     }
@@ -311,5 +357,14 @@ public class ViewFromTacheAjout {
 
         return contenaireDocuments;
     }
+    private Button createButton(String text) {
+        Button button = new Button(text);
+
+        button.setOnMouseEntered(event -> button.setCursor(Cursor.HAND));
+        button.setOnMouseExited(event -> button.setCursor(Cursor.DEFAULT));
+
+        return button;
+    }
+
 
 }

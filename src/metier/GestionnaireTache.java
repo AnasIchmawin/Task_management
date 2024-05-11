@@ -21,7 +21,7 @@ public class GestionnaireTache {
     }
 
     // Read
-    public Document readTask(Integer id) {
+    public Document readTask(String id) {
         return daoTache.read(id);
     }
 
@@ -35,6 +35,9 @@ public class GestionnaireTache {
     // Delete
     public void deleteTask(Integer id) {
         daoTache.delete(id);
+    }
+
+    public void createTask(POJOTache nouveauTache) {
     }
 
     // GetAllTask

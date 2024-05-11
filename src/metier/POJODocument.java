@@ -3,28 +3,30 @@ package metier;
 import java.time.LocalDateTime;
 
 public class POJODocument {
-    private String id;
-    private String titre;
     private String description;
-    private String path;
+    private String URL;
     private LocalDateTime dateAjout;
+    private String Titre;
+
+    public POJODocument() {
+    }
+
+    public POJODocument(String titre, String description, String URL, LocalDateTime dateAjout) {
+        this.Titre = titre;
+        this.description = description;
+        this.URL = URL;
+        this.dateAjout = dateAjout;
+    }
 
     // Getters and Setters
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getTitre() {
-        return titre;
+        return Titre;
     }
 
     public void setTitre(String titre) {
-        this.titre = titre;
+        Titre = titre;
     }
+
 
     public String getDescription() {
         return description;
@@ -34,12 +36,12 @@ public class POJODocument {
         this.description = description;
     }
 
-    public String getPath() {
-        return path;
+    public String getURL() {
+        return URL;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 
     public LocalDateTime getDateAjout() {
@@ -48,11 +50,5 @@ public class POJODocument {
 
     public void setDateAjout(LocalDateTime dateAjout) {
         this.dateAjout = dateAjout;
-    }
-
-    @Override
-    public String toString() {
-        return "POJODocument [id=" + id + ", titre=" + titre + ", description=" + description + ", path=" + path
-                + ", dateAjout=" + dateAjout + "]";
     }
 }

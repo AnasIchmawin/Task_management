@@ -17,8 +17,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import presentation.taches.*;
-
 
 public class screen extends Application {
     private Button leftButton;
@@ -28,19 +26,108 @@ public class screen extends Application {
     private BorderPane root;
     private Label descriptionLabel;
     private controleur controller;
+    Button addDocButton;
+    Label titleabel ;
+    Label indexDebut;
+    Label indexFin;
+    Label indexCategorie;
+    Label indexType ;
+    Label dateDebutLabel;
+    Label dateFinLabel;
+    Label indexdescription;
+    Label categorieLabel;
+    Label typeLabel;
+    public Label getTitleabel() {
+        return titleabel;
+    }
+
+    public Label getDateDebutLabel() {
+        return dateDebutLabel;
+    }
+
+    public Label getDateFinLabel() {
+        return dateFinLabel;
+    }
+
+    public Label getCategorieLabel() {
+        return categorieLabel;
+    }
+
+    public Label getTypeLabel() {
+        return typeLabel;
+    }
+
+    public Label getDescriptionLabel() {
+        return descriptionLabel;
+    }
 
     // Constructor
     public screen() {
         init();
         style();
+        controller = new controleur(this, new tacheDetailModele());
     }
+
+    public HBox Designe(){
+        
+
+        // Titre labels
+        Label indexDebut = new Label("Debut");
+        Label indexFin = new Label("Fin");
+        Label indexCategorie = new Label("Categorie");
+        Label indexType = new Label();
+
+        // Style
+        indexDebut.getStyleClass().add("index-style");
+        indexFin.getStyleClass().add("index-style");
+        indexCategorie.getStyleClass().add("index-style");
+        indexType.getStyleClass().add("index-style");
+
+        // Create Head Box
+        HBox hboxHead = new HBox(10);
+
+        HBox hbox1 = new HBox(10);
+        HBox hbox2 = new HBox(30);
+
+        // Create HBox for labels
+        VBox vbox1 = new VBox(5);
+        VBox vbox2 = new VBox(5);
+        VBox vbox3 = new VBox(5);
+        VBox vbox4 = new VBox(5);
+
+        // centering
+        hbox1.setAlignment(Pos.CENTER_LEFT);
+        hbox1.setPadding(new Insets(0, 0, 0, 30));
+        hbox2.setAlignment(Pos.CENTER_RIGHT);
+        hbox2.setPadding(new Insets(0, 30, 0, 0));
+        vbox1.setAlignment(Pos.CENTER);
+        vbox2.setAlignment(Pos.CENTER);
+        vbox3.setAlignment(Pos.CENTER);
+        vbox4.setAlignment(Pos.CENTER);
+
+        // Add labels to VBoxes
+        vbox1.getChildren().addAll(indexDebut, dateDebutLabel);
+        vbox2.getChildren().addAll(indexFin, dateFinLabel);
+        vbox3.getChildren().addAll(indexCategorie, categorieLabel);
+        vbox4.getChildren().addAll(indexType, typeLabel);
+        hbox1.getChildren().add(titleabel);
+
+        HBox.setHgrow(hbox1, javafx.scene.layout.Priority.ALWAYS);
+        HBox.setHgrow(hbox2, javafx.scene.layout.Priority.ALWAYS);
+
+        hboxHead.getChildren().addAll(hbox1, hbox2);
+
+        // Add VBoxes to HBox
+        hbox2.getChildren().addAll(vbox1, vbox2, vbox3, vbox4);
+        return hboxHead;
+    } 
 
     @Override
     public void start(Stage primaryStage) {
         // Create the nnavigation bar
         VBox navbarContainer = createNavbarContainer();
         // Create the main content
-        StackPane container = createMainContent();
+        StackPane container = Designer();
         // Create the root layout
         root = createBorderPane(navbarContainer, container);
         // Create the scene
@@ -74,23 +161,50 @@ public class screen extends Application {
         return navbarContainer;
     }
 
-    private StackPane createMainContent() {
-        // le background de la page gris
+    private StackPane Designer(){
         StackPane container = new StackPane();
         container.getStyleClass().add("container");
-        container.setPadding(new Insets(20, 20, 20, 25)); // 15px padding top, 70px padding right,
-        // 20px padding bottom, 55px padding left
+        container.setPadding(new Insets(20, 20, 20, 25)); 
+        HBox HeadBox = new HBox();
+        HBox hbox1 = new HBox(10);
+        HBox hbox2 = new HBox(30);
+         // Create HBox for labels
+         VBox vbox1 = new VBox(5);
+         VBox vbox2 = new VBox(5);
+         VBox vbox3 = new VBox(5);
+         VBox vbox4 = new VBox(5);
 
-        // Créer un conteneur VBox pour contenir les éléments principaux
-        HBox HeadBox = BoxHead("la tache de la famille des taches", "12/21/2021", "13/12/2023", "Encadrement", "PFE");
-        VBox DescriptionBox = BoxDescription(
-                "  la bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautiquela bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautiquela bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautiquela bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautiquela bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautiquela bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautique informatique, sans que son conte");
+        //centring
+        hbox1.setAlignment(Pos.CENTER_LEFT);
+        hbox1.setPadding(new Insets(0, 0, 0, 30));
+        hbox2.setAlignment(Pos.CENTER_RIGHT);
+        hbox2.setPadding(new Insets(0, 30, 0, 0));
+        vbox1.setAlignment(Pos.CENTER);
+        vbox2.setAlignment(Pos.CENTER);
+        vbox3.setAlignment(Pos.CENTER);
+        vbox4.setAlignment(Pos.CENTER);
+
+
+        vbox1.getChildren().addAll(indexDebut, dateDebutLabel);
+        vbox2.getChildren().addAll(indexFin, dateFinLabel);
+        vbox3.getChildren().addAll(indexCategorie, categorieLabel);
+        vbox4.getChildren().addAll(indexType, typeLabel);
+        hbox1.getChildren().add(titleabel);
+
+        HBox.setHgrow(hbox1, javafx.scene.layout.Priority.ALWAYS);
+        HBox.setHgrow(hbox2, javafx.scene.layout.Priority.ALWAYS);
+
+        HeadBox.getChildren().addAll(hbox1, hbox2);
+
+        hbox2.getChildren().addAll(vbox1, vbox2, vbox3, vbox4);
+        VBox DescriptionBox = new VBox();
+        descriptionLabel.setWrapText(true);
+        DescriptionBox.getChildren().addAll(indexdescription, descriptionLabel);
         VBox DocSection = DocumentSection();
-
-        // Création du VBox
-        VBox vbox = new VBox(30); // Espacement vertical entre les HBox
-        vbox.getChildren().addAll(HeadBox, DescriptionBox, DocSection);
+        VBox vbox = new VBox(30);
+        vbox.getChildren().addAll(HeadBox,DescriptionBox, DocSection);
         container.getChildren().add(vbox);
+
         return container;
     }
 
@@ -164,98 +278,27 @@ public class screen extends Application {
 
     private ScrollPane createScrollPaneWithButton(HBox hboxContainer) {
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(hboxContainer); // Définir le contenu du ScrollPane
-
-        // Vous pouvez également définir d'autres propriétés de ScrollPane ici selon vos
-        // besoins
-
+        scrollPane.setContent(hboxContainer); 
         return scrollPane;
     }
-
-    private VBox BoxDescription(String description) {
-        Label indexdescription = new Label("Description: ");
-        indexdescription.getStyleClass().add("index-style");
-        Label descriptionLabel = new Label(description);
-        descriptionLabel.setWrapText(true);
-        descriptionLabel.getStyleClass().add("description-style");
-        VBox vbox = new VBox();
-        vbox.getChildren().addAll(indexdescription, descriptionLabel);
-        return vbox;
-    }
-
-    private HBox BoxHead(String title, String dateDebut, String dateFin, String categorie, String type) {
-
-        // Titre
-        Label titleabel = new Label(title);
-
-        // labels
-        Label dateDebutLabel = new Label(dateDebut);
-        Label dateFinLabel = new Label(dateFin);
-        Label categorieLabel = new Label(categorie);
-        Label typeLabel = new Label(type);
-        // Style
-        titleabel.getStyleClass().add("index-style");
-        dateDebutLabel.getStyleClass().add("title-style");
-        dateFinLabel.getStyleClass().add("title-style");
-        categorieLabel.getStyleClass().add("title-style");
-        typeLabel.getStyleClass().add("title-style");
-
-        // Titre labels
-        Label indexDebut = new Label("Debut");
-        Label indexFin = new Label("Fin");
-        Label indexCategorie = new Label("Categorie");
-        Label indexType = new Label("Type");
-
-        // Style
-        indexDebut.getStyleClass().add("index-style");
-        indexFin.getStyleClass().add("index-style");
-        indexCategorie.getStyleClass().add("index-style");
-        indexType.getStyleClass().add("index-style");
-
-        // Create Head Box
-        HBox hboxHead = new HBox(10);
-
-        HBox hbox1 = new HBox(10);
-        HBox hbox2 = new HBox(30);
-
-        // Create HBox for labels
-        VBox vbox1 = new VBox(5);
-        VBox vbox2 = new VBox(5);
-        VBox vbox3 = new VBox(5);
-        VBox vbox4 = new VBox(5);
-
-        // centering
-        hbox1.setAlignment(Pos.CENTER_LEFT);
-        hbox1.setPadding(new Insets(0, 0, 0, 30));
-        hbox2.setAlignment(Pos.CENTER_RIGHT);
-        hbox2.setPadding(new Insets(0, 30, 0, 0));
-        vbox1.setAlignment(Pos.CENTER);
-        vbox2.setAlignment(Pos.CENTER);
-        vbox3.setAlignment(Pos.CENTER);
-        vbox4.setAlignment(Pos.CENTER);
-
-        // Add labels to VBoxes
-        vbox1.getChildren().addAll(indexDebut, dateDebutLabel);
-        vbox2.getChildren().addAll(indexFin, dateFinLabel);
-        vbox3.getChildren().addAll(indexCategorie, categorieLabel);
-        vbox4.getChildren().addAll(indexType, typeLabel);
-        hbox1.getChildren().add(titleabel);
-
-        HBox.setHgrow(hbox1, javafx.scene.layout.Priority.ALWAYS);
-        HBox.setHgrow(hbox2, javafx.scene.layout.Priority.ALWAYS);
-
-        hboxHead.getChildren().addAll(hbox1, hbox2);
-
-        // Add VBoxes to HBox
-        hbox2.getChildren().addAll(vbox1, vbox2, vbox3, vbox4);
-        return hboxHead;
-    }
-
+//----------------------------------------------------------------------------------
     public void init() {
         leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
+        descriptionLabel = new Label();
+        titleabel = new Label();
+        descriptionLabel = new Label();
+        dateDebutLabel = new Label();
+        dateFinLabel = new Label();
+        categorieLabel = new Label();
+        typeLabel = new Label();
+        indexDebut = new Label("Debut");
+        indexFin = new Label("Fin");
+        indexCategorie = new Label("Categorie");
+        indexType = new Label("Type");
+        indexdescription = new Label("Description");
         descriptionLabel = new Label();
     }
 
@@ -265,6 +308,17 @@ public class screen extends Application {
         projectsButton.getStyleClass().add("button-style");
         archiveButton.getStyleClass().add("button-style");
         descriptionLabel.getStyleClass().add("description-label");
+        titleabel.getStyleClass().add("index-style");
+        dateDebutLabel.getStyleClass().add("title-style");
+        dateFinLabel.getStyleClass().add("title-style");
+        categorieLabel.getStyleClass().add("title-style");
+        typeLabel.getStyleClass().add("title-style");
+        indexDebut.getStyleClass().add("index-style");
+        indexFin.getStyleClass().add("index-style");
+        indexCategorie.getStyleClass().add("index-style");
+        indexType.getStyleClass().add("index-style");
+        indexdescription.getStyleClass().add("index-style");
+        descriptionLabel.getStyleClass().add("description-style");
     }
 
     private Button createButtonWithIcon(String name, String string, int i, int j) {

@@ -1,7 +1,5 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-import org.apache.commons.logging.Log;
 import org.bson.Document;
 
 import com.mongodb.client.FindIterable;
@@ -55,9 +53,9 @@ public class App extends Application {
         // LoginFormView login = new LoginFormView(primaryStage);
         // login.start(primaryStage);
 
-        // ControllerFromTacheAjout controller = new ControllerFromTacheAjout();
-        // ViewFromTacheAjout view = new ViewFromTacheAjout(controller);
-        // view.start(primaryStage);
+        ControllerFromTacheAjout controller = new ControllerFromTacheAjout();
+        ViewFromTacheAjout view = new ViewFromTacheAjout(controller);
+        view.start(primaryStage);
 
         // ProjetDetailController con = new ProjetDetailController() ;
         // Projet_Detail_View view = new Projet_Detail_View(con) ;
