@@ -33,7 +33,7 @@ public class ListeFormView extends Application {
     private TextField searchField;
     private ListeFormController controller;
     private BorderPane root;
-    GridPane ZoneListes;
+    private GridPane ZoneListes;
     private HBox buttonsBar;
     private HBox leftButtonBox;
     private HBox navbar;
