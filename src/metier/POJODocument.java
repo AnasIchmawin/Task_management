@@ -5,17 +5,23 @@ import java.time.LocalDateTime;
 public class POJODocument {
     private String description;
     private String URL;
-    private LocalDateTime dateAjout;
+    private String dateAjout;
     private String Titre;
+    private String idProjet;
+    private String idTache;
+    private String idSeance;
 
     public POJODocument() {
     }
 
-    public POJODocument(String titre, String description, String URL, LocalDateTime dateAjout) {
+    public POJODocument(String titre, String description, String URL, String dateAjout, String idProjet, String idTache, String idSeance) {
         this.Titre = titre;
         this.description = description;
         this.URL = URL;
         this.dateAjout = dateAjout;
+        this.idProjet = idProjet;
+        this.idTache = idTache;
+        this.idSeance = idSeance;
     }
 
     // Getters and Setters
@@ -44,11 +50,36 @@ public class POJODocument {
         this.URL = URL;
     }
 
-    public LocalDateTime getDateAjout() {
+    public String getDateAjout() {
         return dateAjout;
     }
 
-    public void setDateAjout(LocalDateTime dateAjout) {
+    public void setDateAjout(String dateAjout) {
         this.dateAjout = dateAjout;
     }
+
+    public String getIdProjet() {
+        return idProjet;
+    }
+
+    public void setIdProjet(String idProjet) {
+        this.idProjet = idProjet;
+    }
+
+    public String getIdTache() {
+        return idTache;
+    }
+
+    public void setIdTache(String idTache) {
+        this.idTache = idTache;
+    }
+
+    public String getIdSeance() {
+        return idSeance;
+    }
+
+    public void setIdSeance(String idSeance) {
+        this.idSeance = idSeance;
+    }
+
 }

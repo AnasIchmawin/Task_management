@@ -281,13 +281,19 @@ public class TachesFormController {
         projets.start(stage);
     }
 
-    //getTacheEtat
     public Boolean getTaskEtat(String tacheId) {
         return gestionnaireTache.getTaskEtat(tacheId);
     }
 
-    //setTacheEtat
     public static void setTaskEtat(String tacheId, Boolean etat) {
         gestionnaireTache.setTaskEtat(tacheId, etat);
+    }
+
+    public String getListTitle() {
+        return gestionnaireListe.getListTitle(listId);
+    }
+
+    public String getListDescription() {
+        return gestionnaireListe.getListDescription(listId);
     }
 }

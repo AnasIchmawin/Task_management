@@ -14,7 +14,7 @@ import java.util.List;
 public class DAODocument {
 
     // Create
-    public void create(String titre, String description, String path, LocalDateTime datedAjout) {
+    public void create(String titre, String description, String path, String datedAjout, String idProjet, String idTache, String idSeance) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("documents");
             Document doc = new Document("titre", titre)

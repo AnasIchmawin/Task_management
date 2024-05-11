@@ -9,17 +9,19 @@ public class DocumentModel {
     private LocalDate dateInsertion;
     private String idProjet;
     private String idTache;
+    private String idSeance;
 
     public DocumentModel() {
     }
 
-    public DocumentModel(String titre, String url, String description, LocalDate dateInsertion, String idProjet, String idTache) {
+    public DocumentModel(String titre, String url, String description, LocalDate dateInsertion, String idProjet, String idTache, String idSeance) {
         this.titre = titre;
         this.url = url;
         this.description = description;
         this.dateInsertion = dateInsertion;
         this.idProjet = idProjet;
         this.idTache = idTache;
+        this.idSeance = idSeance;
     }
 
     public LocalDate getDateInsertion() {
@@ -68,5 +70,13 @@ public class DocumentModel {
 
     public void setIdTache(String idTache) {
         this.idTache = idTache;
+    }
+
+    public String getIdSeance() {
+        return idSeance;
+    }
+
+    public void setIdSeance(String idSeance) {
+        this.idSeance = idSeance;
     }
 }

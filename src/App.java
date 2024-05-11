@@ -48,10 +48,15 @@ public class App extends Application {
 
         // ArchiveFormView archive = new ArchiveFormView();
         // archive.start(primaryStage);
+        // ArchiveFormView archive = new ArchiveFormView();
+        // archive.start(primaryStage);
 
         // LoginFormView login = new LoginFormView(primaryStage);
         // login.start(primaryStage);
 
+        // ControllerFromTacheAjout controller = new ControllerFromTacheAjout();
+        // ViewFromTacheAjout view = new ViewFromTacheAjout(controller);
+        // view.start(primaryStage);
         // ControllerFromTacheAjout controller = new ControllerFromTacheAjout();
         // ViewFromTacheAjout view = new ViewFromTacheAjout(controller);
         // view.start(primaryStage);
