@@ -52,6 +52,16 @@ public class GestionnaireListe {
         return daoListe.read(id);
     }
 
+    //getListTitle
+    public String getListTitle(String id) {
+        return daoListe.getListTitle(id);
+    }
+
+    //getListDescription
+    public String getListDescription(String id) {
+        return daoListe.getListDescription(id);
+    }
+
     // Method to update a list
     public void mettreAJourListe(String id, String titre, String description, List<Document> taches) {
         daoListe.update(id, titre, description, taches);

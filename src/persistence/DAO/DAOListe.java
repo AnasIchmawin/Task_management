@@ -129,4 +129,38 @@ public class DAOListe {
                 }
                 return taches;
             }
+
+        public String getListTitle(String id) {
+                try {
+                        MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                                        .getCollection("listes");
+                        ObjectId objId = new ObjectId(id);
+                        Document liste = collection.find(Filters.eq("_id", objId)).first();
+                        if (liste != null) {
+                                return liste.getString("titre");
+                        } else {
+                                System.err.println("Liste non trouvée avec l'ID: " + id);
+                        }
+                } catch (Exception e) {
+                        System.err.println("Erreur lors de la récupération du titre de la liste : " + e.getMessage());
+                }
+                return null;
+        }
+
+        public String getListDescription(String id) {
+                try {
+                        MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                                        .getCollection("listes");
+                        ObjectId objId = new ObjectId(id);
+                        Document liste = collection.find(Filters.eq("_id", objId)).first();
+                        if (liste != null) {
+                                return liste.getString("description");
+                        } else {
+                                System.err.println("Liste non trouvée avec l'ID: " + id);
+                        }
+                } catch (Exception e) {
+                        System.err.println("Erreur lors de la récupération de la description de la liste : " + e.getMessage());
+                }
+                return null;
+        }
 }

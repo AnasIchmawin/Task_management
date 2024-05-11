@@ -47,15 +47,15 @@ public class App extends Application {
         // ListeFormView projets = new ListeFormView();
         // projets.start(primaryStage);
 
-        ArchiveFormView archive = new ArchiveFormView();
-        archive.start(primaryStage);
+        // ArchiveFormView archive = new ArchiveFormView();
+        // archive.start(primaryStage);
 
         // LoginFormView login = new LoginFormView(primaryStage);
         // login.start(primaryStage);
 
-        ControllerFromTacheAjout controller = new ControllerFromTacheAjout();
-        ViewFromTacheAjout view = new ViewFromTacheAjout(controller);
-        view.start(primaryStage);
+        // ControllerFromTacheAjout controller = new ControllerFromTacheAjout();
+        // ViewFromTacheAjout view = new ViewFromTacheAjout(controller);
+        // view.start(primaryStage);
 
         // ProjetDetailController con = new ProjetDetailController() ;
         // Projet_Detail_View view = new Projet_Detail_View(con) ;
@@ -75,8 +75,8 @@ public class App extends Application {
         // SceanceAjouteView view = new SceanceAjouteView();
         // view.start(primaryStage);
         
-        // TachesFormView view = new TachesFormView() ;
-        // view.start(primaryStage) ;
+        TachesFormView view = new TachesFormView() ;
+        view.start(primaryStage) ;
 
         // SceanceFormController con = new SceanceFormController() ;
         // SeanceFormView view = new SeanceFormView(con) ;
