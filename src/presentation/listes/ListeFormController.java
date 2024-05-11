@@ -98,6 +98,7 @@ public class ListeFormController {
     private void handleButtoListnAction(Button newListButton) {
         List<String> listInfos = gridCaseInfos.get(List.of(this.listView.getZoneListes().getRowIndex(newListButton), this.listView.getZoneListes().getColumnIndex(newListButton)));
         String Id = listInfos.get(0);
+        System.out.println("ID de la liste : " + Id);
         TachesFormController tachesFormController = new TachesFormController(Id);
         TachesFormView tachesFormView = new TachesFormView();
         Stage stage = (Stage) listView.getZoneListes().getScene().getWindow();
