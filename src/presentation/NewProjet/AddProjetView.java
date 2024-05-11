@@ -1,10 +1,8 @@
 package presentation.NewProjet;
 
-import java.util.ArrayList;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,51 +17,48 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import presentation.listes.ListeFormController;
+import presentation.projets.ProjetsFormController;
 
 public class AddProjetView {
-
-    private static final Pos TOP_CENTER = Pos.TOP_CENTER;
-    private static final Pos TOP_LEFT = Pos.TOP_LEFT;
-    private Button leftButton;
-    private Button listesButton;
-    private Button projectsButton;
-    private Button archiveButton;
-    private Button Enregistrer;
-    private Button ajouterTacheButton;
-    private Button Annuler;
-    private AddProjetController controleur;
     private BorderPane root;
+    private Button Enregistrer;
+    private Button Annuler;
     private TextField TitreField;
     private TextArea ZoneDescription;
     private GridPane ZoneTaches;
-    private AddProjetModel addListModel;
-    private ListeFormController listeFormController;
+    private GridPane ZoneSeances;
+    private GridPane ZoneDocuments;
+    private AddProjetController controleur;
+    private ProjetsFormController projetFormController;
+    private Button ajouterTacheButton;
+    private Button ajouterSeanceButton;
+    private Button ajouterDocumentButton;
 
-    public AddProjetView(ListeFormController listeFormController) {
-        this.listeFormController = listeFormController;
-        addListModel = new AddProjetModel("", "", "", "", "", "", new ArrayList<>());
+    public AddProjetView(ProjetsFormController projetFormController) {
+        this.projetFormController = projetFormController;
+        this.controleur = new AddProjetController(this);
         init();
         style();
         action();
     }
 
-    public AddProjetView(AddProjetModel addmodel, ListeFormController listeFormController) {
-        this.listeFormController = listeFormController;
-        this.addListModel = new AddProjetModel(addmodel.getTitre(), addmodel.getCategorie(), addmodel.getType(),
-                addmodel.getDescription(), addmodel.getDateDebut(), addmodel.getDateFin(), addmodel.getTitreSelectionnes());
-
+    public AddProjetView(AddProjetController controleur, ProjetsFormController projetFormController) {
+        this.projetFormController = projetFormController;
+        this.controleur = controleur;
         init();
         style();
         action();
-        this.controleur.afficherTaches(this.addListModel.getTitreSelectionnes(), this.ZoneTaches);
+        this.controleur.updateView(this);
+        this.controleur.displayTasks(ZoneTaches);
+        this.controleur.displaySeances(ZoneSeances);
+        this.controleur.displayDocuments(ZoneDocuments);
     }
 
     public void start(Stage primaryStage) {
         StackPane containerContent = createMainContent();
         root = createBorderPane(containerContent);
 
-        Scene scene = new Scene(root, 550, 520);
+        Scene scene = new Scene(root, 700, 600);
         scene.getStylesheets().add(getClass().getResource("AddProjetStyle.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Formulaire d'un Projet");
@@ -72,31 +67,24 @@ public class AddProjetView {
     }
 
     public void init() {
-        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
-        listesButton = new Button("Listes");
-        projectsButton = new Button("Projets");
-        archiveButton = new Button("Archive");
-        ajouterTacheButton = createButtonWithIcon("Ajouter Tache", "file:./Pictures/add.png", 20, 20);
-        Annuler = createButtonWithIcon("Annuler", "file:./Pictures/annuler.png", 20, 20);
         Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 13, 13);
+        Annuler = createButtonWithIcon("Annuler", "file:./Pictures/annuler.png", 20, 20);
         TitreField = createTextField("");
-        TitreField.setText(this.addListModel.getTitre());
         ZoneDescription = createTextArea("", "ZoneDescription-Style");
-        ZoneDescription.setText(this.addListModel.getDescription());
+        ZoneTaches = creatZone();
+        ZoneSeances = creatZone();
+        ZoneDocuments = creatZone();
         ajouterTacheButton = createButtonWithIcon("Ajouter Tache", "file:./Pictures/addIcon.png", 20, 20);
-        ZoneTaches = creatZoneTaches();
-        this.controleur = new AddProjetController();
-
+        ajouterSeanceButton = createButtonWithIcon("Ajouter Seance", "file:./Pictures/addIcon.png", 20, 20);
+        ajouterDocumentButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/addIcon.png", 20, 20);
     }
 
     private void style() {
-        leftButton.getStyleClass().add("left-btn-style");
-        listesButton.getStyleClass().add("button-style");
-        projectsButton.getStyleClass().add("button-style");
-        archiveButton.getStyleClass().add("button-style");
-        ajouterTacheButton.getStyleClass().add("AjouterTache-style");
-        Annuler.getStyleClass().add("footBtn-style");
         Enregistrer.getStyleClass().add("footBtn-style");
+        Annuler.getStyleClass().add("footBtn-style");
+        ajouterTacheButton.getStyleClass().add("AjouterTache-style");
+        ajouterSeanceButton.getStyleClass().add("AjouterTache-style");
+        ajouterDocumentButton.getStyleClass().add("AjouterTache-style");
     }
 
     private BorderPane createBorderPane(StackPane container) {
@@ -107,53 +95,45 @@ public class AddProjetView {
     }
 
     private StackPane createMainContent() {
-        // le background de la page gris
         StackPane container = new StackPane();
         container.getStyleClass().add("container");
         container.setPadding(new Insets(15, 70, 20, 55));
 
-        VBox mainContentContainer = CreateVbox(20, TOP_CENTER);
+        VBox mainContentContainer = CreateVbox(20, Pos.TOP_CENTER);
 
-        VBox topContainer = CreateVbox(10, TOP_LEFT);
-
+        VBox topContainer = CreateVbox(10, Pos.TOP_LEFT);
         Label labelTitre = createLabel("Titre de ma liste");
-
-        HBox ContainerTitle = CreateHbox(0, TOP_LEFT);
-
+        HBox ContainerTitle = CreateHbox(0, Pos.TOP_LEFT);
         TitreField.setPadding(new Insets(4, 4, 4, 12));
-
         ContainerTitle.getChildren().addAll(TitreField);
-
-        // Add elements to TopContainer
         topContainer.getChildren().addAll(labelTitre, ContainerTitle);
-
-        mainContentContainer.getChildren().addAll(topContainer); // Add top container and
-
-        // ------------------------------
+        mainContentContainer.getChildren().addAll(topContainer);
 
         Label labelDescription = createLabel("Discription");
-        VBox ContenaireDescription = CreateVbox(10, TOP_LEFT);
-
+        VBox ContenaireDescription = CreateVbox(10, Pos.TOP_LEFT);
         ContenaireDescription.getChildren().addAll(labelDescription, ZoneDescription);
-
         mainContentContainer.getChildren().addAll(ContenaireDescription);
 
-        // create vbox Contenaire Taches
-        VBox CentenaireTaches = CreateVbox(15, TOP_LEFT);
-        Label labelTachces = createLabel("Taches Ajoutés");
+        VBox CentenaireTaches = CreateVbox(10, Pos.TOP_LEFT);
         VBox Taches = createTacheBox();
+        CentenaireTaches.getChildren().addAll(Taches);
 
-        CentenaireTaches.getChildren().addAll(labelTachces, Taches);
+        VBox CentenaireSeances = CreateVbox(10, Pos.TOP_LEFT);
+        VBox Seances = createSeanceBox();
+        CentenaireSeances.getChildren().addAll(Seances);
 
-        mainContentContainer.getChildren().addAll(CentenaireTaches);
+        VBox CentenaireDocuments = CreateVbox(10, Pos.TOP_LEFT);
+        VBox Documents = createDocumentBox();
+        CentenaireDocuments.getChildren().addAll(Documents);
 
-        // ---------------------------------------------------------------
+        HBox ContenaireAjout = CreateHbox(8, Pos.TOP_CENTER);
+        ContenaireAjout.getChildren().addAll(CentenaireTaches,CentenaireSeances,CentenaireDocuments);
+        
 
-        // Centenaire Buttons
+        mainContentContainer.getChildren().addAll(ContenaireAjout);
 
-        HBox ContenaireButtons = CreateHbox(8, TOP_CENTER);
+        HBox ContenaireButtons = CreateHbox(8, Pos.TOP_CENTER);
         ContenaireButtons.getChildren().addAll(Enregistrer, Annuler);
-
         mainContentContainer.getChildren().addAll(ContenaireButtons);
 
         container.getChildren().addAll(mainContentContainer);
@@ -161,7 +141,7 @@ public class AddProjetView {
         return container;
     }
 
-    private GridPane creatZoneTaches() {
+    private GridPane creatZone() {
         GridPane grid = new GridPane();
         grid.setVgap(8);
         grid.setHgap(10);
@@ -169,13 +149,6 @@ public class AddProjetView {
         return grid;
     }
 
-    private ScrollPane createScrollPane(GridPane gridPane) {
-        ScrollPane scrollPane = new ScrollPane(gridPane);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide horizontal scrollbar
-        return scrollPane;
-    }
 
     private Button createButtonWithIcon(String name, String path, int i, int j) {
         Button button = new Button(name);
@@ -230,61 +203,93 @@ public class AddProjetView {
     private VBox createTacheBox() {
         ScrollPane scrollTask = createScrollPane(ZoneTaches);
         scrollTask.getStyleClass().add("scroll-Style");
-
-        // Créer la VBox contenant les documents
         VBox contenaireTaches = CreateVbox(5, Pos.TOP_LEFT);
         contenaireTaches.getStyleClass().add("contenaire-taches");
-
-        // Ajouter les éléments à la VBox
         contenaireTaches.getChildren().addAll(scrollTask, ajouterTacheButton);
         contenaireTaches.setPadding(new Insets(10, 10, 5, 10));
-
         return contenaireTaches;
+    }
+
+    private VBox createSeanceBox() {
+        ScrollPane scrollSeance = createScrollPane(ZoneSeances);
+        scrollSeance.getStyleClass().add("scroll-Style");
+        VBox contenaireSeances = CreateVbox(5, Pos.TOP_LEFT);
+        contenaireSeances.getStyleClass().add("contenaire-taches");
+        contenaireSeances.getChildren().addAll(scrollSeance, ajouterSeanceButton);
+        contenaireSeances.setPadding(new Insets(10, 10, 5, 10));
+        return contenaireSeances;
+    }
+
+    private VBox createDocumentBox() {
+        ScrollPane scrollDocument = createScrollPane(ZoneDocuments);
+        scrollDocument.getStyleClass().add("scroll-Style");
+        VBox contenaireDocuments = CreateVbox(5, Pos.TOP_LEFT);
+        contenaireDocuments.getStyleClass().add("contenaire-taches");
+        contenaireDocuments.getChildren().addAll(scrollDocument, ajouterDocumentButton);
+        contenaireDocuments.setPadding(new Insets(10, 10, 5, 10));
+        return contenaireDocuments;
+    }
+
+    private ScrollPane createScrollPane(GridPane gridPane) {
+        ScrollPane scrollPane = new ScrollPane(gridPane);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        return scrollPane;
     }
 
     // actions :
     public void action() {
         Annuler.setOnAction(event -> {
             try {
-                Stage stage = (Stage) Annuler.getScene().getWindow();
-                stage.close();
+                this.controleur.closerWindow(event);
             } catch (Exception e) {
-                System.out.println("Erreur pendant la fermeture AddProjet  : " + e.getMessage());
+                System.out.println("Erreur pendant la fermeture AddList  : " + e.getMessage());
             }
         });
 
         Enregistrer.setOnAction(event -> {
             try {
-
-                addListModel.setTitre(TitreField.getText());
-                addListModel.setDescription(ZoneDescription.getText());
-                ArrayList<String> Taches = new ArrayList<>();
-
-                // Accéder aux boutons dans le GridPane
-                for (Node node : ZoneTaches.getChildren()) {
-                    if (node instanceof Button) {
-                        Button button = (Button) node;
-                        String tachesAssocie = button.getText();
-                        Taches.add(tachesAssocie);
-                    }
-                }
-
-                this.controleur.saveInfosProjet(addListModel);
-                this.listeFormController.afficheListes();
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Récupérer la fenêtre
-                                                                                         // actuelle
-                stage.close();
-
+                this.controleur.saveInfosProjet(event);
+                this.projetFormController.displayProjets(false);
+                this.controleur.closerWindow(event);
             } catch (Exception e) {
-                System.out.println("Erreur pendant la fermeture du addProjet : " + e.getMessage());
+                System.out.println("Erreur pendant la fermeture du addlist : " + e.getMessage());
             }
         });
-        ajouterTacheButton.setOnAction(event -> {
-            addListModel.setTitre(TitreField.getText());
-            addListModel.setDescription(ZoneDescription.getText());
 
-            this.controleur.getTasksView(event, addListModel, this.listeFormController);
+        ajouterTacheButton.setOnAction(event -> {
+            this.controleur.getTasksView(event, this.projetFormController);
         });
 
+        ajouterSeanceButton.setOnAction(event -> {
+            this.controleur.getSeancesView(event, this.projetFormController);
+        });
+    }
+
+    public String getTitre() {
+        return TitreField.getText();
+    }
+
+    public void setTitre(String newTitle) {
+        TitreField.setText(newTitle);
+    }
+
+    public String getDescription() {
+        return ZoneDescription.getText();
+    }
+
+    public void setDescription(String newDescription) {
+        ZoneDescription.setText(newDescription);
+    }
+
+    public GridPane getZoneTaches() {
+        return ZoneTaches;
+    }
+
+    public void setZoneTaches(GridPane newZoneTaches) {
+        ZoneTaches = newZoneTaches;
     }
 }
+
+

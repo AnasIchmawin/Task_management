@@ -65,6 +65,7 @@
     -fx-font-size: 16px;
     -fx-focus-color: transparent;
     -fx-max-height: 180px;
+    -fx-background-color: yellow;
 }
 
 

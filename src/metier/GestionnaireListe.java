@@ -1,6 +1,6 @@
 package metier;
 
-
+import java.util.LinkedHashMap;
 import java.util.List;
 import org.bson.Document;
 
@@ -23,6 +23,11 @@ public class GestionnaireListe {
 
     public POJOListe getListe() {
         return liste;
+    }
+
+    //getTaches
+    public LinkedHashMap<String,Boolean> getTaches(String listeId) {
+        return daoListe.getTaches(listeId);
     }
 
     public void setDaoListe(DAOListe daoListe) {
@@ -53,8 +58,13 @@ public class GestionnaireListe {
     }
 
     // Method to delete a list by its ID
-    public void supprimerListe(String id) {
-        daoListe.delete(id);
+    public void supprimerListe(List<String> ids) {
+        try {
+            for (String id : ids)
+                daoListe.delete(id);
+        } catch (Exception e) {
+            System.out.println("Supression failed");
+        }
     }
 
     // Method to get all lists

@@ -19,6 +19,9 @@ public class POJOListe {
         this.Taches = new ArrayList<>(addListModel.getTachesSelectionnees().keySet());
     }
 
+
+    
+
     public String getTitre() {
         return titre;
     }

@@ -7,7 +7,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,6 +22,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class TachesFormView extends Application {
     private Button leftButton;
@@ -35,12 +39,14 @@ public class TachesFormView extends Application {
     private ComboBox<String> comboBox1;
     private ComboBox<String> comboBox2;
     private Label filterLabel;
+    private GridPane ZoneListes;
 
     // Constructor
-    public TachesFormView(TachesFormController controller) {
-        this.controller = controller;
+    public TachesFormView() {
+        // this.controller = controller;
         init();
         style();
+        this.controller.displayTaches(false);
     }
 
     @Override
@@ -85,7 +91,6 @@ public class TachesFormView extends Application {
     private StackPane createMainContent() {
         //Le conteneur principal qui contient tous les éléments 
         VBox mainContentContainer = new VBox();
-        mainContentContainer.setSpacing(10);
 
         // le background de la page gris
         StackPane container = new StackPane();
@@ -93,13 +98,11 @@ public class TachesFormView extends Application {
         
 
         // Create GridPane for list items
-        GridPane ZoneListes = createGridPane();
         ScrollPane scrollPane = createScrollPane(ZoneListes);
 
-        VBox Listes = new VBox();
-        Listes.setSpacing(15);
-        Listes.getChildren().addAll(scrollPane); // Add description area
-        Listes.setPadding(new Insets(0, 40, 0, 40)); // Set padding for description area
+        VBox Tasks = new VBox();
+        Tasks.getChildren().addAll(scrollPane); // Add description area
+        Tasks.setMargin(Tasks, new Insets(0, 0, 0, 80));
 
         StackPane searchPane = new StackPane();
         searchPane.setAlignment(Pos.TOP_RIGHT);
@@ -113,23 +116,38 @@ public class TachesFormView extends Application {
         filterBox.setAlignment(Pos.CENTER); // Centrer les éléments horizontalement
 
         stackPane.getChildren().addAll(filterLabel,filterBox);
-        HBox.setMargin(stackPane, new Insets(30, 40, 30, 70));
+        HBox.setMargin(stackPane, new Insets(25, 40, 50, 70));
 
         HBox topContainer = new HBox();
         topContainer.setAlignment(Pos.TOP_LEFT); // Align elements at top left
+        topContainer.setPrefHeight(300);
         topContainer.getChildren().addAll(ordonnerButton,searchPane); // Add "Ordonner" button
         
+
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS); // Make spacer grow as much as possible
         topContainer.getChildren().add(spacer);
         topContainer.getChildren().add(stackPane); // Add StackPane containing search field and search button
 
+        //title
+        Label title = createLabel("Listes des tâches");
+        HBox titleContainer = new HBox();
+        titleContainer.getChildren().add(title);
+        HBox.setMargin(title, new Insets(0, 0, 0, 40));
+        titleContainer.setAlignment(Pos.TOP_LEFT);
+        // Create HBox for description
+        HBox descriptionContainer = new HBox();
+        VBox description = BoxDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque viverra nisl eget sapien hendrerit semper. Integer a dictum massa. Vivamus id sapien eu orci bibendum ornare non sed mauris. Donec sagittis odio ut sem aliquam rutrum. Duis auctor dignissim quam, ac vulputate tortor ultricies et. Interdum et malesuada fames ac ante ipsum primis in faucibus.consectetur adipiscing elit. Quisque viverra nisl eget sapien hendrerit semper. Integer a dictum massa. Vivamus id sapien eu orci bibendum ornare non sed mauris. Donec sagittis odio ut sem aliquam rutrum. Duis auctor dignissim quam, ac vulputate tortor ultricies et. Interdum et malesuada fames ac ante ipsum primis in faucibus.");
+        descriptionContainer.getChildren().addAll(description);
+        HBox.setMargin(description, new Insets(0, 20,30, 40));
+        descriptionContainer.setAlignment(Pos.TOP_LEFT);
+
         // Create HBox for adding the "Ajouter" button
         HBox buttonContainer = new HBox();
         buttonContainer.getChildren().add(ajouterButton);
-        HBox.setMargin(ajouterButton, new Insets(50, 0, 0, 70));
+        HBox.setMargin(ajouterButton, new Insets(0, 0, 20, 70));
 
-        mainContentContainer.getChildren().addAll(topContainer, Listes, buttonContainer); // Add top container and
+        mainContentContainer.getChildren().addAll(topContainer,titleContainer,descriptionContainer, Tasks, buttonContainer); // Add top container and
                                                                                           // Listes
 
         // Add les éléments à la StackPane
@@ -143,8 +161,8 @@ public class TachesFormView extends Application {
             controller.handleAjouterButtonAction(ZoneListes,"Task"+(ZoneListes.getRowCount()));
         });
 
-        searchButton.setOnAction(event -> {
-            controller.handleSearchButtonAction(ZoneListes,searchField.getText());
+        ordonnerButton.setOnAction(event -> {
+            controller.handleOrdonnerButtonAction();
         });
 
         return container;
@@ -152,9 +170,9 @@ public class TachesFormView extends Application {
 
     private GridPane createGridPane() {
         GridPane gridPane = new GridPane();
-        gridPane.setVgap(30);
-        gridPane.setHgap(20);
-        gridPane.setPrefHeight(350);
+        gridPane.setVgap(15);
+        gridPane.setHgap(10);
+        gridPane.setPrefHeight(500);
         gridPane.setStyle("-fx-background-color: #F0F0F0;");
         return gridPane;
     }
@@ -183,6 +201,16 @@ public class TachesFormView extends Application {
         comboBox1 = createComboBox("Type", "These", "PFE", "Cours", "Examen", "Autres");
         comboBox2 = createComboBox("Categorie", "Enseignement", "Encadrement", "Autres");
         filterLabel = new Label("     Filtrer");
+        SurveillerButton(projectsButton, "100px", "40px", "#3F72AF");
+        SurveillerButton(archiveButton, "100px", "40px", "#3F72AF");
+        SurveillerButton(ordonnerButton, "100px", "40px", "#3F72AF");
+        SurveillerButton(ajouterButton, "150px", "40px", "#3F72AF");
+        ZoneListes = createGridPane();
+
+
+
+
+        this.controller = new TachesFormController(this);
     }
 
     private void style() {
@@ -220,4 +248,52 @@ public class TachesFormView extends Application {
         return comboBox;
     }
 
+    private Label createLabel(String text) {
+        Label label = new Label(text);
+        label.getStyleClass().add("Label-style");
+        return label;
+    }
+
+    private VBox BoxDescription(String description) {
+        Label descriptionLabel = new Label(description);
+        descriptionLabel.setWrapText(true);
+        descriptionLabel.getStyleClass().add("description-style");
+        descriptionLabel.setTextOverrun(OverrunStyle.CLIP);
+        descriptionLabel.setEllipsisString(""); // Pas de troncature
+        VBox vbox = new VBox();
+        vbox.getChildren().addAll(descriptionLabel);
+        return vbox;
+    }
+
+    //getZoneTaches
+    public GridPane getZoneTaches() {
+        return ZoneListes;
+    }
+
+    public void SurveillerButton(Button button, String width, String height, String color) {
+        button.setOnMouseEntered(event -> {
+            button.setStyle("-fx-background-radius: 10px; " +
+                    "-fx-pref-width:" + width + "; " +
+                    "-fx-background-color: #8E9EB2; " +
+                    "-fx-text-fill: white; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 13px;");
+            button.setCursor(javafx.scene.Cursor.HAND);
+        });
+        button.setOnMouseExited(event -> {
+            button.setStyle("-fx-background-radius: 10px; " +
+                    "-fx-pref-width:" + width + "; " +
+                    "-fx-background-color: " + color + ";" +
+                    "-fx-text-fill: white; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 13px;");
+            button.setCursor(javafx.scene.Cursor.DEFAULT);
+        });
+        searchField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                controller.searchTache(newValue);
+            }
+        });
+    }
 }

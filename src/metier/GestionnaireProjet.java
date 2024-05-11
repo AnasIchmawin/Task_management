@@ -8,16 +8,7 @@ import persistence.DAO.DAOProjet;
 
 public class GestionnaireProjet {
     private DAOProjet daoProjet;
-    private POJOProjet projet; 
-    static Integer id = 1 ;
-
-    private static int getId(){
-        return id ;
-    }
-
-    private static void setId(Integer Id){
-        id = Id ;
-    }
+    private POJOProjet projet;
 
     public GestionnaireProjet() {
         this.daoProjet = new DAOProjet();
@@ -45,23 +36,27 @@ public class GestionnaireProjet {
         if (projet.getTitre().isEmpty()) {
             throw new NonValidList("Le projet doit avoir un nom !");
         }
-        daoProjet.create(getId(), this.projet.getTitre(), this.projet.getCategorie(), this.projet.getType(), this.projet.getDescription(), this.projet.getDateDebut(), this.projet.getDateFin(), this.projet.getSeances(), this.projet.getDocuments(), this.projet.getTaches(), this.projet.getCloture());
-        setId(id + 1);
+        daoProjet.create(this.projet.getTitre(), this.projet.getDescription(), this.projet.getTaches());
     }
 
     // Method to retrieve a projet by its ID
-    public Document lireProjet(int id) {
+    public Document lireProjet(String id) {
         return this.daoProjet.read(id);
     }
 
     // mettreAJourProjet
-    public void mettreAJourProjet(int id, String nom, String description, String dateDebut, String dateFin, String chefProjet, String client, String etat) {
-        this.daoProjet.update(id, nom, description, dateDebut, dateFin, chefProjet, client, etat);
+    public void mettreAJourProjet(String id, String nom, String description, List<Document> taches) {
+        this.daoProjet.update(id, nom, description, taches);
     }
 
     // supprimerProjet
-    public void supprimerProjet(int id) {
-        this.daoProjet.delete(id);
+    public void supprimerProjet(List<String> ids) {
+        try {
+            for (String id : ids)
+                daoProjet.delete(id);
+        } catch (Exception e) {
+            System.out.println("Supression failed");
+        }
     }
 
     // obtenirToutesLesProjets

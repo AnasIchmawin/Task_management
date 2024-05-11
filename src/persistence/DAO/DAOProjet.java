@@ -3,7 +3,10 @@ package persistence.DAO;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
 import com.mongodb.MongoException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
@@ -12,163 +15,87 @@ import metier.POJOProjet;
 import persistence.DBConnection;
 
 public class DAOProjet {
-
-    private static Integer Id = 0;
-
-    public int getId() {
-        return Id;
-    }
-    public static void setId(Integer id) {
-        Id = id;
-    }
+    
     // Create
-    public void create(int id, String titre, String categorie, String type, String description, String dateDebut,
-            String dateFin, List<Document> seances, List<Document> documents, List<Document> taches, boolean cloture) {
+    public void create(String titre, String description, List<String> taches) {
         try {
-            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                    .getCollection("projets");
-
-            // Ajouter les attributs du document
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
             Document doc = new Document();
-            doc.append("id", id)
-                    .append("titre", titre)
-                    .append("categorie", categorie)
-                    .append("type", type)
-                    .append("description", description)
-                    .append("dateDebut", dateDebut)
-                    .append("dateFin", dateFin)
-                    .append("seances", seances)
-                    .append("documents", documents)
-                    .append("taches", taches)
-                    .append("cloture", cloture);
-            // Insert the document
+            doc.append("titre", titre)
+                .append("description", description);
+            if(taches != null){
+                List<Document> tachesList = new ArrayList<>();
+                for (String id_tache : taches) {
+                    Document tacheDoc = new Document();
+                    tacheDoc.append("id", id_tache);
+                    tachesList.add(tacheDoc);
+                }
+                doc.append("taches", tachesList);
+            }
+            else{
+                doc.append("taches", null);
+            }
             collection.insertOne(doc);
-        } catch (MongoException e) {
-            // Gérer l'exception ici (par exemple, enregistrer l'erreur et/ou quitter le
-            // programme)
-            System.err.println("Erreur lors de la création du document projet: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la création du projet : " + e.getMessage());
         }
     }
 
     // Read
-    public Document read(int id) {
+    public Document read(String id) {
         try {
-            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                    .getCollection("projets");
-            Document doc = collection.find(Filters.eq("id", id)).first();
-            if (doc == null) {
-                System.out.println("Aucun document trouvé avec l'id : " + id);
-                return null;
-            }
-            return doc;
-        } catch (MongoException e) {
-            // Gérer l'exception ici (par exemple, enregistrer l'erreur et/ou quitter le
-            // programme)
-            System.err.println("Erreur lors de la lecture du document projet: " + e.getMessage());
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
+            return collection.find(Filters.eq("_id", id)).first();
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la lecture du projet : " + e.getMessage());
             return null;
         }
     }
 
-
-    // Delete
-    public void delete(Integer id) {
+    // Update
+    public void update(String id, String titre, String description, List<Document> taches) {
         try {
-            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                    .getCollection("projets");
-
-            DeleteResult result = collection.deleteOne(Filters.eq("id", id));
-            if (result.getDeletedCount() == 0) {
-                System.out.println("Aucun document trouvé avec l'id : " + id);
-            } else {
-                System.out.println("Document supprimé avec succès.");
-            }
-        } catch (MongoException e) {
-            // Gérer l'exception ici (par exemple, enregistrer l'erreur et/ou quitter le
-            // programme)
-            System.err.println("Erreur lors de la suppression du document projet: " + e.getMessage());
-        }
-    }
-    public void update(int id2, String titre, String categorie, String type, String description, String dateDebut,
-            String dateFin, List<Document> seances, List<Document> documents, List<Document> taches, boolean cloture) {
-        try {
-            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                    .getCollection("projets");
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
             Document doc = new Document();
             if (titre != null) {
                 doc.append("titre", titre);
             }
-            if (categorie != null) {
-                doc.append("categorie", categorie);
-            }
-            if (type != null) {
-                doc.append("type", type);
-            }
             if (description != null) {
                 doc.append("description", description);
-            }
-            if (dateDebut != null) {
-                doc.append("dateDebut", dateDebut);
-            }
-            if (dateFin != null) {
-                doc.append("dateFin", dateFin);
-            }
-            if (seances != null) {
-                doc.append("seances", seances);
-            }
-            if (documents != null) {
-                doc.append("documents", documents);
             }
             if (taches != null) {
                 doc.append("taches", taches);
             }
-            if (cloture) {
-                doc.append("cloture", cloture);
-            }
-            collection.updateOne(Filters.eq("id", id2), new Document("$set", doc));
-        } catch (MongoException e) {
-            // Gérer l'exception ici (par exemple, enregistrer l'erreur et/ou quitter le
-            // programme)
-            System.err.println("Erreur lors de la mise à jour du document projet: " + e.getMessage());
+            collection.updateOne(Filters.eq("id", id), new Document("$set", doc));
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la mise à jour du projet : " + e.getMessage());
         }
     }
-    
+
+    // Delete
+    public void delete(String id) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                            .getCollection("projets");
+            ObjectId objId = new ObjectId(id);
+            collection.deleteOne(Filters.eq("_id", objId));
+        } catch (Exception e) {
+                System.err.println("Erreur lors de la suppression de la projet : " + e.getMessage());
+        }
+    }
+
     public List<Document> getAllProjects() {
+        List<Document> allProjets = new ArrayList<>();
         try {
-            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                    .getCollection("projets");
-            return collection.find().into(new ArrayList<Document>());
-        } catch (MongoException e) {
-            // Gérer l'exception ici (par exemple, enregistrer l'erreur et/ou quitter le
-            // programme)
-            System.err.println("Erreur lors de la lecture de tous les documents projet: " + e.getMessage());
-            return null;
-        }
-    }
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
+            FindIterable<Document> cursor = collection.find();
 
-    public void setProjet(Document projet) {
-        try {
-            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                    .getCollection("projets");
-            collection.insertOne(projet);
-        } catch (MongoException e) {
-            // Gérer l'exception ici (par exemple, enregistrer l'erreur et/ou quitter le
-            // programme)
-            System.err.println("Erreur lors de la création du document projet: " + e.getMessage());
+            for (Document document : cursor) {
+                allProjets.add(document);
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération de la liste des projets : " + e.getMessage());
         }
+        return allProjets;
     }
-    public POJOProjet getProjet() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getProjet'");
-    }
-    public void update(int id2, String nom, String description, String dateDebut, String dateFin, String chefProjet,
-            String client, String etat) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
-    public void create(int id2, String nom, String description, String dateDebut, String dateFin, String chefProjet,
-            String client, String etat) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
-    }
-
 }

@@ -1,6 +1,5 @@
 package presentation.GetTasks;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,18 +15,29 @@ import javafx.stage.Stage;
 import metier.GestionnaireTache;
 import presentation.NewList.AddListController;
 import presentation.NewList.AddListView;
+import presentation.NewProjet.AddProjetController;
+import presentation.NewProjet.AddProjetView;
 import presentation.listes.ListeFormController;
+import presentation.projets.ProjetsFormController;
 
 public class GetTasksController {
     private GestionnaireTache gestionnaireTache;
     private AddListController addListController;
+    private AddProjetController addProjetController;
     private ListeFormController listeFormController;
-    private HashMap<List<Integer>, List<String>> GridCaseInfos;
+    private LinkedHashMap<List<Integer>, List<String>> GridCaseInfos;
+    private ProjetsFormController projetsFormController;
 
     public GetTasksController(AddListController addListController, ListeFormController listeFormController) {
         this.gestionnaireTache = new GestionnaireTache();
         this.addListController = addListController;
         this.listeFormController = listeFormController;
+    }
+
+    public GetTasksController(AddProjetController addProjetController, ProjetsFormController projetsFormController) {
+        this.gestionnaireTache = new GestionnaireTache();
+        this.addProjetController = addProjetController;
+        this.projetsFormController = projetsFormController;
     }
 
     // Method to get all tasks
@@ -44,14 +54,20 @@ public class GetTasksController {
 
     // Method to handle cancel button
     public void handleCancelButton(ActionEvent eventAddList) {
-        AddListView view = new AddListView(this.listeFormController);
-        Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
-        view.start(stage);
+        if (this.addListController != null) {
+            AddListView view = new AddListView(this.addListController, this.listeFormController);
+            Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
+            view.start(stage);
+        } else {
+            AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
+            Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
+            view.start(stage);
+        }
     }
 
     // Method to display tasks
     public void displayTasks(GridPane gridPane) {
-        GridCaseInfos = new HashMap<>();
+        GridCaseInfos = new LinkedHashMap<>();
 
         if (getTasksMap().isEmpty()) {
             System.out.println("No tasks available");
@@ -85,13 +101,23 @@ public class GetTasksController {
                     String task = checkBox.getText();
                     String id = getIdFromMap(GridCaseInfos, GridPane.getRowIndex(node), GridPane.getColumnIndex(node));
                     System.out.println("Task selected: " + task + " with id: " + id);
-                    this.addListController.addTaskToList(id, task);
+                    if (this.addListController != null)
+                        this.addListController.addSeanceToList(id, task);
+                    else {
+                        this.addProjetController.addSeanceToList(id, task);
+                    }
                 }
             }
         }
-        AddListView view = new AddListView(this.addListController, this.listeFormController);
-        Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
-        view.start(stage);
+        if (this.addListController != null && this.addListController != null) {
+            AddListView view = new AddListView(this.addListController, this.listeFormController);
+            Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
+            view.start(stage);
+        } else {
+            AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
+            Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
+            view.start(stage);
+        }
     }
 
     // Method to create a checkbox

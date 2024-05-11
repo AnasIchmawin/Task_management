@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GoogleCalendarService",
+            "request": "launch",
+            "mainClass": "metier.GoogleCalendarService",
+            "projectName": "Task_management_117e3073"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -15,7 +22,7 @@
             "name": "App",
             "request": "launch",
             "mainClass": "App",
-            "projectName": "Task_management_117e3073",
+            "projectName": "Task_management-1_7d5ea225",
             "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-21.0.2/lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]

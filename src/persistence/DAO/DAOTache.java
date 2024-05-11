@@ -128,4 +128,26 @@ public class DAOTache {
             return null;
         }
     }
+
+    // Read
+
+    public String getTitre(String titre) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            // Find the document by titre
+            Document doc = collection.find(Filters.eq("titre", titre)).first();
+            // Return the titre field as a string if the document exists, otherwise return null
+            return doc != null ? doc.getString("titre") : null;
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la lecture du titre de la tâche : " + e.getMessage());
+            return null;
+        }
+    }
+
+
+
+
+
+
 }
