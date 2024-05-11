@@ -104,24 +104,4 @@ public class GoogleCalendarService {
                 .execute();
         return events.getItems();
     }
-
-    public static void main(String[] args) {
-        try {
-            List<Event> events = getEvents();
-            if (events.isEmpty()) {
-                System.out.println("No upcoming events found.");
-            } else {
-                System.out.println("Upcoming events");
-                for (Event event : events) {
-                    System.out.println(event.getSummary());
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("IOException");
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.out.println("Exception");
-            e.printStackTrace();
-        }
-    }
 }
