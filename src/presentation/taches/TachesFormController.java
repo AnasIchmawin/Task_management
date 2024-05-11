@@ -40,21 +40,22 @@ public class TachesFormController {
     private static GestionnaireTache gestionnaireTache;
     private GestionnaireListe gestionnaireListe;
     private Map<List<Integer>, List<String>> gridCaseInfos;
-    private String listId ;
+    private String listId;
 
     public TachesFormController(TachesFormView tacheView) {
         this.gestionnaireTache = new GestionnaireTache();
         this.gestionnaireListe = new GestionnaireListe();
         this.tacheView = tacheView;
+        this.listId = tacheView.getIdList();
         this.tacheModel = new TachesFormModel(getTacheMap());
     }
 
-    public TachesFormController(String listId) {
-        this.gestionnaireTache = new GestionnaireTache();
-        this.gestionnaireListe = new GestionnaireListe();
-        this.tacheModel = new TachesFormModel(getTacheMap());
-        this.listId = listId;
-    }
+    // public TachesFormController(String listId) {
+    //     this.listId = listId;
+    //     this.gestionnaireTache = new GestionnaireTache();
+    //     this.gestionnaireListe = new GestionnaireListe();
+    //     this.tacheModel = new TachesFormModel(getTacheMap());
+    // }
 
     public static void handleAjouterButtonAction(GridPane gridPane,String taskName) {
         // createTask(gridPane, taskName, true,);

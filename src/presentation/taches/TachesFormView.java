@@ -37,13 +37,20 @@ public class TachesFormView extends Application {
     private TachesFormController controller;
     private BorderPane root;
     private GridPane ZoneListes;
+    private String IdList;
 
     // Constructor
     public TachesFormView() {
-        // this.controller = controller;
         init();
         style();
         this.controller.displayTaches(false);
+    }
+
+    public TachesFormView(String IdList) {
+        this.IdList = IdList;
+        init();
+        style();
+        this.controller.displayTaches(true);
     }
 
     @Override
@@ -125,7 +132,7 @@ public class TachesFormView extends Application {
         descriptionScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide vertical scrollbar
         descriptionContainer.getChildren().addAll(descriptionScrollPane);
         HBox.setMargin(descriptionContainer, new Insets(0, 20,0, 40));
-        descriptionContainer.setAlignment(Pos.TOP_CENTER);
+        descriptionContainer.setAlignment(Pos.TOP_LEFT);
 
         // Create HBox for adding the "Ajouter" button
         HBox buttonContainer = new HBox();
@@ -230,13 +237,6 @@ public class TachesFormView extends Application {
         return button;
     }
 
-    private ComboBox<String> createComboBox(String prompt, String... items) {
-        ComboBox<String> comboBox = new ComboBox<>();
-        comboBox.getItems().addAll(items);
-        comboBox.setPromptText(prompt);
-        comboBox.getStyleClass().add("comboBox-style");
-        return comboBox;
-    }
 
     private Label createLabel(String text) {
         Label label = new Label(text);
@@ -257,6 +257,10 @@ public class TachesFormView extends Application {
     //getZoneTaches
     public GridPane getZoneTaches() {
         return ZoneListes;
+    }
+
+    public String getIdList() {
+        return IdList;
     }
 
     public void SurveillerButton(Button button, String width, String height, String color) {
