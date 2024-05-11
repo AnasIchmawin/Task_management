@@ -97,6 +97,9 @@ public class GetListsController {
         List<Document> lists = gestionnaireListe.obtenirToutesLesListes();
         LinkedHashMap<String, String> listes_Disponibles = new LinkedHashMap<>();
         for (Document list : lists) {
+            if (list.containsKey("taches") && !list.getList("taches", Document.class).isEmpty()) {
+                continue;
+            }
             String id = list.getObjectId("_id").toString();
             String titre = list.getString("titre");
             listes_Disponibles.put(id, titre);

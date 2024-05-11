@@ -1,7 +1,6 @@
 package presentation.login;
 
-import metier.service;
-
+import metier.service ;
 public class ModelLogin {
 
     private String gmail;

@@ -18,6 +18,8 @@ import presentation.NewList.AddListView;
 import presentation.archive.ArchiveFormController;
 import presentation.archive.ArchiveFormView;
 import presentation.projets.ProjetsFormView;
+import presentation.taches.TachesFormController;
+import presentation.taches.TachesFormView;
 
 public class ListeFormController {
     private static final int MAX_COLUMNS = 5;
@@ -96,8 +98,11 @@ public class ListeFormController {
     private void handleButtoListnAction(Button newListButton) {
         List<String> listInfos = gridCaseInfos.get(List.of(this.listView.getZoneListes().getRowIndex(newListButton), this.listView.getZoneListes().getColumnIndex(newListButton)));
         String Id = listInfos.get(0);
-        buttonclickedInfos = Id ;
-        System.out.println("Button clicked : " + Id); ;
+        TachesFormController tachesFormController = new TachesFormController(Id);
+        TachesFormView tachesFormView = new TachesFormView();
+        Stage stage = (Stage) listView.getZoneListes().getScene().getWindow();
+        tachesFormView.start(stage);
+    
     }
 
     private Button createListButton(String title) {
