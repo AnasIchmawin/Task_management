@@ -99,34 +99,33 @@ public class TachesFormView extends Application {
 
         VBox Tasks = new VBox();
         Tasks.getChildren().addAll(scrollPane); // Add description area
-        Tasks.setMargin(Tasks, new Insets(0, 0, 0, 80));
+        Tasks.setMargin(Tasks, new Insets(30, 0, 0, 80));
+        Tasks.setAlignment(Pos.TOP_CENTER);
 
         StackPane searchPane = new StackPane();
         searchPane.setAlignment(Pos.TOP_RIGHT);
         searchPane.getChildren().addAll(searchField, searchButton);
 
         HBox topContainer = new HBox();
-        topContainer.setAlignment(Pos.TOP_LEFT); // Align elements at top left
-        topContainer.setPrefHeight(300);
+        topContainer.setAlignment(Pos.TOP_RIGHT); // Align elements at top left
+        topContainer.setMinHeight(80);
         topContainer.getChildren().addAll(ordonnerButton,searchPane); // Add "Ordonner" button
         
-
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS); // Make spacer grow as much as possible
-        topContainer.getChildren().add(spacer);
-
-        //title
-        Label title = createLabel("Listes des tâches");
+        Label title = createLabel(controller.getListTitle());
         HBox titleContainer = new HBox();
         titleContainer.getChildren().add(title);
-        HBox.setMargin(title, new Insets(0, 0, 0, 40));
+        HBox.setMargin(title, new Insets(0, 0, 10, 40));
         titleContainer.setAlignment(Pos.TOP_LEFT);
-        // Create HBox for description
         HBox descriptionContainer = new HBox();
-        VBox description = BoxDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque viverra nisl eget sapien hendrerit semper. Integer a dictum massa. Vivamus id sapien eu orci bibendum ornare non sed mauris. Donec sagittis odio ut sem aliquam rutrum. Duis auctor dignissim quam, ac vulputate tortor ultricies et. Interdum et malesuada fames ac ante ipsum primis in faucibus.consectetur adipiscing elit. Quisque viverra nisl eget sapien hendrerit semper. Integer a dictum massa. Vivamus id sapien eu orci bibendum ornare non sed mauris. Donec sagittis odio ut sem aliquam rutrum. Duis auctor dignissim quam, ac vulputate tortor ultricies et. Interdum et malesuada fames ac ante ipsum primis in faucibus.");
-        descriptionContainer.getChildren().addAll(description);
-        HBox.setMargin(description, new Insets(0, 20,30, 40));
-        descriptionContainer.setAlignment(Pos.TOP_LEFT);
+        VBox description = BoxDescription(controller.getListDescription());
+        ScrollPane descriptionScrollPane = new ScrollPane(description);
+        descriptionScrollPane.setFitToWidth(true);
+        descriptionScrollPane.setStyle("-fx-background-color: transparent;");
+        descriptionScrollPane.setPadding(new Insets(0, 10, 0, 40));
+        descriptionScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide vertical scrollbar
+        descriptionContainer.getChildren().addAll(descriptionScrollPane);
+        HBox.setMargin(descriptionContainer, new Insets(0, 20,0, 40));
+        descriptionContainer.setAlignment(Pos.TOP_CENTER);
 
         // Create HBox for adding the "Ajouter" button
         HBox buttonContainer = new HBox();
@@ -201,10 +200,7 @@ public class TachesFormView extends Application {
         SurveillerButton(ordonnerButton, "100px", "40px", "#3F72AF");
         SurveillerButton(ajouterButton, "150px", "40px", "#3F72AF");
         ZoneListes = createGridPane();
-
-
-
-
+        
         this.controller = new TachesFormController(this);
     }
 
@@ -250,11 +246,10 @@ public class TachesFormView extends Application {
 
     private VBox BoxDescription(String description) {
         Label descriptionLabel = new Label(description);
-        descriptionLabel.setWrapText(true);
         descriptionLabel.getStyleClass().add("description-style");
-        descriptionLabel.setTextOverrun(OverrunStyle.CLIP);
-        descriptionLabel.setEllipsisString(""); // Pas de troncature
+        descriptionLabel.setWrapText(true);
         VBox vbox = new VBox();
+        vbox.setPrefHeight(250);
         vbox.getChildren().addAll(descriptionLabel);
         return vbox;
     }

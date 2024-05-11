@@ -44,8 +44,8 @@ public class App extends Application {
 
         // ListeFormController controller = new ListeFormController();
 
-        ListeFormView projets = new ListeFormView();
-        projets.start(primaryStage);
+        // ListeFormView projets = new ListeFormView();
+        // projets.start(primaryStage);
 
         // ArchiveFormView archive = new ArchiveFormView();
         // archive.start(primaryStage);
@@ -75,8 +75,8 @@ public class App extends Application {
         // SceanceAjouteView view = new SceanceAjouteView();
         // view.start(primaryStage);
         
-        // TachesFormView view = new TachesFormView() ;
-        // view.start(primaryStage) ;
+        TachesFormView view = new TachesFormView() ;
+        view.start(primaryStage) ;
 
         // SceanceFormController con = new SceanceFormController() ;
         // SeanceFormView view = new SeanceFormView(con) ;

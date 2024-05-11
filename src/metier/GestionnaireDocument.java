@@ -9,15 +9,6 @@ import persistence.DAO.DAODocument;
 import persistence.DAO.DAODocument;
 
 public class GestionnaireDocument {
-    DAODocument daoDocument ;
-
-       public GestionnaireDocument() {
-        this.daoDocument = new DAODocument();
-    }
-
-    public List<Document> getAllDocuments() {
-        return daoDocument.getAllDocuments();
-    }
     private DAODocument daoDocument;
     private POJODocument pojoDocument;
 
