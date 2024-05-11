@@ -65,8 +65,7 @@ public class ListeFormController {
 
     public void handleArchiveButton() {
         Stage stage = (Stage) listView.getZoneListes().getScene().getWindow();
-        ArchiveFormController archiveCon = new ArchiveFormController();
-        ArchiveFormView archiveFormView = new ArchiveFormView(archiveCon);
+        ArchiveFormView archiveFormView = new ArchiveFormView();
         archiveFormView.start(stage);
     }
 

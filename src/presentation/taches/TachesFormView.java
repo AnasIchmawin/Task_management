@@ -36,9 +36,6 @@ public class TachesFormView extends Application {
     private TextField searchField;
     private TachesFormController controller;
     private BorderPane root;
-    private ComboBox<String> comboBox1;
-    private ComboBox<String> comboBox2;
-    private Label filterLabel;
     private GridPane ZoneListes;
 
     // Constructor
@@ -108,16 +105,6 @@ public class TachesFormView extends Application {
         searchPane.setAlignment(Pos.TOP_RIGHT);
         searchPane.getChildren().addAll(searchField, searchButton);
 
-        StackPane stackPane = new StackPane();
-        HBox.setMargin(comboBox1, new Insets(0, 0, 0, 88));
-        HBox filterBox = new HBox();
-        filterBox.getChildren().addAll(comboBox1, comboBox2);
-        filterBox.setSpacing(10); // Espace entre les éléments    
-        filterBox.setAlignment(Pos.CENTER); // Centrer les éléments horizontalement
-
-        stackPane.getChildren().addAll(filterLabel,filterBox);
-        HBox.setMargin(stackPane, new Insets(25, 40, 50, 70));
-
         HBox topContainer = new HBox();
         topContainer.setAlignment(Pos.TOP_LEFT); // Align elements at top left
         topContainer.setPrefHeight(300);
@@ -127,7 +114,6 @@ public class TachesFormView extends Application {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS); // Make spacer grow as much as possible
         topContainer.getChildren().add(spacer);
-        topContainer.getChildren().add(stackPane); // Add StackPane containing search field and search button
 
         //title
         Label title = createLabel("Listes des tâches");
@@ -165,6 +151,18 @@ public class TachesFormView extends Application {
             controller.handleOrdonnerButtonAction();
         });
 
+        listesButton.setOnAction(event -> {
+            this.controller.handleListesButtonAction();
+        });
+
+        archiveButton.setOnAction(event -> {
+            this.controller.handleArchiveButtonAction();
+        });
+
+        projectsButton.setOnAction(event -> {
+            this.controller.handleProjectsButtonAction();
+        });
+
         return container;
     }
 
@@ -198,9 +196,6 @@ public class TachesFormView extends Application {
         ajouterButton = createButtonWithIcon("Ajouter", "file:./Pictures/add.png", 20, 20);
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
-        comboBox1 = createComboBox("Type", "These", "PFE", "Cours", "Examen", "Autres");
-        comboBox2 = createComboBox("Categorie", "Enseignement", "Encadrement", "Autres");
-        filterLabel = new Label("     Filtrer");
         SurveillerButton(projectsButton, "100px", "40px", "#3F72AF");
         SurveillerButton(archiveButton, "100px", "40px", "#3F72AF");
         SurveillerButton(ordonnerButton, "100px", "40px", "#3F72AF");
@@ -222,7 +217,6 @@ public class TachesFormView extends Application {
         ordonnerButton.getStyleClass().add("ordonner-btn-style");
         ajouterButton.getStyleClass().add("button-style");
         searchField.getStyleClass().add("search-field-style");
-        filterLabel.getStyleClass().add("filter-label-style");
 
     }
 

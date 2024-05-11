@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class TachesFormModel {
     private LinkedHashMap<String , String> taches;
+    private LinkedHashMap<String , Boolean> tachesEtat;
 
     public TachesFormModel(LinkedHashMap<String , String> taches) {
         this.taches = taches;
@@ -24,6 +25,14 @@ public class TachesFormModel {
 
     public void setTaches(LinkedHashMap<String , String> taches) {
         this.taches = taches;
+    }
+
+    public Boolean getTachesEtat(String id) {
+        return tachesEtat.get(id);
+    }
+
+    public void setTachesEtat(String id, Boolean etat) {
+        this.tachesEtat.put(id, etat);
     }
 
     //sortTaches

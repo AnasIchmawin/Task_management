@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import metier.GestionnaireProjet;
 import presentation.GetProjets.GetProjetsView;
 import presentation.NewProjet.AddProjetView;
+import presentation.archive.ArchiveFormView;
 import presentation.NewProjet.AddProjetView;
 import presentation.listes.ListeFormView;
 
@@ -133,6 +134,12 @@ public class ProjetsFormController {
         Stage stage = (Stage) projetView.getZoneProjets().getScene().getWindow();
         ListeFormView listes = new ListeFormView();
         listes.start(stage);
+    }
+
+    public void handleArchiveButton() {
+        Stage stage = (Stage) projetView.getZoneProjets().getScene().getWindow();
+        ArchiveFormView archiveFormView = new ArchiveFormView();
+        archiveFormView.start(stage);
     }
 
     public void SearchProjet(String searchText) {

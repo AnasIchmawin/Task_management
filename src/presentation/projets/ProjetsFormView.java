@@ -242,6 +242,10 @@ public class ProjetsFormView extends Application {
         supprimerButton.setOnAction(event -> {
             this.controller.handleSupprimerButtonAction();
         });
+
+        archiveButton.setOnAction(event -> {
+            this.controller.handleArchiveButton();
+        });
     }
     
     public void SurveillerButton(Button button ,String width ,String heitht ,String color) {

@@ -12,11 +12,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Arc;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import metier.GestionnaireListe;
 import metier.GestionnaireTache;
+import presentation.archive.ArchiveFormController;
+import presentation.archive.ArchiveFormView;
+import presentation.archive.modele;
+import presentation.listes.ListeFormView;
+import presentation.projets.ProjetsFormView;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -30,15 +36,11 @@ import javafx.beans.value.ObservableValue;
 
 public class TachesFormController {
     private TachesFormView tacheView;
-    private TachesFormModel tacheModel;
-    private GestionnaireTache gestionnaireTache;
+    private static TachesFormModel tacheModel;
+    private static GestionnaireTache gestionnaireTache;
     private GestionnaireListe gestionnaireListe;
     private Map<List<Integer>, List<String>> gridCaseInfos;
     private String listId = "66378f5d9173b3209a52c28c";
-
-    public TachesFormController() {
-        super();
-    }
 
     public TachesFormController(TachesFormView tacheView) {
         this.gestionnaireTache = new GestionnaireTache();
@@ -48,7 +50,7 @@ public class TachesFormController {
     }
 
     public static void handleAjouterButtonAction(GridPane gridPane,String taskName) {
-        createTask(gridPane, taskName);
+        // createTask(gridPane, taskName, true,);
         //save in database
     }
 
@@ -69,7 +71,7 @@ public class TachesFormController {
         int rowCount = 0;
 
         for (Map.Entry<String, String>  entry : tacheModel.getTaches().entrySet()) {
-            createTask(tacheView.getZoneTaches(), entry.getValue());
+            createTask(tacheView.getZoneTaches(), entry.getValue(), getTaskEtat(entry.getKey()), entry.getKey());
             gridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), entry.getValue()));
 
             if (++colCount == 3) {
@@ -80,7 +82,7 @@ public class TachesFormController {
     } 
 
     //create task
-    public static void createTask(GridPane gridPane, String taskName) {
+    public static void createTask(GridPane gridPane, String taskName, Boolean isChecked, String tacheId) {
         Button cloneButton = new Button("");
         Button deleteButton = new Button("");
         Button taskButton = new Button("");
@@ -119,7 +121,7 @@ public class TachesFormController {
                 "-fx-font-size: 13px;");
         //clonner la tache normale et tack checker
         cloneButton.setOnAction(e -> {
-            createTask(gridPane, taskCheckBox.getText());
+            createTask(gridPane, taskCheckBox.getText(), isChecked, tacheId);
         });
 
         taskButton.setStyle("-fx-background-color: transparent; " +
@@ -149,6 +151,29 @@ public class TachesFormController {
             dialogStage.show();
         });
 
+        if (isChecked) {
+            taskCheckBox.setSelected(true);
+            taskCheckBox.setStyle("-fx-background-color: #FF7E67; " +
+                    "-fx-background-radius: 10px; " +
+                    "-fx-min-width: 700px; " +
+                    "-fx-min-height: 30px;" +
+                    "-fx-text-fill: #ffffff;" +
+                    "-fx-font-size: 17px;"+
+                    "-fx-padding: 0px 0px 0px 5px;");
+            deleteButton.setStyle("-fx-background-color: #FF7E67; " +
+                    "-fx-background-radius: 10px; " +
+                    "-fx-min-width: 30px; " +
+                    "-fx-min-height: 30px;" +
+                    "-fx-text-fill: #ffffff;" +
+                    "-fx-font-size: 13px;");
+            cloneButton.setStyle("-fx-background-color: #FF7E67; " +
+                    "-fx-background-radius: 10px; " +
+                    "-fx-min-width: 30px; " +
+                    "-fx-min-height: 30px;" +
+                    "-fx-text-fill: #ffffff;" +
+                    "-fx-font-size: 13px;");
+        }
+
         taskCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             //change color checkbox and thier buttons when checked
             @Override
@@ -173,6 +198,7 @@ public class TachesFormController {
                             "-fx-min-height: 30px;" +
                             "-fx-text-fill: #ffffff;" +
                             "-fx-font-size: 13px;");
+                    setTaskEtat(tacheId, true);
                 } else {
                     taskCheckBox.setStyle("-fx-background-color: #112D4E; " +
                             "-fx-background-radius: 10px; " +
@@ -193,6 +219,7 @@ public class TachesFormController {
                             "-fx-min-height: 30px;" +
                             "-fx-text-fill: #ffffff;" +
                             "-fx-font-size: 13px;");
+                    setTaskEtat(tacheId, false);
                 }
             }
         });
@@ -207,7 +234,7 @@ public class TachesFormController {
         for (Map.Entry<String, String> entry : tacheModel.getTaches().entrySet()) {
             String taskName = entry.getValue().toLowerCase();
             if (taskName.contains(searchText.toLowerCase())) {
-                createTask(tacheView.getZoneTaches(), taskName);
+                createTask(tacheView.getZoneTaches(), taskName, getTaskEtat(entry.getKey()), entry.getKey());
                 gridCaseInfos.put(List.of(rowCount, colCount), List.of(taskName, entry.getKey()));
                 rowCount++;
             }
@@ -215,7 +242,6 @@ public class TachesFormController {
         
     }
 
-    //getTacheMap
     private LinkedHashMap<String, String> getTacheMap() {
         LinkedHashMap<String,Boolean> taches = gestionnaireListe.getTaches(listId);
 
@@ -225,5 +251,36 @@ public class TachesFormController {
             tacheMap.put(tacheId, tacheTitle);
         }
         return tacheMap;
+    }
+
+    //handleListesButtonAction
+    public void handleListesButtonAction() {
+        Stage stage = (Stage) tacheView.getZoneTaches().getScene().getWindow();
+        ListeFormView liste = new ListeFormView();
+        liste.start(stage);
+    }
+
+    //handleArchivesButtonAction
+    public void handleArchiveButtonAction() {
+        Stage stage = (Stage) tacheView.getZoneTaches().getScene().getWindow();
+        ArchiveFormView archive = new ArchiveFormView();
+        archive.start(stage);
+    }
+
+    //handleProjectsButtonAction
+    public void handleProjectsButtonAction() {
+        Stage stage = (Stage) tacheView.getZoneTaches().getScene().getWindow();
+        ProjetsFormView projets = new ProjetsFormView();
+        projets.start(stage);
+    }
+
+    //getTacheEtat
+    public Boolean getTaskEtat(String tacheId) {
+        return gestionnaireTache.getTaskEtat(tacheId);
+    }
+
+    //setTacheEtat
+    public static void setTaskEtat(String tacheId, Boolean etat) {
+        gestionnaireTache.setTaskEtat(tacheId, etat);
     }
 }

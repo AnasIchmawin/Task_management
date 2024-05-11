@@ -31,12 +31,13 @@ public class ArchiveFormView extends Application {
     private ArchiveFormController controller;
     private BorderPane root;
     private ImageView RecycleIconView;
+    private GridPane ZoneListes;
 
     // Constructor
-    public ArchiveFormView(ArchiveFormController controller) {
-        this.controller = controller;
+    public ArchiveFormView() {
         init();
         style();
+        this.controller = new ArchiveFormController(this);
     }
 
     @Override
@@ -92,7 +93,7 @@ public class ArchiveFormView extends Application {
         Recycle.setPadding(new Insets(20, 0, 0, 0));
 
         // Create GridPane for list items
-        GridPane ZoneListes = createGridPane();
+        ZoneListes = createGridPane();
         ScrollPane scrollPane = createScrollPane(ZoneListes);
 
         VBox Listes = new VBox();
@@ -122,6 +123,14 @@ public class ArchiveFormView extends Application {
         HBox.setMargin(ordonnerButton, new Insets(30, 0, 20, 70));
         HBox.setMargin(filtrerButton, new Insets(30, 0, 20, 20));
         HBox.setMargin(searchPane, new Insets(30, 70, 20, 20));
+
+        listesButton.setOnAction(event -> {
+            this.controller.handleListesButtonAction();
+        });
+
+        projectsButton.setOnAction(event -> {
+            this.controller.handleProjectsButtonAction();
+        });
 
         return container;
     }
@@ -190,6 +199,11 @@ public class ArchiveFormView extends Application {
         searchIconView.setFitWidth(i);
         searchIconView.setFitHeight(j);
         return searchIconView;
+    }
+
+    // getZoneListes
+    public GridPane getZoneListes() {
+        return ZoneListes;
     }
 
 }

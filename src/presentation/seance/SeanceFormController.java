@@ -29,8 +29,7 @@ public class SeanceFormController {
     }
 
     public void goToArchive(ActionEvent event) {
-        ArchiveFormController contoller = new ArchiveFormController();
-        ArchiveFormView nextView = new ArchiveFormView(contoller);
+        ArchiveFormView nextView = new ArchiveFormView();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         nextView.start(stage);
     }

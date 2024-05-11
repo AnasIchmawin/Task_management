@@ -14,10 +14,10 @@ public class GestionnaireTache {
     }
 
     // Create
-    public void createTask(String titre, String categorie, String description,
+    public void createTask(String titre, String categorie, Boolean etat, String description,
             LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
             Document projet, Document liste) {
-        daoTache.create(titre, categorie, description, dateDebut, dateFin, documents, projet, liste);
+        daoTache.create(titre, categorie, etat, description, dateDebut, dateFin, documents, projet, liste);
     }
 
     // Read
@@ -26,10 +26,10 @@ public class GestionnaireTache {
     }
 
     // Update
-    public void updateTask(Integer id, String titre, String categorie, String description,
+    public void updateTask(Integer id, String titre, String categorie,Boolean etat, String description,
             LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
             Document projet, Document liste) {
-        daoTache.update(id, titre, categorie, description, dateDebut, dateFin, documents, projet, liste);
+        daoTache.update(id, titre, categorie, etat, description, dateDebut, dateFin, documents, projet, liste);
     }
 
     // Delete
@@ -45,5 +45,15 @@ public class GestionnaireTache {
     // getTitle
     public String getTitle(String tacheId) {
         return daoTache.getTitre(tacheId);
+    }
+
+    // getTaskEtat
+    public Boolean getTaskEtat(String tacheId) {
+        return daoTache.getEtat(tacheId);
+    }
+
+    // setTaskEtat
+    public void setTaskEtat(String tacheId, Boolean etat) {
+        daoTache.setEtat(tacheId, etat);
     }
 }

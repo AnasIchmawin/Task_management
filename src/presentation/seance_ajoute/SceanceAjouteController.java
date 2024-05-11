@@ -44,8 +44,7 @@ public class SceanceAjouteController {
     }
 
     public void handleArchiveButton() {
-        ArchiveFormController archiveController = new ArchiveFormController();
-        ArchiveFormView archive = new ArchiveFormView(archiveController);
+        ArchiveFormView archive = new ArchiveFormView();
         Stage stage = this.seanceAjouteView.getStage();
         archive.start(stage);
     }

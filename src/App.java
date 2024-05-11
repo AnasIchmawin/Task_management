@@ -13,6 +13,8 @@ import presentation.GetTasks.GetTasksController;
 import presentation.GetTasks.GetTasksView;
 import presentation.NewList.AddListController;
 import presentation.NewList.AddListView;
+import presentation.archive.ArchiveFormController;
+import presentation.archive.ArchiveFormView;
 import presentation.listes.ListeFormView;
 import presentation.login.LoginController;
 import presentation.login.LoginFormView;
@@ -47,9 +49,8 @@ public class App extends Application {
         // ListeFormView projets = new ListeFormView();
         // projets.start(primaryStage);
 
-        // ArchiveFormController controller = new ArchiveFormController();
-        // ArchiveFormView archive = new ArchiveFormView(controller);
-        // archive.start(primaryStage);
+        ArchiveFormView archive = new ArchiveFormView();
+        archive.start(primaryStage);
 
         // LoginFormView login = new LoginFormView(primaryStage);
         // login.start(primaryStage);
@@ -76,8 +77,8 @@ public class App extends Application {
         // SceanceAjouteView view = new SceanceAjouteView();
         // view.start(primaryStage);
         
-        TachesFormView view = new TachesFormView() ;
-        view.start(primaryStage) ;
+        // TachesFormView view = new TachesFormView() ;
+        // view.start(primaryStage) ;
 
         // SceanceFormController con = new SceanceFormController() ;
         // SeanceFormView view = new SeanceFormView(con) ;
