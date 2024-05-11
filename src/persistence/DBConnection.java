@@ -15,6 +15,10 @@ public class DBConnection {
             // Initialisation de la connexion à MongoDB
             mongoClient = MongoClients.create("mongodb://localhost:27017");
             database = mongoClient.getDatabase("MyDataBase");
+            if(database!=null){
+                System.out.println("connected");
+
+            }
         } catch (MongoException e) {
             // Gérer l'exception ici (par exemple, enregistrer l'erreur et/ou quitter le programme)
             System.err.println("Erreur lors de la connexion à MongoDB: " + e.getMessage());
@@ -34,4 +38,5 @@ public class DBConnection {
     public MongoDatabase getDatabase() {
         return database;
     }
+    
 }

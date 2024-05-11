@@ -47,7 +47,7 @@
 
 .description-label {
     -fx-font-size: 25px; /* Taille de la police */
-    -fx-font-weight: bold; /* Gras */
+    /* Gras */
     -fx-color: #ca1414; /* Couleur du texte */
 }
 

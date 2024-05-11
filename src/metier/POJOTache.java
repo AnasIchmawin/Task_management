@@ -12,9 +12,7 @@ public class POJOTache {
     private String description;
     private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
-    private List<Document> documents;
-    private Document projet;
-    private Document liste;
+    private List<String> documents;
 
     // Getters and Setters
     public Integer getId() {
@@ -65,34 +63,7 @@ public class POJOTache {
         this.dateFin = dateFin;
     }
 
-    public List<Document> getDocuments() {
+    public List<String> getDocuments() {
         return documents;
-    }
-
-    public void setDocuments(List<Document> documents) {
-        this.documents = documents;
-    }
-
-    public Document getProjet() {
-        return projet;
-    }
-
-    public void setProjet(Document projet) {
-        this.projet = projet;
-    }
-
-    public Document getListe() {
-        return liste;
-    }
-
-    public void setListe(Document liste) {
-        this.liste = liste;
-    }
-
-    @Override
-    public String toString() {
-        return "POJOTache [id=" + id + ", titre=" + titre + ", categorie=" + categorie + ", description=" + description
-                + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", documents=" + documents + ", projet="
-                + projet + ", liste=" + liste + "]";
     }
 }

@@ -5,6 +5,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
 import persistence.DBConnection;
 
 import java.time.LocalDateTime;
@@ -42,12 +44,13 @@ public class DAOTache {
     }
 
     // Read
-    public Document read(Integer id) {
+    public Document read(String id) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("taches");
             // Rechercher et retourner le document correspondant à l'ID spécifié
-            return collection.find(Filters.eq("id", id)).first();
+            ObjectId Oid = new ObjectId(id);
+            return collection.find(Filters.eq("_id", Oid)).first();
         } catch (Exception e) {
             System.err.println("Erreur lors de la lecture de la tâche : " + e.getMessage());
             return null;
