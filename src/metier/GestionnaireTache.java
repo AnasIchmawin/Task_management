@@ -15,8 +15,8 @@ public class GestionnaireTache {
 
     // Create
     public void createTask(String titre, String categorie, String description,
-            LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
-            Document projet, Document liste) {
+                           LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
+                           Document projet, Document liste) {
         daoTache.create(titre, categorie, description, dateDebut, dateFin, documents, projet, liste);
     }
 
@@ -27,8 +27,8 @@ public class GestionnaireTache {
 
     // Update
     public void updateTask(Integer id, String titre, String categorie, String description,
-            LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
-            Document projet, Document liste) {
+                           LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
+                           Document projet, Document liste) {
         daoTache.update(id, titre, categorie, description, dateDebut, dateFin, documents, projet, liste);
     }
 
@@ -43,7 +43,10 @@ public class GestionnaireTache {
     }
 
     // getTitle
-    public String getTitle(String tacheId) {
-        return daoTache.getTitre(tacheId);
+    public String getTitle(String titre) {
+        return daoTache.getTitre(titre);
+    }
+
+    public void createTask(POJOTache nouveauTache) {
     }
 }

@@ -5,8 +5,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
-import org.bson.types.ObjectId;
-
 import persistence.DBConnection;
 
 import java.time.LocalDateTime;
@@ -128,25 +126,25 @@ public class DAOTache {
         }
     }
 
-    // GetTitre
-    public String getTitre(String tacheId) {
-    try {
-        MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                .getCollection("taches");
-        
-        // Convert tacheId to ObjectId
-        ObjectId objectId = new ObjectId(tacheId);
-        
-        Document tache = collection.find(Filters.eq("_id", objectId)).first();
-        if (tache != null) {
-            return tache.getString("titre");
-        } else {
-            System.err.println("Task not found with ID: " + tacheId);
+    // Read
+
+    public String getTitre(String titre) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            // Find the document by titre
+            Document doc = collection.find(Filters.eq("titre", titre)).first();
+            // Return the titre field as a string if the document exists, otherwise return null
+            return doc != null ? doc.getString("titre") : null;
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la lecture du titre de la tâche : " + e.getMessage());
             return null;
         }
-    } catch (Exception e) {
-        System.err.println("Error retrieving the title of the task: " + e.getMessage());
-        return null;
     }
-}
+
+
+
+
+
+
 }
