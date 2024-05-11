@@ -44,18 +44,18 @@ public class App extends Application {
 
         // ListeFormController controller = new ListeFormController();
 
-        // ListeFormView projets = new ListeFormView();
-        // projets.start(primaryStage);
+        ListeFormView projets = new ListeFormView();
+        projets.start(primaryStage);
 
-        ArchiveFormView archive = new ArchiveFormView();
-        archive.start(primaryStage);
+        // ArchiveFormView archive = new ArchiveFormView();
+        // archive.start(primaryStage);
 
         // LoginFormView login = new LoginFormView(primaryStage);
         // login.start(primaryStage);
 
-        ControllerFromTacheAjout controller = new ControllerFromTacheAjout();
-        ViewFromTacheAjout view = new ViewFromTacheAjout(controller);
-        view.start(primaryStage);
+        // ControllerFromTacheAjout controller = new ControllerFromTacheAjout();
+        // ViewFromTacheAjout view = new ViewFromTacheAjout(controller);
+        // view.start(primaryStage);
 
         // ProjetDetailController con = new ProjetDetailController() ;
         // Projet_Detail_View view = new Projet_Detail_View(con) ;
