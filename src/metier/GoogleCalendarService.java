@@ -9,6 +9,7 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
@@ -104,4 +105,45 @@ public class GoogleCalendarService {
                 .execute();
         return events.getItems();
     }
+
+    public void displayEventsFromGoogle() {
+        try {
+            List<Event> events = getEvents();
+            if (events.isEmpty()) {
+                System.out.println("No upcoming events found.");
+            } else {
+                System.out.println("Upcoming events");
+                for (Event event : events) {
+                    // Récupérer le titre de l'événement
+                    String summary = event.getSummary();
+
+                    // Récupérer la date de début de l'événement
+                    DateTime startDateTime = event.getStart().getDateTime();
+                    String startDate = (startDateTime != null) ? startDateTime.toString()
+                            : event.getStart().getDate().toString();
+
+                    // Récupérer la date de fin de l'événement
+                    DateTime endDateTime = event.getEnd().getDateTime();
+                    String endDate = (endDateTime != null) ? endDateTime.toString()
+                            : event.getEnd().getDate().toString();
+
+                    // Afficher toutes les informations sur l'événement
+                    System.out.println("Titre : " + summary);
+                    System.out.println("Date de début : " + startDate);
+                    System.out.println("Date de fin : " + endDate);
+                    // Ajoutez ici d'autres propriétés de l'événement que vous souhaitez afficher
+
+                    // Afficher une ligne vide entre les événements
+                    System.out.println();
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("IOException");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Exception");
+            e.printStackTrace();
+        }
+    }
+
 }
