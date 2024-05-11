@@ -1,7 +1,5 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-import org.apache.commons.logging.Log;
 import org.bson.Document;
 
 import com.mongodb.client.FindIterable;
