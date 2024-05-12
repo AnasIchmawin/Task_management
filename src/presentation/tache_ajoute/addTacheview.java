@@ -40,6 +40,8 @@ public class addTacheview {
     private DatePicker dateFin;
     private TextField TempsDebut;
     private TextField TempsFin;
+    private Button Enregistrer;
+    private Button Annuler;
     private Button Ajouter;
     private Button leftButton;
     private Button listesButton;
@@ -78,6 +80,8 @@ public class addTacheview {
 
     
     public void init() {
+        Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 20, 20);
+        Annuler = createButtonWithIcon("Annuler", "file:./Pictures/annuler.png", 20, 20);
         Ajouter = createButtonWithIcon("Ajouter", "file:./Pictures/add.png", 20, 20);
         leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
         listesButton = createButton("Listes");
@@ -90,6 +94,8 @@ public class addTacheview {
 
     private void style() {
         Ajouter.getStyleClass().add("footBtn-style");
+        Annuler.getStyleClass().add("footBtn-style");
+        Enregistrer.getStyleClass().add("footBtn-style");
         leftButton.getStyleClass().add("left-btn-style");
         listesButton.getStyleClass().add("button-style");
         projectsButton.getStyleClass().add("button-style");
@@ -191,16 +197,6 @@ public class addTacheview {
         Label labelDocs = createLabel("Documents Ajoutés");
         VBox ZoneDocuments = createDocumentsSection();
         contenaireDocuments.getChildren().addAll(labelDocs, ZoneDocuments);
-
-        Button Enregistrer = new Button("Enregistrer");
-        Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 20, 20);
-        Enregistrer.getStyleClass().add("footBtn-style");
-
-        Button Annuler = new Button("Annuler");
-        Annuler = createButtonWithIcon("Annuler", "file:./Pictures/annuler.png", 20, 20);
-        Annuler.getStyleClass().add("footBtn-style");
-
-
         HBox buttons = new HBox(10, Ajouter, Enregistrer, Annuler);
 
         leftBox.getChildren().add(labelTitle);
@@ -369,6 +365,16 @@ public class addTacheview {
         });
         Ajouter.setOnAction(event -> {
             this.controller.handleSauvegarderButtonAction();
+        });
+        Enregistrer.setOnAction(event -> {
+            this.controller.handleUpdateButtonAction();
+        });
+        Annuler.setOnAction(event -> {
+            try {
+                this.controller.closerWindow(event);
+            } catch (Exception e) {
+                System.out.println("Erreur pendant la fermeture AddList  : " + e.getMessage());
+            }
         });
     }
 
