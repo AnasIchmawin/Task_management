@@ -6,29 +6,54 @@ import java.util.List;
 import org.bson.Document;
 
 public class POJOTache {
-    private Integer id;
+
     private String titre;
     private String categorie;
+    Boolean etat;
     private String description;
-    private LocalDateTime dateDebut;
-    private LocalDateTime dateFin;
+    private String dateDebut;
+    private String TempsDebut;
+    private String dateFin;
+    private String TempsFin;
     private List<String> documents;
+    private String projet;
+    private String liste;
 
-    // Getters and Setters
-    public Integer getId() {
-        return id;
+    public POJOTache() {
+        super();
+    }
+                    
+    public POJOTache(String titre,Boolean etat ,String categorie, String description, String dateDebut, String TempsDebut,
+                     String dateFin, String TempsFin, List<String> documents, String projet, String liste)
+                     {
+                        
+        this.titre = titre;
+        this.etat = etat;
+        this.categorie = categorie;
+        this.description = description;
+        this.dateDebut = dateDebut;
+        this.TempsDebut = TempsDebut;
+        this.dateFin = dateFin;
+        this.TempsFin = TempsFin;
+        this.documents = documents;
+        this.projet = projet;
+        this.liste =liste;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitre() {
+    public String gettitre() {
         return titre;
     }
 
     public void setTitre(String titre) {
         this.titre = titre;
+    }
+
+    public Boolean getetat() {
+        return etat;
+    }
+
+    public void setetat(Boolean etat) {
+        this.etat = etat;
     }
 
     public String getCategorie() {
@@ -47,23 +72,76 @@ public class POJOTache {
         this.description = description;
     }
 
-    public LocalDateTime getDateDebut() {
+    public String getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(LocalDateTime dateDebut) {
+    public void setDateDebut(String dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public LocalDateTime getDateFin() {
+    public String getTempsDebut() {
+        return TempsDebut;
+    }
+
+    public void setTempsDebut(String tempsDebut) {
+        this.TempsDebut = tempsDebut;
+    }
+
+    public String getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(LocalDateTime dateFin) {
+    public void setDateFin(String dateFin) {
         this.dateFin = dateFin;
+    }
+
+    public String getTempsFin() {
+        return TempsFin;
+    }
+
+    public void setTempsFin(String tempsFin) {
+        this.TempsFin = tempsFin;
     }
 
     public List<String> getDocuments() {
         return documents;
     }
+
+    public void setDocuments(List<String> documents) {
+        this.documents = documents;
+    }
+
+    public String getprojet() {
+        return projet;
+    } 
+
+    public String getliste() {
+        return liste;
+    } 
+
+    public void setprojet(String projet) {
+        this.projet = projet;
+    }
+
+    public void setliste(String liste){
+        this.liste = liste;
+    }
+    @Override
+public String toString() {
+    return "POJOTache [titre=" + titre  +
+            ", etat=" + etat +
+            ", categorie=" + categorie  +
+            ", description=" + description +
+            ", dateDebut=" + dateDebut +
+            ", TempsDebut=" + TempsDebut  +
+            ", dateFin=" + dateFin +
+            ", TempsFin=" + TempsFin +
+            ", documents=" + documents +
+            ", projet=" + projet  +
+            ", liste=" + liste  +
+            "]";
+}
+//mod
+
 }
