@@ -18,11 +18,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import presentation.seance_ajoute.SceanceAjouteController;
+import presentation.tache_ajoute.ControllerFromTacheAjout;
 
 public class GetDocView {
 
     private GetDocController controller;
     private SceanceAjouteController sceanceAjouteController;
+    private ControllerFromTacheAjout controllerFromTacheAjout;
     private Label titleLabel;
     private BorderPane root;
     private Button confirmButton;
@@ -32,7 +34,14 @@ public class GetDocView {
 
     public GetDocView(SceanceAjouteController sceanceAjouteController) {
         this.sceanceAjouteController = sceanceAjouteController;
-        this.controller = new GetDocController(this, this.sceanceAjouteController);
+        
+        init();
+        style();
+        action();
+    }
+    public GetDocView(ControllerFromTacheAjout controllerFromTacheAjout) {
+        this.controllerFromTacheAjout = controllerFromTacheAjout;
+    
         init();
         style();
         action();

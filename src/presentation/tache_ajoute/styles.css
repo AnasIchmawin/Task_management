@@ -6,6 +6,15 @@
     -fx-font-weight: bold;
     -fx-font-size: 13px;
 }
+.button-style:hover,
+.button-style:pressed {
+    -fx-background-radius: 10px;
+    -fx-pref-width: 100px;
+    -fx-background-color: #8E9EB2;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
 
 .footBtn-style {
     -fx-background-radius: 10px;
@@ -15,6 +24,15 @@
     -fx-font-weight: bold;
     -fx-font-size: 13px;
 }
+.footBtn-style:hover,
+.footBtn-style:pressed {
+    -fx-background-radius: 10px;
+        -fx-pref-width: 170px;
+        -fx-background-color: #8E9EB2;
+        -fx-text-fill: white;
+        -fx-font-weight: bold;
+        -fx-font-size: 13px;
+}
 
 .left-btn-style {
     -fx-background-color: #8E9EB2;
@@ -23,6 +41,15 @@
     -fx-max-width: 30px;
     -fx-max-height: 30px;
     -fx-background-radius: 30px;
+}
+.left-btn-style:hover,
+.left-btn-style:pressed{
+    -fx-background-color: #3F72AF;
+        -fx-min-width: 30px;
+        -fx-min-height: 30px;
+        -fx-max-width: 30px;
+        -fx-max-height: 30px;
+        -fx-background-radius: 30px;
 }
 
 .navbar {
@@ -45,14 +72,19 @@
     -fx-border-width: 0px;
     -fx-focus-color: transparent;
     -fx-pref-width: 750px;
-    -fx-max-height: 180px;
+    -fx-max-height: 500px;
+    -fx-border-radius: 10px;
 }
-.ZoneTitre-Style {
+
+.Titre-style {
     -fx-font-size: 16px;
     -fx-border-width: 0px;
     -fx-focus-color: transparent;
     -fx-pref-width: 200px;
-    -fx-max-height: 30px;
+    -fx-max-width: 200px;
+    -fx-max-height: 10px;
+    -fx-border-radius: 10px;
+
 }
 
 .container {
@@ -63,18 +95,17 @@
 }
 
 .Label-style {
-    -fx-font-size: 20px;
+    -fx-font-size: 17px;
     -fx-font-weight: bold;
     -fx-text-fill: #000000;
-    -fx-underline: true;
+    -fx-underline: false;
 }
-
 .date-picker {
     -fx-font-size: 14px;
     -fx-border-width: 0px;
     -fx-focus-color: transparent;
     -fx-pref-width: 150px;
-    -fx-pref-height: 100px;
+    -fx-pref-height: 50px;
 }
 
 .Hour-Minute-Style {
@@ -83,6 +114,7 @@
     -fx-focus-color: transparent;
     -fx-prompt-text-fill: rgba(0, 0, 0, 0.5);
     -fx-pref-width: 70px;
+    -fx-pref-height: 50px;
 }
 
 .ZoneNote-Style {
@@ -96,9 +128,10 @@
 .Docs-Style {
     -fx-border-width: 0px;
     -fx-focus-color: transparent;
-    -fx-pref-width: 100px;
+    -fx-pref-width: 750px;
     -fx-pref-height: 150px;
 }
+
 
 .AjouterTache-style {
     -fx-background-color: #BDBDBD;
@@ -106,8 +139,25 @@
     -fx-font-size: 15px;
     -fx-font-weight: bold;
 }
+.AjouterTache-style:hover,
+.AjouterTache-style:pressed {
+    -fx-background-color: #3F72AF;
+    -fx-background-radius: 15px;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
 .category-combobox-style {
     -fx-font-size: 14px;
-    -fx-pref-width: 150px; /* Adjust the width as needed */
-    -fx-padding: 5px; /* Adjust the padding as needed */
+    -fx-pref-width: 150px;
+    -fx-padding: 5px;
+    -fx-pref-height: 50px;
+}
+.root {
+    -fx-background-color: white;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
 }

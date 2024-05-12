@@ -14,18 +14,26 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import metier.GestionnaireDocument;
 import presentation.seance_ajoute.SceanceAjouteController;
+import presentation.tache_ajoute.ControllerFromTacheAjout;
 
 public class GetDocController {
     private GetDocView getDocView;
     private SceanceAjouteController sceanceAjouteController;
+    private ControllerFromTacheAjout controllerFromTacheAjout;
     private GestionnaireDocument gestionnaireDocument;
     private LinkedHashMap<List<Integer>, List<String>> GridCaseInfos;
 
-    public GetDocController(GetDocView view, SceanceAjouteController sceanceAjouteController) {
+    public GetDocController(GetDocView view, ControllerFromTacheAjout controllerFromTacheAjout) {
         this.getDocView = view;
-        this.sceanceAjouteController = sceanceAjouteController;
+        
         this.gestionnaireDocument = new GestionnaireDocument();
     }
+    public GetDocController(GetDocView view, SceanceAjouteController sceanceAjouteController) {
+        this.getDocView = view;
+        
+        this.gestionnaireDocument = new GestionnaireDocument();
+    }
+
 
     public void diplayDocs() {
         GridCaseInfos = new LinkedHashMap<>();
