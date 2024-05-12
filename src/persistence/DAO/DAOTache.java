@@ -17,7 +17,7 @@ public class DAOTache {
 
     // Create
     public void create(String titre, String categorie,Boolean etat, String description, 
-            LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
+            LocalDateTime dateDebut, LocalDateTime dateFin, List<String> documents,
             Document projet, Document liste) {
 
         try {

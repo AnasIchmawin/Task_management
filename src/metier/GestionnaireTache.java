@@ -14,10 +14,15 @@ public class GestionnaireTache {
     }
 
     // Create
-    public void createTask(String titre, String categorie, Boolean etat, String description,
-            LocalDateTime dateDebut, LocalDateTime dateFin, List<Document> documents,
-            Document projet, Document liste) {
-        daoTache.create(titre, categorie, etat, description, dateDebut, dateFin, documents, projet, liste);
+ 
+    public void createTask(POJOTache nouveauTache) {
+        try {
+            daoTache.create(nouveauTache.getTitre(), nouveauTache.getCategorie(), nouveauTache.getEtat(),
+                    nouveauTache.getDescription(), nouveauTache.getDateDebut(), nouveauTache.getDateFin(),
+                    nouveauTache.getDocuments(), nouveauTache.getProjet(), nouveauTache.getListe());
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la création de la tâche : " + e.getMessage());
+        }
     }
 
     // Read
@@ -37,8 +42,6 @@ public class GestionnaireTache {
         daoTache.delete(id);
     }
 
-    public void createTask(POJOTache nouveauTache) {
-    }
 
     // GetAllTask
     public List<Document> getAllTasks() {

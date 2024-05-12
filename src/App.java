@@ -30,14 +30,25 @@ import presentation.tache_ajoute.addTacheview;
 import presentation.taches.TachesFormController;
 import presentation.taches.TachesFormView;
 
+import java.time.LocalDateTime;
+
 
 public class App extends Application {
 
+
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+
+    
+
+
+
+
+
         // ListeFormController controller = new ListeFormController();
-        // ListeFormView Seance = new ListeFormView();
-        // Seance.start(primaryStage);
+        ListeFormView Seance = new ListeFormView();
+        Seance.start(primaryStage);
 
         // ProjetsFormView projets = new ProjetsFormView();
         // projets.start(primaryStage);
@@ -53,8 +64,8 @@ public class App extends Application {
         // LoginFormView login = new LoginFormView(primaryStage);
         // login.start(primaryStage);
 
-        addTacheview view = new addTacheview();
-        view.start(primaryStage);
+        // addTacheview view = new addTacheview();
+        // view.start(primaryStage);
 
         // ProjetDetailController con = new ProjetDetailController() ;
         // Projet_Detail_View view = new Projet_Detail_View(con) ;
@@ -80,6 +91,7 @@ public class App extends Application {
         // SceanceFormController con = new SceanceFormController() ;
         // SeanceFormView view = new SeanceFormView(con) ;
         // view.start(primaryStage) ;
+      
   
 
 

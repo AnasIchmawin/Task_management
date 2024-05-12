@@ -16,10 +16,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import presentation.taches.TachesFormController;
 
 public class GetTaskCalendar {
 
     private GetTaskCalenderController controller;
+    private TachesFormController tachesFormController;
     private Label titleLabel;
     private BorderPane root;
     private Button confirmButton;
@@ -28,8 +30,9 @@ public class GetTaskCalendar {
     GridPane ZoneTasks;
     TableViewPane tableViewPane;
 
-    public GetTaskCalendar(GetTaskCalenderController getTaskCalenderController) {
-        this.controller = getTaskCalenderController;
+    public GetTaskCalendar(TachesFormController tachesFormController) {
+        this.tachesFormController = tachesFormController;
+        this.controller = new GetTaskCalenderController(this) ;
         init();
         style();
         action();
@@ -93,8 +96,6 @@ public class GetTaskCalendar {
         ZoneTasks.setHgap(20);
         ZoneTasks.setVgap(15);
         ZoneTasks.setPadding(new Insets(20));
-        // this.controller.displayTasks();
-
         return this.ZoneTasks;
     }
 
@@ -149,6 +150,9 @@ public class GetTaskCalendar {
             this.controller.handleCancelButtonAction(event);
         });
 
+    }
+    public String getDateTask() {
+        return this.tachesFormController.getDateTaskFormated(); 
     }
 
 }

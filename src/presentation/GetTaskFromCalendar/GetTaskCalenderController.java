@@ -1,34 +1,65 @@
 package presentation.GetTaskFromCalendar;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import javafx.stage.Stage;
+import metier.GestionnaireTache;
+import metier.POJOTache;
 
 public class GetTaskCalenderController {
     private String dateTask;
+    private GestionnaireTache gestionnaireTache;
+    private ObservableList<Item> listTasItems;
+    private GetTaskCalendar getTaskCalendar;
 
-    public GetTaskCalenderController(String dateTask) {
-         this.dateTask = dateTask;
+    public GetTaskCalenderController(GetTaskCalendar getTaskCalendar) {
+        this.gestionnaireTache = new GestionnaireTache();
+        this.getTaskCalendar = getTaskCalendar;
+        this.dateTask = this.getTaskCalendar.getDateTask();
     }
 
     public void handleConfirmButton(ActionEvent event) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleConfirmButton'");
+        System.out.println("Confirm Button Clicked");
+        System.out.println("Selected Tasks : ");
+        for (Item item : listTasItems) {
+            if (item.isSelected()) {
+                try{
+                POJOTache tache = new POJOTache();
+                tache.setTitre(item.getTitle());
+                tache.setDescription(item.getDescription());
+                tache.setDateDebut(parseDateTime(item.getStartDate()));
+                tache.setDateFin(parseDateTime(item.getEndDate()));
+                gestionnaireTache.createTask(tache);
+                }catch(Exception e){
+                    System.out.println("Erreur lors de la création de la tâche");
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 
     public void handleCancelButtonAction(ActionEvent event) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleCancelButtonAction'");
-    }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
 
-    public void displayTasks() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'displayTasks'");
     }
 
     public ObservableList<Item> getDataTasks() {
         GetTaskCalendarModel model = new GetTaskCalendarModel();
-        ObservableList<Item> data = model.getDataFromGoogle(this.dateTask);
-        return data;
+        listTasItems = model.getDataFromGoogle(this.dateTask);
+        return listTasItems;
     }
-    
+
+    public LocalDateTime parseDateTime(String dateTimeString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
+        return dateTime;
+    }
+
 }

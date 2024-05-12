@@ -8,34 +8,22 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Arc;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import metier.GestionnaireListe;
 import metier.GestionnaireTache;
 import presentation.GetTaskFromCalendar.GetTaskCalendar;
-import presentation.GetTaskFromCalendar.GetTaskCalenderController;
-import presentation.archive.ArchiveFormController;
 import presentation.archive.ArchiveFormView;
-import presentation.archive.modele;
 import presentation.listes.ListeFormView;
 import presentation.projets.ProjetsFormView;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import org.bson.Document;
-
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 
 public class TachesFormController {
     private TachesFormView tacheView;
@@ -44,6 +32,7 @@ public class TachesFormController {
     private GestionnaireListe gestionnaireListe;
     private Map<List<Integer>, List<String>> gridCaseInfos;
     private String listId;
+    private String dateTaskFormated;
 
     public TachesFormController(TachesFormView tacheView) {
         this.gestionnaireTache = new GestionnaireTache();
@@ -302,15 +291,18 @@ public class TachesFormController {
     }
 
     public void handleConfirmerButtonAction() {
-        try{
-        String dateTask = tacheView.getDateTask();
-        // convert format to DD/MM/YYYY
-        String[] date = dateTask.split("-");
-        String dateTaskFormated = date[2] + "/" + date[1] + "/" + date[0];
-        GetTaskCalenderController getTaskCalenderController = new GetTaskCalenderController(dateTaskFormated);
-        GetTaskCalendar getTaskCalendar = new GetTaskCalendar(getTaskCalenderController);
-        getTaskCalendar.start(new Stage());
-        }catch(Exception e){
+        try {
+            String dateTask11 = tacheView.getDateTask();
+            String dateTask = tacheView.getDateTask();
+            // convert format to DD/MM/YYYY
+            String[] date = dateTask.split("-");
+            this.setDateTaskFormated(date[2] + "/" + date[1] + "/" + date[0]);
+            System.out.println("Date Task : " + dateTask);
+
+            GetTaskCalendar getTaskCalendar = new GetTaskCalendar(this);
+            getTaskCalendar.start(new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
             alert.setHeaderText("Erreur de saisie");
@@ -319,4 +311,13 @@ public class TachesFormController {
         }
 
     }
+
+    public String getDateTaskFormated() {
+        return dateTaskFormated;
+    }
+
+    public void setDateTaskFormated(String dateTaskFormated) {
+        this.dateTaskFormated = dateTaskFormated;
+    }
+
 }

@@ -5,23 +5,20 @@ import java.util.List;
 
 import org.bson.Document;
 
+
+
 public class POJOTache {
-    private Integer id;
     private String titre;
     private String categorie;
     private String description;
     private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
     private List<String> documents;
+    private Document projet;
+    private Document liste;
+    private Boolean etat;
 
-    // Getters and Setters
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getTitre() {
         return titre;
@@ -66,4 +63,34 @@ public class POJOTache {
     public List<String> getDocuments() {
         return documents;
     }
+
+    public void setDocuments(List<String> documents) {
+        this.documents = documents;
+    }
+
+    public Document getProjet() {
+        return projet;
+    }
+
+    public void setProjet(Document projet) {
+        this.projet = projet;
+    }
+
+    public Document getListe() {
+        return liste;
+    }
+
+    public void setListe(Document liste) {
+        this.liste = liste;
+    }
+
+    public Boolean getEtat() {
+        return etat;
+    }
+
+    public void setEtat(Boolean etat) {
+        this.etat = etat;
+    }
+
+
 }
