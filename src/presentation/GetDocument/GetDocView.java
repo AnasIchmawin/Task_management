@@ -20,22 +20,31 @@ import javafx.stage.Stage;
 import presentation.seance_ajoute.SceanceAjouteController;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
 
-public class GetDocController {
-    private GetDocView getDocView;
+public class GetDocView {
+
+    private GetDocController controller;
     private SceanceAjouteController sceanceAjouteController;
     private ControllerFromTacheAjout controllerFromTacheAjout;
-    private GestionnaireDocument gestionnaireDocument;
-    private LinkedHashMap<List<Integer>, List<String>> GridCaseInfos;
+    private Label titleLabel;
+    private BorderPane root;
+    private Button confirmButton;
+    private Button cancelButton;
+    private ScrollPane scrollPane;
+    GridPane ZoneDocuments;
 
-    public GetDocController(GetDocView view, ControllerFromTacheAjout controllerFromTacheAjout) {
-        this.getDocView = view;
+    public GetDocView(SceanceAjouteController sceanceAjouteController) {
+        this.sceanceAjouteController = sceanceAjouteController;
         
-        this.gestionnaireDocument = new GestionnaireDocument();
+        init();
+        style();
+        action();
     }
-    public GetDocController(GetDocView view, SceanceAjouteController sceanceAjouteController) {
-        this.getDocView = view;
-        
-        this.gestionnaireDocument = new GestionnaireDocument();
+    public GetDocView(ControllerFromTacheAjout controllerFromTacheAjout) {
+        this.controllerFromTacheAjout = controllerFromTacheAjout;
+    
+        init();
+        style();
+        action();
     }
 
     public void start(Stage primaryStage) {
