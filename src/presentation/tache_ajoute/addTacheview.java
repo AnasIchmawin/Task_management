@@ -163,7 +163,7 @@ public class addTacheview {
 
         Label labelCategorie = createLabel("Catégorie");
 
-        categorie= new ComboBox<>();
+        categorie = new ComboBox<>();
         categorie.getItems().addAll("Enseignement", "Encadrement", "Autre");
         categorie.setPromptText("select");
         categorie.getStyleClass().add("category-combobox-style");

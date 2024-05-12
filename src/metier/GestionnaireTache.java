@@ -65,7 +65,8 @@ public class GestionnaireTache {
         try {
             // Vérifie si la date est dans le futur
             LocalDate parsedDate = LocalDate.parse(date);
-            return parsedDate.isAfter(LocalDate.now());
+            return true;
+            
         } catch (Exception e) {
             return false;
         }
@@ -75,6 +76,7 @@ public class GestionnaireTache {
         try {
             LocalTime parsedTime = LocalTime.parse(time);
             return true;
+            
         } catch (Exception e) {
             return false;
         }
@@ -82,7 +84,8 @@ public class GestionnaireTache {
 
     public static boolean validateTache(String dateDebut, String tempsDebut, String dateFin, String tempsFin) {
         return validateDate(dateDebut) && validateDate(dateFin) &&
-                validateTime(tempsDebut) && validateTime(tempsFin) &&
+                validateTime(tempsDebut) && validateTime(tempsFin)
+                 &&
                 LocalDate.parse(dateDebut).isBefore(LocalDate.parse(dateFin)); // Check if dateDebut is before dateFin
     }
 
