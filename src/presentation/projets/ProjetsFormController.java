@@ -56,6 +56,10 @@ public class ProjetsFormController {
 
     // Affiche les projets triés
     public void handleOrdonnerButton() {
+        projetView.getSearchField().setText("");
+        projetView.setTypeBoxValue("Tous");
+        projetView.setCategorieBoxValue("Tous");
+
         this.displayProjets(true);
     }
 
@@ -143,6 +147,9 @@ public class ProjetsFormController {
     }
 
     public void SearchProjet(String searchText) {
+        // chnager les valeur des combox to Tous
+        projetView.setTypeBoxValue("Tous");
+        projetView.setCategorieBoxValue("Tous");
         // Réinitialisation des compteurs de colonnes et de lignes
         int colCount = 0;
         int rowCount = 0;
@@ -163,4 +170,35 @@ public class ProjetsFormController {
             }
         }
     }
+
+    //handleTypeBoxAction
+    public void handleBoxsAction() {
+        String type = projetView.getTypeBoxValue();
+        String categorie = projetView.getCategorieBoxValue();
+            // Réinitialisation des compteurs de colonnes et de lignes
+        int colCount = 0;
+        int rowCount = 0;
+
+        projetView.getZoneProjets().getChildren().clear();
+
+        //afficher les projet qui ont la valeur de key (type) est egale a type selectionner
+        for (Map.Entry<String, String> entry : projetsModel.getProjets().entrySet()) {
+            String id = entry.getKey();
+            String titre = entry.getValue();
+            Document projet = gestionnaireProjet.obtenirProjet(id);
+            String typeProjet = projet.getString("type");
+            String categorieProjet = projet.getString("categorie");
+            if ((typeProjet.equals(type) || type.equals("Tous")) && (categorieProjet.equals(categorie) || categorie.equals("Tous"))) {
+                Button button = createProjectButton(titre);
+                addProjetButton(button, colCount, rowCount);
+                gridCaseInfos.put(List.of(colCount, rowCount), List.of(id, titre));
+                colCount++;
+                if (colCount == MAX_COLUMNS) {
+                    colCount = 0;
+                    rowCount++;
+                }
+            }
+        }
+    }
+
 }

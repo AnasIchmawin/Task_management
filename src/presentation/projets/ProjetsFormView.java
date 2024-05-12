@@ -37,8 +37,8 @@ public class ProjetsFormView extends Application {
     private TextField searchField;
     private ProjetsFormController controller;
     private BorderPane root;
-    private ComboBox<String> comboBox1;
-    private ComboBox<String> comboBox2;
+    private ComboBox<String> TypeBox;
+    private ComboBox<String> CategorieBox;
     private Label filterLabel;
     private HBox navbar;
     private VBox navbarContainer;
@@ -84,8 +84,8 @@ public class ProjetsFormView extends Application {
         supprimerButton = createButton("Supprimer un Projet", "file:./Pictures/delete.png", 20, 20);
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
-        comboBox1 = createComboBox("Type", "These", "PFE", "Cours", "Examen", "Autres");
-        comboBox2 = createComboBox("Categorie", "Enseignement", "Encadrement", "Autres");
+        TypeBox = createComboBox("Type", "Tous","These", "PFE", "Cours", "Examen", "Autres");
+        CategorieBox = createComboBox("Categorie", "Tous","Enseignement", "Encadrement", "Autres");
         filterLabel = new Label("     Filtrer");
         navbar = new HBox(30, leftButton, listesButton, projectsButton, archiveButton);
         navbarContainer = new VBox(navbar);
@@ -100,7 +100,7 @@ public class ProjetsFormView extends Application {
         spacer = new Region();
         buttonContainer = new HBox();
         filterBox = new HBox();
-        SurveillerButton(projectsButton,"100px","40px","#3F72AF");
+        SurveillerButton(listesButton,"100px","40px","#3F72AF");
         SurveillerButton(archiveButton,"100px","40px","#3F72AF");
         SurveillerButton(ordonnerButton,"100px","40px","#3F72AF");
         SurveillerButton(ajouterButton,"150px","40px","#3F72AF");
@@ -112,7 +112,7 @@ public class ProjetsFormView extends Application {
         leftButton.getStyleClass().add("left-btn-style");
         searchButton.getStyleClass().add("left-btn-style");
         listesButton.getStyleClass().add("button-style");
-        projectsButton.getStyleClass().add("button-style");
+        projectsButton.getStyleClass().add("button-clicked-style");
         archiveButton.getStyleClass().add("button-style");
         ordonnerButton.getStyleClass().add("ordonner-btn-style");
         ajouterButton.getStyleClass().add("button-style");
@@ -160,9 +160,10 @@ public class ProjetsFormView extends Application {
         if (!topContainer.getChildren().contains(stackPane)) {
             HBox.setHgrow(spacer, Priority.ALWAYS);
             topContainer.getChildren().add(spacer);
-            HBox.setMargin(comboBox1, new Insets(0, 0, 0, 88));
-            filterBox.getChildren().addAll(comboBox1, comboBox2);
+            HBox.setMargin(TypeBox, new Insets(0, 0, 0, 88));
+            filterBox.getChildren().addAll(TypeBox, CategorieBox);
             filterBox.setSpacing(10);
+            filterBox.setPadding(new Insets(0, 20, 0, 0));
             filterBox.setAlignment(Pos.CENTER);
             stackPane.getChildren().addAll(filterLabel, filterBox);
             HBox.setMargin(stackPane, new Insets(30, 40, 30, 70));
@@ -178,14 +179,6 @@ public class ProjetsFormView extends Application {
         root.setTop(navbarContainer);
         root.setCenter(container);
         return root;
-    }
-
-    private VBox createNavbarContainer() {
-        HBox buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
-        HBox leftButtonBox = new HBox(20, leftButton);
-        HBox navbar = new HBox(30, leftButtonBox, buttonsBar);
-        VBox navbarContainer = new VBox(navbar);
-        return navbarContainer;
     }
 
     private GridPane createGridPane() {
@@ -246,6 +239,14 @@ public class ProjetsFormView extends Application {
         archiveButton.setOnAction(event -> {
             this.controller.handleArchiveButton();
         });
+
+        TypeBox.setOnAction(event -> {
+            this.controller.handleBoxsAction();
+        });
+
+        CategorieBox.setOnAction(event -> {
+            this.controller.handleBoxsAction();
+        });
     }
     
     public void SurveillerButton(Button button ,String width ,String heitht ,String color) {
@@ -280,7 +281,32 @@ public class ProjetsFormView extends Application {
         return ZoneProjets;
     }
 
+    //getTypeBox
+    public String getTypeBoxValue() {
+        return TypeBox.getValue();
+    }
+
+    //getCategorieBox
+    public String getCategorieBoxValue() {
+        return CategorieBox.getValue();
+    }
+
     public String getSearchFieldText() {
         return searchField.getText();
+    }
+
+    //setTypeBoxsValue
+    public void setTypeBoxValue(String value) {
+        TypeBox.setValue(value);
+    }
+
+    //setCategorieBoxsValue
+    public void setCategorieBoxValue(String value) {
+        CategorieBox.setValue(value);
+    }
+
+    //getSearchField
+    public TextField getSearchField() {
+        return searchField;
     }
 }

@@ -92,7 +92,21 @@ public class TachesFormController {
     //create task
     public static void createTask(GridPane gridPane, String taskName, Boolean isChecked, String tacheId) {
         Button cloneButton = new Button("");
+        //add icon to clone button
+        Image image = new Image("file:Pictures/clone.png");
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(15);
+        imageView.setFitWidth(15);
+        cloneButton.setGraphic(imageView);
+
         Button deleteButton = new Button("");
+        //add icon to delete button
+        Image image2 = new Image("file:Pictures/delete.png");
+        ImageView imageView2 = new ImageView(image2);
+        imageView2.setFitHeight(15);
+        imageView2.setFitWidth(15);
+        deleteButton.setGraphic(imageView2);
+
         Button taskButton = new Button("");
         CheckBox taskCheckBox = new CheckBox(taskName);
         taskCheckBox.setStyle("-fx-background-color: #112D4E; " +

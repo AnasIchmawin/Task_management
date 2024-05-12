@@ -49,6 +49,10 @@ public class AddProjetController {
     private void updateProjetModel() {
         addProjetModel.setTitre(addProjetView.getTitre());
         addProjetModel.setDescription(addProjetView.getDescription());
+        addProjetModel.setCategorie(addProjetView.getCategorie());
+        addProjetModel.setType(addProjetView.getType());
+        addProjetModel.setDateDebut(addProjetView.getDateDebut());
+        addProjetModel.setDateFin(addProjetView.getDateFin());
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {

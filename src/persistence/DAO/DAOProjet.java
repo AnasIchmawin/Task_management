@@ -47,13 +47,15 @@ public class DAOProjet {
 
     // Read
     public Document read(String id) {
+        Document projet = null;
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
-            return collection.find(Filters.eq("_id", id)).first();
+            ObjectId objId = new ObjectId(id);
+            projet = collection.find(Filters.eq("_id", objId)).first();
         } catch (Exception e) {
-            System.err.println("Erreur lors de la lecture du projet : " + e.getMessage());
-            return null;
+            System.err.println("Erreur lors de la récupération du projet : " + e.getMessage());
         }
+        return projet;
     }
 
     // Update

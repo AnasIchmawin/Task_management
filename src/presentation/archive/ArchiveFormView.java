@@ -173,7 +173,7 @@ public class ArchiveFormView extends Application {
         searchButton.getStyleClass().add("left-btn-style");
         listesButton.getStyleClass().add("button-style");
         projectsButton.getStyleClass().add("button-style");
-        archiveButton.getStyleClass().add("button-style");
+        archiveButton.getStyleClass().add("button-clicked-style");
         ordonnerButton.getStyleClass().add("ordonner-btn-style");
         filtrerButton.getStyleClass().add("ordonner-btn-style");
         searchField.getStyleClass().add("search-field-style");

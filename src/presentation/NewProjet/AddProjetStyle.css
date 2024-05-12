@@ -114,10 +114,10 @@
 
 .comboBox-style {
     -fx-background-radius: 10px;
-    -fx-pref-width: 81px;
-    -fx-pref-height: 20px;
+    -fx-pref-width: 101px;
+    -fx-pref-height: 28px;
     -fx-background-color: #8e9eb2;
     -fx-text-fill: #FFFFFF;
-    -fx-font-size: 10px;
+    -fx-font-size: 12px;
     -fx-font-weight: bold;
 }

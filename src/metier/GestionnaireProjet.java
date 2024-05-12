@@ -66,4 +66,9 @@ public class GestionnaireProjet {
         return this.daoProjet.getAllProjects();
     }
 
+    //obtenirProjet
+    public Document obtenirProjet(String id) {
+        return this.daoProjet.read(id);
+    }
+
 }

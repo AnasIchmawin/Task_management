@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -15,6 +16,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -27,8 +30,12 @@ public class AddProjetView {
     private TextField TitreField;
     private TextArea ZoneDescription;
     private GridPane ZoneTaches;
-    private GridPane ZoneSeances;
-    private GridPane ZoneDocuments;
+
+    private DatePicker dateDebut;
+    private DatePicker dateFin;
+    private TextField TempsDebut;
+    private TextField TempsFin;
+
     private AddProjetController controleur;
     private ProjetsFormController projetFormController;
     private Button ajouterTacheButton;
@@ -59,7 +66,7 @@ public class AddProjetView {
         StackPane containerContent = createMainContent();
         root = createBorderPane(containerContent);
 
-        Scene scene = new Scene(root, 700, 600);
+        Scene scene = new Scene(root, 800, 450);
         scene.getStylesheets().add(getClass().getResource("AddProjetStyle.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Formulaire d'un Projet");
@@ -75,11 +82,13 @@ public class AddProjetView {
         TitreField = createTextField("");
         ZoneDescription = createTextArea("", "ZoneDescription-Style");
         ZoneTaches = creatZone();
-        ZoneSeances = creatZone();
-        ZoneDocuments = creatZone();
         ajouterTacheButton = createButtonWithIcon("Ajouter Tache", "file:./Pictures/addIcon.png", 20, 20);
         ajouterSeanceButton = createButtonWithIcon("Ajouter Seance", "file:./Pictures/addIcon.png", 20, 20);
         ajouterDocumentButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/addIcon.png", 20, 20);
+        TempsDebut = createTextField();
+        TempsFin = createTextField();
+        dateDebut = DateTache();
+        dateFin = DateTache();
     }
 
     private void style() {
@@ -104,16 +113,30 @@ public class AddProjetView {
 
         VBox mainContentContainer = CreateVbox(20, Pos.TOP_CENTER);
 
-        HBox ContenaireComboBox = CreateHbox(8, Pos.TOP_LEFT);
-        ContenaireComboBox.getChildren().addAll(comboBox1, comboBox2);
-        mainContentContainer.getChildren().addAll(ContenaireComboBox);
+        HBox dateDebutContainer = CreateHbox(8, Pos.TOP_LEFT);
+        Label labelDateDebut = createLabel("Date de debut : ");
+        dateDebutContainer.setPadding(new Insets(0, 0, 0, 0));
+        dateDebutContainer.getChildren().addAll(labelDateDebut, dateDebut, TempsDebut);
 
-        VBox topContainer = CreateVbox(10, Pos.TOP_LEFT);
-        Label labelTitre = createLabel("Titre de ma liste");
+        HBox dateFinContainer = CreateHbox(8, Pos.TOP_LEFT);
+        Label labelDateFin = createLabel("Date de fin : ");
+        dateFinContainer.getChildren().addAll(labelDateFin, dateFin, TempsFin);
+
+        HBox ContenaireDates = CreateHbox(8, Pos.TOP_LEFT);
+        ContenaireDates.setPadding(new Insets(0, 0, 0, 0));
+        ContenaireDates.getChildren().addAll(dateDebutContainer, dateFinContainer);
+        mainContentContainer.getChildren().addAll(ContenaireDates);
+
+        HBox ContenaireComboBox = CreateHbox(8, Pos.TOP_RIGHT);
+        ContenaireComboBox.getChildren().addAll(comboBox1, comboBox2);
+
+        HBox topContainer = CreateHbox(10, Pos.TOP_LEFT);
+        Label labelTitre = createLabel("Titre :  ");
         HBox ContainerTitle = CreateHbox(0, Pos.TOP_LEFT);
+        ContainerTitle.setPadding(new Insets(0, 100, 0, 0));
         TitreField.setPadding(new Insets(4, 4, 4, 12));
-        ContainerTitle.getChildren().addAll(TitreField);
-        topContainer.getChildren().addAll(labelTitre, ContainerTitle);
+        ContainerTitle.getChildren().addAll(labelTitre, TitreField);
+        topContainer.getChildren().addAll(ContainerTitle, ContenaireComboBox);
         mainContentContainer.getChildren().addAll(topContainer);
 
         Label labelDescription = createLabel("Discription");
@@ -193,6 +216,20 @@ public class AddProjetView {
         return text;
     }
 
+    private TextField createTextField() {
+        TextField text = new TextField();
+        text.setPromptText("HH:MM");
+        text.setPrefWidth(50);
+        return text;
+    }
+
+    private DatePicker DateTache() {
+        DatePicker date = new DatePicker();
+        date.setPrefWidth(100);
+        date.promptTextProperty().set("YYYY-MM-DD");
+        return date;
+    }
+
     private VBox CreateVbox(int Spacing, Pos position) {
         VBox vbox = new VBox();
         vbox.setSpacing(Spacing);
@@ -260,6 +297,22 @@ public class AddProjetView {
 
     public String getDescription() {
         return ZoneDescription.getText();
+    }
+
+    public String getCategorie() {
+        return comboBox2.getValue();
+    }
+
+    public String getType() {
+        return comboBox1.getValue();
+    }
+
+    public String getDateDebut() {
+        return dateDebut.getValue().toString() + " " + TempsDebut.getText();
+    }
+
+    public String getDateFin() {
+        return dateFin.getValue().toString() + " " + TempsFin.getText();
     }
 
     public void setDescription(String newDescription) {
