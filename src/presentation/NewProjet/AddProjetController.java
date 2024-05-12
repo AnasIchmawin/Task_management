@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 import metier.GestionnaireProjet;
 import metier.POJOProjet;
 import metier.Errors.NonValidList;
-import presentation.GetTasks.GetSeancesView;
 import presentation.GetTasks.GetTasksController;
 import presentation.GetTasks.GetTasksView;
 import presentation.projets.ProjetsFormController;
@@ -30,7 +29,7 @@ public class AddProjetController {
     public AddProjetController(AddProjetView addProjetView) {
         this.gestionnaireProjet = new GestionnaireProjet();
         this.addProjetView = addProjetView;
-        this.addProjetModel = new AddProjetModel("", "",new LinkedHashMap<>());
+        this.addProjetModel = new AddProjetModel("", "","","","","",new LinkedHashMap<>());
     }
 
     public void saveInfosProjet(ActionEvent event) {
@@ -72,19 +71,6 @@ public class AddProjetController {
         View.start(stage);
     }
 
-    //getSeancesView
-    public void getSeancesView(ActionEvent event, ProjetsFormController projetFormController) {
-        String titre = addProjetView.getTitre();
-        String description = addProjetView.getDescription();
-        this.addProjetModel.setTitre(titre);
-        this.addProjetModel.setDescription(description);
-
-        GetTasksController Controller = new GetTasksController(this, projetFormController);
-        GetSeancesView View = new GetSeancesView(Controller);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        View.start(stage);
-    }
-
     public void displayTasks(GridPane gridPane) {
         List<String> mesTaches = new ArrayList<>(getTasksTitles());
 
@@ -96,27 +82,6 @@ public class AddProjetController {
         }
     }
 
-    public void displaySeances(GridPane gridPane) {
-        List<String> mesSeances = new ArrayList<>(getTasksTitles());
-
-        for (String title : mesSeances) {
-            Button newTaskButton = createTaskButton(title);
-            int colIndex = gridPane.getChildren().size() % 6; // Calculating column index
-            int rowIndex = gridPane.getChildren().size() / 6; // Calculating row index
-            gridPane.add(newTaskButton, colIndex, rowIndex); 
-        }
-    }
-
-    public void displayDocuments(GridPane gridPane) {
-        List<String> mesDocuments = new ArrayList<>(getTasksTitles());
-
-        for (String title : mesDocuments) {
-            Button newTaskButton = createTaskButton(title);
-            int colIndex = gridPane.getChildren().size() % 6; // Calculating column index
-            int rowIndex = gridPane.getChildren().size() / 6; // Calculating row index
-            gridPane.add(newTaskButton, colIndex, rowIndex); 
-        }
-    }
 
     private List<String> getTasksTitles() {
         return new ArrayList<>(this.addProjetModel.getTachesSelectionnees().values());

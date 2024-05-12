@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -33,6 +34,8 @@ public class AddProjetView {
     private Button ajouterTacheButton;
     private Button ajouterSeanceButton;
     private Button ajouterDocumentButton;
+    private ComboBox<String> comboBox1;
+    private ComboBox<String> comboBox2;
 
     public AddProjetView(ProjetsFormController projetFormController) {
         this.projetFormController = projetFormController;
@@ -50,8 +53,6 @@ public class AddProjetView {
         action();
         this.controleur.updateView(this);
         this.controleur.displayTasks(ZoneTaches);
-        this.controleur.displaySeances(ZoneSeances);
-        this.controleur.displayDocuments(ZoneDocuments);
     }
 
     public void start(Stage primaryStage) {
@@ -69,6 +70,8 @@ public class AddProjetView {
     public void init() {
         Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 13, 13);
         Annuler = createButtonWithIcon("Annuler", "file:./Pictures/annuler.png", 20, 20);
+        comboBox1 = createComboBox("Type", "These", "PFE", "Cours", "Examen", "Autres");
+        comboBox2 = createComboBox("Categorie", "Enseignement", "Encadrement", "Autres");
         TitreField = createTextField("");
         ZoneDescription = createTextArea("", "ZoneDescription-Style");
         ZoneTaches = creatZone();
@@ -101,6 +104,10 @@ public class AddProjetView {
 
         VBox mainContentContainer = CreateVbox(20, Pos.TOP_CENTER);
 
+        HBox ContenaireComboBox = CreateHbox(8, Pos.TOP_LEFT);
+        ContenaireComboBox.getChildren().addAll(comboBox1, comboBox2);
+        mainContentContainer.getChildren().addAll(ContenaireComboBox);
+
         VBox topContainer = CreateVbox(10, Pos.TOP_LEFT);
         Label labelTitre = createLabel("Titre de ma liste");
         HBox ContainerTitle = CreateHbox(0, Pos.TOP_LEFT);
@@ -118,16 +125,8 @@ public class AddProjetView {
         VBox Taches = createTacheBox();
         CentenaireTaches.getChildren().addAll(Taches);
 
-        VBox CentenaireSeances = CreateVbox(10, Pos.TOP_LEFT);
-        VBox Seances = createSeanceBox();
-        CentenaireSeances.getChildren().addAll(Seances);
-
-        VBox CentenaireDocuments = CreateVbox(10, Pos.TOP_LEFT);
-        VBox Documents = createDocumentBox();
-        CentenaireDocuments.getChildren().addAll(Documents);
-
         HBox ContenaireAjout = CreateHbox(8, Pos.TOP_CENTER);
-        ContenaireAjout.getChildren().addAll(CentenaireTaches,CentenaireSeances,CentenaireDocuments);
+        ContenaireAjout.getChildren().addAll(CentenaireTaches);
         
 
         mainContentContainer.getChildren().addAll(ContenaireAjout);
@@ -147,6 +146,14 @@ public class AddProjetView {
         grid.setHgap(10);
         grid.getStyleClass().addAll("Zone-taches");
         return grid;
+    }
+
+    private ComboBox<String> createComboBox(String prompt, String... items) {
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll(items);
+        comboBox.setPromptText(prompt);
+        comboBox.getStyleClass().add("comboBox-style");
+        return comboBox;
     }
 
 
@@ -210,26 +217,6 @@ public class AddProjetView {
         return contenaireTaches;
     }
 
-    private VBox createSeanceBox() {
-        ScrollPane scrollSeance = createScrollPane(ZoneSeances);
-        scrollSeance.getStyleClass().add("scroll-Style");
-        VBox contenaireSeances = CreateVbox(5, Pos.TOP_LEFT);
-        contenaireSeances.getStyleClass().add("contenaire-taches");
-        contenaireSeances.getChildren().addAll(scrollSeance, ajouterSeanceButton);
-        contenaireSeances.setPadding(new Insets(10, 10, 5, 10));
-        return contenaireSeances;
-    }
-
-    private VBox createDocumentBox() {
-        ScrollPane scrollDocument = createScrollPane(ZoneDocuments);
-        scrollDocument.getStyleClass().add("scroll-Style");
-        VBox contenaireDocuments = CreateVbox(5, Pos.TOP_LEFT);
-        contenaireDocuments.getStyleClass().add("contenaire-taches");
-        contenaireDocuments.getChildren().addAll(scrollDocument, ajouterDocumentButton);
-        contenaireDocuments.setPadding(new Insets(10, 10, 5, 10));
-        return contenaireDocuments;
-    }
-
     private ScrollPane createScrollPane(GridPane gridPane) {
         ScrollPane scrollPane = new ScrollPane(gridPane);
         scrollPane.setFitToWidth(true);
@@ -260,10 +247,6 @@ public class AddProjetView {
 
         ajouterTacheButton.setOnAction(event -> {
             this.controleur.getTasksView(event, this.projetFormController);
-        });
-
-        ajouterSeanceButton.setOnAction(event -> {
-            this.controleur.getSeancesView(event, this.projetFormController);
         });
     }
 

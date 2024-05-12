@@ -17,12 +17,16 @@ import persistence.DBConnection;
 public class DAOProjet {
     
     // Create
-    public void create(String titre, String description, List<String> taches) {
+    public void create(String titre, String description,String categorie, String type, String dateDebut, String dateFin, List<String> taches) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
             Document doc = new Document();
             doc.append("titre", titre)
-                .append("description", description);
+                .append("description", description)
+                .append("categorie", categorie)
+                .append("type", type)
+                .append("dateDebut", dateDebut)
+                .append("dateFin", dateFin);
             if(taches != null){
                 List<Document> tachesList = new ArrayList<>();
                 for (String id_tache : taches) {
@@ -53,20 +57,25 @@ public class DAOProjet {
     }
 
     // Update
-    public void update(String id, String titre, String description, List<Document> taches) {
+    public void update(String id, String titre, String description,String categorie, String type, String dateDebut, String dateFin, List<String> taches) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
             Document doc = new Document();
-            if (titre != null) {
-                doc.append("titre", titre);
+            doc.append("titre", titre)
+                .append("description", description);
+            if(taches != null){
+                List<Document> tachesList = new ArrayList<>();
+                for (String id_tache : taches) {
+                    Document tacheDoc = new Document();
+                    tacheDoc.append("id", id_tache);
+                    tachesList.add(tacheDoc);
+                }
+                doc.append("taches", tachesList);
             }
-            if (description != null) {
-                doc.append("description", description);
+            else{
+                doc.append("taches", null);
             }
-            if (taches != null) {
-                doc.append("taches", taches);
-            }
-            collection.updateOne(Filters.eq("id", id), new Document("$set", doc));
+            collection.updateOne(Filters.eq("_id", id), new Document("$set", doc));
         } catch (Exception e) {
             System.err.println("Erreur lors de la mise à jour du projet : " + e.getMessage());
         }

@@ -111,3 +111,13 @@
     /* -fx-background-radius: 15px; */
     -fx-max-height: 50px;
 }
+
+.comboBox-style {
+    -fx-background-radius: 10px;
+    -fx-pref-width: 81px;
+    -fx-pref-height: 20px;
+    -fx-background-color: #8e9eb2;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
