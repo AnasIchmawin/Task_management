@@ -16,6 +16,15 @@
     -fx-background-radius: 30px;
 }
 
+.confirm-btn-style {
+    -fx-background-color: #8E9EB2;
+    -fx-min-width: 25px;
+    -fx-min-height: 20px;
+    -fx-max-width: 25px;
+    -fx-max-height: 20px;
+    -fx-background-radius: 25px;
+}
+
 .navbar {
     -fx-pref-width: 50px; /* Largeur préférée de la barre de navigation */
     -fx-background-color: #112D4E; /* Couleur de fond de la barre de navigation */
@@ -112,4 +121,33 @@
 .description-style {
     -fx-font-size: 16px;
     -fx-focus-color: transparent;
+}
+
+.google-calendar-style{
+    -fx-background-color: #3F72AF;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-pref-width: 175px;
+    -fx-pref-height: 350px;
+}
+
+
+.google-calendar-label-style {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+}
+
+/*
+.button-calendrier-style{
+    -fx-background-color: #3F72AF;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-pref-width: 180px;
+    -fx-pref-height: 50px;
+    -fx-text-fill: #fff;
+} */
+
+.bottom-container-style{
+    /* -fx-background-color: red; */
 }

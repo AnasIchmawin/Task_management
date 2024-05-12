@@ -323,10 +323,6 @@ public class addTacheview {
         ScrollPane scrollDocs = createScrollPane(ZoneDocuments);
         scrollDocs.getStyleClass().add("Docs-Style");
 
-        // Créer le bouton "Ajouter Document"
-        // Button ajouterDocsButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/addIcon.png", 20, 20);
-        // ajouterDocsButton.getStyleClass().add("AjouterTache-style");
-
         VBox contenaireDocuments = CreateVbox(5, Pos.TOP_LEFT);
         contenaireDocuments.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
         contenaireDocuments.getChildren().addAll(scrollDocs, ajouterDocButton);

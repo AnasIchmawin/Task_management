@@ -36,8 +36,7 @@ public class GestionnaireProjet {
         if (projet.getTitre().isEmpty()) {
             throw new NonValidList("Le projet doit avoir un nom !");
         }
-        daoProjet.create(this.projet.getTitre(), this.projet.getDescription(), this.projet.getCategorie(), this.projet.getType(),
-                            this.projet.getDateDebut(), this.projet.getDateFin(), this.projet.getTaches());
+        daoProjet.create(this.projet.getTitre(), this.projet.getDescription(), this.projet.getTaches());
     }
 
     // Method to retrieve a projet by its ID
@@ -46,9 +45,8 @@ public class GestionnaireProjet {
     }
 
     // mettreAJourProjet
-    public void mettreAJourProjet(String id, String nom, String description, String categorie, String type, String dateDebut, String dateFin,
-                                    List<String> taches) {
-        this.daoProjet.update(id, nom, description, categorie, type, dateDebut, dateFin, taches);
+    public void mettreAJourProjet(String id, String nom, String description, List<Document> taches) {
+        this.daoProjet.update(id, nom, description, taches);
     }
 
     // supprimerProjet

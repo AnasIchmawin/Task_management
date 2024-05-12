@@ -1,5 +1,4 @@
-package presentation.GetDocument;
-
+package presentation.GetTaskFromCalendar;
 
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -17,31 +16,23 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import presentation.seance_ajoute.SceanceAjouteController;
-import presentation.tache_ajoute.ControllerFromTacheAjout;
+import presentation.taches.TachesFormController;
 
-public class GetDocView {
+public class GetTaskCalendar {
 
-    private GetDocController controller;
-    private SceanceAjouteController sceanceAjouteController;
-    private ControllerFromTacheAjout controllerFromTacheAjout;
+    private GetTaskCalenderController controller;
+    private TachesFormController tachesFormController;
     private Label titleLabel;
     private BorderPane root;
     private Button confirmButton;
     private Button cancelButton;
     private ScrollPane scrollPane;
-    GridPane ZoneDocuments;
+    GridPane ZoneTasks;
+    TableViewPane tableViewPane;
 
-    public GetDocView(SceanceAjouteController sceanceAjouteController) {
-        this.sceanceAjouteController = sceanceAjouteController;
-        
-        init();
-        style();
-        action();
-    }
-    public GetDocView(ControllerFromTacheAjout controllerFromTacheAjout) {
-        this.controllerFromTacheAjout = controllerFromTacheAjout;
-    
+    public GetTaskCalendar(TachesFormController tachesFormController) {
+        this.tachesFormController = tachesFormController;
+        this.controller = new GetTaskCalenderController(this) ;
         init();
         style();
         action();
@@ -51,30 +42,35 @@ public class GetDocView {
         VBox taskContainer = createVBox(5, Pos.TOP_CENTER);
         taskContainer.setPadding(new Insets(20, 0, 0, 20));
 
-        // Adding ScrollPane to the center of BorderPane
+        tableViewPane = new TableViewPane(this.controller.getDataTasks());
+        scrollPane.setContent(tableViewPane);
         root.setCenter(scrollPane);
 
         HBox buttonContainer = createHBox(25, Pos.CENTER);
         buttonContainer.getChildren().addAll(confirmButton, cancelButton);
+        buttonContainer.setPadding(new Insets(20, 0, 0, 0));
 
         root.setTop(titleLabel);
         root.setBottom(buttonContainer);
         BorderPane.setAlignment(titleLabel, Pos.CENTER);
+        Insets labelMargin = new Insets(13, 0, 0, 0);
+        BorderPane.setMargin(titleLabel, labelMargin);
 
         Insets buttonMargin = new Insets(0, 0, 20, 0);
 
         // Applying margins to button container
         BorderPane.setMargin(buttonContainer, buttonMargin);
 
-        Scene scene = new Scene(root, 550, 520);
-        scene.getStylesheets().add(getClass().getResource("GetDoc.css").toExternalForm());
+        Scene scene = new Scene(root, 650, 570);
+        primaryStage.setResizable(false);
+        scene.getStylesheets().add(getClass().getResource("GetTaskCalendar.css").toExternalForm());
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Liste des documents");
+        primaryStage.setTitle("Liste des tâches");
         primaryStage.show();
     }
 
     private void init() {
-        titleLabel = new Label("Liste des documents");
+        titleLabel = new Label("Liste des tâches");
         root = new BorderPane();
         confirmButton = createButton("Confirmer", "file:./Pictures/confirmer.png", 16, 16);
         cancelButton = createButton("Annuler", "file:./Pictures/annuler.png", 20, 20);
@@ -94,15 +90,13 @@ public class GetDocView {
     }
 
     private GridPane createTaskGridPane() {
-        ZoneDocuments = new GridPane();
-        ZoneDocuments.getStyleClass().add("scroll-pane-style");
-        ZoneDocuments.setAlignment(Pos.TOP_CENTER);
-        ZoneDocuments.setHgap(20);
-        ZoneDocuments.setVgap(15);
-        ZoneDocuments.setPadding(new Insets(20));
-        this.controller.diplayDocs();
-
-        return this.ZoneDocuments;
+        ZoneTasks = new GridPane();
+        ZoneTasks.getStyleClass().add("scroll-pane-style");
+        ZoneTasks.setAlignment(Pos.TOP_CENTER);
+        ZoneTasks.setHgap(20);
+        ZoneTasks.setVgap(15);
+        ZoneTasks.setPadding(new Insets(20));
+        return this.ZoneTasks;
     }
 
     private VBox createVBox(int spacing, Pos position) {
@@ -157,9 +151,8 @@ public class GetDocView {
         });
 
     }
-
-    public GridPane getZoneDocuments() {
-        return ZoneDocuments;
+    public String getDateTask() {
+        return this.tachesFormController.getDateTaskFormated(); 
     }
 
 }

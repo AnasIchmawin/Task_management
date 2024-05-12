@@ -30,11 +30,22 @@ import presentation.tache_ajoute.addTacheview;
 import presentation.taches.TachesFormController;
 import presentation.taches.TachesFormView;
 
+import java.time.LocalDateTime;
+
 
 public class App extends Application {
 
+
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+
+    
+
+
+
+
+
         // ListeFormController controller = new ListeFormController();
         // ListeFormView Seance = new ListeFormView();
         // Seance.start(primaryStage);
@@ -80,6 +91,7 @@ public class App extends Application {
         // SceanceFormController con = new SceanceFormController() ;
         // SeanceFormView view = new SeanceFormView(con) ;
         // view.start(primaryStage) ;
+      
   
 
 
