@@ -1,10 +1,7 @@
 package presentation.GetTaskFromCalendar;
 
-import com.google.api.services.calendar.Calendar.Acl.Get;
-
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import metier.GoogleCalendarService;
 
 public class GetTaskCalenderController {
     private String dateTask;

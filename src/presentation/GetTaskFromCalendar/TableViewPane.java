@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.layout.VBox;
 
 public class TableViewPane extends VBox {
+    @SuppressWarnings("unused")
     private ObservableList<Item> data;
 
     @SuppressWarnings("unchecked")

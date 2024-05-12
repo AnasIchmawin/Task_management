@@ -25,6 +25,7 @@ public class GetTaskCalendarModel {
         data.add(task);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public ObservableList<Item> getDataFromGoogle(String myDate) {
         try {
             GoogleCalendarService service = new GoogleCalendarService();
