@@ -18,24 +18,24 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import presentation.seance_ajoute.SceanceAjouteController;
+import presentation.tache_ajoute.ControllerFromTacheAjout;
 
-public class GetDocView {
-
-    private GetDocController controller;
+public class GetDocController {
+    private GetDocView getDocView;
     private SceanceAjouteController sceanceAjouteController;
-    private Label titleLabel;
-    private BorderPane root;
-    private Button confirmButton;
-    private Button cancelButton;
-    private ScrollPane scrollPane;
-    GridPane ZoneDocuments;
+    private ControllerFromTacheAjout controllerFromTacheAjout;
+    private GestionnaireDocument gestionnaireDocument;
+    private LinkedHashMap<List<Integer>, List<String>> GridCaseInfos;
 
-    public GetDocView(SceanceAjouteController sceanceAjouteController) {
-        this.sceanceAjouteController = sceanceAjouteController;
-        this.controller = new GetDocController(this, this.sceanceAjouteController);
-        init();
-        style();
-        action();
+    public GetDocController(GetDocView view, ControllerFromTacheAjout controllerFromTacheAjout) {
+        this.getDocView = view;
+        
+        this.gestionnaireDocument = new GestionnaireDocument();
+    }
+    public GetDocController(GetDocView view, SceanceAjouteController sceanceAjouteController) {
+        this.getDocView = view;
+        
+        this.gestionnaireDocument = new GestionnaireDocument();
     }
 
     public void start(Stage primaryStage) {
