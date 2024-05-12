@@ -1,6 +1,8 @@
 package presentation.tache_ajoute;
 
 import javafx.animation.PauseTransition;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
 // import javafx.event.ActionEvent;
 // import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -146,6 +148,42 @@ public class ControllerFromTacheAjout {
             alert.showAndWait();
         }
     }
+    public void handleUpdateButtonAction() {
+        try {
+                
+                String titre = this.addTacheview.gettitre();
+                String dateDebut = this.addTacheview.getDateDebut();
+                String TempsDebut = this.addTacheview.getTempsDebut();
+                String dateFin = this.addTacheview.getDateFin();
+                String TempsFin = this.addTacheview.getTempsFin();
+                String description = this.addTacheview.getDescription();
+                String categorie = this.addTacheview.getCategorie();
+                List<String> IdsDoc = this.model.getListOfDocuments().keySet().stream().toList();
+                Boolean etat = false;  // Assuming false as default
+                String projet = "";    // Empty string as default
+                String liste = "";     // Empty string as default
+                
+                
+            POJOTache tache = new POJOTache(titre, etat,categorie, description, dateDebut, TempsDebut , dateFin, TempsFin,
+                IdsDoc, projet , liste);
+            this.gestionnaireTache.setTache(tache);
+            this.gestionnaireTache.updateTask();
+            alert("Tache créée", "La tache a été créée avec succès");
+
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur lors de la création de la tache : les champs ne sont pas valides");
+            alert.showAndWait();
+        }
+    }
+
+       public void closerWindow(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+
     public void alert(String titre, String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(titre);
