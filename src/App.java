@@ -26,9 +26,10 @@ import presentation.seance_ajoute.SceanceAjouteController;
 import presentation.seance_ajoute.SceanceAjouteView;
 import presentation.seance.SeanceFormView;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
-import presentation.tache_ajoute.ViewFromTacheAjout;
+import presentation.tache_ajoute.addTacheview;
 import presentation.taches.TachesFormController;
 import presentation.taches.TachesFormView;
+
 
 public class App extends Application {
 
@@ -43,27 +44,22 @@ public class App extends Application {
 
         // ListeFormController controller = new ListeFormController();
 
-        ListeFormView projets = new ListeFormView();
-        projets.start(primaryStage);
+        // ListeFormView projets = new ListeFormView();
+        // projets.start(primaryStage);
 
-        // ArchiveFormView archive = new ArchiveFormView();
-        // archive.start(primaryStage);
         // ArchiveFormView archive = new ArchiveFormView();
         // archive.start(primaryStage);
 
         // LoginFormView login = new LoginFormView(primaryStage);
         // login.start(primaryStage);
 
-        // ControllerFromTacheAjout controller = new ControllerFromTacheAjout();
-        // ViewFromTacheAjout view = new ViewFromTacheAjout(controller);
-        // view.start(primaryStage);
-        // ControllerFromTacheAjout controller = new ControllerFromTacheAjout();
-        // ViewFromTacheAjout view = new ViewFromTacheAjout(controller);
-        // view.start(primaryStage);
+        addTacheview view = new addTacheview();
+        view.start(primaryStage);
 
         // ProjetDetailController con = new ProjetDetailController() ;
         // Projet_Detail_View view = new Projet_Detail_View(con) ;
         // view.start(primaryStage) ;
+
 
         // SeanceFormView seance = new SeanceFormView();
         // seance.start(primaryStage);
@@ -77,16 +73,17 @@ public class App extends Application {
 
         // SceanceAjouteView view = new SceanceAjouteView();
         // view.start(primaryStage);
-
+        
         // TachesFormView view = new TachesFormView() ;
         // view.start(primaryStage) ;
 
         // SceanceFormController con = new SceanceFormController() ;
         // SeanceFormView view = new SeanceFormView(con) ;
         // view.start(primaryStage) ;
+  
+
+
     }
-
-
 
     public static void main(String[] args) {
         launch(args);
