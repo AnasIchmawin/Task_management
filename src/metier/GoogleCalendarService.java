@@ -1,3 +1,4 @@
+// GoogleCalendarService.java
 package metier;
 
 import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
@@ -6,14 +7,13 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.DateTime;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
@@ -22,8 +22,6 @@ import com.sun.net.httpserver.HttpExchange;
 import java.awt.*;
 import java.net.URI;
 import java.net.InetSocketAddress;
-import java.security.GeneralSecurityException;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -31,6 +29,10 @@ import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import presentation.GetTaskFromCalendar.Item;
 
 public class GoogleCalendarService {
     private static final String APPLICATION_NAME = "Task-Management";
@@ -106,41 +108,45 @@ public class GoogleCalendarService {
         return events.getItems();
     }
 
-    public void displayEventsFromGoogle() {
+    public ObservableList<Item> getDataEvents(String mydate) {
+        ObservableList<Item> items = FXCollections.observableArrayList();
         try {
             List<Event> events = getEvents();
-            if (events.isEmpty()) {
-                System.out.println("No upcoming events found.");
-            } else {
-                System.out.println("Upcoming events");
+            if (!events.isEmpty()) {
                 for (Event event : events) {
-                    // Récupérer le titre de l'événement
-                    String summary = event.getSummary();
-
-                    // Récupérer la date de début de l'événement
-                    DateTime startDateTime = event.getStart().getDateTime();
-                    String startDate = (startDateTime != null) ? startDateTime.toString()
-                            : event.getStart().getDate().toString();
-
-                    // Récupérer la date de fin de l'événement
-                    DateTime endDateTime = event.getEnd().getDateTime();
-                    String endDate = (endDateTime != null) ? endDateTime.toString()
-                            : event.getEnd().getDate().toString();
-
-                    // Afficher toutes les informations sur l'événement
-                    System.out.println("Titre : " + summary);
-                    System.out.println("Date de début : " + startDate);
-                    System.out.println("Date de fin : " + endDate);
-                    System.out.println();
+                    String title = event.getSummary();
+                    String startDate = getFormattedDateTime(event.getStart());
+                    String endDate = getFormattedDateTime(event.getEnd());
+                    String description = event.getDescription();
+                    System.out.println("Title: " + title);
+                    System.out.println("Start Date: " + startDate);
+                    if (startDate.contains(mydate) || endDate.contains(mydate))
+                        items.add(new Item(false, title, description, startDate, endDate));
                 }
             }
         } catch (IOException e) {
-            System.out.println("IOException");
-            e.printStackTrace();
+            handleException("IOException", e);
         } catch (Exception e) {
-            System.out.println("Exception");
-            e.printStackTrace();
+            handleException("Exception", e);
         }
+        return items;
+    }
+
+    private String getFormattedDateTime(EventDateTime eventDateTime) {
+        if (eventDateTime == null) {
+            return "";
+        }
+        String dateTimeString = (eventDateTime.getDateTime() != null) ? eventDateTime.getDateTime().toString()
+                : eventDateTime.getDate().toString();
+        String[] dateTimeParts = dateTimeString.split("T");
+        String[] dateParts = dateTimeParts[0].split("-");
+        String[] timeParts = dateTimeParts[1].split(":");
+        return dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0] + " " + timeParts[0] + ":" + timeParts[1];
+    }
+
+    private void handleException(String type, Exception e) {
+        System.out.println(type);
+        e.printStackTrace();
     }
 
 }

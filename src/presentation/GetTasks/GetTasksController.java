@@ -40,11 +40,14 @@ public class GetTasksController {
         this.projetsFormController = projetsFormController;
     }
 
-    // Method to get all tasks
+    // Method to get all tasks available no assigned to any list
     public LinkedHashMap<String, String> getTasksMap() {
         List<Document> tasks = gestionnaireTache.getAllTasks();
         LinkedHashMap<String, String> taches_Disponibles = new LinkedHashMap<>();
         for (Document task : tasks) {
+            Document liste = task.get("liste", Document.class);
+            if (!liste.isEmpty())
+                continue;
             String id = task.getObjectId("_id").toString();
             String titre = task.getString("titre");
             taches_Disponibles.put(id, titre);
@@ -78,6 +81,7 @@ public class GetTasksController {
         int rowCount = 0;
 
         for (Map.Entry<String, String> entry : getTasksMap().entrySet()) {
+            System.out.println("Task id: " + entry.getKey() + " Task title: " + entry.getValue());
             String taskTitle = entry.getValue();
 
             CheckBox checkBox = createCheckBox(taskTitle);

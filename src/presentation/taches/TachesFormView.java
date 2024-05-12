@@ -5,15 +5,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -38,6 +35,9 @@ public class TachesFormView extends Application {
     private BorderPane root;
     private GridPane ZoneListes;
     private String IdList;
+    private VBox ContainerGoogleCalendar;
+    private Button confirmerButton;
+    private DatePicker dateTask;
 
     // Constructor
     public TachesFormView() {
@@ -93,13 +93,12 @@ public class TachesFormView extends Application {
     }
 
     private StackPane createMainContent() {
-        //Le conteneur principal qui contient tous les éléments 
+        // Le conteneur principal qui contient tous les éléments
         VBox mainContentContainer = new VBox();
 
         // le background de la page gris
         StackPane container = new StackPane();
         container.getStyleClass().add("container");
-        
 
         // Create GridPane for list items
         ScrollPane scrollPane = createScrollPane(ZoneListes);
@@ -116,8 +115,8 @@ public class TachesFormView extends Application {
         HBox topContainer = new HBox();
         topContainer.setAlignment(Pos.TOP_RIGHT); // Align elements at top left
         topContainer.setMinHeight(80);
-        topContainer.getChildren().addAll(ordonnerButton,searchPane); // Add "Ordonner" button
-        
+        topContainer.getChildren().addAll(ordonnerButton, searchPane); // Add "Ordonner" button
+
         Label title = createLabel(controller.getListTitle());
         HBox titleContainer = new HBox();
         titleContainer.getChildren().add(title);
@@ -131,16 +130,46 @@ public class TachesFormView extends Application {
         descriptionScrollPane.setPadding(new Insets(0, 10, 0, 40));
         descriptionScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide vertical scrollbar
         descriptionContainer.getChildren().addAll(descriptionScrollPane);
-        HBox.setMargin(descriptionContainer, new Insets(0, 20,0, 40));
+        HBox.setMargin(descriptionContainer, new Insets(0, 20, 0, 40));
         descriptionContainer.setAlignment(Pos.TOP_LEFT);
 
         // Create HBox for adding the "Ajouter" button
-        HBox buttonContainer = new HBox();
-        buttonContainer.getChildren().add(ajouterButton);
-        HBox.setMargin(ajouterButton, new Insets(0, 0, 20, 70));
+        HBox bottomContainer = new HBox();
+        bottomContainer.setAlignment(Pos.CENTER); // Align elements at bottom left
 
-        mainContentContainer.getChildren().addAll(topContainer,titleContainer,descriptionContainer, Tasks, buttonContainer); // Add top container and
-                                                                                          // Listes
+        ContainerGoogleCalendar = new VBox();
+        ContainerGoogleCalendar.setPadding(new Insets(10, 10, 10, 10));
+        ContainerGoogleCalendar.setSpacing(5);
+        ContainerGoogleCalendar.getStyleClass().add("google-calendar-style");
+        Label labelGoogleCalender = new Label("  Importer depuis  Google Calendrier");
+        labelGoogleCalender.getStyleClass().add("google-calendar-label-style");
+        labelGoogleCalender.setWrapText(true);
+
+        HBox dateGoogleCalendar = new HBox();
+        dateGoogleCalendar.setAlignment(Pos.TOP_LEFT);
+        dateGoogleCalendar.setSpacing(5);
+
+        dateTask = new DatePicker();
+        dateTask.setPromptText("YYYY-MM-DD");
+        dateTask.setPrefWidth(130);
+
+        HBox.setMargin(confirmerButton, new Insets(2, 0, 0, 0));
+        dateGoogleCalendar.getChildren().addAll(dateTask, confirmerButton);
+
+        ContainerGoogleCalendar.getChildren().addAll(labelGoogleCalender, dateGoogleCalendar);
+
+        HBox.setMargin(ajouterButton, new Insets(0, 0, 0, 70));
+        HBox.setMargin(ContainerGoogleCalendar, new Insets(0, 70, 40, 0));
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        bottomContainer.getChildren().addAll(ajouterButton, spacer, ContainerGoogleCalendar); // Add "Ajouter" button
+        bottomContainer.getStyleClass().add("bottom-container-style");
+
+        mainContentContainer.getChildren().addAll(topContainer, titleContainer, descriptionContainer, Tasks,
+                bottomContainer); // Add top container and
+        // Listes
 
         // Add les éléments à la StackPane
         container.getChildren().addAll(mainContentContainer);
@@ -150,7 +179,7 @@ public class TachesFormView extends Application {
 
         // Action for AjouterButton
         ajouterButton.setOnAction(event -> {
-            controller.handleAjouterButtonAction(ZoneListes,"Task"+(ZoneListes.getRowCount()));
+            controller.handleAjouterButtonAction(ZoneListes, "Task" + (ZoneListes.getRowCount()));
         });
 
         ordonnerButton.setOnAction(event -> {
@@ -167,6 +196,9 @@ public class TachesFormView extends Application {
 
         projectsButton.setOnAction(event -> {
             this.controller.handleProjectsButtonAction();
+        });
+        confirmerButton.setOnAction(event -> {
+            controller.handleConfirmerButtonAction();
         });
 
         return container;
@@ -207,7 +239,11 @@ public class TachesFormView extends Application {
         SurveillerButton(ordonnerButton, "100px", "40px", "#3F72AF");
         SurveillerButton(ajouterButton, "150px", "40px", "#3F72AF");
         ZoneListes = createGridPane();
-        
+        ContainerGoogleCalendar = new VBox();
+        ContainerGoogleCalendar.setPadding(new Insets(2, 2, 2, 2));
+        ContainerGoogleCalendar.setSpacing(5);
+        confirmerButton = createButtonWithIcon("", "file:./Pictures/confirmer.png", 29, 29);
+
         this.controller = new TachesFormController(this);
     }
 
@@ -220,6 +256,8 @@ public class TachesFormView extends Application {
         ordonnerButton.getStyleClass().add("ordonner-btn-style");
         ajouterButton.getStyleClass().add("button-style");
         searchField.getStyleClass().add("search-field-style");
+        ContainerGoogleCalendar.getStyleClass().add("google-calendar-style");
+        confirmerButton.getStyleClass().add("confirm-btn-style");
 
     }
 
@@ -237,7 +275,6 @@ public class TachesFormView extends Application {
         return button;
     }
 
-
     private Label createLabel(String text) {
         Label label = new Label(text);
         label.getStyleClass().add("Label-style");
@@ -254,7 +291,7 @@ public class TachesFormView extends Application {
         return vbox;
     }
 
-    //getZoneTaches
+    // getZoneTaches
     public GridPane getZoneTaches() {
         return ZoneListes;
     }
@@ -288,5 +325,9 @@ public class TachesFormView extends Application {
                 controller.searchTache(newValue);
             }
         });
+    }
+
+    public String getDateTask() {
+        return dateTask.getValue().toString();
     }
 }
