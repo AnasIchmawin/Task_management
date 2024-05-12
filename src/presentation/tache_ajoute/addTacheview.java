@@ -33,7 +33,7 @@ public class addTacheview {
     private static final Pos TOP_CENTER = Pos.TOP_CENTER;
     private static final Pos TOP_LEFT = Pos.TOP_LEFT;
     private static final Pos CENTER_LEFT = Pos.CENTER_LEFT;
-    private TextField ZoneTitre;
+    private TextField titreField;
     private TextArea ZoneDescription;
     private ComboBox<String>  categorie;
     private DatePicker dateDebut;
@@ -58,7 +58,6 @@ public class addTacheview {
         action();
     }
     
-
     public void start(Stage primaryStage) {
         // Create the nnavigation bar
         VBox navbarContainer = createNavbarContainer();
@@ -75,6 +74,29 @@ public class addTacheview {
         primaryStage.setTitle("Responsive Page with Navbar");
         primaryStage.show();
 
+    }
+
+    
+    public void init() {
+        Ajouter = createButtonWithIcon("Ajouter", "file:./Pictures/add.png", 20, 20);
+        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
+        listesButton = createButton("Listes");
+        projectsButton = createButton("Projets");
+        archiveButton = createButton("Archive");
+        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/add.png", 20, 20);
+        titreField = new TextField();
+        titreField.setPromptText("Entrer le titre de la tache");
+    }
+
+    private void style() {
+        Ajouter.getStyleClass().add("footBtn-style");
+        leftButton.getStyleClass().add("left-btn-style");
+        listesButton.getStyleClass().add("button-style");
+        projectsButton.getStyleClass().add("button-style");
+        archiveButton.getStyleClass().add("button-style");
+        ajouterDocButton.getStyleClass().add("AjouterTache-style");
+        titreField.getStyleClass().add("Titre-style");
+        
     }
 
     private BorderPane createBorderPane(VBox navbarContainer, StackPane container) {
@@ -104,8 +126,8 @@ public class addTacheview {
         container.getStyleClass().add("container");
         container.setPadding(new Insets(15, 70, 20, 55)); // 15px padding top, 70px padding right,
                                                           // 20px padding bottom, 55px padding left
-        TextField TempsDebut = createTextField();
-        TextField TempsFin = createTextField();
+        TempsDebut = createTextField();
+        TempsFin = createTextField();
 
         VBox mainContentContainer = CreateVbox(10, TOP_CENTER);
 
@@ -120,14 +142,14 @@ public class addTacheview {
         Region verticalSpace2 = createVerticalSpace(20);
 
         HBox DateDebutComplet = CreateHbox(5, TOP_CENTER);
-        DatePicker dateDebut = DateTache();
+        dateDebut = DateTache();
         Label labelDebut = createLabel("Date de début");
 
         VBox dateDebutContainer = createVboxDates(DateDebutComplet, dateDebut, TempsDebut, labelDebut, Space_Dates);
 
         // Date picker pour la date de fin
         HBox DateFinComplet = CreateHbox(5, TOP_CENTER);
-        DatePicker dateFin = DateTache();
+        dateFin = DateTache();
         Label labelFin = createLabel("Date de fin");
 
         // Creer un conteneur VBox pour la date de fin
@@ -135,13 +157,13 @@ public class addTacheview {
 
         Label labelCategorie = createLabel("Catégorie");
 
-        ComboBox<String> categoryComboBox = new ComboBox<>();
-        categoryComboBox.getItems().addAll("Enseignement", "Encadrement", "Autre");
-        categoryComboBox.setPromptText("select");
-        categoryComboBox.getStyleClass().add("category-combobox-style");
+        categorie= new ComboBox<>();
+        categorie.getItems().addAll("Enseignement", "Encadrement", "Autre");
+        categorie.setPromptText("select");
+        categorie.getStyleClass().add("category-combobox-style");
 
         VBox catgContainer = new VBox();
-        catgContainer.getChildren().addAll(labelCategorie,categoryComboBox);
+        catgContainer.getChildren().addAll(labelCategorie,categorie);
 
         // Créer un conteneur HBox pour les deux dates
         HBox Dates = new HBox();
@@ -159,19 +181,16 @@ public class addTacheview {
 
         VBox leftBox = CreateVbox(3, TOP_LEFT);
 
-        Label labelTitre = createLabel("Titre de ma tache");
-
-        TextArea ZoneTitre = createTextArea("Titre", "ZoneTitre-Style");
+        Label labelTitle = createLabel("Titre");
 
         Label labelDescription = createLabel("Discription");
 
-        TextArea ZoneDescription = createTextArea("Description", "ZoneDescription-Style");
+        ZoneDescription = createTextArea("Description", "ZoneDescription-Style");
 
         VBox contenaireDocuments = CreateVbox(1, TOP_LEFT);
         Label labelDocs = createLabel("Documents Ajoutés");
         VBox ZoneDocuments = createDocumentsSection();
         contenaireDocuments.getChildren().addAll(labelDocs, ZoneDocuments);
-
 
         Button Enregistrer = new Button("Enregistrer");
         Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 20, 20);
@@ -184,8 +203,8 @@ public class addTacheview {
 
         HBox buttons = new HBox(10, Ajouter, Enregistrer, Annuler);
 
-        leftBox.getChildren().add(labelTitre);
-        leftBox.getChildren().add(ZoneTitre);
+        leftBox.getChildren().add(labelTitle);
+        leftBox.getChildren().add(titreField);
         leftBox.getChildren().add(verticalSpace2);
         leftBox.getChildren().add(labelDescription);
         leftBox.getChildren().add(ZoneDescription);
@@ -221,23 +240,6 @@ public class addTacheview {
         return scrollPane;
     }
 
-    public void init() {
-        Ajouter = createButtonWithIcon("Ajouter", "file:./Pictures/add.png", 20, 20);
-        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
-        listesButton = createButton("Listes");
-        projectsButton = createButton("Projets");
-        archiveButton = createButton("Archive");
-        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/add.png", 20, 20);
-    }
-
-    private void style() {
-        Ajouter.getStyleClass().add("footBtn-style");
-        leftButton.getStyleClass().add("left-btn-style");
-        listesButton.getStyleClass().add("button-style");
-        projectsButton.getStyleClass().add("button-style");
-        archiveButton.getStyleClass().add("button-style");
-        ajouterDocButton.getStyleClass().add("AjouterTache-style");
-    }
 
     private Button createButtonWithIcon(String name, String string, int i, int j) {
         Button button = new Button(name);
@@ -379,7 +381,7 @@ public class addTacheview {
     }
 
     public String gettitre() {
-        return ZoneTitre.getText();
+        return titreField.getText();
     }
 
     public String getDescription() {
