@@ -1,20 +1,30 @@
 package presentation.NewDocument;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import metier.POJODocument;
+import presentation.tache_ajoute.ControllerFromTacheAjout;
+import presentation.taches.TachesFormController;
 import metier.GestionnaireDocument;
 
 public class AddDocumentController {
     private GestionnaireDocument gestionnaireDocument;
+    private ControllerFromTacheAjout controllerFromTacheAjout;
     private AddDocumentView view;
 
     public AddDocumentController(AddDocumentView view) {
         this.view = view;
+        gestionnaireDocument = new GestionnaireDocument();
+    }
+
+    public AddDocumentController(AddDocumentView view, ControllerFromTacheAjout controllerFromTacheAjout) {
+        this.view = view;
+        this.controllerFromTacheAjout = controllerFromTacheAjout;
         gestionnaireDocument = new GestionnaireDocument();
     }
 
@@ -49,6 +59,7 @@ public class AddDocumentController {
         POJODocument document = new POJODocument(titre, url, desc, dateInsertion, idProjet, idTache, idSeance);
         this.gestionnaireDocument.setPojoDocument(document);
         this.gestionnaireDocument.creerDocument();
+        controllerFromTacheAjout.addDocToTache(this.gestionnaireDocument.getIdLastDoc(),titre);
     }
 
     public void close() {

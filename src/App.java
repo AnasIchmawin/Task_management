@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import persistence.DAO.DAOTache;
 import presentation.GetTasks.GetTasksController;
 import presentation.GetTasks.GetTasksView;
+import presentation.NewDocument.AddDocumentController;
+import presentation.NewDocument.AddDocumentView;
 import presentation.NewList.AddListController;
 import presentation.NewList.AddListView;
 import presentation.archive.ArchiveFormController;
@@ -92,7 +94,8 @@ public class App extends Application {
         // SeanceFormView view = new SeanceFormView(con) ;
         // view.start(primaryStage) ;
       
-  
+        // AddDocumentView view = new AddDocumentView() ;
+        // view.start(primaryStage) ;
 
 
     }

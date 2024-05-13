@@ -22,6 +22,8 @@ import metier.POJOTache;
 // import metier.Errors.NonValidList;
 import presentation.GetDocument.GetDocModel;
 import presentation.GetDocument.GetDocView;
+import presentation.NewDocument.AddDocumentController;
+import presentation.NewDocument.AddDocumentView;
 // import presentation.GetDocument.GetDocView;
 // import presentation.GetDocument.GetDocView;
 // import org.bson.Document;
@@ -73,7 +75,7 @@ public class ControllerFromTacheAjout {
 
     public void handleAjouterButtonAction() {
         System.out.println("Ajouter Button Clicked");
-        GetDocView view = new GetDocView(this);
+        AddDocumentView view = new AddDocumentView(this);
         Stage stage = new Stage();
         view.start(stage);
     }
@@ -85,10 +87,13 @@ public class ControllerFromTacheAjout {
     public void addDocToTache(String id, String doc) {
         this.model.addDocumentToSeance(id, doc);
         System.out.println("Document added to Tache: " + doc);
+        displayDocuments();
     }
 
     public void displayDocuments() {
         List<String> mesDocs = new ArrayList<>(this.model.getListOfDocuments().values());
+
+        this.addTacheview.getZoneDocuments().getChildren().clear();
 
         for (String doc : mesDocs) {
             Button newTaskButton = createDocButton(doc);
@@ -195,6 +200,10 @@ public class ControllerFromTacheAjout {
         PauseTransition delay = new PauseTransition(Duration.seconds(1));
         delay.setOnFinished(e -> alert.close()); 
         delay.play();
+    }
+
+    public void setIdTitreDocument(String id, String titre) {
+        this.model.setIdTitreDocument(id, titre);
     }
 
 

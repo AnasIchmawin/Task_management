@@ -79,4 +79,16 @@ public class DAODocument {
         }
         return allDocuments;
     }
+
+    //getIdLastDoc
+    public String getIdLastDoc() {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("documents");
+            Document doc = collection.find().sort(new Document("_id", -1)).first();
+            return doc.get("_id").toString();
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération de l'id du dernier document : " + e.getMessage());
+            return null;
+        }
+    }
 }

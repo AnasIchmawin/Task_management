@@ -38,6 +38,11 @@ public class GestionnaireDocument {
         this.pojoDocument = pojoDocument;
     }
 
+    //getIdLastDoc
+    public String getIdLastDoc() {
+        return daoDocument.getIdLastDoc();
+    }
+
     // Method to create a new document
     public void creerDocument() {
         daoDocument.create(this.pojoDocument.getTitre(), this.pojoDocument.getDescription(), this.pojoDocument.getURL(), this.pojoDocument.getDateAjout(), this.pojoDocument.getIdProjet(), this.pojoDocument.getIdTache(), this.pojoDocument.getIdSeance());

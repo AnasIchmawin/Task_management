@@ -52,8 +52,7 @@ public class TachesFormController {
     // }
 
     public static void handleAjouterButtonAction(GridPane gridPane, String taskName) {
-        // createTask(gridPane, taskName, true,);
-        // save in database
+        
     }
 
     // handleOrdonnerButtonAction
