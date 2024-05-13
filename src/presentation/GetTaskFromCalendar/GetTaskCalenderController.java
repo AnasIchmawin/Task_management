@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import metier.GestionnaireTache;
 import metier.POJOTache;
@@ -28,14 +29,21 @@ public class GetTaskCalenderController {
         System.out.println("Selected Tasks : ");
         for (Item item : listTasItems) {
             if (item.isSelected()) {
-                try{
-                POJOTache tache = new POJOTache();
-                tache.setTitre(item.getTitle());
-                tache.setDescription(item.getDescription());
-                tache.setDateDebut(parseDateTime(item.getStartDate()));
-                tache.setDateFin(parseDateTime(item.getEndDate()));
-                gestionnaireTache.createTask(tache);
-                }catch(Exception e){
+                try {
+                    POJOTache tache = new POJOTache();
+                    tache.setTitre(item.getTitle());
+                    tache.setDescription(item.getDescription());
+                    tache.setDateDebut(item.getStartDate());
+                    tache.setDateFin(item.getEndDate());
+                    this.gestionnaireTache.setTache(tache);
+                    gestionnaireTache.createTache();
+                    Alert   alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Tâche ajoutée avec succès");
+                    alert.showAndWait();
+
+                } catch (Exception e) {
                     System.out.println("Erreur lors de la création de la tâche");
                     e.printStackTrace();
                 }

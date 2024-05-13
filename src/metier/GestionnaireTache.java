@@ -37,10 +37,10 @@ public class GestionnaireTache {
 
     // Create
     public void createTache() throws NonValidTache {
-        if (this.pojoTache.gettitre() == null || this.pojoTache.getDateDebut() == null || this.pojoTache.getTempsDebut() == null
-                || this.pojoTache.getDateFin() == null || this.pojoTache.getTempsFin() == null) {
-            throw new NonValidTache("Tous les champs de la tache  doivent être remplis");
-        }
+        // if (this.pojoTache.gettitre() == null || this.pojoTache.getDateDebut() == null || this.pojoTache.getTempsDebut() == null
+        //         || this.pojoTache.getDateFin() == null || this.pojoTache.getTempsFin() == null) {
+        //     throw new NonValidTache("Tous les champs de la tache  doivent être remplis");
+        // }
 
         if (!validateTache(this.pojoTache.getDateDebut(), this.pojoTache.getTempsDebut(), this.pojoTache.getDateFin(),
                 this.pojoTache.getTempsFin())) {

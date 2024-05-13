@@ -22,7 +22,7 @@ import presentation.tache_ajoute.ControllerFromTacheAjout;
 
 public class GetDocView {
 
-    private GetDocController controller;
+    private GetDocController getDocController;
     private SceanceAjouteController sceanceAjouteController;
     private ControllerFromTacheAjout controllerFromTacheAjout;
     private Label titleLabel;
@@ -40,6 +40,7 @@ public class GetDocView {
         action();
     }
     public GetDocView(ControllerFromTacheAjout controllerFromTacheAjout) {
+        this.getDocController = new GetDocController(this , controllerFromTacheAjout);
         this.controllerFromTacheAjout = controllerFromTacheAjout;
     
         init();
@@ -100,7 +101,7 @@ public class GetDocView {
         ZoneDocuments.setHgap(20);
         ZoneDocuments.setVgap(15);
         ZoneDocuments.setPadding(new Insets(20));
-        this.controller.diplayDocs();
+        this.getDocController.diplayDocs();
 
         return this.ZoneDocuments;
     }
@@ -149,11 +150,11 @@ public class GetDocView {
 
     private void action() {
         confirmButton.setOnAction(event -> {
-            this.controller.handleConfirmButton(event);
+            this.getDocController.handleConfirmButton(event);
         });
 
         cancelButton.setOnAction(event -> {
-            this.controller.handleCancelButtonAction(event);
+            this.getDocController.handleCancelButtonAction(event);
         });
 
     }
