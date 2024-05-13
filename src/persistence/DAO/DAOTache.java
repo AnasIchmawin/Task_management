@@ -23,9 +23,9 @@ public class DAOTache {
         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("taches");
         Document doc = new Document()
                 .append("titre", titre)
-                .append("etat", etat)
                 .append("categorie", categorie)
                 .append("description", description)
+                .append("etat", etat)
                 .append("dateDebut", dateDebut)
                 .append("TempsDebut", TempsDebut)
                 .append("dateFin", dateFin)

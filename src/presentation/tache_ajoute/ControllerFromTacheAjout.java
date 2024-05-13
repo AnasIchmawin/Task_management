@@ -135,11 +135,11 @@ public class ControllerFromTacheAjout {
                 String liste = "";     // Empty string as default
                 
                 
-            POJOTache tache = new POJOTache(titre, etat,categorie, description, dateDebut, TempsDebut , dateFin, TempsFin,
-                IdsDoc, projet , liste);
-            this.gestionnaireTache.setTache(tache);
-            this.gestionnaireTache.createTache();
-            alert("Tache créée", "La tache a été créée avec succès");
+                POJOTache tache = new POJOTache(titre, etat,categorie, description, dateDebut, TempsDebut , dateFin, TempsFin,
+                    IdsDoc, projet , liste);
+                this.gestionnaireTache.setTache(tache);
+                this.gestionnaireTache.createTache();
+                alert("Tache créée", "La tache a été créée avec succès");
 
         } catch (Exception e) {
             Alert alert = new Alert(AlertType.ERROR);

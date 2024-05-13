@@ -48,17 +48,17 @@ public class GestionnaireTache {
         }
 
         this.daoTache.create(
-        this.pojoTache.gettitre(),
-        this.pojoTache.getetat(),
-        this.pojoTache.getCategorie(),
-        this.pojoTache.getDescription(),
-        this.pojoTache.getDateDebut(),
-        this.pojoTache.getTempsDebut(),
-        this.pojoTache.getDateFin(),
-        this.pojoTache.getTempsFin(),
-        this.pojoTache.getDocuments(),
-        this.pojoTache.getprojet(),
-        this.pojoTache.getliste());
+            this.pojoTache.gettitre(),
+            this.pojoTache.getetat(),
+            this.pojoTache.getCategorie(),
+            this.pojoTache.getDescription(),
+            this.pojoTache.getDateDebut(),
+            this.pojoTache.getTempsDebut(),
+            this.pojoTache.getDateFin(),
+            this.pojoTache.getTempsFin(),
+            this.pojoTache.getDocuments(),
+            this.pojoTache.getprojet(),
+            this.pojoTache.getliste());
     }
  
     public static boolean validateDate(String date) {
