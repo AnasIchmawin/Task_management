@@ -72,6 +72,7 @@ public class ControllerFromTacheAjout {
     }
 
     public void handleAjouterButtonAction() {
+        System.out.println("Ajouter Button Clicked");
         GetDocView view = new GetDocView(this);
         Stage stage = new Stage();
         view.start(stage);
