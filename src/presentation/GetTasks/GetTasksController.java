@@ -12,7 +12,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import metier.GestionnaireTache;
+import metier.Gestionnaire.GestionnaireTache;
 import presentation.NewList.AddListController;
 import presentation.NewList.AddListView;
 import presentation.NewProjet.AddProjetController;

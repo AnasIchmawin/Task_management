@@ -1,4 +1,5 @@
-package metier;
+package metier.Gestionnaire;
+import metier.POJO.POJOTache;
 
 import org.bson.Document;
 

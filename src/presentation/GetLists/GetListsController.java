@@ -17,7 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import metier.GestionnaireListe;
+import metier.Gestionnaire.GestionnaireListe;
 import presentation.listes.ListeFormController;
 
 public class GetListsController {

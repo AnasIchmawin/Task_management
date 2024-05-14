@@ -25,6 +25,7 @@ public class screen extends Application {
     private Button archiveButton;
     private BorderPane root;
     private Label descriptionLabel;
+    @SuppressWarnings("unused")
     private controleur controller;
     Button addDocButton;
     Label titleabel ;

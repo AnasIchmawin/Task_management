@@ -1,4 +1,4 @@
-package metier;
+package metier.Service;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -26,7 +26,7 @@ public class LoginService {
 
     // Récupère la clé API à partir du fichier de configuration
     private static String getAPIKeyFromConfig() throws Exception {
-        String strJson = getJSONFromFile("./src/metier/config.json");
+        String strJson = getJSONFromFile("./src/metier/config/config.json");
         JSONParser parser = new JSONParser();
         JSONObject mainJsonObject = (JSONObject) parser.parse(strJson);
         return (String) mainJsonObject.get("apiKey");

@@ -1,12 +1,8 @@
 package presentation.tache_ajoute;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,7 +21,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import metier.Errors.NonValidList;
 import presentation.taches.TachesFormController;
 import javafx.scene.control.ComboBox;
 //mod

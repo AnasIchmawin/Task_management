@@ -12,7 +12,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import metier.GestionnaireSeance;
+import metier.Gestionnaire.GestionnaireSeance;
 import presentation.NewList.AddListController;
 import presentation.NewList.AddListView;
 import presentation.NewProjet.AddProjetController;
@@ -42,7 +42,7 @@ public class GetSeancesController {
 
     // Method to get all seances
     public LinkedHashMap<String, String> getSeancesMap() {
-        List<Document> seances = gestionnaireSeance.obtenirToutesLesSceances();
+        List<Document> seances = gestionnaireSeance.getAllSeances();
         LinkedHashMap<String, String> seancesDisponibles = new LinkedHashMap<>();
         for (Document seance : seances) {
             String id = seance.getObjectId("_id").toString();

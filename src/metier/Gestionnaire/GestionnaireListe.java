@@ -1,4 +1,5 @@
-package metier;
+package metier.Gestionnaire;
+import metier.POJO.POJOListe;
 
 import java.util.LinkedHashMap;
 import java.util.List;

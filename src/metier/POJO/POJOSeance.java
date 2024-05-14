@@ -1,4 +1,4 @@
-package metier;
+package metier.POJO;
 
 import java.util.List;
 

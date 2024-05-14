@@ -1,6 +1,5 @@
-package metier;
+package metier.POJO;
 
-import java.time.LocalDateTime;
 
 public class POJODocument {
     private String description;

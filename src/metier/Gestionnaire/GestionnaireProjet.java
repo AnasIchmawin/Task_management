@@ -1,4 +1,5 @@
-package metier;
+package metier.Gestionnaire;
+import metier.POJO.POJOProjet;
 
 import java.util.List;
 import org.bson.Document;

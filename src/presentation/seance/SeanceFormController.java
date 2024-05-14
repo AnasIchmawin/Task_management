@@ -3,13 +3,14 @@ package presentation.seance;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-import presentation.archive.ArchiveFormController;
 import presentation.archive.ArchiveFormView;
 import presentation.listes.ListeFormView;
 import presentation.projets.ProjetsFormView;
 
 public class SeanceFormController {
+    @SuppressWarnings("unused")
     private SeanceFormView view;
+    @SuppressWarnings("unused")
     private SeanceModel model;
 
     SeanceFormController(SeanceFormView view) {

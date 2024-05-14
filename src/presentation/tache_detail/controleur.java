@@ -3,11 +3,13 @@ package presentation.tache_detail;
 import org.bson.Document;
 
 import javafx.scene.control.Label;
-import metier.GestionnaireTache;
+import metier.Gestionnaire.GestionnaireTache;
 import persistence.Connexion;
 
 public class controleur {
+    @SuppressWarnings("unused")
     private screen sc;
+    @SuppressWarnings("unused")
     private tacheDetailModele md;
     private Label titleabel;
     Connexion con;

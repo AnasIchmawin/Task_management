@@ -62,6 +62,7 @@ public class DAOTache {
     String tempsFin, List<String> list, String projet, String liste) {
         try {
             // Récupérer la collection "taches"
+            @SuppressWarnings("unused")
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("taches");
 
             // Créer les mises à jour à appliquer

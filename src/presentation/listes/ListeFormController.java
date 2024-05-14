@@ -1,6 +1,6 @@
 package presentation.listes;
 
-import metier.GestionnaireListe;
+import metier.Gestionnaire.GestionnaireListe;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;

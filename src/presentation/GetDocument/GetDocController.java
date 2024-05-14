@@ -12,13 +12,14 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import metier.GestionnaireDocument;
+import metier.Gestionnaire.GestionnaireDocument;
 import presentation.seance_ajoute.SceanceAjouteController;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
 
 public class GetDocController {
     private GetDocView getDocView;
     private SceanceAjouteController sceanceAjouteController;
+    @SuppressWarnings("unused")
     private ControllerFromTacheAjout controllerFromTacheAjout;
     private GestionnaireDocument gestionnaireDocument;
     private LinkedHashMap<List<Integer>, List<String>> GridCaseInfos;

@@ -1,6 +1,6 @@
 package presentation.login;
 
-import metier.LoginService;
+import metier.Service.LoginService;
 
 public class LoginModel {
 
