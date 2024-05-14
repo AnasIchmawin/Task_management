@@ -50,8 +50,9 @@ public class AddDocumentView extends Application {
         primaryStage.show();
     }
 
-    public AddDocumentView(ProjetDetailController controller, String idProjet) {
-        this.idProjet = idProjet;
+    public AddDocumentView(ProjetDetailController controleur) {
+        this.controller = new AddDocumentController(this, controleur);
+
     }
 
     public AddDocumentView(controleur controller, String idTache) {

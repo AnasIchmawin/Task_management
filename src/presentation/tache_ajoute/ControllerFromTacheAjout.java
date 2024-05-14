@@ -21,9 +21,8 @@ import metier.GestionnaireTache;
 import metier.POJOTache;
 // import metier.Errors.NonValidList;
 import presentation.GetDocument.GetDocModel;
-import presentation.GetDocument.GetDocView;
-import presentation.NewDocument.AddDocumentController;
 import presentation.NewDocument.AddDocumentView;
+import presentation.NewDocument.AddDocumentController;
 // import presentation.GetDocument.GetDocView;
 // import presentation.GetDocument.GetDocView;
 // import org.bson.Document;
@@ -154,35 +153,35 @@ public class ControllerFromTacheAjout {
             alert.showAndWait();
         }
     }
-    public void handleUpdateButtonAction() {
-        try {
+    // public void handleUpdateButtonAction() {
+    //     try {
                 
-                String titre = this.addTacheview.gettitre();
-                String dateDebut = this.addTacheview.getDateDebut();
-                String TempsDebut = this.addTacheview.getTempsDebut();
-                String dateFin = this.addTacheview.getDateFin();
-                String TempsFin = this.addTacheview.getTempsFin();
-                String description = this.addTacheview.getDescription();
-                String categorie = this.addTacheview.getCategorie();
-                List<String> IdsDoc = this.model.getListOfDocuments().keySet().stream().toList();
-                Boolean etat = false;  // Assuming false as default
-                String projet = "";    // Empty string as default
-                String liste = "";     // Empty string as default
+    //             String titre = this.addTacheview.gettitre();
+    //             String dateDebut = this.addTacheview.getDateDebut();
+    //             String TempsDebut = this.addTacheview.getTempsDebut();
+    //             String dateFin = this.addTacheview.getDateFin();
+    //             String TempsFin = this.addTacheview.getTempsFin();
+    //             String description = this.addTacheview.getDescription();
+    //             String categorie = this.addTacheview.getCategorie();
+    //             List<String> IdsDoc = this.model.getListOfDocuments().keySet().stream().toList();
+    //             Boolean etat = false;  // Assuming false as default
+    //             String projet = "";    // Empty string as default
+    //             String liste = "";     // Empty string as default
                 
                 
-            POJOTache tache = new POJOTache(titre, etat,categorie, description, dateDebut, TempsDebut , dateFin, TempsFin,
-                IdsDoc, projet , liste);
-            this.gestionnaireTache.setTache(tache);
-            this.gestionnaireTache.updateTask();
-            alert("Tache créée", "La tache a été créée avec succès");
+    //         POJOTache tache = new POJOTache(titre, etat,categorie, description, dateDebut, TempsDebut , dateFin, TempsFin,
+    //             IdsDoc, projet , liste);
+    //         this.gestionnaireTache.setTache(tache);
+    //         this.gestionnaireTache.updateTask();
+    //         alert("Tache créée", "La tache a été créée avec succès");
 
-        } catch (Exception e) {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("Erreur lors de la création de la tache : les champs ne sont pas valides");
-            alert.showAndWait();
-        }
-    }
+    //     } catch (Exception e) {
+    //         Alert alert = new Alert(AlertType.ERROR);
+    //         alert.setTitle("Erreur");
+    //         alert.setHeaderText("Erreur lors de la création de la tache : les champs ne sont pas valides");
+    //         alert.showAndWait();
+    //     }
+    // }
 
        public void closerWindow(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
