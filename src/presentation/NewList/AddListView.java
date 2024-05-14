@@ -15,6 +15,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import presentation.listes.ListeFormController;
 
@@ -25,33 +27,18 @@ public class AddListView {
     private TextField TitreField;
     private TextArea ZoneDescription;
     private GridPane ZoneTaches;
-    private AddListController controleur;
-    private ListeFormController listeFormController;
+    private AddListController addListController;
     private Button ajouterTacheButton;
+    private StackPane containerContent;
 
     public AddListView(ListeFormController listeFormController) {
-        this.listeFormController = listeFormController;
-        this.controleur = new AddListController(this);
+        this.addListController = new AddListController(this, listeFormController);
         init();
         style();
         action();
-    }
-
-    public AddListView(AddListController controleur, ListeFormController listeFormController) {
-        this.listeFormController = listeFormController;
-        this.controleur = controleur;
-        init();
-        style();
-        action();
-        this.controleur.updateView(this);
-        this.controleur.displayTasks(ZoneTaches);
-
     }
 
     public void start(Stage primaryStage) {
-        StackPane containerContent = createMainContent();
-        root = createBorderPane(containerContent);
-
         Scene scene = new Scene(root, 550, 520);
         scene.getStylesheets().add(getClass().getResource("AddListStyle.css").toExternalForm());
         primaryStage.setScene(scene);
@@ -61,12 +48,14 @@ public class AddListView {
     }
 
     private void init() {
-        Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 13, 13);
-        Annuler = createButtonWithIcon("Annuler", "file:./Pictures/annuler.png", 20, 20);
+        Enregistrer = createButton("Enregistrer", "file:./Pictures/save.png", 13, 13);
+        Annuler = createButton("Annuler", "file:./Pictures/annuler.png", 20, 20);
         TitreField = createTextField("");
         ZoneDescription = createTextArea("", "ZoneDescription-Style");
         ZoneTaches = creatZoneTaches();
-        ajouterTacheButton = createButtonWithIcon("Ajouter Tache", "file:./Pictures/addIcon.png", 20, 20);
+        ajouterTacheButton = createButton("Ajouter Tache", "file:./Pictures/addIcon.png", 20, 20);
+        containerContent = createMainContent();
+        root = createBorderPane(containerContent);
     }
 
     private void style() {
@@ -77,7 +66,7 @@ public class AddListView {
 
     private BorderPane createBorderPane(StackPane container) {
         BorderPane root = new BorderPane();
-        root.setStyle("-fx-background-color: white;");
+        root.getStyleClass().add("root-style");
         root.setCenter(container);
         return root;
     }
@@ -87,34 +76,57 @@ public class AddListView {
         container.getStyleClass().add("container");
         container.setPadding(new Insets(15, 70, 20, 55));
 
-        VBox mainContentContainer = CreateVbox(20, Pos.TOP_CENTER);
-
-        VBox topContainer = CreateVbox(10, Pos.TOP_LEFT);
-        Label labelTitre = createLabel("Titre de ma liste");
-        HBox ContainerTitle = CreateHbox(0, Pos.TOP_LEFT);
-        TitreField.setPadding(new Insets(4, 4, 4, 12));
-        ContainerTitle.getChildren().addAll(TitreField);
-        topContainer.getChildren().addAll(labelTitre, ContainerTitle);
-        mainContentContainer.getChildren().addAll(topContainer);
-
-        Label labelDescription = createLabel("Discription");
-        VBox ContenaireDescription = CreateVbox(10, Pos.TOP_LEFT);
-        ContenaireDescription.getChildren().addAll(labelDescription, ZoneDescription);
-        mainContentContainer.getChildren().addAll(ContenaireDescription);
-
-        VBox CentenaireTaches = CreateVbox(15, Pos.TOP_LEFT);
-        Label labelTachces = createLabel("Taches Ajoutés");
-        VBox Taches = createTacheBox();
-        CentenaireTaches.getChildren().addAll(labelTachces, Taches);
-        mainContentContainer.getChildren().addAll(CentenaireTaches);
-
-        HBox ContenaireButtons = CreateHbox(8, Pos.TOP_CENTER);
-        ContenaireButtons.getChildren().addAll(Enregistrer, Annuler);
-        mainContentContainer.getChildren().addAll(ContenaireButtons);
+        VBox mainContentContainer = createMainContentContainer();
 
         container.getChildren().addAll(mainContentContainer);
 
         return container;
+    }
+
+    private VBox createMainContentContainer() {
+        VBox mainContentContainer = CreateVbox(20, Pos.TOP_CENTER);
+
+        VBox topContainer = createTopContainer();
+        VBox descriptionContainer = createDescriptionContainer();
+        VBox tasksContainer = createTasksContainer();
+        HBox buttonsContainer = createButtonsContainer();
+
+        mainContentContainer.getChildren().addAll(topContainer, descriptionContainer, tasksContainer, buttonsContainer);
+
+        return mainContentContainer;
+    }
+
+    private VBox createTopContainer() {
+        VBox topContainer = CreateVbox(10, Pos.TOP_LEFT);
+        Label labelTitre = createLabel("Titre de ma liste");
+        HBox containerTitle = CreateHbox(0, Pos.TOP_LEFT);
+        TitreField.setPadding(new Insets(4, 4, 4, 12));
+        containerTitle.getChildren().addAll(TitreField);
+        topContainer.getChildren().addAll(labelTitre, containerTitle);
+        return topContainer;
+    }
+
+    private VBox createDescriptionContainer() {
+        VBox descriptionContainer = CreateVbox(10, Pos.TOP_LEFT);
+        Label labelDescription = createLabel("Discription");
+        VBox containerDescription = CreateVbox(10, Pos.TOP_LEFT);
+        containerDescription.getChildren().addAll(labelDescription, ZoneDescription);
+        descriptionContainer.getChildren().addAll(containerDescription);
+        return descriptionContainer;
+    }
+
+    private VBox createTasksContainer() {
+        VBox tasksContainer = CreateVbox(15, Pos.TOP_LEFT);
+        Label labelTaches = createLabel("Taches Ajoutées");
+        VBox taches = createTacheBox();
+        tasksContainer.getChildren().addAll(labelTaches, taches);
+        return tasksContainer;
+    }
+
+    private HBox createButtonsContainer() {
+        HBox buttonsContainer = CreateHbox(8, Pos.TOP_CENTER);
+        buttonsContainer.getChildren().addAll(Enregistrer, Annuler);
+        return buttonsContainer;
     }
 
     private GridPane creatZoneTaches() {
@@ -125,18 +137,22 @@ public class AddListView {
         return grid;
     }
 
-    private Button createButtonWithIcon(String name, String path, int i, int j) {
-        Button button = new Button(name);
+    private Button createButton(String name, String path, int width, int height) {
+        Button newButton = new Button();
         try {
-            Image icon = new Image(path);
-            ImageView iconView = new ImageView(icon);
-            iconView.setFitWidth(i);
-            iconView.setFitHeight(j);
-            button.setGraphic(iconView);
+            ImageView icon = new ImageView(new Image(path));
+            icon.setFitWidth(width);
+            icon.setFitHeight(height);
+            Text buttonText = new Text(name);
+            buttonText.setFill(Color.WHITE);
+            HBox buttonContent = new HBox(buttonText, icon);
+            buttonContent.setAlignment(Pos.CENTER);
+            buttonContent.setSpacing(4);
+            newButton.setGraphic(buttonContent);
         } catch (Exception e) {
-            System.out.println("Error loading the icon: " + e.getMessage());
+            System.out.println("Erreur lors de la création du bouton : " + e.getMessage());
         }
-        return button;
+        return newButton;
     }
 
     private Label createLabel(String text) {
@@ -192,30 +208,6 @@ public class AddListView {
         return scrollPane;
     }
 
-    private void action() {
-        Annuler.setOnAction(event -> {
-            try {
-                this.controleur.closerWindow(event);
-            } catch (Exception e) {
-                System.out.println("Erreur pendant la fermeture AddList  : " + e.getMessage());
-            }
-        });
-
-        Enregistrer.setOnAction(event -> {
-            try {
-                this.controleur.saveInfosListe(event);
-                this.listeFormController.displayLists(false);
-                this.controleur.closerWindow(event);
-            } catch (Exception e) {
-                System.out.println("Erreur pendant la fermeture du addlist : " + e.getMessage());
-            }
-        });
-
-        ajouterTacheButton.setOnAction(event -> {
-            this.controleur.getTasksView(event, this.listeFormController);
-        });
-    }
-
     public String getTitre() {
         return TitreField.getText();
     }
@@ -239,4 +231,27 @@ public class AddListView {
     public void setZoneTaches(GridPane newZoneTaches) {
         ZoneTaches = newZoneTaches;
     }
+
+    private void action() {
+        Annuler.setOnAction(event -> {
+            try {
+                this.addListController.closerWindow(event);
+            } catch (Exception e) {
+                System.out.println("Erreur pendant la fermeture AddList  : " + e.getMessage());
+            }
+        });
+
+        Enregistrer.setOnAction(event -> {
+            try {
+                this.addListController.saveInfosListe(event);
+            } catch (Exception e) {
+                System.out.println("Erreur pendant la fermeture du addlist : " + e.getMessage());
+            }
+        });
+
+        ajouterTacheButton.setOnAction(event -> {
+            this.addListController.getTasksView(event);
+        });
+    }
+
 }

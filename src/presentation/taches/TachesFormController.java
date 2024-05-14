@@ -1,6 +1,5 @@
 package presentation.taches;
 
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -19,62 +18,54 @@ import metier.GestionnaireListe;
 import metier.GestionnaireTache;
 import presentation.GetTaskFromCalendar.GetTaskCalendar;
 import presentation.archive.ArchiveFormView;
+import presentation.listes.ListeFormController;
 import presentation.listes.ListeFormView;
 import presentation.projets.ProjetsFormView;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import javafx.beans.value.ChangeListener;
 
 public class TachesFormController {
     private TachesFormView tacheView;
     private static TachesFormModel tacheModel;
-    private static GestionnaireTache gestionnaireTache;
+    private GestionnaireTache gestionnaireTache;
     private GestionnaireListe gestionnaireListe;
-    private Map<List<Integer>, List<String>> gridCaseInfos;
-    private String listId;
     private String dateTaskFormated;
+    private ListeFormController listeFormController;
 
-    public TachesFormController(TachesFormView tacheView) {
+    @SuppressWarnings("static-access")
+    public TachesFormController(TachesFormView tacheView, ListeFormController listeFormController) {
         this.gestionnaireTache = new GestionnaireTache();
         this.gestionnaireListe = new GestionnaireListe();
+        this.listeFormController = listeFormController;
         this.tacheView = tacheView;
-        this.listId = tacheView.getIdList();
         this.tacheModel = new TachesFormModel(getTacheMap());
+        this.FillChamps();
     }
 
-    // public TachesFormController(String listId) {
-    // this.listId = listId;
-    // this.gestionnaireTache = new GestionnaireTache();
-    // this.gestionnaireListe = new GestionnaireListe();
-    // this.tacheModel = new TachesFormModel(getTacheMap());
-    // }
-
-    public static void handleAjouterButtonAction(GridPane gridPane, String taskName) {
-        // createTask(gridPane, taskName, true,);
-        // save in database
+    public void handleAjouterButtonAction() {
+        System.out.println("Ajouter tache");
     }
 
     // handleOrdonnerButtonAction
     public void handleOrdonnerButtonAction() {
-        displayTaches(true);
+        displayedTasks(true);
     }
 
     // displayTaches
-    public void displayTaches(boolean isSorted) {
-        tacheModel.setTaches(getTacheMap());
+    public void displayedTasks(boolean isSorted) {
+        tacheModel.setdisplayedTasks(getTacheMap());
         if (isSorted) {
-            tacheModel.sortTaches();
+            tacheModel.sortTasksByTitle();
         }
         tacheView.getZoneTaches().getChildren().clear();
-        gridCaseInfos = new LinkedHashMap<>();
         int colCount = 0;
         int rowCount = 0;
 
-        for (Map.Entry<String, String> entry : tacheModel.getTaches().entrySet()) {
+        for (Map.Entry<String, String> entry : tacheModel.getdisplayedTasks().entrySet()) {
             createTask(tacheView.getZoneTaches(), entry.getValue(), getTaskEtat(entry.getKey()), entry.getKey());
-            gridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), entry.getValue()));
+            tacheModel.addGridInfosCase(List.of(rowCount, colCount), entry.getKey());
 
             if (++colCount == 3) {
                 colCount = 0;
@@ -85,23 +76,50 @@ public class TachesFormController {
 
     // create task
     public static void createTask(GridPane gridPane, String taskName, Boolean isChecked, String tacheId) {
-        Button cloneButton = new Button("");
-        //add icon to clone button
-        Image image = new Image("file:Pictures/clone.png");
+        Button cloneButton = createButtonWithIcon("file:Pictures/clone.png");
+        Button deleteButton = createButtonWithIcon("file:Pictures/delete.png");
+        Button taskButton = new Button("");
+        CheckBox taskCheckBox = createTaskCheckBox(taskName, isChecked);
+
+        configureButtons(gridPane, cloneButton, deleteButton, taskButton, taskCheckBox, isChecked, tacheId);
+        setTaskRow(gridPane, deleteButton, cloneButton, taskCheckBox, taskButton);
+
+        configureTaskCheckBoxListener(taskCheckBox, deleteButton, cloneButton, tacheId);
+    }
+
+    private void FillChamps() {
+        this.tacheView.setTitle(getListTitle());
+        this.tacheView.setDescription(getListDescription());
+        this.displayedTasks(true);
+        this.ServeillerButtons();
+    }
+
+    private void ServeillerButtons() {
+        SurveillerButton(tacheView.getListesButton(), "100", "40", "#3F72AF");
+        SurveillerButton(tacheView.getProjectsButton(), "100", "40", "#3F72AF");
+        SurveillerButton(tacheView.getArchiveButton(), "100", "40", "#3F72AF");
+        SurveillerButton(tacheView.getAjouterButton(), "150", "40", "#3F72AF");
+    }
+
+    // Méthodes auxiliaires de création d'éléments
+    private static Button createButtonWithIcon(String imagePath) {
+        Button button = new Button("");
+        Image image = new Image(imagePath);
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(15);
         imageView.setFitWidth(15);
-        cloneButton.setGraphic(imageView);
+        button.setGraphic(imageView);
+        button.setStyle("-fx-background-color: #112D4E; " +
+                "-fx-background-radius: 10px; " +
+                "-fx-min-width: 30px; " +
+                "-fx-min-height: 30px;" +
+                "-fx-text-fill: #ffffff;" +
+                "-fx-font-size: 13px;");
+        return button;
+    }
 
-        Button deleteButton = new Button("");
-        //add icon to delete button
-        Image image2 = new Image("file:Pictures/delete.png");
-        ImageView imageView2 = new ImageView(image2);
-        imageView2.setFitHeight(15);
-        imageView2.setFitWidth(15);
-        deleteButton.setGraphic(imageView2);
-
-        Button taskButton = new Button("");
+    // Configuration des éléments
+    private static CheckBox createTaskCheckBox(String taskName, Boolean isChecked) {
         CheckBox taskCheckBox = new CheckBox(taskName);
         taskCheckBox.setStyle("-fx-background-color: #112D4E; " +
                 "-fx-background-radius: 10px; " +
@@ -110,65 +128,95 @@ public class TachesFormController {
                 "-fx-text-fill: #ffffff;" +
                 "-fx-font-size: 17px;" +
                 "-fx-padding: 0px 0px 0px 5px;");
-        taskCheckBox.setAlignment(Pos.CENTER_LEFT); // Align the checkbox to the left
-        deleteButton.setStyle("-fx-background-color: #112D4E; " +
-                "-fx-background-radius: 10px; " +
-                "-fx-min-width: 30px; " +
-                "-fx-min-height: 30px;" +
-                "-fx-text-fill: #ffffff;" +
-                "-fx-font-size: 13px;");
+        taskCheckBox.setAlignment(Pos.CENTER_LEFT);
+        taskCheckBox.setSelected(isChecked);
+        return taskCheckBox;
+    }
 
-        deleteButton.setOnAction(e -> {
-            gridPane.getChildren().removeAll(taskCheckBox, deleteButton, cloneButton);
-            // delete the space of the deleted task
-            for (Node node : gridPane.getChildren()) {
-                Integer rowIndex = GridPane.getRowIndex(node);
-                if (rowIndex != null && rowIndex > gridPane.getRowIndex(taskCheckBox)) {
-                    GridPane.setRowIndex(node, rowIndex - 1);
-                }
-            }
-        });
+    // Configuration des éléments
+    private static void configureButtons(GridPane gridPane, Button cloneButton, Button deleteButton, Button taskButton,
+            CheckBox taskCheckBox, Boolean isChecked, String tacheId) {
+        configureDeleteButton(gridPane, deleteButton, cloneButton, taskCheckBox);
+        configureCloneButton(gridPane, cloneButton, isChecked, tacheId);
+        configureTaskButton(gridPane, taskButton);
+    }
 
-        cloneButton.setStyle("-fx-background-color: #112D4E; " +
-                "-fx-background-radius: 10px; " +
-                "-fx-min-width: 30px; " +
-                "-fx-min-height: 30px;" +
-                "-fx-text-fill: #ffffff;" +
-                "-fx-font-size: 13px;");
-        // clonner la tache normale et tack checker
-        cloneButton.setOnAction(e -> {
-            createTask(gridPane, taskCheckBox.getText(), isChecked, tacheId);
-        });
+    private static void configureDeleteButton(GridPane gridPane, Button deleteButton, Button cloneButton,
+            CheckBox taskCheckBox) {
+        deleteButton.setOnAction(e -> removeTask(gridPane, taskCheckBox, deleteButton, cloneButton));
+    }
 
+    private static void configureCloneButton(GridPane gridPane, Button cloneButton, Boolean isChecked, String tacheId) {
+        cloneButton.setOnAction(e -> createTask(gridPane, getnameTask(tacheId), isChecked, tacheId));
+    }
+
+    private static void configureTaskButton(GridPane gridPane, Button taskButton) {
         taskButton.setStyle("-fx-background-color: transparent; " +
                 "-fx-background-radius: 10px; " +
                 "-fx-min-width: 665px; " +
                 "-fx-min-height: 30px;" +
                 "-fx-text-fill: #ffffff;" +
                 "-fx-font-size: 13px;");
+        taskButton.setOnAction(e -> displayMessageDialog());
+    }
+
+    private static void configureTaskCheckBoxListener(CheckBox taskCheckBox, Button deleteButton, Button cloneButton,
+            String tacheId) {
+        taskCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> updateTaskState(taskCheckBox,
+                deleteButton, cloneButton, tacheId, newValue));
+    }
+
+    // retourne le nom de la tache
+    private static String getnameTask(String tacheId) {
+        for (Map.Entry<String, String> entry : tacheModel.getdisplayedTasks().entrySet()) {
+            if (entry.getKey().equals(tacheId)) {
+                return entry.getValue();
+            }
+        }
+        return "";
+    }
+
+    // Configuration de la ligne de la tâche
+    private static void setTaskRow(GridPane gridPane, Button deleteButton, Button cloneButton, CheckBox taskCheckBox,
+            Button taskButton) {
         int row = gridPane.getRowCount();
         gridPane.add(deleteButton, 3, row);
         gridPane.add(cloneButton, 4, row);
         gridPane.add(taskCheckBox, 5, row);
         gridPane.add(taskButton, 5, row);
         GridPane.setHalignment(taskButton, HPos.RIGHT);
+    }
 
-        taskButton.setOnAction(e -> {
-            // Création d'une nouvelle fenêtre de dialogue
-            Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.APPLICATION_MODAL);
-            dialogStage.setTitle("Message");
-            VBox dialogVbox = new VBox(20);
-            dialogVbox.setAlignment(Pos.CENTER);
-            dialogVbox.getChildren().add(new Text("Ach ban lik a mourad 😎😛"));
-            dialogVbox.setStyle("-fx-font-size: 20px;");
-            Scene dialogScene = new Scene(dialogVbox, 400, 200);
-            dialogStage.setScene(dialogScene);
-            dialogStage.show();
-        });
+    // Autres méthodes auxiliaires
+    @SuppressWarnings("static-access")
+    private static void removeTask(GridPane gridPane, CheckBox taskCheckBox, Button deleteButton, Button cloneButton) {
+        gridPane.getChildren().removeAll(taskCheckBox, deleteButton, cloneButton);
+        // Suppression de l'espace de la tâche supprimée
+        for (Node node : gridPane.getChildren()) {
+            Integer rowIndex = GridPane.getRowIndex(node);
+            if (rowIndex != null && rowIndex > gridPane.getRowIndex(taskCheckBox)) {
+                GridPane.setRowIndex(node, rowIndex - 1);
+            }
+        }
+    }
 
-        if (isChecked) {
-            taskCheckBox.setSelected(true);
+    private static void displayMessageDialog() {
+        // Création d'une nouvelle fenêtre de dialogue
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        dialogStage.setTitle("Message");
+        VBox dialogVbox = new VBox(20);
+        dialogVbox.setAlignment(Pos.CENTER);
+        dialogVbox.getChildren().add(new Text("Ach ban lik a mourad 😎😛"));
+        dialogVbox.setStyle("-fx-font-size: 20px;");
+        Scene dialogScene = new Scene(dialogVbox, 400, 200);
+        dialogStage.setScene(dialogScene);
+        dialogStage.show();
+    }
+
+    private static void updateTaskState(CheckBox taskCheckBox, Button deleteButton, Button cloneButton, String tacheId,
+            Boolean newValue) {
+        if (newValue) {
             taskCheckBox.setStyle("-fx-background-color: #FF7E67; " +
                     "-fx-background-radius: 10px; " +
                     "-fx-min-width: 700px; " +
@@ -176,69 +224,45 @@ public class TachesFormController {
                     "-fx-text-fill: #ffffff;" +
                     "-fx-font-size: 17px;" +
                     "-fx-padding: 0px 0px 0px 5px;");
-            deleteButton.setStyle("-fx-background-color: #FF7E67; " +
+            if (deleteButton != null)
+                deleteButton.setStyle("-fx-background-color: #FF7E67; " +
+                        "-fx-background-radius: 10px; " +
+                        "-fx-min-width: 30px; " +
+                        "-fx-min-height: 30px;" +
+                        "-fx-text-fill: #ffffff;" +
+                        "-fx-font-size: 13px;");
+            if (cloneButton != null)
+                cloneButton.setStyle("-fx-background-color: #FF7E67; " +
+                        "-fx-background-radius: 10px; " +
+                        "-fx-min-width: 30px; " +
+                        "-fx-min-height: 30px;" +
+                        "-fx-text-fill: #ffffff;" +
+                        "-fx-font-size: 13px;");
+            setTaskEtat(tacheId, true);
+        } else {
+            taskCheckBox.setStyle("-fx-background-color: #112D4E; " +
                     "-fx-background-radius: 10px; " +
-                    "-fx-min-width: 30px; " +
+                    "-fx-min-width: 700px; " +
                     "-fx-min-height: 30px;" +
                     "-fx-text-fill: #ffffff;" +
-                    "-fx-font-size: 13px;");
-            cloneButton.setStyle("-fx-background-color: #FF7E67; " +
-                    "-fx-background-radius: 10px; " +
-                    "-fx-min-width: 30px; " +
-                    "-fx-min-height: 30px;" +
-                    "-fx-text-fill: #ffffff;" +
-                    "-fx-font-size: 13px;");
+                    "-fx-font-size: 17px;" +
+                    "-fx-padding: 0px 0px 0px 5px;");
+            if (deleteButton != null)
+                deleteButton.setStyle("-fx-background-color: #112D4E; " +
+                        "-fx-background-radius: 10px; " +
+                        "-fx-min-width: 30px; " +
+                        "-fx-min-height: 30px;" +
+                        "-fx-text-fill: #ffffff;" +
+                        "-fx-font-size: 13px;");
+            if (cloneButton != null)
+                cloneButton.setStyle("-fx-background-color: #112D4E; " +
+                        "-fx-background-radius: 10px; " +
+                        "-fx-min-width: 30px; " +
+                        "-fx-min-height: 30px;" +
+                        "-fx-text-fill: #ffffff;" +
+                        "-fx-font-size: 13px;");
+            setTaskEtat(tacheId, false);
         }
-
-        taskCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            // change color checkbox and thier buttons when checked
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    taskCheckBox.setStyle("-fx-background-color: #FF7E67; " +
-                            "-fx-background-radius: 10px; " +
-                            "-fx-min-width: 700px; " +
-                            "-fx-min-height: 30px;" +
-                            "-fx-text-fill: #ffffff;" +
-                            "-fx-font-size: 17px;" +
-                            "-fx-padding: 0px 0px 0px 5px;");
-                    deleteButton.setStyle("-fx-background-color: #FF7E67; " +
-                            "-fx-background-radius: 10px; " +
-                            "-fx-min-width: 30px; " +
-                            "-fx-min-height: 30px;" +
-                            "-fx-text-fill: #ffffff;" +
-                            "-fx-font-size: 13px;");
-                    cloneButton.setStyle("-fx-background-color: #FF7E67; " +
-                            "-fx-background-radius: 10px; " +
-                            "-fx-min-width: 30px; " +
-                            "-fx-min-height: 30px;" +
-                            "-fx-text-fill: #ffffff;" +
-                            "-fx-font-size: 13px;");
-                    setTaskEtat(tacheId, true);
-                } else {
-                    taskCheckBox.setStyle("-fx-background-color: #112D4E; " +
-                            "-fx-background-radius: 10px; " +
-                            "-fx-min-width: 700px; " +
-                            "-fx-min-height: 30px;" +
-                            "-fx-text-fill: #ffffff;" +
-                            "-fx-font-size: 17px;" +
-                            "-fx-padding: 0px 0px 0px 5px;");
-                    deleteButton.setStyle("-fx-background-color: #112D4E; " +
-                            "-fx-background-radius: 10px; " +
-                            "-fx-min-width: 30px; " +
-                            "-fx-min-height: 30px;" +
-                            "-fx-text-fill: #ffffff;" +
-                            "-fx-font-size: 13px;");
-                    cloneButton.setStyle("-fx-background-color: #112D4E; " +
-                            "-fx-background-radius: 10px; " +
-                            "-fx-min-width: 30px; " +
-                            "-fx-min-height: 30px;" +
-                            "-fx-text-fill: #ffffff;" +
-                            "-fx-font-size: 13px;");
-                    setTaskEtat(tacheId, false);
-                }
-            }
-        });
     }
 
     public void searchTache(String searchText) {
@@ -247,11 +271,11 @@ public class TachesFormController {
 
         tacheView.getZoneTaches().getChildren().clear();
 
-        for (Map.Entry<String, String> entry : tacheModel.getTaches().entrySet()) {
+        for (Map.Entry<String, String> entry : tacheModel.getdisplayedTasks().entrySet()) {
             String taskName = entry.getValue().toLowerCase();
             if (taskName.contains(searchText.toLowerCase())) {
                 createTask(tacheView.getZoneTaches(), taskName, getTaskEtat(entry.getKey()), entry.getKey());
-                gridCaseInfos.put(List.of(rowCount, colCount), List.of(taskName, entry.getKey()));
+                tacheModel.addGridInfosCase(List.of(rowCount, colCount), entry.getKey());
                 rowCount++;
             }
         }
@@ -259,7 +283,7 @@ public class TachesFormController {
     }
 
     private LinkedHashMap<String, String> getTacheMap() {
-        LinkedHashMap<String, Boolean> taches = gestionnaireListe.getTaches(listId);
+        LinkedHashMap<String, Boolean> taches = gestionnaireListe.getTaches(this.listeFormController.getListId());
 
         LinkedHashMap<String, String> tacheMap = new LinkedHashMap<>();
         for (String tacheId : taches.keySet()) {
@@ -295,26 +319,23 @@ public class TachesFormController {
     }
 
     public static void setTaskEtat(String tacheId, Boolean etat) {
-        gestionnaireTache.setTaskEtat(tacheId, etat);
+        tacheModel.addTaskEtat(tacheId, etat);
     }
 
     public String getListTitle() {
-        return gestionnaireListe.getListTitle(listId);
+        return gestionnaireListe.getListTitle(this.listeFormController.getListId());
     }
 
     public String getListDescription() {
-        return gestionnaireListe.getListDescription(listId);
+        return gestionnaireListe.getListDescription(this.listeFormController.getListId());
     }
 
     public void handleConfirmerButtonAction() {
         try {
-            String dateTask11 = tacheView.getDateTask();
             String dateTask = tacheView.getDateTask();
             // convert format to DD/MM/YYYY
             String[] date = dateTask.split("-");
             this.setDateTaskFormated(date[2] + "/" + date[1] + "/" + date[0]);
-            System.out.println("Date Task : " + dateTask);
-
             GetTaskCalendar getTaskCalendar = new GetTaskCalendar(this);
             getTaskCalendar.start(new Stage());
         } catch (Exception e) {
@@ -336,4 +357,24 @@ public class TachesFormController {
         this.dateTaskFormated = dateTaskFormated;
     }
 
+    public void SurveillerButton(Button button, String width, String height, String color) {
+        button.setOnMouseEntered(event -> {
+            button.setStyle("-fx-background-radius: 10px; " +
+                    "-fx-pref-width:" + width + "; " +
+                    "-fx-background-color: #8E9EB2; " +
+                    "-fx-text-fill: white; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 13px;");
+            button.setCursor(javafx.scene.Cursor.HAND);
+        });
+        button.setOnMouseExited(event -> {
+            button.setStyle("-fx-background-radius: 10px; " +
+                    "-fx-pref-width:" + width + "; " +
+                    "-fx-background-color: " + color + ";" +
+                    "-fx-text-fill: white; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 13px;");
+            button.setCursor(javafx.scene.Cursor.DEFAULT);
+        });
+    }
 }

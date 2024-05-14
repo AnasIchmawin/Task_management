@@ -1,41 +1,59 @@
 package presentation.listes;
 
-
 import java.util.*;
 
-
 public class ListModel {
-    private LinkedHashMap<String , String> Listes;
-
-    public ListModel(LinkedHashMap<String , String> Listes) {
-        this.Listes = Listes;
-    }
+    private LinkedHashMap<String, String> DisplayedLists;
+    private LinkedHashMap<List<List<String>>, String> gridInfoCase;
+    private String listID;
 
     public ListModel() {
-        super() ;
+        super();
     }
 
-    public LinkedHashMap<String , String> getLists() {
-        return Listes;
+    public ListModel(LinkedHashMap<String, String> Listes,
+            LinkedHashMap<List<List<String>>, String> gridInfoCase) {
+
+        this.DisplayedLists = Listes;
+        this.gridInfoCase = gridInfoCase;
     }
 
-
-    public void setLists(LinkedHashMap<String , String> Listes) {
-        this.Listes = Listes;
+    public LinkedHashMap<String, String> getLists() {
+        return DisplayedLists;
     }
 
-    public void sortLists() {
-       //trier liste par le titre 
-        List<Map.Entry<String, String>> list = new LinkedList<>(Listes.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<String, String>>() {
-            public int compare(Map.Entry<String, String> o1, Map.Entry<String, String> o2) {
-                return o1.getValue().compareTo(o2.getValue());
-            }
-        });
-        LinkedHashMap<String, String> sortedList = new LinkedHashMap<>();
-        for (Map.Entry<String, String> entry : list) {
-            sortedList.put(entry.getKey(), entry.getValue());
-        }
-        this.setLists(sortedList);
+    public void setLists(LinkedHashMap<String, String> Listes) {
+        this.DisplayedLists = Listes;
     }
+
+    public LinkedHashMap<List<List<String>>, String> getGridInfoCase() {
+        return gridInfoCase;
+    }
+
+    public void setGridInfoCase(LinkedHashMap<List<List<String>>, String> gridInfoCase) {
+        this.gridInfoCase = gridInfoCase;
+    }
+
+    public String getListID() {
+        return listID;
+    }
+
+    public void setListID(String listID) {
+        this.listID = listID;
+    }
+
+    public void putInGridInfoCase(Integer Row, Integer Column, String id) {
+        List<List<String>> caseInfo = new ArrayList<>();
+        caseInfo.add(Arrays.asList(Row.toString(), Column.toString()));
+        gridInfoCase.put(caseInfo, id);
+    }
+
+    // Method to sort the lists by alphabetical order
+    public void sortListsByTitle() {
+        List<Map.Entry<String, String>> list = new LinkedList<>(DisplayedLists.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+        DisplayedLists.clear();
+        list.forEach(entry -> DisplayedLists.put(entry.getKey(), entry.getValue()));
+    }
+
 }

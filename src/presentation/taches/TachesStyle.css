@@ -138,16 +138,11 @@
     -fx-text-fill: #fff;
 }
 
-/*
-.button-calendrier-style{
+.ajouter-btn-style{
+    -fx-background-radius: 10px;
+    -fx-pref-width: 150px;
     -fx-background-color: #3F72AF;
-    -fx-font-weight: bold;
-    -fx-background-radius: 8px;
-    -fx-pref-width: 180px;
-    -fx-pref-height: 50px;
-    -fx-text-fill: #fff;
-} */
-
-.bottom-container-style{
-    /* -fx-background-color: red; */
+    -fx-text-fill: white;
+    -fx-font-weight: bold; 
+    -fx-font-size: 13px
 }

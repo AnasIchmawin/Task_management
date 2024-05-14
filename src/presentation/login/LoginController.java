@@ -10,17 +10,18 @@ import javafx.scene.Node;
 
 public class LoginController {
     private LoginFormView loginFormView;
-    private ModelLogin modelLogin;
+    private LoginModel loginModel;
 
     public LoginController(LoginFormView loginFormView) {
         this.loginFormView = loginFormView;
-        this.modelLogin = new ModelLogin("");
+        this.loginModel = new LoginModel("");
     }
 
     public void handleLoginButtonClick(ActionEvent event) throws ParseException {
         try {
-            this.modelLogin.setGmail(loginFormView.getEmailField());
-            boolean emailIsValid = modelLogin.isValidEmailAddress();
+            String email = this.loginFormView.getEmail();
+            this.loginModel.setGmail(email);
+            boolean emailIsValid = loginModel.isValidEmailAddress();
             if (emailIsValid) {
                 navigateToListView(event);
             } else {
@@ -32,12 +33,14 @@ public class LoginController {
         }
     }
 
+    // Navigation vers la vue de liste
     private void navigateToListView(ActionEvent event) {
         ListeFormView nextView = new ListeFormView();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         nextView.start(stage);
     }
 
+    // Afficher une alerte
     private void displayAlert(String title, String message) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);

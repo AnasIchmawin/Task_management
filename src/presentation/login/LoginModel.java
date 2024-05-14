@@ -1,11 +1,12 @@
 package presentation.login;
 
-import metier.service ;
-public class ModelLogin {
+import metier.LoginService;
+
+public class LoginModel {
 
     private String gmail;
 
-    public ModelLogin(String gmail) {
+    public LoginModel(String gmail) {
         this.gmail = gmail;
     }
 
@@ -20,7 +21,7 @@ public class ModelLogin {
     // methode de verification :
     public boolean isValidEmailAddress() {
         try {
-            return service.isValidEmailAddress(this.gmail);
+            return LoginService.isValidEmailAddress(this.gmail);
         } catch (Exception e) {
             e.printStackTrace();
             return false;

@@ -7,10 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -46,25 +43,18 @@ public class LoginFormView extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // Création de la scène avec des dimensions minimales définies par les
-        // constantes
         Scene scene = new Scene(verticalPane, MIN_WIDTH, MIN_HEIGHT);
-
-        // Chargement du fichier CSS externe pour le style
         scene.getStylesheets().add(getClass().getResource("login.css").toExternalForm());
-
-        // Configuration de la scène et affichage de la fenêtre
         primaryStage.setScene(scene);
         primaryStage.setTitle("LoginForm");
         primaryStage.show();
     }
 
-    // la methode Initialiser :
     private void Initialiser() {
-        leftPane = createPane("HBox");
-        rightPane = createPane("HBox");
-        topPane = createPane("VBox");
-        bottomPane = createPane("VBox");
+        leftPane = createPane(HBox.class);
+        rightPane = createPane(HBox.class);
+        topPane = createPane(VBox.class);
+        bottomPane = createPane(VBox.class);
         emailField = new TextField();
         emailField.setPromptText("Example@Gmail.com");
         connectButton = new Button("Connexion");
@@ -79,7 +69,6 @@ public class LoginFormView extends Application {
         this.controller = new LoginController(this);
     }
 
-    // la methode styler :
     private void Styler() {
         leftPane.getStyleClass().add("Horizontal-Pane-style");
         rightPane.getStyleClass().add("Horizontal-Pane-style");
@@ -88,19 +77,16 @@ public class LoginFormView extends Application {
         emailField.getStyleClass().add("Email-Input-style");
         connectButton.getStyleClass().add("Button-style");
         Formulaire.getStyleClass().add("BorderPane-style");
-
     }
 
-    // la methode dessiner :
     private void Dessiner() {
         VBox.setVgrow(Formulaire, javafx.scene.layout.Priority.ALWAYS);
         Formulaire.setTop(logoBox);
         Formulaire.setCenter(centerContainer);
-        BorderPane.setMargin(bottomContainer, new Insets(0, 0, 70, 0)); // Définir la marge pour le conteneur inférieur
+        BorderPane.setMargin(bottomContainer, new Insets(0, 0, 70, 0));
         Formulaire.setBottom(bottomContainer);
     }
 
-    // creer des composants :
     private ImageView createImageView(String path, int width, int height) {
         Image image = new Image(path);
         ImageView imageView = new ImageView(image);
@@ -111,35 +97,35 @@ public class LoginFormView extends Application {
         return imageView;
     }
 
-    private Pane createPane(String BoxType) {
-        Pane pane;
-        if (BoxType.equals("HBox")) {
-            pane = new HBox();
-            HBox.setHgrow(pane, javafx.scene.layout.Priority.ALWAYS);
-        } else if (BoxType.equals("VBox")) {
-            pane = new VBox();
-            VBox.setVgrow(pane, javafx.scene.layout.Priority.ALWAYS);
-        } else {
-            pane = new Pane();
+    @SuppressWarnings("deprecation")
+    private <T extends Pane> T createPane(Class<T> paneType) {
+        T pane;
+        try {
+            pane = paneType.newInstance();
+            if (pane instanceof HBox) {
+                HBox.setHgrow(pane, javafx.scene.layout.Priority.ALWAYS);
+            } else if (pane instanceof VBox) {
+                VBox.setVgrow(pane, javafx.scene.layout.Priority.ALWAYS);
+            }
+        } catch (InstantiationException | IllegalAccessException e) {
+            pane = null;
         }
         return pane;
     }
 
-    private VBox createVBox(int spacing, Pos alignment,
-            Node... nodes) {
+    private VBox createVBox(int spacing, Pos alignment, Node... nodes) {
         VBox vbox = new VBox(spacing);
         vbox.setAlignment(alignment);
-
         vbox.getChildren().addAll(nodes);
         return vbox;
     }
 
-    // getEmailField
-    public String getEmailField() {
+    public String getEmail() {
         return emailField.getText();
     }
 
-    // gerer les actions
+
+    // Action
     private void Action() {
         connectButton.setOnAction(event -> {
             try {
@@ -148,10 +134,17 @@ public class LoginFormView extends Application {
                 System.out.println("Erreur pendant l'action connexion : " + e.getMessage());
             }
         });
+        connectButton.setOnMouseEntered(e -> {
+            connectButton.getStyleClass().add("Button-style-hover");
+            connectButton.setCursor(javafx.scene.Cursor.HAND);
+        });
+        connectButton.setOnMouseExited(e -> {
+            connectButton.getStyleClass().remove("Button-style-hover");
+            connectButton.setCursor(javafx.scene.Cursor.DEFAULT);
+        });
 
-        // Gestion de la taille minimale de la fenêtre
-        Scene scene = primaryStage.getScene(); // Récupérer la scène actuelle
-        if (scene != null) { // Vérifier si la scène est définie
+        Scene scene = primaryStage.getScene();
+        if (scene != null) {
             scene.widthProperty().addListener((obs, oldWidth, newWidth) -> {
                 double minWidth = MIN_WIDTH + 150;
                 if (newWidth.doubleValue() < minWidth) {
@@ -165,6 +158,6 @@ public class LoginFormView extends Application {
                 }
             });
         }
-    }
 
+    }
 }

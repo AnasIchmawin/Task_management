@@ -78,7 +78,7 @@ public class GestionnaireListe {
     }
 
     // Method to get all lists
-    public List<Document> obtenirToutesLesListes() {
+    public List<Document> getAllLists() {
         return daoListe.getAllLists();
     }
 }

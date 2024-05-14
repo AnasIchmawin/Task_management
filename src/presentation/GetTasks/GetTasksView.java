@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import presentation.NewList.AddListController;
 
 public class GetTasksView {
 
@@ -27,8 +28,8 @@ public class GetTasksView {
     private ScrollPane scrollPane;
     GridPane ZoneTasks;
 
-    public GetTasksView(GetTasksController getTasksController) {
-        this.controller = getTasksController;
+    public GetTasksView(AddListController addListController) {
+        this.controller = new GetTasksController(this , addListController);
         init();
         style();
         action();
@@ -87,8 +88,6 @@ public class GetTasksView {
         ZoneTasks.setHgap(20);
         ZoneTasks.setVgap(15);
         ZoneTasks.setPadding(new Insets(20));
-        this.controller.displayTasks(ZoneTasks);
-
         return this.ZoneTasks;
     }
 
@@ -136,7 +135,7 @@ public class GetTasksView {
 
     private void action() {
         confirmButton.setOnAction(event -> {
-            this.controller.handleConfirmButton(this.ZoneTasks, event);
+            this.controller.handleConfirmButton(event);
         });
 
         cancelButton.setOnAction(event -> {

@@ -2,8 +2,9 @@ package presentation.listes;
 
 import metier.GestionnaireListe;
 
-
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,16 +13,18 @@ import org.bson.Document;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import presentation.GetLists.GetListsView;
 import presentation.NewList.AddListView;
-import presentation.archive.ArchiveFormController;
 import presentation.archive.ArchiveFormView;
 import presentation.projets.ProjetsFormView;
-import presentation.taches.TachesFormController;
 import presentation.taches.TachesFormView;
 
 public class ListeFormController {
+    private GestionnaireListe gestionnaireListe;
+    private ListeFormView listView;
+    private ListModel listModel;
     private static final int MAX_COLUMNS = 5;
     private static final int BUTTON_WIDTH = 170;
     private static final int BUTTON_HEIGHT = 60;
@@ -32,52 +35,54 @@ public class ListeFormController {
             + "-fx-text-fill: #ffffff; "
             + "-fx-font-size: 18px;";
 
-    private String buttonclickedInfos ;
-    private GestionnaireListe gestionnaireListe;
-    private ListeFormView listView;
-    private ListModel listModel;
-    private Map<List<Integer>, List<String>> gridCaseInfos;
+
 
     public ListeFormController(ListeFormView listeFormView) {
         this.gestionnaireListe = new GestionnaireListe();
         this.listView = listeFormView;
-        this.listModel = new ListModel(getListMap());
+        this.listModel = new ListModel(getMapList(), new LinkedHashMap<>());
+        this.displayAvailableLists(false);
     }
 
+    // navigation vers la page de création de liste
     public void handleAjouterButtonAction() {
         AddListView newListFormulaire = new AddListView(this);
         Stage stage = new Stage();
         newListFormulaire.start(stage);
     }
 
+    // afficher les listes ordonnées par ordre alphabétique
     public void handleOrdonnerButton() {
-        displayLists(true);
+        displayAvailableLists(true);
     }
 
+    // navigation vers la page de projets
     public void handleProjectsButton() {
         Stage stage = (Stage) listView.getZoneListes().getScene().getWindow();
         ProjetsFormView projets = new ProjetsFormView();
         projets.start(stage);
     }
 
-    public void handleSupprimerButtonAction() {
-        GetListsView getListview = new GetListsView(this);
-        getListview.start(new Stage());
-    }
-
+    // navigation vers la page d'archivage
     public void handleArchiveButton() {
         Stage stage = (Stage) listView.getZoneListes().getScene().getWindow();
         ArchiveFormView archiveFormView = new ArchiveFormView();
         archiveFormView.start(stage);
     }
 
-    public void displayLists(boolean isSorted) {
-        listModel.setLists(getListMap());
+    // navigation vers la page de suppression de liste
+    public void handleSupprimerButtonAction() {
+        GetListsView getListview = new GetListsView(this);
+        getListview.start(new Stage());
+    }
+
+    // afficher les listes
+    public void displayAvailableLists(boolean isSorted) {
         if (isSorted) {
-            listModel.sortLists();
+            listModel.sortListsByTitle();
         }
+        // clear the gridpane
         listView.getZoneListes().getChildren().clear();
-        gridCaseInfos = new LinkedHashMap<>();
         int colCount = 0;
         int rowCount = 0;
 
@@ -85,7 +90,7 @@ public class ListeFormController {
             Button newListButton = createListButton(entry.getValue());
             newListButton.setOnAction(event -> handleButtoListnAction(newListButton));
             addListButton(newListButton, colCount, rowCount);
-            gridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), entry.getValue()));
+            listModel.putInGridInfoCase(rowCount, colCount, entry.getKey());
 
             if (++colCount == MAX_COLUMNS) {
                 colCount = 0;
@@ -94,63 +99,50 @@ public class ListeFormController {
         }
     }
 
-    //recuperer les informations du bouton cliqué (ID de la liste)
+    public String getListId() {
+        return listModel.getListID();
+    }
+
+    // navigation vers la page de tâches
     private void handleButtoListnAction(Button newListButton) {
-        List<String> listInfos = gridCaseInfos.get(List.of(this.listView.getZoneListes().getRowIndex(newListButton), this.listView.getZoneListes().getColumnIndex(newListButton)));
-        String Id = listInfos.get(0);
-        TachesFormView tachesFormView = new TachesFormView(Id);
+        String listId = getListIdFromButton(newListButton);
+        listModel.setListID(listId);
+        startTachesFormView();
+    }
+
+    // récupérer l'ID de la liste à partir du bouton
+    private String getListIdFromButton(Button button) {
+        List<List<String>> caseInfo = new LinkedList<>();
+        caseInfo.add(Arrays.asList(GridPane.getRowIndex(button).toString(),
+                GridPane.getColumnIndex(button).toString()));
+        return listModel.getGridInfoCase().get(caseInfo);
+    }
+
+    // navigation vers la page de tâches
+    private void startTachesFormView() {
+        TachesFormView tachesFormView = new TachesFormView(this);
         Stage stage = (Stage) listView.getZoneListes().getScene().getWindow();
         tachesFormView.start(stage);
-    
     }
 
-    private Button createListButton(String title) {
-        Button newListButton = new Button(title);
-        newListButton.setStyle(BUTTON_STYLE);
-
-        newListButton.setOnMouseEntered(event -> {
-            newListButton.setStyle("-fx-background-color: #8E9EB2; "
-                    + "-fx-background-radius: 10px; "
-                    + "-fx-min-width: " + BUTTON_WIDTH + "px; "
-                    + "-fx-min-height: " + BUTTON_HEIGHT + "px; "
-                    + "-fx-text-fill: #ffffff; "
-                    + "-fx-font-size: 18px;");
-            newListButton.setCursor(javafx.scene.Cursor.HAND);
-        });
-
-        newListButton.setOnMouseExited(event -> {
-            newListButton.setStyle(BUTTON_STYLE);
-            newListButton.setCursor(javafx.scene.Cursor.DEFAULT);
-        });
-
-        try {
-            Image listIcon = new Image("file:./Pictures/to-do.png");
-            ImageView listIconView = new ImageView(listIcon);
-            listIconView.setFitWidth(15);
-            listIconView.setFitHeight(15);
-            newListButton.setGraphic(listIconView);
-        } catch (Exception e) {
-            System.out.println("Erreur de chargement de l'icône de la liste : " + e.getMessage());
-        }
-
-        return newListButton;
-    }
-
+    // ajout de bouton à la grille
     private void addListButton(Button newListButton, int colCount, int rowCount) {
         listView.getZoneListes().add(newListButton, colCount, rowCount);
     }
 
-    private LinkedHashMap<String, String> getListMap() {
-        List<Document> listes = gestionnaireListe.obtenirToutesLesListes();
-        LinkedHashMap<String, String> listMap = new LinkedHashMap<>();
+    // recuperer les listes de la base de données
+    private LinkedHashMap<String, String> getMapList() {
+        List<Document> listes = gestionnaireListe.getAllLists();
+        LinkedHashMap<String, String> listInfos = new LinkedHashMap<>();
         for (Document liste : listes) {
             String id = liste.getObjectId("_id").toString();
             String titre = liste.getString("titre");
-            listMap.put(id, titre);
+            listInfos.put(id, titre);
         }
-        return listMap;
+        return listInfos;
     }
 
+    // recherche de liste
     public void searchList(String searchText) {
         int colCount = 0;
         int rowCount = 0;
@@ -162,7 +154,7 @@ public class ListeFormController {
             if (buttonTitle.contains(searchText.toLowerCase())) {
                 Button button = createListButton(entry.getValue());
                 addListButton(button, colCount, rowCount);
-                gridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), entry.getValue()));
+                listModel.putInGridInfoCase(rowCount, colCount, entry.getKey());
                 colCount++;
                 if (colCount == MAX_COLUMNS) {
                     colCount = 0;
@@ -170,5 +162,50 @@ public class ListeFormController {
                 }
             }
         }
+    }
+
+    // création d'un bouton pour chaque liste
+    private Button createListButton(String title) {
+        Button newListButton = new Button(title);
+        setButtonStyle(newListButton);
+        addMouseEvents(newListButton);
+        addListIcon(newListButton);
+        return newListButton;
+    }
+
+    // ajout de l'icône de la liste
+    private void addListIcon(Button button) {
+        try {
+            Image listIcon = new Image("file:./Pictures/to-do.png");
+            ImageView listIconView = new ImageView(listIcon);
+            listIconView.setFitWidth(15);
+            listIconView.setFitHeight(15);
+            button.setGraphic(listIconView);
+        } catch (Exception e) {
+            System.out.println("Erreur de chargement de l'icône de la liste : " + e.getMessage());
+        }
+    }
+
+    // style du bouton
+    private void setButtonStyle(Button button) {
+        button.setStyle(BUTTON_STYLE);
+    }
+
+    // événements de souris
+    private void addMouseEvents(Button button) {
+        button.setOnMouseEntered(event -> {
+            button.setStyle("-fx-background-color: #8E9EB2; "
+                    + "-fx-background-radius: 10px; "
+                    + "-fx-min-width: " + BUTTON_WIDTH + "px; "
+                    + "-fx-min-height: " + BUTTON_HEIGHT + "px; "
+                    + "-fx-text-fill: #ffffff; "
+                    + "-fx-font-size: 18px;");
+            button.setCursor(javafx.scene.Cursor.HAND);
+        });
+
+        button.setOnMouseExited(event -> {
+            button.setStyle(BUTTON_STYLE);
+            button.setCursor(javafx.scene.Cursor.DEFAULT);
+        });
     }
 }

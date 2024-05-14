@@ -37,11 +37,6 @@ public class GetTaskCalenderController {
                     tache.setDateFin(item.getEndDate());
                     this.gestionnaireTache.setTache(tache);
                     gestionnaireTache.createTache();
-                    Alert   alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Dialog");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Tâche ajoutée avec succès");
-                    alert.showAndWait();
 
                 } catch (Exception e) {
                     System.out.println("Erreur lors de la création de la tâche");

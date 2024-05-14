@@ -1,9 +1,6 @@
 package metier;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import presentation.NewList.AddListModel;
 
 public class POJOListe {
     private String titre;
@@ -13,14 +10,11 @@ public class POJOListe {
     public POJOListe() {
     }
 
-    public POJOListe(AddListModel addListModel) {
-        this.titre = addListModel.getTitre();
-        this.description = addListModel.getDescription();
-        this.Taches = new ArrayList<>(addListModel.getTachesSelectionnees().keySet());
+    public POJOListe(String titre, String description, List<String> taches) {
+        this.titre = titre;
+        this.description = description;
+        Taches = taches;
     }
-
-
-    
 
     public String getTitre() {
         return titre;
