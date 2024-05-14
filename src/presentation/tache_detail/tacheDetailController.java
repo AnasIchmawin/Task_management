@@ -2,13 +2,14 @@ package presentation.tache_detail;
 
 import org.bson.Document;
 
+import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import metier.GestionnaireTache;
 import persistence.Connexion;
+import presentation.listes.ListeFormView;
 
-public class controleur {
-    private screen sc;
-    private tacheDetailModele md;
+public class tacheDetailController {
     private Label titleabel;
     Connexion con;
     GestionnaireTache gt;
@@ -21,10 +22,8 @@ public class controleur {
     Label descriptionLabel;
 
     // constructor
-    public controleur(screen sc, tacheDetailModele md) {
+    public tacheDetailController(tacheDetailView sc, tacheDetailModele md) {
         gt = new GestionnaireTache();
-        this.sc = sc;
-        this.md = md;
         titleabel = sc.getTitleabel();
         dateDebutLabel = sc.getDateDebutLabel();
         dateFinLabel = sc.getDateFinLabel();
@@ -50,6 +49,13 @@ public class controleur {
         categorieLabel.setText(categorie);
         typeLabel.setText(type);
         descriptionLabel.setText(description);
+    }
+
+    public void listesButtonAction(ActionEvent event) {
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        ListeFormView listes = new ListeFormView();
+        listes.start(stage);
+        
     }
 
 }

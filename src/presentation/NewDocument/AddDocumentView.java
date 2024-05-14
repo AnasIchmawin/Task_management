@@ -1,7 +1,6 @@
 package presentation.NewDocument;
 
 import java.io.File;
-import java.time.LocalDate;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -15,8 +14,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import presentation.tache_detail.controleur;
-import presentation.projet_detail.ProjetDetailController;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
 
 public class AddDocumentView extends Application {
@@ -31,10 +28,7 @@ public class AddDocumentView extends Application {
     private Label labelDescription;
     private Scene scene;
     private AddDocumentController controller;
-    private LocalDate dateInsertion;
-    private String idProjet;
-    private String idTache;
-    private String idSeance;
+    
 
     @Override
     public void start(Stage primaryStage) {
@@ -48,18 +42,7 @@ public class AddDocumentView extends Application {
         primaryStage.setTitle("Ajouter un document");
         primaryStage.setOnCloseRequest(e -> controller.close());
         primaryStage.show();
-    }
-
-    public AddDocumentView(ProjetDetailController controller, String idProjet) {
-        this.idProjet = idProjet;
-    }
-
-    public AddDocumentView(controleur controller, String idTache) {
-        this.idTache = idTache;
-    }
-
-    public AddDocumentView(String idSeance){
-        this.idSeance = idSeance;
+        style();
     }
 
     public AddDocumentView(ControllerFromTacheAjout controllerFromTacheAjout) {
@@ -88,7 +71,6 @@ public class AddDocumentView extends Application {
                 labelURL, createURLBox(),
                 labelDescription, ZoneDescription,
                 save);
-        style();
         return mainBox;
     }
 
@@ -164,27 +146,6 @@ public class AddDocumentView extends Application {
 
     public String getDescription() {
         return ZoneDescription.getText();
-    }
-
-    public String getDateInsertion() {
-        //convertire date en string
-        return dateInsertion.toString();
-    }   
-
-    public void setDateInsertion(LocalDate dateInsertion) {
-        this.dateInsertion = dateInsertion;
-    }
-
-    public String getIdProjet() {
-        return idProjet;
-    }
-
-    public String getIdTache() {
-        return idTache;
-    }
-
-    public String getIdSeance() {
-        return idSeance;
     }
 
     public void close() {

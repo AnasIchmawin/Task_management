@@ -31,6 +31,8 @@ import presentation.tache_ajoute.ControllerFromTacheAjout;
 import presentation.tache_ajoute.addTacheview;
 import presentation.taches.TachesFormController;
 import presentation.taches.TachesFormView;
+import presentation.tache_detail.tacheDetailController;
+import presentation.tache_detail.tacheDetailView;
 
 import java.time.LocalDateTime;
 
@@ -87,8 +89,8 @@ public class App extends Application {
         // SceanceAjouteView view = new SceanceAjouteView();
         // view.start(primaryStage);
         
-        TachesFormView view = new TachesFormView() ;
-        view.start(primaryStage) ;
+        // TachesFormView view = new TachesFormView() ;
+        // view.start(primaryStage) ;
 
         // SceanceFormController con = new SceanceFormController() ;
         // SeanceFormView view = new SeanceFormView(con) ;
@@ -100,9 +102,8 @@ public class App extends Application {
         // view.start(primaryStage) ;
 
 
-        // presentation.tache_detail.screen view = new presentation.tache_detail.screen() ;
-        // presentation.tache_detail.controleur con = new presentation.tache_detail.controleur(view, null) ;
-        // view.start(primaryStage) ;
+        tacheDetailView view = new tacheDetailView();
+        view.start(primaryStage) ;
     }
 
     public static void main(String[] args) {
