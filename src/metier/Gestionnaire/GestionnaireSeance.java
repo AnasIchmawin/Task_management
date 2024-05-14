@@ -1,11 +1,12 @@
-package metier;
+package metier.Gestionnaire;
+import metier.POJO.POJOSeance;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
-import metier.Errors.NonValidList;
+import org.bson.Document;
 import metier.Errors.NonValidSeance;
 import persistence.DAO.DAOSeance;
+import java.util.List;
 
 public class GestionnaireSeance {
     private DAOSeance daoSeance;
@@ -66,6 +67,7 @@ public class GestionnaireSeance {
     // Méthode pour valider une heure au format HH:MM
     public static boolean validateTime(String time) {
         try {
+            @SuppressWarnings("unused")
             LocalTime parsedTime = LocalTime.parse(time);
             return true;
         } catch (Exception e) {
@@ -79,5 +81,9 @@ public class GestionnaireSeance {
                 validateTime(heureDebut) && validateTime(heureFin) &&
                 LocalDate.parse(dateDebut).isBefore(LocalDate.parse(dateFin)); // Vérifie que dateDebut est avant
                                                                                // dateFin
+    }
+
+    public List<Document> getAllSeances() {
+        return daoSeance.getAllSeances();
     }
 }

@@ -56,4 +56,15 @@ public class ListModel {
         list.forEach(entry -> DisplayedLists.put(entry.getKey(), entry.getValue()));
     }
 
+    public void addList(String id, String titre) {
+        DisplayedLists.put(id, titre);
+
+    }
+
+    public void removeList(List<String> id) {
+        for (String i : id) {
+            DisplayedLists.remove(i);
+        }
+    }
+
 }

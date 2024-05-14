@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-
-import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.DeleteResult;
 
-import metier.POJOProjet;
+
 import persistence.DBConnection;
 
 public class DAOProjet {

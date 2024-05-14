@@ -23,7 +23,9 @@ import presentation.tache_ajoute.ControllerFromTacheAjout;
 public class GetDocView {
 
     private GetDocController getDocController;
+    @SuppressWarnings("unused")
     private SceanceAjouteController sceanceAjouteController;
+    @SuppressWarnings("unused")
     private ControllerFromTacheAjout controllerFromTacheAjout;
     private Label titleLabel;
     private BorderPane root;

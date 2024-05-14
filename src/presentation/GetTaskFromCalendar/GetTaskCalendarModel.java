@@ -1,7 +1,7 @@
 package presentation.GetTaskFromCalendar;
 
 import javafx.collections.ObservableList;
-import metier.GoogleCalendarService;
+import metier.Service.GoogleCalendarService;
 
 public class GetTaskCalendarModel {
     private ObservableList<Item> data;

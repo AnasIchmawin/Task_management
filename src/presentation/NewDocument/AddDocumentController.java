@@ -1,22 +1,23 @@
 package presentation.NewDocument;
 
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import metier.POJODocument;
+import metier.POJO.POJODocument;
 import presentation.projet_detail.ProjetDetailController;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
 import presentation.taches.TachesFormController;
-import metier.GestionnaireDocument;
+import metier.Gestionnaire.GestionnaireDocument;
 
+@SuppressWarnings("unused")
 public class AddDocumentController {
     private GestionnaireDocument gestionnaireDocument;
     private ControllerFromTacheAjout controllerFromTacheAjout;
     private AddDocumentView view;
+    @SuppressWarnings("unused")
     private ProjetDetailController controleur;
 
     public AddDocumentController(AddDocumentView view) {

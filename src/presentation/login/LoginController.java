@@ -41,7 +41,7 @@ public class LoginController {
     }
 
     // Afficher une alerte
-    private void displayAlert(String title, String message) {
+    public void displayAlert(String title, String message) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);

@@ -1,9 +1,6 @@
-package metier;
+package metier.POJO;
 
-import java.time.LocalDateTime;
 import java.util.List;
-
-import org.bson.Document;
 
 public class POJOTache {
 

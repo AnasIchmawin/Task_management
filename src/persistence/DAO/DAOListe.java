@@ -115,6 +115,7 @@ public class DAOListe {
                     
                     Document liste = collection.find(Filters.eq("_id", objectId)).first();
                     if (liste != null) {
+                        @SuppressWarnings("unchecked")
                         List<Document> tachesList = (List<Document>) liste.get("taches");
                         if (tachesList != null) {
                             for (Document tache : tachesList) {
@@ -174,6 +175,7 @@ public class DAOListe {
                     
                     Document liste = collection.find(Filters.eq("_id", objectId)).first();
                     if (liste != null) {
+                        @SuppressWarnings("unchecked")
                         List<Document> taches = (List<Document>) liste.get("taches");
                         if (taches != null) {
                             Document tache = new Document();
@@ -214,6 +216,17 @@ public class DAOListe {
                     }
                 } catch (Exception e) {
                     System.err.println("Error deleting task from the list: " + e.getMessage());
+                }
+        }
+
+        public Document getLastList() {
+                try {
+                        MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                                        .getCollection("listes");
+                        return collection.find().sort(new Document("_id", -1)).first();
+                } catch (Exception e) {
+                        System.err.println("Erreur lors de la récupération de la dernière liste : " + e.getMessage());
+                        return null;
                 }
         }
 }

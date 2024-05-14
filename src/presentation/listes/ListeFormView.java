@@ -67,6 +67,7 @@ public class ListeFormView extends Application {
     private void Initialiser() {
         leftButton = createButton("", "file:./Pictures/left-arrow.png",
                 35, 35);
+        leftButton.setVisible(false);
         ordonnerButton = createButton("Ordonner", "file:./Pictures/folder.png",
                 20, 20);
         searchButton = createButton("", "file:./Pictures/loupe.png",

@@ -1,4 +1,6 @@
-package metier;
+
+package metier.Gestionnaire;
+import metier.POJO.POJOListe;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -68,12 +70,13 @@ public class GestionnaireListe {
     }
 
     // Method to delete a list by its ID
-    public void supprimerListe(List<String> ids) {
+    public void deleteList(List<String> ids) {
         try {
             for (String id : ids)
                 daoListe.delete(id);
         } catch (Exception e) {
             System.out.println("Supression failed");
+            System.out.println(e.getMessage());
         }
     }
 
@@ -87,7 +90,7 @@ public class GestionnaireListe {
         daoListe.setTacheToliste(listeId, tacheId);
     }
 
-    public void deleteTacheFromListe(String listId, String tacheId) {
-        daoListe.deleteTacheFromListe(listId, tacheId);
+    public Document getLastList() {
+        return daoListe.getLastList();
     }
 }

@@ -1,5 +1,5 @@
 // GoogleCalendarService.java
-package metier;
+package metier.Service;
 
 import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
 import com.google.api.client.auth.oauth2.Credential;
@@ -19,7 +19,6 @@ import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
 
-import java.awt.*;
 import java.net.URI;
 import java.net.InetSocketAddress;
 import java.io.IOException;
@@ -43,7 +42,7 @@ public class GoogleCalendarService {
     private static String code;
 
     private static Credential authorize() throws Exception {
-        InputStream in = GoogleCalendarService.class.getResourceAsStream("client_secret1.json");
+        InputStream in = GoogleCalendarService.class.getResourceAsStream("client_secret.json");
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
