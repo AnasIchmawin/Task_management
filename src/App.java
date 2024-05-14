@@ -41,13 +41,6 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-
-    
-
-
-
-
-
         // ListeFormController controller = new ListeFormController();
         // ListeFormView Seance = new ListeFormView();
         // Seance.start(primaryStage);
@@ -66,13 +59,12 @@ public class App extends Application {
         // LoginFormView login = new LoginFormView(primaryStage);
         // login.start(primaryStage);
 
-        addTacheview view = new addTacheview();
-        view.start(primaryStage);
+        // addTacheview view = new addTacheview();
+        // view.start(primaryStage);
 
         // ProjetDetailController con = new ProjetDetailController() ;
         // Projet_Detail_View view = new Projet_Detail_View(con) ;
         // view.start(primaryStage) ;
-
 
         // SeanceFormView seance = new SeanceFormView();
         // seance.start(primaryStage);
@@ -80,24 +72,29 @@ public class App extends Application {
         // SeanceFormView view = new SeanceFormView();
         // view.start(primaryStage);
 
-        // ProjetDetailController con = new ProjetDetailController();
-        // Projet_Detail_View view = new Projet_Detail_View(con);
-        // view.start(primaryStage);
+
+        Projet_Detail_View view = new Projet_Detail_View();
+        view.start(primaryStage);
 
         // SceanceAjouteView view = new SceanceAjouteView();
         // view.start(primaryStage);
         
-        // TachesFormView view = new TachesFormView() ;
-        // view.start(primaryStage) ;
+        TachesFormView view = new TachesFormView() ;
+        view.start(primaryStage) ;
 
         // SceanceFormController con = new SceanceFormController() ;
         // SeanceFormView view = new SeanceFormView(con) ;
         // view.start(primaryStage) ;
-      
-        // AddDocumentView view = new AddDocumentView() ;
+
+        // addTacheview vue = new addTacheview() ;
+        // ControllerFromTacheAjout con = new ControllerFromTacheAjout(vue) ;
+        // AddDocumentView view = new AddDocumentView(con) ;
         // view.start(primaryStage) ;
 
 
+        // presentation.tache_detail.screen view = new presentation.tache_detail.screen() ;
+        // presentation.tache_detail.controleur con = new presentation.tache_detail.controleur(view, null) ;
+        // view.start(primaryStage) ;
     }
 
     public static void main(String[] args) {
