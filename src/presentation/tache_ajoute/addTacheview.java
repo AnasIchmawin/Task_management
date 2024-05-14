@@ -26,6 +26,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import metier.Errors.NonValidList;
+import presentation.taches.TachesFormController;
 import javafx.scene.control.ComboBox;
 //mod
 public class addTacheview {
@@ -40,9 +41,9 @@ public class addTacheview {
     private DatePicker dateFin;
     private TextField TempsDebut;
     private TextField TempsFin;
-    private Button Enregistrer;
+    // private Button Enregistrer;
     private Button Annuler;
-    private Button Ajouter;
+    private Button Sauvegarder;
     private Button leftButton;
     private Button listesButton;
     private Button projectsButton;
@@ -55,6 +56,13 @@ public class addTacheview {
 
     public addTacheview() {
         this.controller = new ControllerFromTacheAjout(this);
+        init();
+        style();
+        action();
+    }
+
+    public addTacheview(TachesFormController controller) {
+        this.controller = new ControllerFromTacheAjout(this, controller);
         init();
         style();
         action();
@@ -80,9 +88,9 @@ public class addTacheview {
 
     
     public void init() {
-        Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 20, 20);
+        // Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 20, 20);
         Annuler = createButtonWithIcon("Annuler", "file:./Pictures/annuler.png", 20, 20);
-        Ajouter = createButtonWithIcon("Ajouter", "file:./Pictures/add.png", 20, 20);
+        Sauvegarder = createButtonWithIcon("Ajouter", "file:./Pictures/add.png", 20, 20);
         leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
         listesButton = createButton("Listes");
         projectsButton = createButton("Projets");
@@ -93,9 +101,9 @@ public class addTacheview {
     }
 
     private void style() {
-        Ajouter.getStyleClass().add("footBtn-style");
+        Sauvegarder.getStyleClass().add("footBtn-style");
         Annuler.getStyleClass().add("footBtn-style");
-        Enregistrer.getStyleClass().add("footBtn-style");
+        // Enregistrer.getStyleClass().add("footBtn-style");
         leftButton.getStyleClass().add("left-btn-style");
         listesButton.getStyleClass().add("button-style");
         projectsButton.getStyleClass().add("button-style");
@@ -197,7 +205,7 @@ public class addTacheview {
         Label labelDocs = createLabel("Documents Ajoutés");
         VBox ZoneDocuments = createDocumentsSection();
         contenaireDocuments.getChildren().addAll(labelDocs, ZoneDocuments);
-        HBox buttons = new HBox(10, Ajouter, Enregistrer, Annuler);
+        HBox buttons = new HBox(10, Sauvegarder, Annuler);
 
         leftBox.getChildren().add(labelTitle);
         leftBox.getChildren().add(titreField);
@@ -359,12 +367,12 @@ public class addTacheview {
         ajouterDocButton.setOnAction(event -> {
             this.controller.handleAjouterButtonAction();
         });
-        Ajouter.setOnAction(event -> {
+        Sauvegarder.setOnAction(event -> {
             this.controller.handleSauvegarderButtonAction();
         });
-        Enregistrer.setOnAction(event -> {
-            this.controller.handleUpdateButtonAction();
-        });
+        // Enregistrer.setOnAction(event -> {
+        //     this.controller.handleUpdateButtonAction();
+        // });
         Annuler.setOnAction(event -> {
             try {
                 this.controller.closerWindow(event);

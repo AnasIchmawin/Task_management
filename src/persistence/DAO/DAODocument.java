@@ -20,7 +20,10 @@ public class DAODocument {
             Document doc = new Document("titre", titre)
                     .append("description", description)
                     .append("path", path)
-                    .append("datedAjout", datedAjout);
+                    .append("datedAjout", datedAjout)
+                    .append("idProjet", idProjet)
+                    .append("idTache", idTache)
+                    .append("idSeance", idSeance);
             collection.insertOne(doc);
         } catch (Exception e) {
             System.err.println("Erreur lors de la création du document : " + e.getMessage());
@@ -78,5 +81,17 @@ public class DAODocument {
             System.err.println("Erreur lors de la récupération de tous les documents : " + e.getMessage());
         }
         return allDocuments;
+    }
+
+    //getIdLastDoc
+    public String getIdLastDoc() {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("documents");
+            Document doc = collection.find().sort(new Document("_id", -1)).first();
+            return doc.get("_id").toString();
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération de l'id du dernier document : " + e.getMessage());
+            return null;
+        }
     }
 }

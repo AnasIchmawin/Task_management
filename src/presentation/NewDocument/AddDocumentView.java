@@ -17,6 +17,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import presentation.tache_detail.controleur;
 import presentation.projet_detail.ProjetDetailController;
+import presentation.tache_ajoute.ControllerFromTacheAjout;
 
 public class AddDocumentView extends Application {
     private BorderPane root;
@@ -37,7 +38,6 @@ public class AddDocumentView extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        controller = new AddDocumentController(this);
         root = new BorderPane();
         VBox mainBox = createMainBox();
         mainBox.setStyle("-fx-background-color: #112D4E;");
@@ -50,8 +50,9 @@ public class AddDocumentView extends Application {
         primaryStage.show();
     }
 
-    public AddDocumentView(ProjetDetailController controller, String idProjet) {
-        this.idProjet = idProjet;
+    public AddDocumentView(ProjetDetailController controleur) {
+        this.controller = new AddDocumentController(this, controleur);
+
     }
 
     public AddDocumentView(controleur controller, String idTache) {
@@ -62,7 +63,8 @@ public class AddDocumentView extends Application {
         this.idSeance = idSeance;
     }
 
-    public AddDocumentView() {
+    public AddDocumentView(ControllerFromTacheAjout controllerFromTacheAjout) {
+        this.controller = new AddDocumentController(this, controllerFromTacheAjout);
     }
 
     private VBox createMainBox() {

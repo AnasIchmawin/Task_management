@@ -21,4 +21,8 @@ public class GetDocModel {
         ListOfDocuments.put(id, task);
     }
     
+    //setIdTitreDocument
+    public void setIdTitreDocument(String id, String titre) {
+        ListOfDocuments.put(id, titre);
+    }
 }

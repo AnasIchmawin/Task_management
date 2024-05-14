@@ -163,4 +163,29 @@ public class DAOListe {
                 }
                 return null;
         }
+
+        public void setTacheToliste(String listeId, String tacheId) {
+                try {
+                    MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                            .getCollection("listes");
+                    
+                    // Convert listeId to ObjectId
+                    ObjectId objectId = new ObjectId(listeId);
+                    
+                    Document liste = collection.find(Filters.eq("_id", objectId)).first();
+                    if (liste != null) {
+                        List<Document> taches = (List<Document>) liste.get("taches");
+                        if (taches != null) {
+                            Document tache = new Document();
+                            tache.append("id", tacheId).append("checked", false);
+                            taches.add(tache);
+                            collection.updateOne(Filters.eq("_id", objectId), new Document("$set", new Document("taches", taches)));
+                        }
+                    } else {
+                        System.err.println("List not found with ID: " + listeId);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error adding task to the list: " + e.getMessage());
+                }
+            }
 }

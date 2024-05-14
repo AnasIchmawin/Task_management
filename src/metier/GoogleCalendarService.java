@@ -33,6 +33,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import presentation.GetTaskFromCalendar.Item;
+import java.awt.Desktop;
 
 public class GoogleCalendarService {
     private static final String APPLICATION_NAME = "Task-Management";
@@ -55,7 +56,6 @@ public class GoogleCalendarService {
                 .setRedirectUri("http://localhost:8000");
         URI uri = new URI(authorizationUrl.build());
         Desktop.getDesktop().browse(uri);
-
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/", new HttpHandler() {
             @Override
@@ -85,9 +85,10 @@ public class GoogleCalendarService {
             Thread.sleep(100);
         }
 
-        GoogleTokenResponse response = flow.newTokenRequest(code)
+        GoogleTokenResponse response = flow.newTokenRequest(code) //////////////////////////////////////////////////////////////////////////
                 .setRedirectUri("http://localhost:8000")
                 .execute();
+
 
         server.stop(0);
 
@@ -99,7 +100,6 @@ public class GoogleCalendarService {
         Calendar service = new Calendar.Builder(GoogleNetHttpTransport.newTrustedTransport(), JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
-
         Events events = service.events().list("primary")
                 .setMaxResults(10)
                 .setOrderBy("startTime")

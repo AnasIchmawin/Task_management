@@ -23,9 +23,9 @@ public class DAOTache {
         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("taches");
         Document doc = new Document()
                 .append("titre", titre)
-                .append("etat", etat)
                 .append("categorie", categorie)
                 .append("description", description)
+                .append("etat", etat)
                 .append("dateDebut", dateDebut)
                 .append("TempsDebut", TempsDebut)
                 .append("dateFin", dateFin)
@@ -191,6 +191,23 @@ public class DAOTache {
             collection.updateOne(Filters.eq("_id", objectId), Updates.set("etat", etat));
         } catch (Exception e) {
             System.err.println("Error setting the state of the task: " + e.getMessage());
+        }
+    }
+
+    //getLastTacheId
+    public String getLastTacheId() {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            Document lastTache = collection.find().sort(new Document("_id", -1)).first();
+            if (lastTache != null) {
+                return lastTache.getObjectId("_id").toString();
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Error getting the last task ID: " + e.getMessage());
+            return null;
         }
     }
 

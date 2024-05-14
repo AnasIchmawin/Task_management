@@ -21,6 +21,7 @@ import presentation.archive.ArchiveFormView;
 import presentation.listes.ListeFormController;
 import presentation.listes.ListeFormView;
 import presentation.projets.ProjetsFormView;
+import presentation.tache_ajoute.addTacheview;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -45,8 +46,8 @@ public class TachesFormController {
     }
 
     public void handleAjouterButtonAction() {
-        System.out.println("Ajouter tache");
-    }
+        addTacheview view = new addTacheview(this);
+        view.start(new Stage());    }
 
     // handleOrdonnerButtonAction
     public void handleOrdonnerButtonAction() {

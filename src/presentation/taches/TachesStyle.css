@@ -115,12 +115,14 @@
 .description-label {
     -fx-font-size: 25px; /* Taille de la police */
     -fx-font-weight: bold; /* Gras */
-    -fx-background-color: #3F72AF; /* Couleur de fond */
+    
 }
 
 .description-style {
     -fx-font-size: 16px;
     -fx-focus-color: transparent;
+    -fx-background-color: transparent;
+    -fx-control-inner-background: #f0f0f0;
 }
 
 .google-calendar-style{

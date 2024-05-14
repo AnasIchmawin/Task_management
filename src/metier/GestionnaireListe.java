@@ -81,4 +81,9 @@ public class GestionnaireListe {
     public List<Document> getAllLists() {
         return daoListe.getAllLists();
     }
+
+    //setTacheToliste
+    public void setTacheToListe(String listeId, String tacheId) {
+        daoListe.setTacheToliste(listeId, tacheId);
+    }
 }

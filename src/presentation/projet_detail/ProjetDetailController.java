@@ -1,16 +1,34 @@
 package presentation.projet_detail;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.stage.Stage;
+import presentation.GetDocument.GetDocModel;
+import presentation.NewDocument.AddDocumentView;
+import presentation.tache_ajoute.addTacheview;
+import presentation.projet_detail.Projet_Detail_View;
 
 public class ProjetDetailController {
 
+    private GetDocModel model;
+    private Projet_Detail_View view;
+
+    public ProjetDetailController(Projet_Detail_View view){
+        this.model = new GetDocModel();
+        this.view = view;
+
+    }
     
     public void handleAjouterButtonAction(GridPane gridPane) {
         Button newListButton = new Button("Seance  1");
@@ -27,19 +45,59 @@ public class ProjetDetailController {
     public void handleSaveButton(GridPane gridPane) {
         // Save button;
     }
+    public void handleAjouterDocButtonAction() {
+        System.out.println("Ajouter Button Clicked");
+        AddDocumentView adddoc = new AddDocumentView(this);
+        Stage stage = new Stage();
+        adddoc.start(stage);
+    }
 
+    public void addDocToTache(String id, String doc) {
+        this.model.addDocumentToSeance(id, doc);
+        System.out.println("Document added to Tache: " + doc);
+        displayDocuments();
+    }
 
+    public void displayDocuments() {
+        List<String> mesDocs = new ArrayList<>(this.model.getListOfDocuments().values());
 
+        this.view.getZoneDocuments().getChildren().clear();
 
+        for (String doc : mesDocs) {
+            Button newTaskButton = createDocButton(doc);
+            int colIndex = this.view.getZoneDocuments().getChildren().size() % 6; 
+                                                                                              
+            int rowIndex = this.view.getZoneDocuments().getChildren().size() / 6; 
+            this.view.getZoneDocuments().add(newTaskButton, colIndex, rowIndex);
+        }
+    }
+    private Button createDocButton(String doc) {
+        Button newTaskButton = new Button(doc);
+        newTaskButton.setStyle("-fx-background-color: #112D4E; " +
+                "-fx-background-radius: 10px; " +
+                "-fx-min-width: 50px; " +
+                "-fx-max-height: 20px;" +
+                "-fx-text-fill: #ffffff;" +
+                "-fx-font-size: 18px;");
 
+        try {
+            Image listIcon = new Image("file:./Pictures/document.png");
+            ImageView listIconView = new ImageView(listIcon);
+            listIconView.setFitWidth(15);
+            listIconView.setFitHeight(15);
+            newTaskButton.setGraphic(listIconView);
+        } catch (Exception e) {
+            System.out.println("Erreur de chargement de l'icône de la liste : " + e.getMessage());
+        }
 
-
+        return newTaskButton;
+    }
 
 
     //handleajouterTacheButtonAction
     public void handleAjouterTacheButtonAction(GridPane gridPane) {
-        Button deleteButton = new Button("");
-        Button cloneButton = new Button("");
+        Button deleteButton = createButtonWithIcon("", "file:./Pictures/delete.png", 15, 15);
+        Button cloneButton = createButtonWithIcon("", "file:./Pictures/cloner.png", 15, 15);
             CheckBox taskCheckBox = new CheckBox("taskName");
             taskCheckBox.setStyle("-fx-background-color: #112D4E; " +
                     "-fx-background-radius: 10px; " +
@@ -130,6 +188,24 @@ public class ProjetDetailController {
                     }
                 }
             });
+    }
+
+    private Button createButtonWithIcon(String name, String string, int i, int j) {
+        Button button = new Button(name);
+        try {
+            Image icon = new Image(string);
+            ImageView iconView = new ImageView(icon);
+            iconView.setFitWidth(i);
+            iconView.setFitHeight(j);
+            button.setGraphic(iconView);
+        } catch (Exception e) {
+            System.out.println("Error loading the icon: " + e.getMessage());
+        }
+        return button;
+    }
+
+    public void setIdTitreDocument(String id, String titre) {
+        this.model.setIdTitreDocument(id, titre);
     }
 
 }

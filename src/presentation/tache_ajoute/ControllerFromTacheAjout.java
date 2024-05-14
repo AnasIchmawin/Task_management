@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 // import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import metier.GestionnaireListe;
 // import metier.GestionnaireProjet;
 // import metier.GestionnaireSeance;
 import metier.GestionnaireTache;
@@ -21,7 +22,8 @@ import metier.GestionnaireTache;
 import metier.POJOTache;
 // import metier.Errors.NonValidList;
 import presentation.GetDocument.GetDocModel;
-import presentation.GetDocument.GetDocView;
+import presentation.NewDocument.AddDocumentView;
+import presentation.NewDocument.AddDocumentController;
 // import presentation.GetDocument.GetDocView;
 // import presentation.GetDocument.GetDocView;
 // import org.bson.Document;
@@ -31,6 +33,8 @@ import presentation.archive.ArchiveFormView;
 // import presentation.listes.ListeFormController;
 import presentation.listes.ListeFormView;
 import presentation.projets.ProjetsFormView;
+import presentation.taches.TachesFormController;
+
 // import presentation.seance_ajoute.SceanceAjouteView;
 // import presentation.archive.ArchiveFormController;
 // import presentation.archive.ArchiveFormView;
@@ -42,14 +46,29 @@ import java.util.List;
 
 public class ControllerFromTacheAjout {
     private GestionnaireTache gestionnaireTache;
+    private TachesFormController tachesFormController;
+    private GestionnaireListe gestionnaireListe;
     private addTacheview addTacheview;
     private GetDocModel model;
+    private ModuleFromTacheAjout moduleFromTacheAjout;
 
 
     public ControllerFromTacheAjout(addTacheview addTacheview) {
         this.addTacheview = addTacheview;
         this.model = new GetDocModel();
         this.gestionnaireTache = new GestionnaireTache();
+        this.moduleFromTacheAjout = new ModuleFromTacheAjout("");
+        this.gestionnaireListe = new GestionnaireListe();
+
+    }
+
+    public ControllerFromTacheAjout(addTacheview addTacheview, TachesFormController tachesFormController) {
+        this.tachesFormController = tachesFormController;
+        this.addTacheview = addTacheview;
+        this.model = new GetDocModel();
+        this.moduleFromTacheAjout = new ModuleFromTacheAjout(tachesFormController.getListId());
+        this.gestionnaireTache = new GestionnaireTache();
+        this.gestionnaireListe = new GestionnaireListe();
 
     }
 
@@ -73,7 +92,7 @@ public class ControllerFromTacheAjout {
 
     public void handleAjouterButtonAction() {
         System.out.println("Ajouter Button Clicked");
-        GetDocView view = new GetDocView(this);
+        AddDocumentView view = new AddDocumentView(this);
         Stage stage = new Stage();
         view.start(stage);
     }
@@ -85,10 +104,13 @@ public class ControllerFromTacheAjout {
     public void addDocToTache(String id, String doc) {
         this.model.addDocumentToSeance(id, doc);
         System.out.println("Document added to Tache: " + doc);
+        displayDocuments();
     }
 
     public void displayDocuments() {
         List<String> mesDocs = new ArrayList<>(this.model.getListOfDocuments().values());
+
+        this.addTacheview.getZoneDocuments().getChildren().clear();
 
         for (String doc : mesDocs) {
             Button newTaskButton = createDocButton(doc);
@@ -133,14 +155,18 @@ public class ControllerFromTacheAjout {
                 List<String> IdsDoc = this.model.getListOfDocuments().keySet().stream().toList();
                 Boolean etat = false;  // Assuming false as default
                 String projet = "";    // Empty string as default
-                String liste = "";     // Empty string as default
+                String liste = moduleFromTacheAjout.getIdListe();
+                               
                 
-                
-            POJOTache tache = new POJOTache(titre, etat,categorie, description, dateDebut, TempsDebut , dateFin, TempsFin,
-                IdsDoc, projet , liste);
-            this.gestionnaireTache.setTache(tache);
-            this.gestionnaireTache.createTache();
-            alert("Tache créée", "La tache a été créée avec succès");
+                POJOTache tache = new POJOTache(titre, etat,categorie, description, dateDebut, TempsDebut , dateFin, TempsFin,
+                    IdsDoc, projet , liste);
+                this.gestionnaireTache.setTache(tache);
+                this.gestionnaireTache.createTache();
+                if (liste != "") {
+                    String tacheId = this.gestionnaireTache.getLastTacheId();
+                    gestionnaireListe.setTacheToListe(liste,tacheId); 
+                }
+                alert("Tache créée", "La tache a été créée avec succès");
 
         } catch (Exception e) {
             Alert alert = new Alert(AlertType.ERROR);
@@ -149,35 +175,35 @@ public class ControllerFromTacheAjout {
             alert.showAndWait();
         }
     }
-    public void handleUpdateButtonAction() {
-        try {
+    // public void handleUpdateButtonAction() {
+    //     try {
                 
-                String titre = this.addTacheview.gettitre();
-                String dateDebut = this.addTacheview.getDateDebut();
-                String TempsDebut = this.addTacheview.getTempsDebut();
-                String dateFin = this.addTacheview.getDateFin();
-                String TempsFin = this.addTacheview.getTempsFin();
-                String description = this.addTacheview.getDescription();
-                String categorie = this.addTacheview.getCategorie();
-                List<String> IdsDoc = this.model.getListOfDocuments().keySet().stream().toList();
-                Boolean etat = false;  // Assuming false as default
-                String projet = "";    // Empty string as default
-                String liste = "";     // Empty string as default
+    //             String titre = this.addTacheview.gettitre();
+    //             String dateDebut = this.addTacheview.getDateDebut();
+    //             String TempsDebut = this.addTacheview.getTempsDebut();
+    //             String dateFin = this.addTacheview.getDateFin();
+    //             String TempsFin = this.addTacheview.getTempsFin();
+    //             String description = this.addTacheview.getDescription();
+    //             String categorie = this.addTacheview.getCategorie();
+    //             List<String> IdsDoc = this.model.getListOfDocuments().keySet().stream().toList();
+    //             Boolean etat = false;  // Assuming false as default
+    //             String projet = "";    // Empty string as default
+    //             String liste = "";     // Empty string as default
                 
                 
-            POJOTache tache = new POJOTache(titre, etat,categorie, description, dateDebut, TempsDebut , dateFin, TempsFin,
-                IdsDoc, projet , liste);
-            this.gestionnaireTache.setTache(tache);
-            this.gestionnaireTache.updateTask();
-            alert("Tache créée", "La tache a été créée avec succès");
+    //         POJOTache tache = new POJOTache(titre, etat,categorie, description, dateDebut, TempsDebut , dateFin, TempsFin,
+    //             IdsDoc, projet , liste);
+    //         this.gestionnaireTache.setTache(tache);
+    //         this.gestionnaireTache.updateTask();
+    //         alert("Tache créée", "La tache a été créée avec succès");
 
-        } catch (Exception e) {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("Erreur lors de la création de la tache : les champs ne sont pas valides");
-            alert.showAndWait();
-        }
-    }
+    //     } catch (Exception e) {
+    //         Alert alert = new Alert(AlertType.ERROR);
+    //         alert.setTitle("Erreur");
+    //         alert.setHeaderText("Erreur lors de la création de la tache : les champs ne sont pas valides");
+    //         alert.showAndWait();
+    //     }
+    // }
 
        public void closerWindow(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -195,6 +221,10 @@ public class ControllerFromTacheAjout {
         PauseTransition delay = new PauseTransition(Duration.seconds(1));
         delay.setOnFinished(e -> alert.close()); 
         delay.play();
+    }
+
+    public void setIdTitreDocument(String id, String titre) {
+        this.model.setIdTitreDocument(id, titre);
     }
 
 

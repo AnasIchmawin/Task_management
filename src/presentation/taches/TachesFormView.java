@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -268,7 +269,7 @@ public class TachesFormView extends Application {
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
         scrollPane.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide vertical scrollbar
+        // scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide vertical scrollbar
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide horizontal scrollbar
         scrollPane.setPadding(new Insets(0, 50, 0, 50));
         return scrollPane;
@@ -293,11 +294,12 @@ public class TachesFormView extends Application {
     }
 
     private VBox BoxDescription(String description) {
-        Label descriptionLabel = new Label(description);
+        TextArea descriptionLabel = new TextArea(description);
         descriptionLabel.getStyleClass().add("description-style");
         descriptionLabel.setWrapText(true);
         VBox vbox = new VBox();
-        vbox.setPrefHeight(250);
+        vbox.setPrefHeight(340);
+        vbox.setPrefWidth(1000);
         vbox.getChildren().addAll(descriptionLabel);
         return vbox;
     }
