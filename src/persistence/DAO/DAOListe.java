@@ -177,7 +177,7 @@ public class DAOListe {
                         List<Document> taches = (List<Document>) liste.get("taches");
                         if (taches != null) {
                             Document tache = new Document();
-                            tache.append("id", tacheId).append("checked", false);
+                            tache.append("id", tacheId);
                             taches.add(tache);
                             collection.updateOne(Filters.eq("_id", objectId), new Document("$set", new Document("taches", taches)));
                         }
@@ -188,4 +188,32 @@ public class DAOListe {
                     System.err.println("Error adding task to the list: " + e.getMessage());
                 }
             }
+
+        public void deleteTacheFromListe(String listId, String tacheId) {
+                try {
+                    MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                            .getCollection("listes");
+                    
+                    // Convert listId to ObjectId
+                    ObjectId objectId = new ObjectId(listId);
+                    
+                    Document liste = collection.find(Filters.eq("_id", objectId)).first();
+                    if (liste != null) {
+                        List<Document> taches = (List<Document>) liste.get("taches");
+                        if (taches != null) {
+                            for (Document tache : taches) {
+                                if (tache.getString("id").equals(tacheId)) {
+                                    taches.remove(tache);
+                                    break;
+                                }
+                            }
+                            collection.updateOne(Filters.eq("_id", objectId), new Document("$set", new Document("taches", taches)));
+                        }
+                    } else {
+                        System.err.println("List not found with ID: " + listId);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error deleting task from the list: " + e.getMessage());
+                }
+        }
 }

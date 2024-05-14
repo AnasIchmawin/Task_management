@@ -1,9 +1,5 @@
 package presentation.archive;
 
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import presentation.listes.ListeFormView;
 import presentation.projets.ProjetsFormView;

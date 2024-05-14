@@ -60,6 +60,10 @@ public class TachesFormModel {
         displayedTasksEtat.put(id, etat);
     }
 
+    public Boolean getTaskEtat(String id) {
+        return displayedTasksEtat.get(id);
+    }
+
     public void removeTaskEtat(String id) {
         displayedTasksEtat.remove(id);
     }

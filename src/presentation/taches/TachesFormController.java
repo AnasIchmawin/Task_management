@@ -26,14 +26,13 @@ import presentation.tache_ajoute.addTacheview;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 public class TachesFormController {
     private TachesFormView tacheView;
     private static TachesFormModel tacheModel;
-    private GestionnaireTache gestionnaireTache;
-    private GestionnaireListe gestionnaireListe;
+    private static GestionnaireTache gestionnaireTache;
+    private static GestionnaireListe gestionnaireListe;
     private String dateTaskFormated;
-    private ListeFormController listeFormController;
+    private static ListeFormController listeFormController;
 
     @SuppressWarnings("static-access")
     public TachesFormController(TachesFormView tacheView, ListeFormController listeFormController) {
@@ -47,7 +46,12 @@ public class TachesFormController {
 
     public void handleAjouterButtonAction() {
         addTacheview view = new addTacheview(this);
-        view.start(new Stage());    }
+        view.start(new Stage());   
+    }
+
+    public void handleSaveButtonAction() {
+        // gestionnaireTache.updateTask(getListId(), );//id,title,description
+    }
 
     // handleOrdonnerButtonAction
     public void handleOrdonnerButtonAction() {
@@ -84,7 +88,7 @@ public class TachesFormController {
 
         configureButtons(gridPane, cloneButton, deleteButton, taskButton, taskCheckBox, isChecked, tacheId);
         setTaskRow(gridPane, deleteButton, cloneButton, taskCheckBox, taskButton);
-
+        updateTaskState(taskCheckBox, deleteButton, cloneButton, tacheId, isChecked);
         configureTaskCheckBoxListener(taskCheckBox, deleteButton, cloneButton, tacheId);
     }
 
@@ -137,18 +141,26 @@ public class TachesFormController {
     // Configuration des éléments
     private static void configureButtons(GridPane gridPane, Button cloneButton, Button deleteButton, Button taskButton,
             CheckBox taskCheckBox, Boolean isChecked, String tacheId) {
-        configureDeleteButton(gridPane, deleteButton, cloneButton, taskCheckBox);
-        configureCloneButton(gridPane, cloneButton, isChecked, tacheId);
+        configureDeleteButton(gridPane, deleteButton, cloneButton, taskCheckBox, tacheId);
+        configureCloneButton(gridPane, cloneButton, tacheId);
         configureTaskButton(gridPane, taskButton);
     }
 
     private static void configureDeleteButton(GridPane gridPane, Button deleteButton, Button cloneButton,
-            CheckBox taskCheckBox) {
-        deleteButton.setOnAction(e -> removeTask(gridPane, taskCheckBox, deleteButton, cloneButton));
+            CheckBox taskCheckBox, String tacheId) {
+        deleteButton.setOnAction(e -> {
+            removeTask(gridPane, taskCheckBox, deleteButton, cloneButton);
+            gestionnaireTache.deleteTask(tacheId);
+            gestionnaireListe.deleteTacheFromListe(listeFormController.getListId(), tacheId);
+        });
     }
 
-    private static void configureCloneButton(GridPane gridPane, Button cloneButton, Boolean isChecked, String tacheId) {
-        cloneButton.setOnAction(e -> createTask(gridPane, getnameTask(tacheId), isChecked, tacheId));
+    private static void configureCloneButton(GridPane gridPane, Button cloneButton, String tacheId) {
+        cloneButton.setOnAction(e -> {
+            createTask(gridPane, getnameTask(tacheId), tacheModel.getTaskEtat(tacheId), tacheId);
+            gestionnaireTache.cloneTask(tacheId);
+            gestionnaireListe.setTacheToListe(listeFormController.getListId(), gestionnaireTache.getLastTacheId());
+        });
     }
 
     private static void configureTaskButton(GridPane gridPane, Button taskButton) {
@@ -284,7 +296,7 @@ public class TachesFormController {
     }
 
     private LinkedHashMap<String, String> getTacheMap() {
-        LinkedHashMap<String, Boolean> taches = gestionnaireListe.getTaches(this.listeFormController.getListId());
+        LinkedHashMap<String, Boolean> taches = gestionnaireListe.getTaches(TachesFormController.listeFormController.getListId());
 
         LinkedHashMap<String, String> tacheMap = new LinkedHashMap<>();
         for (String tacheId : taches.keySet()) {
@@ -320,15 +332,20 @@ public class TachesFormController {
     }
 
     public static void setTaskEtat(String tacheId, Boolean etat) {
+        gestionnaireTache.setTaskEtat(tacheId, etat);
         tacheModel.addTaskEtat(tacheId, etat);
     }
 
     public String getListTitle() {
-        return gestionnaireListe.getListTitle(this.listeFormController.getListId());
+        return gestionnaireListe.getListTitle(TachesFormController.listeFormController.getListId());
     }
 
     public String getListDescription() {
-        return gestionnaireListe.getListDescription(this.listeFormController.getListId());
+        return gestionnaireListe.getListDescription(TachesFormController.listeFormController.getListId());
+    }
+
+    public String getListId() {
+        return TachesFormController.listeFormController.getListId();
     }
 
     public void handleConfirmerButtonAction() {

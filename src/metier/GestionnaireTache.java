@@ -71,6 +71,7 @@ public class GestionnaireTache {
         }
     }
 
+
     public static boolean validateTime(String time) {
         try {
             LocalTime parsedTime = LocalTime.parse(time);
@@ -110,8 +111,8 @@ public class GestionnaireTache {
     
 
     // Delete
-    public void deleteTask(Integer id) {
-        daoTache.delete(id);
+    public void deleteTask(String tacheId) {
+        daoTache.delete(tacheId);
     }
     // GetAllTask
     public List<Document> getAllTasks() {
@@ -142,4 +143,9 @@ public class GestionnaireTache {
     public String getLastTacheId() {
         return daoTache.getLastTacheId();
     }
+
+    public void cloneTask(String tacheId) {
+        daoTache.cloneTask(tacheId);
+    }
+
 }

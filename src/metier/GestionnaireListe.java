@@ -86,4 +86,8 @@ public class GestionnaireListe {
     public void setTacheToListe(String listeId, String tacheId) {
         daoListe.setTacheToliste(listeId, tacheId);
     }
+
+    public void deleteTacheFromListe(String listId, String tacheId) {
+        daoListe.deleteTacheFromListe(listId, tacheId);
+    }
 }

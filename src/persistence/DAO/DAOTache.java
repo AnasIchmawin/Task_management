@@ -108,11 +108,14 @@ public class DAOTache {
     }
 
     // Delete
-    public void delete(Integer id) {
+    public void delete(String tacheId) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("taches");
-            collection.deleteOne(Filters.eq("id", id));
+            // Convertir tacheId en ObjectId
+            ObjectId objectId = new ObjectId(tacheId);
+            // Supprimer la tâche correspondante à l'ID spécifié
+            collection.deleteOne(Filters.eq("_id", objectId));
         } catch (Exception e) {
             System.err.println("Erreur lors de la suppression de la tâche : " + e.getMessage());
         }
@@ -210,5 +213,28 @@ public class DAOTache {
             return null;
         }
     }
+
+
+
+
+    public void cloneTask(String tacheId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            Document tache = read(tacheId);
+            if (tache != null) {
+                Document clone = new Document(tache);
+                clone.remove("_id");
+                //change the title of the cloned task
+                clone.append("titre", tache.getString("titre"));
+                collection.insertOne(clone);
+            } else {
+                System.err.println("Task not found with ID: " + tacheId);
+            }
+        } catch (Exception e) {
+            System.err.println("Error cloning the task: " + e.getMessage());
+        }
+    }
+    
 
 }
