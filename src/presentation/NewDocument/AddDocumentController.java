@@ -49,29 +49,38 @@ public class AddDocumentController {
         String idProjet = view.getIdProjet();
         String idTache = view.getIdTache();
         String idSeance = view.getIdSeance();
-        System.out.println("Titre : " + titre);
-        System.out.println("URL : " + url);
-        System.out.println("Description : " + desc);
-        System.out.println("Date d'insertion : " + dateInsertion);
-        System.out.println("ID Projet : " + idProjet);
-        System.out.println("ID Tache : " + idTache);
-        System.out.println("ID Seance : " + idSeance);
-        Platform.runLater(() -> {
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Information");
-            alert.setHeaderText(null);
-            alert.setContentText("Document enregistré avec succès !");
-            alert.showAndWait().ifPresent(response -> {
-                if (response == ButtonType.OK) {
-                    view.close(); // Ferme la fenêtre
-                }
+    
+        // Vérifiez si l'URL est accessible
+        if (gestionnaireDocument.isUrlAccessible(url)) {
+            System.out.println("L'URL est accessible.");
+            Platform.runLater(() -> {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Document enregistré avec succès !");
+                alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                        view.close(); // Ferme la fenêtre
+                    }
+                });
             });
-        });
-        POJODocument document = new POJODocument(titre, url, desc, dateInsertion, idProjet, idTache, idSeance);
-        this.gestionnaireDocument.setPojoDocument(document);
-        this.gestionnaireDocument.creerDocument();
-        controllerFromTacheAjout.addDocToTache(this.gestionnaireDocument.getIdLastDoc(),titre);
+    
+            POJODocument document = new POJODocument(titre, url, desc, dateInsertion, idProjet, idTache, idSeance);
+            this.gestionnaireDocument.setPojoDocument(document);
+            this.gestionnaireDocument.creerDocument();
+            controllerFromTacheAjout.addDocToTache(this.gestionnaireDocument.getIdLastDoc(), titre);
+        } else {
+            System.out.println("L'URL n'est pas accessible.");
+            Platform.runLater(() -> {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText(null);
+                alert.setContentText("L'URL fournie n'est pas accessible. Veuillez vérifier l'URL et réessayer.");
+                alert.showAndWait();
+            });
+        }
     }
+    
 
     public void close() {
         Platform.exit();

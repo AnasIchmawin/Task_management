@@ -20,7 +20,10 @@ public class DAODocument {
             Document doc = new Document("titre", titre)
                     .append("description", description)
                     .append("path", path)
-                    .append("datedAjout", datedAjout);
+                    .append("datedAjout", datedAjout)
+                    .append("idProjet", idProjet)
+                    .append("idTache", idTache)
+                    .append("idSeance", idSeance);
             collection.insertOne(doc);
         } catch (Exception e) {
             System.err.println("Erreur lors de la création du document : " + e.getMessage());
