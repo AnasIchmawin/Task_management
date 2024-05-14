@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 // import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import metier.GestionnaireListe;
 // import metier.GestionnaireProjet;
 // import metier.GestionnaireSeance;
 import metier.GestionnaireTache;
@@ -33,6 +34,8 @@ import presentation.archive.ArchiveFormView;
 // import presentation.listes.ListeFormController;
 import presentation.listes.ListeFormView;
 import presentation.projets.ProjetsFormView;
+import presentation.taches.TachesFormController;
+
 // import presentation.seance_ajoute.SceanceAjouteView;
 // import presentation.archive.ArchiveFormController;
 // import presentation.archive.ArchiveFormView;
@@ -44,14 +47,29 @@ import java.util.List;
 
 public class ControllerFromTacheAjout {
     private GestionnaireTache gestionnaireTache;
+    private TachesFormController tachesFormController;
+    private GestionnaireListe gestionnaireListe;
     private addTacheview addTacheview;
     private GetDocModel model;
+    private ModuleFromTacheAjout moduleFromTacheAjout;
 
 
     public ControllerFromTacheAjout(addTacheview addTacheview) {
         this.addTacheview = addTacheview;
         this.model = new GetDocModel();
         this.gestionnaireTache = new GestionnaireTache();
+        this.moduleFromTacheAjout = new ModuleFromTacheAjout("");
+        this.gestionnaireListe = new GestionnaireListe();
+
+    }
+
+    public ControllerFromTacheAjout(addTacheview addTacheview, TachesFormController tachesFormController) {
+        this.tachesFormController = tachesFormController;
+        this.addTacheview = addTacheview;
+        this.model = new GetDocModel();
+        this.moduleFromTacheAjout = new ModuleFromTacheAjout(tachesFormController.getListId());
+        this.gestionnaireTache = new GestionnaireTache();
+        this.gestionnaireListe = new GestionnaireListe();
 
     }
 
@@ -138,13 +156,17 @@ public class ControllerFromTacheAjout {
                 List<String> IdsDoc = this.model.getListOfDocuments().keySet().stream().toList();
                 Boolean etat = false;  // Assuming false as default
                 String projet = "";    // Empty string as default
-                String liste = "";     // Empty string as default
-                
+                String liste = moduleFromTacheAjout.getIdListe();
+                               
                 
                 POJOTache tache = new POJOTache(titre, etat,categorie, description, dateDebut, TempsDebut , dateFin, TempsFin,
                     IdsDoc, projet , liste);
                 this.gestionnaireTache.setTache(tache);
                 this.gestionnaireTache.createTache();
+                if (liste != "") {
+                    String tacheId = this.gestionnaireTache.getLastTacheId();
+                    gestionnaireListe.setTacheToListe(liste,tacheId); 
+                }
                 alert("Tache créée", "La tache a été créée avec succès");
 
         } catch (Exception e) {

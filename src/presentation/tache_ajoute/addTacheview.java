@@ -26,6 +26,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import metier.Errors.NonValidList;
+import presentation.taches.TachesFormController;
 import javafx.scene.control.ComboBox;
 //mod
 public class addTacheview {
@@ -55,6 +56,13 @@ public class addTacheview {
 
     public addTacheview() {
         this.controller = new ControllerFromTacheAjout(this);
+        init();
+        style();
+        action();
+    }
+
+    public addTacheview(TachesFormController controller) {
+        this.controller = new ControllerFromTacheAjout(this, controller);
         init();
         style();
         action();

@@ -96,7 +96,7 @@ public class GestionnaireTache {
     public void updateTask() {
 
         daoTache.update(
-            this.pojoTache.gettitre(),
+        this.pojoTache.gettitre(),
         this.pojoTache.getetat(),
         this.pojoTache.getCategorie(),
         this.pojoTache.getDescription(),
@@ -131,5 +131,15 @@ public class GestionnaireTache {
     // setTaskEtat
     public void setTaskEtat(String tacheId, Boolean etat) {
         daoTache.setEtat(tacheId, etat);
+    }
+
+    //setTaskListe
+    public void setTaskListe(String listeId) {
+        pojoTache.setliste(listeId);
+    }
+
+    //getLastTacheId
+    public String getLastTacheId() {
+        return daoTache.getLastTacheId();
     }
 }

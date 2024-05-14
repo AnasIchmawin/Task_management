@@ -194,4 +194,21 @@ public class DAOTache {
         }
     }
 
+    //getLastTacheId
+    public String getLastTacheId() {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            Document lastTache = collection.find().sort(new Document("_id", -1)).first();
+            if (lastTache != null) {
+                return lastTache.getObjectId("_id").toString();
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Error getting the last task ID: " + e.getMessage());
+            return null;
+        }
+    }
+
 }

@@ -181,7 +181,7 @@ public class TachesFormView extends Application {
 
         // Action for AjouterButton
         ajouterButton.setOnAction(event -> {
-            controller.handleAjouterButtonAction(ZoneListes, "Task" + (ZoneListes.getRowCount()));
+            controller.handleAjouterButtonAction();
         });
 
         ordonnerButton.setOnAction(event -> {
@@ -288,7 +288,7 @@ public class TachesFormView extends Application {
         descriptionLabel.getStyleClass().add("description-style");
         descriptionLabel.setWrapText(true);
         VBox vbox = new VBox();
-        vbox.setPrefHeight(330);
+        vbox.setPrefHeight(340);
         vbox.setPrefWidth(1000);
         vbox.getChildren().addAll(descriptionLabel);
         return vbox;

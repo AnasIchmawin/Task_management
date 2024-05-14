@@ -21,6 +21,7 @@ import presentation.GetTaskFromCalendar.GetTaskCalendar;
 import presentation.archive.ArchiveFormView;
 import presentation.listes.ListeFormView;
 import presentation.projets.ProjetsFormView;
+import presentation.tache_ajoute.addTacheview;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -51,8 +52,9 @@ public class TachesFormController {
     // this.tacheModel = new TachesFormModel(getTacheMap());
     // }
 
-    public static void handleAjouterButtonAction(GridPane gridPane, String taskName) {
-        
+    public void handleAjouterButtonAction() {
+        addTacheview view = new addTacheview(this);
+        view.start(new Stage());
     }
 
     // handleOrdonnerButtonAction
@@ -333,6 +335,11 @@ public class TachesFormController {
 
     public void setDateTaskFormated(String dateTaskFormated) {
         this.dateTaskFormated = dateTaskFormated;
+    }
+
+    //getlisteId
+    public String getListId() {
+        return listId;
     }
 
 }

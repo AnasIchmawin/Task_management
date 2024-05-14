@@ -9,7 +9,7 @@ public class POJOTache {
 
     private String titre;
     private String categorie;
-    Boolean etat;
+    private Boolean etat;
     private String description;
     private String dateDebut;
     private String TempsDebut;
