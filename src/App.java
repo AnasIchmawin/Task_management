@@ -41,17 +41,11 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        // ListeFormController controller = new ListeFormController();
-        ListeFormView Seance = new ListeFormView();
-        Seance.start(primaryStage);
 
-        // ProjetsFormView projets = new ProjetsFormView();
-        // projets.start(primaryStage);
+        ProjetsFormView projets = new ProjetsFormView();
+        projets.start(primaryStage);
 
         // ListeFormController controller = new ListeFormController();
-
-        // ListeFormView projets = new ListeFormView();
-        // projets.start(primaryStage);
 
         // ArchiveFormView archive = new ArchiveFormView();
         // archive.start(primaryStage);
@@ -73,8 +67,8 @@ public class App extends Application {
         // view.start(primaryStage);
 
 
-        Projet_Detail_View view = new Projet_Detail_View();
-        view.start(primaryStage);
+        // Projet_Detail_View view = new Projet_Detail_View();
+        // view.start(primaryStage);
 
         // SceanceAjouteView view = new SceanceAjouteView();
         // view.start(primaryStage);

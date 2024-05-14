@@ -35,8 +35,6 @@ public class ListeFormController {
             + "-fx-text-fill: #ffffff; "
             + "-fx-font-size: 18px;";
 
-
-
     public ListeFormController(ListeFormView listeFormView) {
         this.gestionnaireListe = new GestionnaireListe();
         this.listView = listeFormView;
@@ -97,6 +95,12 @@ public class ListeFormController {
                 rowCount++;
             }
         }
+    }
+
+    public void removeList(List<String> listId) {
+        gestionnaireListe.deleteList(listId);
+        listModel.removeList(listId);
+        displayAvailableLists(false);
     }
 
     public String getListId() {
@@ -207,5 +211,13 @@ public class ListeFormController {
             button.setStyle(BUTTON_STYLE);
             button.setCursor(javafx.scene.Cursor.DEFAULT);
         });
+    }
+
+    public void addList() {
+        Document list = gestionnaireListe.getLastList();
+        String id = list.getObjectId("_id").toString();
+        String titre = list.getString("titre");
+        listModel.addList(id, titre);
+        displayAvailableLists(false);
     }
 }

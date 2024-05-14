@@ -6,7 +6,6 @@ import metier.Errors.NonValidTache;
 import persistence.DAO.DAOTache;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 //mod
@@ -37,10 +36,10 @@ public class GestionnaireTache {
 
     // Create
     public void createTache() throws NonValidTache {
-        // if (this.pojoTache.gettitre() == null || this.pojoTache.getDateDebut() == null || this.pojoTache.getTempsDebut() == null
-        //         || this.pojoTache.getDateFin() == null || this.pojoTache.getTempsFin() == null) {
-        //     throw new NonValidTache("Tous les champs de la tache  doivent être remplis");
-        // }
+        if (this.pojoTache.gettitre() == null || this.pojoTache.getDateDebut() == null || this.pojoTache.getTempsDebut() == null
+                || this.pojoTache.getDateFin() == null || this.pojoTache.getTempsFin() == null) {
+            throw new NonValidTache("Tous les champs de la tache  doivent être remplis");
+        }
 
         if (!validateTache(this.pojoTache.getDateDebut(), this.pojoTache.getTempsDebut(), this.pojoTache.getDateFin(),
                 this.pojoTache.getTempsFin())) {
@@ -64,6 +63,7 @@ public class GestionnaireTache {
     public static boolean validateDate(String date) {
         try {
             // Vérifie si la date est dans le futur
+            @SuppressWarnings("unused")
             LocalDate parsedDate = LocalDate.parse(date);
             return true;
         } catch (Exception e) {
@@ -73,6 +73,7 @@ public class GestionnaireTache {
 
     public static boolean validateTime(String time) {
         try {
+            @SuppressWarnings("unused")
             LocalTime parsedTime = LocalTime.parse(time);
             return true;
         } catch (Exception e) {

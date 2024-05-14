@@ -32,10 +32,17 @@ public class AddListView {
     private StackPane containerContent;
 
     public AddListView(ListeFormController listeFormController) {
-        this.addListController = new AddListController(this, listeFormController);
         init();
         style();
         action();
+        this.addListController = new AddListController(this, listeFormController);
+    }
+
+    public AddListView(AddListController addListController) {
+        init();
+        style();
+        action();
+        this.addListController = new AddListController(this, addListController);
     }
 
     public void start(Stage primaryStage) {
@@ -48,12 +55,15 @@ public class AddListView {
     }
 
     private void init() {
-        Enregistrer = createButton("Enregistrer", "file:./Pictures/save.png", 13, 13);
-        Annuler = createButton("Annuler", "file:./Pictures/annuler.png", 20, 20);
+        Enregistrer = createButton("Enregistrer", "file:./Pictures/save.png",
+                13, 13);
+        Annuler = createButton("Annuler", "file:./Pictures/annuler.png",
+                20, 20);
         TitreField = createTextField("");
         ZoneDescription = createTextArea("", "ZoneDescription-Style");
         ZoneTaches = creatZoneTaches();
-        ajouterTacheButton = createButton("Ajouter Tache", "file:./Pictures/addIcon.png", 20, 20);
+        ajouterTacheButton = createButton("Ajouter Tache", "file:./Pictures/addIcon.png",
+                20, 20);
         containerContent = createMainContent();
         root = createBorderPane(containerContent);
     }
@@ -91,7 +101,8 @@ public class AddListView {
         VBox tasksContainer = createTasksContainer();
         HBox buttonsContainer = createButtonsContainer();
 
-        mainContentContainer.getChildren().addAll(topContainer, descriptionContainer, tasksContainer, buttonsContainer);
+        mainContentContainer.getChildren().addAll(topContainer, descriptionContainer,
+                tasksContainer, buttonsContainer);
 
         return mainContentContainer;
     }

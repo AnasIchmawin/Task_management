@@ -8,11 +8,15 @@ import java.util.Map;
 import org.bson.Document;
 
 import javafx.scene.Node;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import metier.GestionnaireListe;
 import presentation.listes.ListeFormController;
 
@@ -32,26 +36,8 @@ public class GetListsController {
         this.getListsView = getListsView;
         this.getListsModel = new GetListsModel();
         this.listeFormController = listeFormController;
-        this.getListsView.createListGridPane(this);
-    }
+        displayLists();
 
-    public void showView() {
-        Stage stage = new Stage();
-        this.getListsView.start(stage);
-    }
-
-    public void handleConfirmButton(ActionEvent event) {
-        this.getListsModel.setListDeleted(getSelectedLists());
-        this.gestionnaireListe.supprimerListe(this.getListsModel.getListDeleted());
-        List<String> listIds = new ArrayList<>();
-        for (java.util.Map.Entry<String, String> entry : getListsMap().entrySet()) {
-            listIds.add(entry.getKey());
-        }
-        this.getListsModel.setListDeleted(listIds);
-        getListsView.getZoneLists().getChildren().clear();
-        this.listeFormController.displayLists(false);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
     }
 
     public void handleCancelButton(ActionEvent event) {
@@ -59,7 +45,7 @@ public class GetListsController {
         stage.close();
     }
 
-    public void displayLists(GridPane zoneLists) {
+    public void displayLists() {
         GridCaseInfos = new LinkedHashMap<>();
         if (getListsMap().isEmpty()) {
             System.out.println("No Lists available");
@@ -67,19 +53,36 @@ public class GetListsController {
         }
         int colCount = 0;
         int rowCount = 0;
-
         for (Map.Entry<String, String> entry : getListsMap().entrySet()) {
             String taskTitle = entry.getValue();
-
             CheckBox checkBox = createCheckBox(taskTitle);
-            zoneLists.add(checkBox, colCount, rowCount);
-
+            this.getListsView.getZoneLists().add(checkBox, colCount, rowCount);
             GridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), taskTitle));
             colCount++;
             if (colCount == 4) {
                 colCount = 0;
                 rowCount++;
             }
+        }
+
+    }
+
+    public void handleConfirmButton(ActionEvent event) {
+        this.getListsModel.setListDeleted(getSelectedLists());
+        if (getListsModel.getListDeleted().isEmpty()) {
+            return;
+        }
+        try {
+            gestionnaireListe.deleteList(getListsModel.getListDeleted());
+            this.listeFormController.removeList(getListsModel.getListDeleted());
+            showAlert(AlertType.INFORMATION, "Succès",
+                    "La liste a été supprimée avec succès", Duration.seconds(1));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
+
+        } catch (Exception e) {
+            showAlert(AlertType.ERROR, "Erreur",
+                    "Erreur lors de la suppression de la liste", Duration.seconds(2));
         }
 
     }
@@ -94,10 +97,11 @@ public class GetListsController {
     }
 
     public LinkedHashMap<String, String> getListsMap() {
-        List<Document> lists = gestionnaireListe.obtenirToutesLesListes();
+        List<Document> lists = gestionnaireListe.getAllLists();
         LinkedHashMap<String, String> listes_Disponibles = new LinkedHashMap<>();
         for (Document list : lists) {
-            if (list.containsKey("taches") && !list.getList("taches", Document.class).isEmpty()) {
+            if (list.containsKey("taches") &&
+                    !list.getList("taches", Document.class).isEmpty()) {
                 continue;
             }
             String id = list.getObjectId("_id").toString();
@@ -113,7 +117,8 @@ public class GetListsController {
         for (Map.Entry<List<Integer>, List<String>> entry : GridCaseInfos.entrySet()) {
             List<Integer> key = entry.getKey();
             List<String> value = entry.getValue();
-            CheckBox checkBox = (CheckBox) getListsView.getZoneLists().getChildren().get(key.get(0) * 4 + key.get(1));
+            CheckBox checkBox = (CheckBox) getListsView.getZoneLists()
+                    .getChildren().get(key.get(0) * 4 + key.get(1));
             if (checkBox.isSelected()) {
                 selectedLists.add(value.get(0));
             }
@@ -121,8 +126,16 @@ public class GetListsController {
         return selectedLists;
     }
 
-    public void setview(GetListsView getListsView2) {
-        this.getListsView = getListsView2;
+    public static void showAlert(AlertType type, String title, String headerText, Duration duration) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.show();
+        Timeline timeline = new Timeline(new KeyFrame(duration, event -> {
+            alert.close();
+        }));
+        timeline.setCycleCount(1);
+        timeline.play();
     }
 
 }

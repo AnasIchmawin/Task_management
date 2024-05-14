@@ -42,4 +42,10 @@ public class AddListModel {
     public List<String> getTasksTitles() {
         return new ArrayList<>(getTachesSelectionnees().values());
     }
+
+    public void addList(String titre, String Description, LinkedHashMap<String, String> tachesSelectionnees) {
+        this.Titre = titre;
+        this.Description = Description;
+        this.TachesSelectionnees = tachesSelectionnees;
+    }
 }

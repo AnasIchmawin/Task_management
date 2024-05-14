@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import metier.GestionnaireTache;
 import presentation.NewList.AddListController;
+import presentation.NewList.AddListView;
 import presentation.NewProjet.AddProjetController;
 import presentation.NewProjet.AddProjetView;
 import presentation.projets.ProjetsFormController;
@@ -43,9 +44,13 @@ public class GetTasksController {
     public LinkedHashMap<String, String> getTasksMap() {
         List<Document> tasks = gestionnaireTache.getAllTasks();
         System.out.println("Tasks: " + tasks);
-
         LinkedHashMap<String, String> taches_Disponibles = new LinkedHashMap<>();
         for (Document task : tasks) {
+            System.out.println("at start");
+            Document liste = task.get("liste", Document.class);
+            if (liste == null || liste.isEmpty()) {
+                continue;
+            }
             String id = task.getObjectId("_id").toString();
             String titre = task.getString("titre");
             taches_Disponibles.put(id, titre);
@@ -57,7 +62,8 @@ public class GetTasksController {
     public void handleCancelButton(ActionEvent eventAddList) {
         if (this.addListController != null) {
             Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
-            this.addListController.start(stage);
+            AddListView view = new AddListView(this.addListController);
+            view.start(stage);
         } else {
             AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
             Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
@@ -67,6 +73,7 @@ public class GetTasksController {
 
     // Method to display tasks
     public void displayTasks() {
+        System.out.println("Displaying tasks");
         GridCaseInfos = new LinkedHashMap<>();
 
         if (getTasksMap().isEmpty()) {
@@ -81,7 +88,7 @@ public class GetTasksController {
             String taskTitle = entry.getValue();
 
             CheckBox checkBox = createCheckBox(taskTitle);
-            this.getTasksView.ZoneTasks.add(checkBox, colCount, rowCount);
+            this.getTasksView.getZoneTasks().add(checkBox, colCount, rowCount);
 
             GridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), taskTitle));
             colCount++;
@@ -94,7 +101,7 @@ public class GetTasksController {
 
     // Method to handle confirm button
     public void handleConfirmButton(ActionEvent eventAddList) {
-        for (Node node : this.getTasksView.ZoneTasks.getChildren()) {
+        for (Node node : this.getTasksView.getZoneTasks().getChildren()) {
             if (node instanceof CheckBox) {
                 CheckBox checkBox = (CheckBox) node;
                 if (checkBox.isSelected()) {
@@ -109,9 +116,10 @@ public class GetTasksController {
                 }
             }
         }
-        if (this.addListController != null && this.addListController != null) {
+        if (this.addListController != null) {
             Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
-            this.addListController.start(stage);
+            AddListView view = new AddListView(this.addListController);
+            view.start(stage);
         } else {
             AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
             Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();

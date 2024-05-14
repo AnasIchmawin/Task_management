@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import presentation.NewList.AddListController;
+import presentation.NewProjet.AddProjetController;
 
 public class GetTasksView {
 
@@ -26,13 +27,20 @@ public class GetTasksView {
     private Button confirmButton;
     private Button cancelButton;
     private ScrollPane scrollPane;
-    GridPane ZoneTasks;
+    private GridPane ZoneTasks;
 
     public GetTasksView(AddListController addListController) {
-        this.controller = new GetTasksController(this , addListController);
         init();
         style();
         action();
+        this.controller = new GetTasksController(this, addListController);
+    }
+
+    public GetTasksView(AddProjetController addProjetController) {
+        init();
+        style();
+        action();
+      //  this.controller = new GetTasksController(this, addProjetController);
     }
 
     public void start(Stage primaryStage) {
@@ -131,6 +139,10 @@ public class GetTasksView {
         scrollPane.setFitToHeight(true);
 
         return scrollPane;
+    }
+
+    public GridPane getZoneTasks() {
+        return ZoneTasks;
     }
 
     private void action() {

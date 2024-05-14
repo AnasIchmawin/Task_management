@@ -3,14 +3,19 @@ package presentation.NewList;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import metier.GestionnaireListe;
 import metier.POJOListe;
 import metier.Errors.NonValidList;
@@ -28,30 +33,40 @@ public class AddListController {
         this.addListView = addListView;
         this.listeFormController = listeFormController;
         this.addListModel = new AddListModel("", "", new LinkedHashMap<>());
+        this.updateView(addListView);
     }
 
-    public void start(Stage primaryStage) {
-        addListView.start(primaryStage);
+    public AddListController(AddListView addListView, AddListController addListController) {
+        this.gestionnaireListe = new GestionnaireListe();
+        this.addListView = addListView;
+        this.addListModel = addListController.getAddListModel();
+        this.listeFormController = addListController.getListeFormController();
+        this.updateView(addListView);
+        this.displayTasks(addListView.getZoneTaches());
+    }
+
+    public ListeFormController getListeFormController() {
+        return this.listeFormController;
     }
 
     public void saveInfosListe(ActionEvent event) {
         try {
-            if (!addListView.getTitre().isEmpty()) {
-                updateListModel();
-                String titre = addListModel.getTitre();
-                String description = addListModel.getDescription();
-                LinkedHashMap<String, String> taches = addListModel.getTachesSelectionnees();
+            updateListModel();
+            String titre = addListModel.getTitre();
+            String description = addListModel.getDescription();
+            LinkedHashMap<String, String> taches = addListModel.getTachesSelectionnees();
 
-                POJOListe nouvelleListe = new POJOListe(titre, description, new ArrayList<>(taches.values()));
-                this.gestionnaireListe.setListe(nouvelleListe);
-                gestionnaireListe.creerListe();
-                showAlert(Alert.AlertType.INFORMATION, "Succès", "La liste a été créée avec succès");
-                this.listeFormController.displayAvailableLists(false);
-                closerWindow(event);
+            POJOListe nouvelleListe = new POJOListe(titre, description, new ArrayList<>(taches.values()));
+            this.gestionnaireListe.setListe(nouvelleListe);
+            gestionnaireListe.creerListe();
+            listeFormController.addList();
+            showAlert(AlertType.INFORMATION, "Succès", "Liste créée avec succès", 
+            "La liste a été créée avec succès", Duration.seconds(1));
+            closerWindow(event);
 
-            }
         } catch (NonValidList e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", e.getMessage());
+            showAlert(AlertType.ERROR, "Erreur", "Erreur lors de la création de la liste", 
+            e.getMessage(), Duration.seconds(2));
         }
     }
 
@@ -59,7 +74,6 @@ public class AddListController {
         addListModel.setTitre(addListView.getTitre());
         addListModel.setDescription(addListView.getDescription());
     }
-
     public void getTasksView(ActionEvent event) {
         String titre = addListView.getTitre();
         String description = addListView.getDescription();
@@ -122,11 +136,17 @@ public class AddListController {
         return newTaskButton;
     }
 
-    private void showAlert(Alert.AlertType type, String title, String message) {
+    public static void showAlert(AlertType type, String title, String headerText, String contentText, Duration duration) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        alert.show();
+        Timeline timeline = new Timeline(new KeyFrame(duration, event -> {
+            alert.close();
+        }));
+        timeline.setCycleCount(1);
+        timeline.play();
     }
+
 }
