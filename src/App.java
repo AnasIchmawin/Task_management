@@ -44,23 +44,10 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
 
 
-    
-
-
-
-
-
-        // ListeFormController controller = new ListeFormController();
-        // ListeFormView Seance = new ListeFormView();
-        // Seance.start(primaryStage);
-
         // ProjetsFormView projets = new ProjetsFormView();
         // projets.start(primaryStage);
 
         // ListeFormController controller = new ListeFormController();
-
-        // ListeFormView projets = new ListeFormView();
-        // projets.start(primaryStage);
 
         // ArchiveFormView archive = new ArchiveFormView();
         // archive.start(primaryStage);
@@ -75,15 +62,14 @@ public class App extends Application {
         // Projet_Detail_View view = new Projet_Detail_View(con) ;
         // view.start(primaryStage) ;
 
-
         // SeanceFormView seance = new SeanceFormView();
         // seance.start(primaryStage);
 
         // SeanceFormView view = new SeanceFormView();
         // view.start(primaryStage);
 
-        // ProjetDetailController con = new ProjetDetailController();
-        // Projet_Detail_View view = new Projet_Detail_View(con);
+
+        // Projet_Detail_View view = new Projet_Detail_View();
         // view.start(primaryStage);
 
         // SceanceAjouteView view = new SceanceAjouteView();
@@ -99,6 +85,9 @@ public class App extends Application {
         // addTacheview vue = new addTacheview() ;
         // ControllerFromTacheAjout con = new ControllerFromTacheAjout(vue) ;
         // AddDocumentView view = new AddDocumentView(con) ;
+        // view.start(primaryStage) ;
+
+        // LoginFormView view = new LoginFormView(primaryStage) ;
         // view.start(primaryStage) ;
 
 

@@ -53,7 +53,6 @@ public class ListeFormView extends Application {
         Styler();
         Dessiner();
         Action();
-        this.controller.displayLists(false);
     }
 
     @Override
@@ -66,14 +65,20 @@ public class ListeFormView extends Application {
     }
 
     private void Initialiser() {
-        leftButton = createButton("", "file:./Pictures/left-arrow.png", 35, 35);
+        leftButton = createButton("", "file:./Pictures/left-arrow.png",
+                35, 35);
+        leftButton.setVisible(false);
+        ordonnerButton = createButton("Ordonner", "file:./Pictures/folder.png",
+                20, 20);
+        searchButton = createButton("", "file:./Pictures/loupe.png",
+                20, 20);
+        ajouterButton = createButton("Ajouter une Liste", "file:./Pictures/add.png",
+                20, 20);
+        supprimerButton = createButton("Supprimer une Liste", "file:./Pictures/delete.png",
+                20, 20);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
-        ordonnerButton = createButton("Ordonner", "file:./Pictures/folder.png", 20, 20);
-        searchButton = createButton("", "file:./Pictures/loupe.png", 20, 20);
-        ajouterButton = createButton("Ajouter une Liste", "file:./Pictures/add.png", 20, 20);
-        supprimerButton = createButton("Supprimer une Liste", "file:./Pictures/delete.png", 20, 20);
         buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
         leftButtonBox = new HBox(20, leftButton);
         navbar = new HBox(30, leftButtonBox, buttonsBar);
@@ -166,15 +171,19 @@ public class ListeFormView extends Application {
 
     private Button createButton(String name, String path, int width, int height) {
         Button newButton = new Button();
-        ImageView icon = new ImageView(new Image(path));
-        icon.setFitWidth(width);
-        icon.setFitHeight(height);
-        Text buttonText = new Text(name);
-        buttonText.setFill(Color.WHITE);
-        HBox buttonContent = new HBox(buttonText, icon);
-        buttonContent.setAlignment(Pos.CENTER);
-        buttonContent.setSpacing(4);
-        newButton.setGraphic(buttonContent);
+        try {
+            ImageView icon = new ImageView(new Image(path));
+            icon.setFitWidth(width);
+            icon.setFitHeight(height);
+            Text buttonText = new Text(name);
+            buttonText.setFill(Color.WHITE);
+            HBox buttonContent = new HBox(buttonText, icon);
+            buttonContent.setAlignment(Pos.CENTER);
+            buttonContent.setSpacing(4);
+            newButton.setGraphic(buttonContent);
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la création du bouton : " + e.getMessage());
+        }
         return newButton;
     }
 
@@ -207,7 +216,8 @@ public class ListeFormView extends Application {
         });
         searchField.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
                 controller.searchList(newValue);
             }
         });

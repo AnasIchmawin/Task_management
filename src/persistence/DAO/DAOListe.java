@@ -115,6 +115,7 @@ public class DAOListe {
                     
                     Document liste = collection.find(Filters.eq("_id", objectId)).first();
                     if (liste != null) {
+                        @SuppressWarnings("unchecked")
                         List<Document> tachesList = (List<Document>) liste.get("taches");
                         if (tachesList != null) {
                             for (Document tache : tachesList) {
@@ -162,5 +163,42 @@ public class DAOListe {
                         System.err.println("Erreur lors de la récupération de la description de la liste : " + e.getMessage());
                 }
                 return null;
+        }
+
+        public void setTacheToliste(String listeId, String tacheId) {
+                try {
+                    MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                            .getCollection("listes");
+                    
+                    // Convert listeId to ObjectId
+                    ObjectId objectId = new ObjectId(listeId);
+                    
+                    Document liste = collection.find(Filters.eq("_id", objectId)).first();
+                    if (liste != null) {
+                        @SuppressWarnings("unchecked")
+                        List<Document> taches = (List<Document>) liste.get("taches");
+                        if (taches != null) {
+                            Document tache = new Document();
+                            tache.append("id", tacheId).append("checked", false);
+                            taches.add(tache);
+                            collection.updateOne(Filters.eq("_id", objectId), new Document("$set", new Document("taches", taches)));
+                        }
+                    } else {
+                        System.err.println("List not found with ID: " + listeId);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error adding task to the list: " + e.getMessage());
+                }
+            }
+
+        public Document getLastList() {
+                try {
+                        MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                                        .getCollection("listes");
+                        return collection.find().sort(new Document("_id", -1)).first();
+                } catch (Exception e) {
+                        System.err.println("Erreur lors de la récupération de la dernière liste : " + e.getMessage());
+                        return null;
+                }
         }
 }

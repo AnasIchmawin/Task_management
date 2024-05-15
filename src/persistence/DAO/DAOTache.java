@@ -62,6 +62,7 @@ public class DAOTache {
     String tempsFin, List<String> list, String projet, String liste) {
         try {
             // Récupérer la collection "taches"
+            @SuppressWarnings("unused")
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("taches");
 
             // Créer les mises à jour à appliquer
@@ -191,6 +192,23 @@ public class DAOTache {
             collection.updateOne(Filters.eq("_id", objectId), Updates.set("etat", etat));
         } catch (Exception e) {
             System.err.println("Error setting the state of the task: " + e.getMessage());
+        }
+    }
+
+    //getLastTacheId
+    public String getLastTacheId() {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            Document lastTache = collection.find().sort(new Document("_id", -1)).first();
+            if (lastTache != null) {
+                return lastTache.getObjectId("_id").toString();
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Error getting the last task ID: " + e.getMessage());
+            return null;
         }
     }
 

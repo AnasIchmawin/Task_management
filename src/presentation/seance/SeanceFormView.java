@@ -26,6 +26,7 @@ public class SeanceFormView extends Application {
     private Button listesButton;
     private Button projectsButton;
     private Button archiveButton;
+    @SuppressWarnings("unused")
     private SeanceFormController controller;
     private BorderPane root;
     GridPane ZoneListes;

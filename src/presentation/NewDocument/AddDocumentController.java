@@ -3,12 +3,14 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import metier.POJODocument;
+import metier.POJO.POJODocument;
+import presentation.projet_detail.ProjetDetailController;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
 import presentation.tache_detail.tacheDetailController;
 import metier.GestionnaireDocument;
 import presentation.seance_ajoute.SceanceAjouteController;
 
+@SuppressWarnings("unused")
 public class AddDocumentController {
     private GestionnaireDocument gestionnaireDocument;
     private ControllerFromTacheAjout controllerFromTacheAjout;

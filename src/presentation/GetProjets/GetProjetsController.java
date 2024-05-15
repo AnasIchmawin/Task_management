@@ -13,7 +13,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import metier.GestionnaireProjet;
+import metier.Gestionnaire.GestionnaireProjet;
 import presentation.projets.ProjetsFormController;
 
 public class GetProjetsController {

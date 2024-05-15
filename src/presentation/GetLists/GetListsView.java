@@ -21,43 +21,22 @@ import presentation.listes.ListeFormController;
 public class GetListsView {
 
     private GetListsController controller;
-    private ListeFormController listeFormController ;
+    private ListeFormController listeFormController;
     private Label Question;
     private BorderPane root;
     private Button confirmButton;
     private Button cancelButton;
     private ScrollPane scrollPane;
-    GridPane ZoneLists;
+    private GridPane ZoneLists;
 
-    public GetListsView(ListeFormController listeFormController ) {
-        this.listeFormController = listeFormController ;
+    public GetListsView(ListeFormController listeFormController) {
+        this.listeFormController = listeFormController;
         init();
         style();
         action();
     }
 
     public void start(Stage primaryStage) {
-        VBox listContainer = createVBox(5, Pos.TOP_CENTER);
-        listContainer.setPadding(new Insets(20, 0, 0, 20));
-
-        // Adding ScrollPane to the center of BorderPane
-        root.setCenter(scrollPane);
-
-        HBox buttonContainer = createHBox(25, Pos.CENTER);
-        buttonContainer.getChildren().addAll(confirmButton, cancelButton);
-
-        VBox TopContainer = createVBox(5, Pos.TOP_CENTER);
-        TopContainer.getChildren().addAll(Question);
-        TopContainer.setPadding(new Insets(15));
-
-        root.setTop(TopContainer);
-        root.setBottom(buttonContainer);
-
-        Insets buttonMargin = new Insets(0, 0, 20, 0);
-
-        // Applying margins to button container
-        BorderPane.setMargin(buttonContainer, buttonMargin);
-
         Scene scene = new Scene(root, 550, 520);
         scene.getStylesheets().add(getClass().getResource("GetList-Style.css").toExternalForm());
         primaryStage.setScene(scene);
@@ -70,8 +49,23 @@ public class GetListsView {
         root = new BorderPane();
         confirmButton = createButton("Confirmer", "file:./Pictures/confirmer.png", 16, 16);
         cancelButton = createButton("Annuler", "file:./Pictures/annuler.png", 20, 20);
-        this.controller = new GetListsController(this , this.listeFormController);
-        scrollPane = createScrollPane(createListGridPane(this.controller));
+        VBox listContainer = createVBox(5, Pos.TOP_CENTER);
+        listContainer.setPadding(new Insets(20, 0, 0, 20));
+
+        HBox buttonContainer = createHBox(25, Pos.CENTER);
+        buttonContainer.getChildren().addAll(confirmButton, cancelButton);
+        VBox TopContainer = createVBox(5, Pos.TOP_CENTER);
+        TopContainer.getChildren().addAll(Question);
+        TopContainer.setPadding(new Insets(15));
+        root.setTop(TopContainer);
+        root.setBottom(buttonContainer);
+        Insets buttonMargin = new Insets(0, 0, 20, 0);
+        this.ZoneLists = createListGridPane();
+        System.out.println("ZoneLists: " + ZoneLists);
+        scrollPane = createScrollPane();
+        root.setCenter(scrollPane);
+        this.controller = new GetListsController(this, this.listeFormController);
+        BorderPane.setMargin(buttonContainer, buttonMargin);
 
     }
 
@@ -87,16 +81,15 @@ public class GetListsView {
         start(primaryStage);
     }
 
-    public GridPane createListGridPane(GetListsController controller1) {
-        ZoneLists = new GridPane();
-        ZoneLists.getStyleClass().add("scroll-pane-style");
-        ZoneLists.setAlignment(Pos.TOP_CENTER);
-        ZoneLists.setHgap(35);
-        ZoneLists.setVgap(15);
-        ZoneLists.setPadding(new Insets(20));
-        controller1.displayLists(ZoneLists);
-
-        return this.ZoneLists;
+    public GridPane createListGridPane() {
+        GridPane gridPane = new GridPane();
+        gridPane = new GridPane();
+        gridPane.setAlignment(Pos.TOP_CENTER);
+        gridPane.getStyleClass().add("scroll-pane-style");
+        gridPane.setHgap(35);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(20));
+        return gridPane;
     }
 
     private VBox createVBox(int spacing, Pos position) {
@@ -132,14 +125,15 @@ public class GetListsView {
         return newButton;
     }
 
-    private ScrollPane createScrollPane(GridPane content) {
+    private ScrollPane createScrollPane() {
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(content);
+        scrollPane.setContent(this.ZoneLists);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
 
         return scrollPane;
     }
+
     public GridPane getZoneLists() {
         return ZoneLists;
     }
@@ -154,7 +148,5 @@ public class GetListsView {
         });
 
     }
-
-   
 
 }

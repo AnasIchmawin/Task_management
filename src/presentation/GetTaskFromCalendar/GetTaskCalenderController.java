@@ -1,16 +1,14 @@
 package presentation.GetTaskFromCalendar;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import metier.GestionnaireTache;
-import metier.POJOTache;
+import metier.Gestionnaire.GestionnaireTache;
+import metier.POJO.POJOTache;
 
 public class GetTaskCalenderController {
     private String dateTask;

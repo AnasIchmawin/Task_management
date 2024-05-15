@@ -12,26 +12,26 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import metier.GestionnaireTache;
+import metier.Gestionnaire.GestionnaireTache;
 import presentation.NewList.AddListController;
 import presentation.NewList.AddListView;
 import presentation.NewProjet.AddProjetController;
 import presentation.NewProjet.AddProjetView;
-import presentation.listes.ListeFormController;
 import presentation.projets.ProjetsFormController;
 
 public class GetTasksController {
     private GestionnaireTache gestionnaireTache;
     private AddListController addListController;
     private AddProjetController addProjetController;
-    private ListeFormController listeFormController;
     private LinkedHashMap<List<Integer>, List<String>> GridCaseInfos;
     private ProjetsFormController projetsFormController;
+    private GetTasksView getTasksView;
 
-    public GetTasksController(AddListController addListController, ListeFormController listeFormController) {
+    public GetTasksController(GetTasksView getTasksView, AddListController addListController) {
+        this.getTasksView = getTasksView;
         this.gestionnaireTache = new GestionnaireTache();
         this.addListController = addListController;
-        this.listeFormController = listeFormController;
+        this.displayTasks();
     }
 
     public GetTasksController(AddProjetController addProjetController, ProjetsFormController projetsFormController) {
@@ -40,14 +40,17 @@ public class GetTasksController {
         this.projetsFormController = projetsFormController;
     }
 
-    // Method to get all tasks available no assigned to any list
+    // Method to get all tasks
     public LinkedHashMap<String, String> getTasksMap() {
         List<Document> tasks = gestionnaireTache.getAllTasks();
+        System.out.println("Tasks: " + tasks);
         LinkedHashMap<String, String> taches_Disponibles = new LinkedHashMap<>();
         for (Document task : tasks) {
+            System.out.println("at start");
             Document liste = task.get("liste", Document.class);
-            if (!liste.isEmpty())
+            if (liste == null || liste.isEmpty()) {
                 continue;
+            }
             String id = task.getObjectId("_id").toString();
             String titre = task.getString("titre");
             taches_Disponibles.put(id, titre);
@@ -58,8 +61,8 @@ public class GetTasksController {
     // Method to handle cancel button
     public void handleCancelButton(ActionEvent eventAddList) {
         if (this.addListController != null) {
-            AddListView view = new AddListView(this.addListController, this.listeFormController);
             Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
+            AddListView view = new AddListView(this.addListController);
             view.start(stage);
         } else {
             AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
@@ -69,7 +72,8 @@ public class GetTasksController {
     }
 
     // Method to display tasks
-    public void displayTasks(GridPane gridPane) {
+    public void displayTasks() {
+        System.out.println("Displaying tasks");
         GridCaseInfos = new LinkedHashMap<>();
 
         if (getTasksMap().isEmpty()) {
@@ -81,11 +85,10 @@ public class GetTasksController {
         int rowCount = 0;
 
         for (Map.Entry<String, String> entry : getTasksMap().entrySet()) {
-            System.out.println("Task id: " + entry.getKey() + " Task title: " + entry.getValue());
             String taskTitle = entry.getValue();
 
             CheckBox checkBox = createCheckBox(taskTitle);
-            gridPane.add(checkBox, colCount, rowCount);
+            this.getTasksView.getZoneTasks().add(checkBox, colCount, rowCount);
 
             GridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), taskTitle));
             colCount++;
@@ -97,8 +100,8 @@ public class GetTasksController {
     }
 
     // Method to handle confirm button
-    public void handleConfirmButton(GridPane gridPane, ActionEvent eventAddList) {
-        for (Node node : gridPane.getChildren()) {
+    public void handleConfirmButton(ActionEvent eventAddList) {
+        for (Node node : this.getTasksView.getZoneTasks().getChildren()) {
             if (node instanceof CheckBox) {
                 CheckBox checkBox = (CheckBox) node;
                 if (checkBox.isSelected()) {
@@ -106,16 +109,16 @@ public class GetTasksController {
                     String id = getIdFromMap(GridCaseInfos, GridPane.getRowIndex(node), GridPane.getColumnIndex(node));
                     System.out.println("Task selected: " + task + " with id: " + id);
                     if (this.addListController != null)
-                        this.addListController.addSeanceToList(id, task);
+                        this.addListController.addTask(id, task);
                     else {
                         this.addProjetController.addSeanceToList(id, task);
                     }
                 }
             }
         }
-        if (this.addListController != null && this.addListController != null) {
-            AddListView view = new AddListView(this.addListController, this.listeFormController);
+        if (this.addListController != null) {
             Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
+            AddListView view = new AddListView(this.addListController);
             view.start(stage);
         } else {
             AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);

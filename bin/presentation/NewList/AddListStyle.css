@@ -41,7 +41,7 @@
 }
 
 .ZoneDescription-Style {
-    -fx-font-size: 16px;
+    -fx-font-size: 14px;
     -fx-border-width: 0px;
     -fx-focus-color: transparent;
     -fx-pref-width: 750px;
@@ -65,14 +65,11 @@
 
 
 .ZoneTitre-Style {
-    -fx-font-size: 16px;
-    /* Taille de la police */
-    -fx-pref-width: 300px;
+    -fx-font-size: 14px;
+    -fx-pref-width: 414px;
     -fx-border-radius: 8px;
     -fx-border-color: #ccc;
-    /* Couleur de la bordure */
     -fx-border-width: 1px;
-    /* Largeur de la bordure */
     -fx-background-radius: 8px;
 
 }
@@ -111,4 +108,8 @@
     -fx-background-color: #8E9EB2;
     /* -fx-background-radius: 15px; */
     -fx-max-height: 50px;
+}
+
+.root-style{
+    -fx-background-color: #fff;
 }

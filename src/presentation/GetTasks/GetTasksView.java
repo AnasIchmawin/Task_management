@@ -16,6 +16,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import presentation.NewList.AddListController;
+import presentation.NewProjet.AddProjetController;
 
 public class GetTasksView {
 
@@ -25,13 +27,20 @@ public class GetTasksView {
     private Button confirmButton;
     private Button cancelButton;
     private ScrollPane scrollPane;
-    GridPane ZoneTasks;
+    private GridPane ZoneTasks;
 
-    public GetTasksView(GetTasksController getTasksController) {
-        this.controller = getTasksController;
+    public GetTasksView(AddListController addListController) {
         init();
         style();
         action();
+        this.controller = new GetTasksController(this, addListController);
+    }
+
+    public GetTasksView(AddProjetController addProjetController) {
+        init();
+        style();
+        action();
+      //  this.controller = new GetTasksController(this, addProjetController);
     }
 
     public void start(Stage primaryStage) {
@@ -87,8 +96,6 @@ public class GetTasksView {
         ZoneTasks.setHgap(20);
         ZoneTasks.setVgap(15);
         ZoneTasks.setPadding(new Insets(20));
-        this.controller.displayTasks(ZoneTasks);
-
         return this.ZoneTasks;
     }
 
@@ -134,9 +141,13 @@ public class GetTasksView {
         return scrollPane;
     }
 
+    public GridPane getZoneTasks() {
+        return ZoneTasks;
+    }
+
     private void action() {
         confirmButton.setOnAction(event -> {
-            this.controller.handleConfirmButton(this.ZoneTasks, event);
+            this.controller.handleConfirmButton(event);
         });
 
         cancelButton.setOnAction(event -> {

@@ -45,6 +45,7 @@ public class AddDocumentView extends Application {
         style();
     }
 
+
     public AddDocumentView(ControllerFromTacheAjout controllerFromTacheAjout) {
         this.controller = new AddDocumentController(this, controllerFromTacheAjout);
     }
