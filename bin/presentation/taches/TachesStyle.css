@@ -100,10 +100,11 @@
     -fx-font-size: 18px;
 }
 
-.Label-style {
+.title-style {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-text-fill: #000000;
+    -fx-background-color: transparent;
 }
 
 .index-style {

@@ -34,6 +34,7 @@ public class TachesFormView extends Application {
     private Button ordonnerButton;
     private Button searchButton;
     private Button ajouterButton;
+    private Button saveButton;
     private TextField searchField;
     private TachesFormController controller;
     private BorderPane root;
@@ -43,7 +44,7 @@ public class TachesFormView extends Application {
     private DatePicker dateTask;
     private StackPane container;
     private VBox navbarContainer;
-    private Label title;
+    private TextField title;
     private VBox description;
 
     public TachesFormView(ListeFormController listeFormController) {
@@ -71,6 +72,7 @@ public class TachesFormView extends Application {
         ordonnerButton = createButton("Ordonner", "file:./Pictures/folder.png", 20, 20);
         searchButton = createButton("", "file:./Pictures/loupe.png", 20, 20);
         ajouterButton = createButton("Ajouter une tache", "file:./Pictures/add.png", 20, 20);
+        saveButton = createButton("Enregistrer", "file:./Pictures/save.png", 20, 20);
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
         ZoneTaches = createGridPane();
@@ -93,6 +95,7 @@ public class TachesFormView extends Application {
         archiveButton.getStyleClass().add("button-style");
         ordonnerButton.getStyleClass().add("ordonner-btn-style");
         ajouterButton.getStyleClass().add("ajouter-btn-style");
+        saveButton.getStyleClass().add("ajouter-btn-style");
         searchField.getStyleClass().add("search-field-style");
         ContainerGoogleCalendar.getStyleClass().add("google-calendar-style");
         confirmerButton.getStyleClass().add("confirm-btn-style");
@@ -130,7 +133,7 @@ public class TachesFormView extends Application {
         VBox tasks = createTasksContainer(scrollPane);
         StackPane searchPane = createSearchPane();
         HBox topContainer = createTopContainer(searchPane);
-        title = createLabel("");
+        title = createTextField("");
         HBox titleContainer = createTitleContainer(title);
         HBox descriptionContainer = createDescriptionContainer();
         HBox bottomContainer = createBottomContainer();
@@ -144,10 +147,10 @@ public class TachesFormView extends Application {
         return container;
     }
 
-    private Label createLabel(String text) {
-        Label label = new Label(text);
-        label.getStyleClass().add("Label-style");
-        return label;
+    private TextField createTextField(String text) {
+        TextField title = new TextField(text);
+        title.getStyleClass().add("title-style");
+        return title;
     }
 
     private VBox createMainContentContainer() {
@@ -181,7 +184,7 @@ public class TachesFormView extends Application {
         return topContainer;
     }
 
-    private HBox createTitleContainer(Label title) {
+    private HBox createTitleContainer(TextField title) {
         HBox titleContainer = new HBox();
         titleContainer.getChildren().add(title);
         HBox.setMargin(title, new Insets(0, 0, 10, 40));
@@ -205,7 +208,7 @@ public class TachesFormView extends Application {
         ContainerGoogleCalendar = createGoogleCalendarContainer();
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        bottomContainer.getChildren().addAll(ajouterButton, spacer, ContainerGoogleCalendar);
+        bottomContainer.getChildren().addAll(ajouterButton, saveButton, spacer, ContainerGoogleCalendar);
         bottomContainer.getStyleClass().add("bottom-container-style");
         HBox.setMargin(ContainerGoogleCalendar, new Insets(0, 50, 30, 0));
         return bottomContainer;
@@ -253,6 +256,7 @@ public class TachesFormView extends Application {
         HBox.setMargin(ordonnerButton, new Insets(30, 20, 20, 70));
         HBox.setMargin(searchButton, new Insets(30, 70, 20, 20));
         HBox.setMargin(ajouterButton, new Insets(35, 0, 0, 70));
+        HBox.setMargin(saveButton, new Insets(35, 0, 0, 20));
     }
 
     private GridPane createGridPane() {
@@ -358,6 +362,10 @@ public class TachesFormView extends Application {
     private void Action() {
         ajouterButton.setOnAction(event -> {
             controller.handleAjouterButtonAction();
+        });
+
+        saveButton.setOnAction(event -> {
+            controller.handleSaveButtonAction();
         });
 
         ordonnerButton.setOnAction(event -> {
