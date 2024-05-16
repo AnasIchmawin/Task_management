@@ -1,37 +1,25 @@
 package presentation.NewDocument;
-
-import java.time.LocalDateTime;
-
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import metier.Gestionnaire.GestionnaireDocument;
 import metier.POJO.POJODocument;
 import presentation.NewProjet.AddProjetController;
 import presentation.projet_detail.ProjetDetailController;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
-import presentation.taches.TachesFormController;
-import metier.Gestionnaire.GestionnaireDocument;
+import presentation.tache_detail.tacheDetailController;
+import presentation.seance_ajoute.SceanceAjouteController;
+import presentation.NewProjet.AddProjetController;
 
 @SuppressWarnings("unused")
 public class AddDocumentController {
+    private AddDocumentView view;
     private GestionnaireDocument gestionnaireDocument;
     private ControllerFromTacheAjout controllerFromTacheAjout;
-    private AddProjetController controllerFromAddProjet;
-    private AddDocumentView view;
-    @SuppressWarnings("unused")
-    private ProjetDetailController controleur;
-
-    public AddDocumentController(AddDocumentView view) {
-        this.view = view;
-        gestionnaireDocument = new GestionnaireDocument();
-    }
-
-    public AddDocumentController(AddDocumentView view, ProjetDetailController controleur) {
-        this.view = view;
-        this.controleur = controleur;
-        gestionnaireDocument = new GestionnaireDocument();
-    }
+    private tacheDetailController controllerFromTacheDetail;
+    private SceanceAjouteController SceanceAjouteController;
+    private AddProjetController addProjetController;
 
     public AddDocumentController(AddDocumentView view, ControllerFromTacheAjout controllerFromTacheAjout) {
         this.view = view;
@@ -39,52 +27,121 @@ public class AddDocumentController {
         gestionnaireDocument = new GestionnaireDocument();
     }
 
-    public AddDocumentController(AddDocumentView view, AddProjetController addProjetController) {
+    public AddDocumentController(AddDocumentView view, tacheDetailController controllerFromTacheDetail) {
         this.view = view;
-        this.controllerFromAddProjet = addProjetController;
+        this.controllerFromTacheDetail = controllerFromTacheDetail;
         gestionnaireDocument = new GestionnaireDocument();
     }
 
-    public void saveDocument() {
-        LocalDateTime dateTime = LocalDateTime.now();
+    public AddDocumentController(AddDocumentView view, SceanceAjouteController SceanceAjouteController) {
+        this.view = view;
+        this.SceanceAjouteController = SceanceAjouteController;
+        gestionnaireDocument = new GestionnaireDocument();
+    }
+
+    public AddDocumentController(AddDocumentView view, AddProjetController addProjetController) {
+        this.view = view;
+        this.addProjetController = addProjetController;
+        gestionnaireDocument = new GestionnaireDocument();
+    }
+
+    public void saveDocumentFromTacheDetail() {
         String titre = view.getTitreField();
         String url = view.getURL();
         String desc = view.getDescription();
-        view.setDateInsertion(dateTime.toLocalDate());
-        String dateInsertion = view.getDateInsertion();
-        String idProjet = view.getIdProjet();
-        String idTache = view.getIdTache();
-        String idSeance = view.getIdSeance();
     
         // Vérifiez si l'URL est accessible
         if (gestionnaireDocument.isUrlAccessible(url)) {
             System.out.println("L'URL est accessible.");
-            Platform.runLater(() -> {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Information");
-                alert.setHeaderText(null);
-                alert.setContentText("Document enregistré avec succès !");
-                alert.showAndWait().ifPresent(response -> {
-                    if (response == ButtonType.OK) {
-                        view.close(); // Ferme la fenêtre
-                    }
-                });
-            });
+            BienEnregistre();
+            POJODocument document = new POJODocument(titre, desc, url);
+            this.gestionnaireDocument.setPojoDocument(document);
+            this.gestionnaireDocument.creerDocument();
+            // controllerFromTacheDetail.addDocToTache(this.gestionnaireDocument.getIdLastDoc(), titre);
+        } else {
+            NonEnregistre();
+        }
+    }
+
+    public void saveDocumentFromProjet() {
+        String titre = view.getTitreField();
+        String url = view.getURL();
+        String desc = view.getDescription();
     
-            POJODocument document = new POJODocument(titre, url, desc, dateInsertion, idProjet, idTache, idSeance);
+        // Vérifiez si l'URL est accessible
+        if (gestionnaireDocument.isUrlAccessible(url)) {
+            System.out.println("L'URL est accessible.");
+            BienEnregistre();
+            POJODocument document = new POJODocument(titre, desc, url);
+            this.gestionnaireDocument.setPojoDocument(document);
+            this.gestionnaireDocument.creerDocument();
+            // addProjetController.addDocToProjet(this.gestionnaireDocument.getIdLastDoc(), titre);
+        } else {
+            NonEnregistre();
+        }
+    }
+
+    public void saveDocumentFromeTacheAjout() {
+        System.out.println("button clicked in control");
+        String titre = view.getTitreField();
+        String url = view.getURL();
+        String desc = view.getDescription();
+    
+        // Vérifiez si l'URL est accessible
+        if (gestionnaireDocument.isUrlAccessible(url)) {
+            System.out.println("L'URL est accessible.");
+            BienEnregistre();
+            POJODocument document = new POJODocument(titre, desc, url);
             this.gestionnaireDocument.setPojoDocument(document);
             this.gestionnaireDocument.creerDocument();
             controllerFromTacheAjout.addDocToTache(this.gestionnaireDocument.getIdLastDoc(), titre);
         } else {
-            System.out.println("L'URL n'est pas accessible.");
-            Platform.runLater(() -> {
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Erreur");
-                alert.setHeaderText(null);
-                alert.setContentText("L'URL fournie n'est pas accessible. Veuillez vérifier l'URL et réessayer.");
-                alert.showAndWait();
-            });
+            NonEnregistre();
         }
+    }
+
+    public void saveDocumentFromeSeanceAjout(){
+        String titre = view.getTitreField();
+        String url = view.getURL();
+        String desc = view.getDescription();
+    
+        // Vérifiez si l'URL est accessible
+        if (gestionnaireDocument.isUrlAccessible(url)) {
+            System.out.println("L'URL est accessible.");
+            BienEnregistre();
+            POJODocument document = new POJODocument(titre, desc, url);
+            this.gestionnaireDocument.setPojoDocument(document);
+            this.gestionnaireDocument.creerDocument();
+            SceanceAjouteController.addDocToSeance(this.gestionnaireDocument.getIdLastDoc(), titre);
+        } else {
+            NonEnregistre();
+        }
+    }
+
+
+
+    public void BienEnregistre() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Succès");
+            alert.setHeaderText(null);
+            alert.setContentText("Le document a été enregistré avec succès.");
+            alert.showAndWait();
+            //close the window when the button ok is clicked
+            if (alert.getResult() == ButtonType.OK) {
+                view.close();
+            }
+        });
+    }
+
+    public void NonEnregistre() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Le document n'a pas été enregistré.");
+            alert.showAndWait();
+        });
     }
     
 

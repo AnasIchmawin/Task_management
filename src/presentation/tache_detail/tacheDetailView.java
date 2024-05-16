@@ -18,15 +18,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class screen extends Application {
+public class tacheDetailView extends Application {
     private Button leftButton;
     private Button listesButton;
     private Button projectsButton;
     private Button archiveButton;
     private BorderPane root;
     private Label descriptionLabel;
-    @SuppressWarnings("unused")
-    private controleur controller;
+    private tacheDetailController controller;
     Button addDocButton;
     Label titleabel ;
     Label indexDebut;
@@ -63,10 +62,17 @@ public class screen extends Application {
     }
 
     // Constructor
-    public screen() {
+    public tacheDetailView() {
         init();
         style();
-        controller = new controleur(this, new tacheDetailModele());
+        controller = new tacheDetailController(this, new tacheDetailModele());
+        action();
+    }
+
+    private void action() {
+        listesButton.setOnAction(event -> {
+            controller.listesButtonAction(event);
+        });
     }
 
     public HBox Designe(){
@@ -236,7 +242,7 @@ public class screen extends Application {
 
             Systeme.setOnAction(e -> {
                 // Chemin vers le fichier PDF
-                String cheminPDF = "C:\\Users\\hp\\Desktop\\projet java 2024\\Task_management\\src\\presentation\\tache_detail\\systeme.pdf";
+                String cheminPDF = "src/presentation/tache_detail/systeme.pdf";
 
                 // Vérifier si Desktop est pris en charge par la plateforme
                 if (Desktop.isDesktopSupported()) {

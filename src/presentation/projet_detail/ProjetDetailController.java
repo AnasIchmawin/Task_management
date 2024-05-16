@@ -3,6 +3,8 @@ package presentation.projet_detail;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.text.Document;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -14,18 +16,25 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+import metier.GestionnaireDocument;
+import metier.GestionnaireTache;
+import persistence.DAO.DAOProjet;
 import presentation.GetDocument.GetDocModel;
 import presentation.NewDocument.AddDocumentView;
 
 
-public class ProjetDetailController {
 
+
+
+public class ProjetDetailController {
+    private GestionnaireDocument gestionnaireDocument;
     private GetDocModel model;
     private Projet_Detail_View view;
 
     public ProjetDetailController(Projet_Detail_View view){
         this.model = new GetDocModel();
         this.view = view;
+        this.gestionnaireDocument = new GestionnaireDocument();
 
     }
     
@@ -53,13 +62,12 @@ public class ProjetDetailController {
 
     public void addDocToTache(String id, String doc) {
         this.model.addDocumentToSeance(id, doc);
-        System.out.println("Document added to Tache: " + doc);
+        System.out.println("Document added to Projet: " + doc);
         displayDocuments();
     }
 
     public void displayDocuments() {
         List<String> mesDocs = new ArrayList<>(this.model.getListOfDocuments().values());
-
         this.view.getZoneDocuments().getChildren().clear();
 
         for (String doc : mesDocs) {
@@ -122,6 +130,11 @@ public class ProjetDetailController {
                     "-fx-font-size: 13px;");
 
             deleteButton.setOnAction(e -> {
+
+                String projectId = "";
+                // Get the task ID from the deleteButton's properties or from your application logic
+                String taskId = "";
+                handleSupprimerTacheButtonAction(projectId, taskId);
                 gridPane.getChildren().removeAll(taskCheckBox, deleteButton, cloneButton);
                 //delete the space of the deleted task
                 for (Node node : gridPane.getChildren()) {
@@ -189,6 +202,20 @@ public class ProjetDetailController {
                 }
             });
     }
+
+        public void handleSupprimerTacheButtonAction(String projectId, String taskId) {
+    DAOProjet daoProjet = new DAOProjet();
+   
+    org.bson.Document project = daoProjet.read(projectId);
+    if (project != null) {
+        
+        List<javax.swing.text.Document> tasks = (List<Document>) project.get("taches");
+        tasks.removeIf(task -> ((org.bson.Document) task).getString("id").equals(taskId));
+        daoProjet.update(projectId, null, null, tasks);
+    }
+}
+
+
 
     private Button createButtonWithIcon(String name, String string, int i, int j) {
         Button button = new Button(name);
