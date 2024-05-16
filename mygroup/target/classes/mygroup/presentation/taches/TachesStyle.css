@@ -1,0 +1,150 @@
+.button-style {
+    -fx-background-radius: 10px;
+    -fx-pref-width: 100px;
+    -fx-background-color: #3F72AF;
+    -fx-text-fill: white;
+    -fx-font-weight: bold; 
+    -fx-font-size: 13px; 
+}
+
+.left-btn-style {
+    -fx-background-color: #8E9EB2;
+    -fx-min-width: 30px;
+    -fx-min-height: 25px;
+    -fx-max-width: 30px;
+    -fx-max-height: 25px;
+    -fx-background-radius: 30px;
+}
+
+.confirm-btn-style {
+    -fx-background-color: #8E9EB2;
+    -fx-min-width: 25px;
+    -fx-min-height: 20px;
+    -fx-max-width: 25px;
+    -fx-max-height: 20px;
+    -fx-background-radius: 25px;
+}
+
+.navbar {
+    -fx-pref-width: 50px; /* Largeur préférée de la barre de navigation */
+    -fx-background-color: #112D4E; /* Couleur de fond de la barre de navigation */
+    -fx-background-radius: 10px;
+}
+
+.search-field-style {
+    -fx-background-radius: 10px;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 20px;
+    -fx-background-color: #8E9EB2;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+.ordonner-btn-style {
+    -fx-background-radius: 10px;
+    -fx-pref-width: 110px;
+    -fx-background-color: #3F72AF;
+    -fx-text-fill: white;
+    -fx-font-weight: bold; 
+    -fx-font-size: 13px; 
+}
+
+
+.text-area {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-size: 15px; 
+}
+
+.container{
+
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #112D4E;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+
+}
+
+.desc{
+    -fx-pref-height: 150px;
+}
+
+.comboBox-style {
+    -fx-background-radius: 10px;
+    -fx-pref-width: 81px;
+    -fx-pref-height: 20px;
+    -fx-background-color: #8e9eb2;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.filter-label-style {
+    -fx-background-radius: 10px;
+    -fx-pref-width: 270px;
+    -fx-pref-height: 30px;
+    -fx-background-color: #3F72AF;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.newListButton-style {
+    -fx-background-color: #112D4E;
+    -fx-background-radius: 10px;
+    -fx-min-width: 170px;
+    -fx-min-height: 60px;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18px;
+}
+
+.Label-style {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.index-style {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.description-label {
+    -fx-font-size: 25px; /* Taille de la police */
+    -fx-font-weight: bold; /* Gras */
+    
+}
+
+.description-style {
+    -fx-font-size: 16px;
+    -fx-focus-color: transparent;
+    -fx-background-color: transparent;
+    -fx-control-inner-background: #f0f0f0;
+}
+
+.google-calendar-style{
+    -fx-background-color: #3F72AF;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-pref-width: 175px;
+    -fx-pref-height: 350px;
+}
+
+
+.google-calendar-label-style {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+}
+
+.ajouter-btn-style{
+    -fx-background-radius: 10px;
+    -fx-pref-width: 150px;
+    -fx-background-color: #3F72AF;
+    -fx-text-fill: white;
+    -fx-font-weight: bold; 
+    -fx-font-size: 13px
+}

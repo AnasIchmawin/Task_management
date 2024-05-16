@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CalendarQuickstart",
+            "request": "launch",
+            "mainClass": "mygroup.metier.Service.CalendarQuickstart",
+            "projectName": "mygroup"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -14,9 +21,9 @@
             "type": "java",
             "name": "App",
             "request": "launch",
-            "mainClass": "App",
-            "projectName": "Task_management_88bed8b6",
-            "vmArgs": "--module-path \"lib/javafx-sdk-21.0.2/lib\" --add-modules javafx.controls,javafx.fxml"
+            "mainClass": "mygroup.App",
+            "projectName": "mygroup",
+            "vmArgs": "--module-path \"javafx-sdk-21.0.2/lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }
