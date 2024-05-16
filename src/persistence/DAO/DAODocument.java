@@ -22,7 +22,7 @@ public class DAODocument {
             Document doc = new Document("titre", titre)
                     .append("description", description)
                     .append("path", path)
-                    .append("datedAjout", LocalDate.now());
+                    .append("datedAjout", (LocalDate.now()).toString());
             collection.insertOne(doc);
         } catch (Exception e) {
             System.err.println("Erreur lors de la création du document : " + e.getMessage());

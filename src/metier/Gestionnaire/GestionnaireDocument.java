@@ -42,16 +42,15 @@ public class GestionnaireDocument {
 
     // Method to create a new document
     public void creerDocument() {
-        daoDocument.create(this.pojoDocument.getTitre(), this.pojoDocument.getDescription(),
-                this.pojoDocument.getURL());
-        daoDocument.create(this.pojoDocument.getTitre(), this.pojoDocument.getDescription(), this.pojoDocument.getURL(),
-                this.pojoDocument.getDateAjout(), this.pojoDocument.getIdProjet(), this.pojoDocument.getIdTache(),
-                this.pojoDocument.getIdSeance());
+        daoDocument.create(this.pojoDocument.getTitre(), this.pojoDocument.getDescription(), this.pojoDocument.getURL());
     }
 
     public boolean isUrlAccessible(String filePath) {
         try {
-            return Files.exists(Paths.get(filePath)) && Files.isReadable(Paths.get(filePath));
+            if (!filePath.isEmpty()) {
+                return Files.exists(Paths.get(filePath)) && Files.isReadable(Paths.get(filePath));
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("Erreur lors de la vérification du fichier : " + e.getMessage());
             return false;

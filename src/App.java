@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.bson.Document;
@@ -93,6 +94,14 @@ public class App extends Application {
 
         tacheDetailView view = new tacheDetailView();
         view.start(primaryStage) ;
+
+
+        // addTacheview view = new addTacheview() ;
+        // ControllerFromTacheAjout con = new ControllerFromTacheAjout(view) ;
+        // view.start(primaryStage) ;
+
+
+
     }
 
     public static void main(String[] args) {

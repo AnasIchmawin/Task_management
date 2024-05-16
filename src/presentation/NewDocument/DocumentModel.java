@@ -1,35 +1,14 @@
 package presentation.NewDocument;
 
-import java.time.LocalDate;
-
 public class DocumentModel {
     private String titre;
     private String url;
     private String description;
-    private LocalDate dateInsertion;
-    private String idProjet;
-    private String idTache;
-    private String idSeance;
 
-    public DocumentModel() {
-    }
-
-    public DocumentModel(String titre, String url, String description, LocalDate dateInsertion, String idProjet, String idTache, String idSeance) {
+    public DocumentModel(String titre, String url, String description) {
         this.titre = titre;
         this.url = url;
         this.description = description;
-        this.dateInsertion = dateInsertion;
-        this.idProjet = idProjet;
-        this.idTache = idTache;
-        this.idSeance = idSeance;
-    }
-
-    public LocalDate getDateInsertion() {
-        return dateInsertion;
-    }
-
-    public void setDateInsertion(LocalDate dateInsertion) {
-        this.dateInsertion = dateInsertion;
     }
 
     public String getTitre() {
@@ -54,29 +33,5 @@ public class DocumentModel {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getIdProjet() {
-        return idProjet;
-    }
-
-    public void setIdProjet(String idProjet) {
-        this.idProjet = idProjet;
-    }
-
-    public String getIdTache() {
-        return idTache;
-    }
-
-    public void setIdTache(String idTache) {
-        this.idTache = idTache;
-    }
-
-    public String getIdSeance() {
-        return idSeance;
-    }
-
-    public void setIdSeance(String idSeance) {
-        this.idSeance = idSeance;
     }
 }
