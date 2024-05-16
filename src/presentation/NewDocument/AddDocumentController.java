@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import metier.POJO.POJODocument;
+import presentation.NewProjet.AddProjetController;
 import presentation.projet_detail.ProjetDetailController;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
 import presentation.taches.TachesFormController;
@@ -16,6 +17,7 @@ import metier.Gestionnaire.GestionnaireDocument;
 public class AddDocumentController {
     private GestionnaireDocument gestionnaireDocument;
     private ControllerFromTacheAjout controllerFromTacheAjout;
+    private AddProjetController controllerFromAddProjet;
     private AddDocumentView view;
     @SuppressWarnings("unused")
     private ProjetDetailController controleur;
@@ -37,8 +39,11 @@ public class AddDocumentController {
         gestionnaireDocument = new GestionnaireDocument();
     }
 
-    
-
+    public AddDocumentController(AddDocumentView view, AddProjetController addProjetController) {
+        this.view = view;
+        this.controllerFromAddProjet = addProjetController;
+        gestionnaireDocument = new GestionnaireDocument();
+    }
 
     public void saveDocument() {
         LocalDateTime dateTime = LocalDateTime.now();

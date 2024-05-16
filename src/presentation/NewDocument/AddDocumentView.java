@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import presentation.tache_detail.controleur;
+import presentation.NewProjet.AddProjetController;
 import presentation.projet_detail.ProjetDetailController;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
 
@@ -63,8 +64,13 @@ public class AddDocumentView extends Application {
         this.idSeance = idSeance;
     }
 
+
     public AddDocumentView(ControllerFromTacheAjout controllerFromTacheAjout) {
         this.controller = new AddDocumentController(this, controllerFromTacheAjout);
+    }
+
+    public AddDocumentView(AddProjetController addProjetController) {
+        this.controller = new AddDocumentController(this, addProjetController);
     }
 
     private VBox createMainBox() {

@@ -6,6 +6,8 @@ import java.time.LocalTime;
 import org.bson.Document;
 import metier.Errors.NonValidSeance;
 import persistence.DAO.DAOSeance;
+
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class GestionnaireSeance {
@@ -85,5 +87,9 @@ public class GestionnaireSeance {
 
     public List<Document> getAllSeances() {
         return daoSeance.getAllSeances();
+    }
+
+    public LinkedHashMap<String, String> getLastSeance() {
+        return daoSeance.getLastSeance();
     }
 }

@@ -34,28 +34,23 @@ public class GetTasksController {
         this.displayTasks();
     }
 
-    public GetTasksController(AddProjetController addProjetController, ProjetsFormController projetsFormController) {
+    public GetTasksController(GetTasksView getTasksView, AddProjetController addProjetController) {
+        this.getTasksView = getTasksView;
         this.gestionnaireTache = new GestionnaireTache();
         this.addProjetController = addProjetController;
-        this.projetsFormController = projetsFormController;
+        this.displayTasks();
     }
 
     // Method to get all tasks
     public LinkedHashMap<String, String> getTasksMap() {
-        List<Document> tasks = gestionnaireTache.getAllTasks();
-        System.out.println("Tasks: " + tasks);
-        LinkedHashMap<String, String> taches_Disponibles = new LinkedHashMap<>();
+        LinkedHashMap<String, String> tasksMap = new LinkedHashMap<>();
+        List<Document> tasks = this.gestionnaireTache.getAllTasks();
         for (Document task : tasks) {
-            System.out.println("at start");
-            Document liste = task.get("liste", Document.class);
-            if (liste == null || liste.isEmpty()) {
-                continue;
-            }
             String id = task.getObjectId("_id").toString();
-            String titre = task.getString("titre");
-            taches_Disponibles.put(id, titre);
+            String title = task.getString("titre");
+            tasksMap.put(id, title);
         }
-        return taches_Disponibles;
+        return tasksMap;
     }
 
     // Method to handle cancel button
@@ -111,7 +106,7 @@ public class GetTasksController {
                     if (this.addListController != null)
                         this.addListController.addTask(id, task);
                     else {
-                        this.addProjetController.addSeanceToList(id, task);
+                        this.addProjetController.addTaskToList(id, task);
                     }
                 }
             }

@@ -9,6 +9,7 @@ import com.mongodb.client.model.Filters;
 
 import persistence.DBConnection;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class DAOSeance {
@@ -110,4 +111,17 @@ public class DAOSeance {
             return null;
         }
    }
+
+public LinkedHashMap<String, String> getLastSeance() {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("seances");
+            Document lastS = collection.find().sort(new Document("_id", -1)).first();
+            LinkedHashMap<String, String> lastSeance = new LinkedHashMap<>();
+            lastSeance.put(lastS.getObjectId("_id").toString(), lastS.getString("titre"));
+            return lastSeance;
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération de la dernière séance : " + e.getMessage());
+            return null;
+        }
+}
 }

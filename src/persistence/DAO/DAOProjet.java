@@ -14,30 +14,18 @@ import persistence.DBConnection;
 public class DAOProjet {
     
     // Create
-    public void create(String titre, String description, List<String> taches) {
+    public void create(String titre, String description, String categorie, String type, String dateDebut, String dateFin, List<String> taches, List<String> seances) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
-            Document doc = new Document();
-            doc.append("titre", titre)
-                .append("description", description);
-            if(taches != null){
-                List<Document> tachesList = new ArrayList<>();
-                for (String id_tache : taches) {
-                    Document tacheDoc = new Document();
-                    tacheDoc.append("id", id_tache);
-                    tachesList.add(tacheDoc);
-                }
-                doc.append("taches", tachesList);
-            }
-            else{
-                doc.append("taches", null);
-            }
+            Document doc = new Document("titre", titre).append("description", description).append("categorie", categorie)
+                            .append("type", type).append("dateDebut", dateDebut).append("dateFin", dateFin).append("taches", taches)
+                            .append("seances", seances);
             collection.insertOne(doc);
         } catch (Exception e) {
             System.err.println("Erreur lors de la création du projet : " + e.getMessage());
         }
     }
-
+    
     // Read
     public Document read(String id) {
         Document projet = null;

@@ -36,21 +36,14 @@
     -fx-font-size: 16px;
     -fx-border-width: 0px;
     -fx-focus-color: transparent;
-    -fx-pref-width: 750px;
-    -fx-max-height: 180px;
-}
-
-.container {
-    -fx-background-color: #f0f0f0;
-    -fx-border-color: #112D4E;
-    -fx-border-width: 2px;
-    -fx-border-radius: 10px;
+    -fx-pref-width: 700px;
+    -fx-max-height: 100px;
 }
 
 .Label-style {
     -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-text-fill: #000000;
+    -fx-text-fill: #FFFF;
 }
 
 .date-picker {
@@ -73,15 +66,15 @@
     -fx-font-size: 16px;
     -fx-border-width: 0px;
     -fx-focus-color: transparent;
-    -fx-max-width: 300px;
-    -fx-min-height: 354px ;
+    -fx-max-width: 200px;
+    -fx-min-height: 300px ;
 }
 
 .Docs-Style {
     -fx-border-width: 0px;
     -fx-focus-color: transparent;
     -fx-pref-width: 140px;
-    -fx-pref-height: 150px;
+    -fx-pref-height: 100px;
 }
 
 .AjouterTache-style {

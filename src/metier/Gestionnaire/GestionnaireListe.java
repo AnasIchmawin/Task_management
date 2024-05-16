@@ -93,4 +93,8 @@ public class GestionnaireListe {
     public Document getLastList() {
         return daoListe.getLastList();
     }
+
+    public void deleteTacheFromListe(String listeId, String tacheId) {
+        daoListe.deleteTacheFromListe(listeId, tacheId);
+    }
 }

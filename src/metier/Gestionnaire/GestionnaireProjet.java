@@ -37,7 +37,8 @@ public class GestionnaireProjet {
         if (projet.getTitre().isEmpty()) {
             throw new NonValidList("Le projet doit avoir un nom !");
         }
-        daoProjet.create(this.projet.getTitre(), this.projet.getDescription(), this.projet.getTaches());
+        daoProjet.create(this.projet.getTitre(), this.projet.getDescription(), this.projet.getCategorie(), this.projet.getType(),
+                            this.projet.getDateDebut(), this.projet.getDateFin(), this.projet.getTaches(), this.projet.getSeances());
     }
 
     // Method to retrieve a projet by its ID

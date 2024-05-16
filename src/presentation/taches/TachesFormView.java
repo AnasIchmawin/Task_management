@@ -34,7 +34,6 @@ public class TachesFormView extends Application {
     private Button ordonnerButton;
     private Button searchButton;
     private Button ajouterButton;
-    private Button saveButton;
     private TextField searchField;
     private TachesFormController controller;
     private BorderPane root;
@@ -72,7 +71,6 @@ public class TachesFormView extends Application {
         ordonnerButton = createButton("Ordonner", "file:./Pictures/folder.png", 20, 20);
         searchButton = createButton("", "file:./Pictures/loupe.png", 20, 20);
         ajouterButton = createButton("Ajouter une tache", "file:./Pictures/add.png", 20, 20);
-        saveButton = createButton("Enregistrer", "file:./Pictures/save.png", 20, 20);
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
         ZoneTaches = createGridPane();
@@ -95,7 +93,6 @@ public class TachesFormView extends Application {
         archiveButton.getStyleClass().add("button-style");
         ordonnerButton.getStyleClass().add("ordonner-btn-style");
         ajouterButton.getStyleClass().add("ajouter-btn-style");
-        saveButton.getStyleClass().add("ajouter-btn-style");
         searchField.getStyleClass().add("search-field-style");
         ContainerGoogleCalendar.getStyleClass().add("google-calendar-style");
         confirmerButton.getStyleClass().add("confirm-btn-style");
@@ -133,8 +130,7 @@ public class TachesFormView extends Application {
         VBox tasks = createTasksContainer(scrollPane);
         StackPane searchPane = createSearchPane();
         HBox topContainer = createTopContainer(searchPane);
-        title = createTextField("");
-        HBox titleContainer = createTitleContainer(title);
+        HBox titleContainer = createTitleContainer();
         HBox descriptionContainer = createDescriptionContainer();
         HBox bottomContainer = createBottomContainer();
 
@@ -147,8 +143,8 @@ public class TachesFormView extends Application {
         return container;
     }
 
-    private TextField createTextField(String text) {
-        TextField title = new TextField(text);
+    private TextField createTextField() {
+        TextField title = new TextField();
         title.getStyleClass().add("title-style");
         return title;
     }
@@ -184,10 +180,14 @@ public class TachesFormView extends Application {
         return topContainer;
     }
 
-    private HBox createTitleContainer(TextField title) {
+    private HBox createTitleContainer() {
+        title = createTextField();
         HBox titleContainer = new HBox();
-        titleContainer.getChildren().add(title);
-        HBox.setMargin(title, new Insets(0, 0, 10, 40));
+        Button titleConfButton = createButton("", "file:./Pictures/check-mark.png", 12, 12);
+        titleConfButton.setStyle("-fx-background-color: #transparant; -fx-border-radius: 50px; -fx-background-radius: 50px;");
+        titleContainer.getChildren().addAll(titleConfButton, title);
+        HBox.setMargin(titleConfButton, new Insets(10, 0, 0, 30));//
+        HBox.setMargin(title, new Insets(0, 0, 10, 5));
         titleContainer.setAlignment(Pos.TOP_LEFT);
         return titleContainer;
     }
@@ -196,9 +196,8 @@ public class TachesFormView extends Application {
         HBox descriptionContainer = new HBox();
         description = BoxDescription("");
         ScrollPane descriptionScrollPane = createDescriptionScrollPane(description);
-        descriptionContainer.getChildren().addAll(descriptionScrollPane);
-        HBox.setMargin(descriptionContainer, new Insets(0, 20, 0, 40));
-        descriptionContainer.setAlignment(Pos.TOP_LEFT);
+        descriptionContainer.getChildren().addAll( descriptionScrollPane);
+        descriptionContainer.setAlignment(Pos.TOP_RIGHT);
         return descriptionContainer;
     }
 
@@ -208,7 +207,7 @@ public class TachesFormView extends Application {
         ContainerGoogleCalendar = createGoogleCalendarContainer();
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        bottomContainer.getChildren().addAll(ajouterButton, saveButton, spacer, ContainerGoogleCalendar);
+        bottomContainer.getChildren().addAll(ajouterButton, spacer, ContainerGoogleCalendar);
         bottomContainer.getStyleClass().add("bottom-container-style");
         HBox.setMargin(ContainerGoogleCalendar, new Insets(0, 50, 30, 0));
         return bottomContainer;
@@ -246,7 +245,7 @@ public class TachesFormView extends Application {
         ScrollPane descriptionScrollPane = new ScrollPane(description);
         descriptionScrollPane.setFitToWidth(true);
         descriptionScrollPane.setStyle("-fx-background-color: transparent;");
-        descriptionScrollPane.setPadding(new Insets(0, 10, 0, 40));
+        descriptionScrollPane.setPadding(new Insets(0, 40, 0, 10));
         descriptionScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         return descriptionScrollPane;
     }
@@ -256,7 +255,6 @@ public class TachesFormView extends Application {
         HBox.setMargin(ordonnerButton, new Insets(30, 20, 20, 70));
         HBox.setMargin(searchButton, new Insets(30, 70, 20, 20));
         HBox.setMargin(ajouterButton, new Insets(35, 0, 0, 70));
-        HBox.setMargin(saveButton, new Insets(35, 0, 0, 20));
     }
 
     private GridPane createGridPane() {
@@ -362,10 +360,6 @@ public class TachesFormView extends Application {
     private void Action() {
         ajouterButton.setOnAction(event -> {
             controller.handleAjouterButtonAction();
-        });
-
-        saveButton.setOnAction(event -> {
-            controller.handleSaveButtonAction();
         });
 
         ordonnerButton.setOnAction(event -> {

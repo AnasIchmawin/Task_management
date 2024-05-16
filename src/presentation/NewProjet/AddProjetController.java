@@ -19,17 +19,21 @@ import metier.POJO.POJOProjet;
 import metier.Errors.NonValidList;
 import presentation.GetTasks.GetTasksController;
 import presentation.GetTasks.GetTasksView;
+import presentation.NewDocument.AddDocumentController;
+import presentation.NewDocument.AddDocumentView;
 import presentation.projets.ProjetsFormController;
+import presentation.seance_ajoute.SceanceAjouteView;
 
 public class AddProjetController {
     private final GestionnaireProjet gestionnaireProjet;
+    private AddDocumentController addDocumentController;
     private final AddProjetView addProjetView;
     private final AddProjetModel addProjetModel;
 
     public AddProjetController(AddProjetView addProjetView) {
         this.gestionnaireProjet = new GestionnaireProjet();
         this.addProjetView = addProjetView;
-        this.addProjetModel = new AddProjetModel("", "","","","","",new LinkedHashMap<>());
+        this.addProjetModel = new AddProjetModel("", "","","","","",new LinkedHashMap<>(), new LinkedHashMap<>());
     }
 
     public void saveInfosProjet(ActionEvent event) {
@@ -63,17 +67,17 @@ public class AddProjetController {
         alert.showAndWait();
     }
 
-    public void getTasksView(ActionEvent event, ProjetsFormController projetFormController) {
+    public void getTasksView(ActionEvent event) {
         String titre = addProjetView.getTitre();
         String description = addProjetView.getDescription();
         this.addProjetModel.setTitre(titre);
         this.addProjetModel.setDescription(description);
 
-        GetTasksController Controller = new GetTasksController(this, projetFormController);
-        GetTasksView View = new GetTasksView(Controller);
+        GetTasksView View = new GetTasksView(this);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         View.start(stage);
     }
+
 
     public void displayTasks(GridPane gridPane) {
         List<String> mesTaches = new ArrayList<>(getTasksTitles());
@@ -97,16 +101,17 @@ public class AddProjetController {
     //     }
     // }
 
-    // public void displaySeances(GridPane gridPane) {
-    //     List<String> mesSeances = new ArrayList<>(getSeancesTitles());
+    public void displaySeances() {
+        GridPane gridPane = addProjetView.getZoneSeances();
+        List<String> mesSeances = new ArrayList<>(getSeancesTitles());
 
-    //     for (String title : mesSeances) {
-    //         Button newSeanceButton = createTaskButton(title);
-    //         int colIndex = gridPane.getChildren().size() % 6; // Calculating column index
-    //         int rowIndex = gridPane.getChildren().size() / 6; // Calculating row index
-    //         gridPane.add(newSeanceButton, colIndex, rowIndex); 
-    //     }
-    // }
+        for (String title : mesSeances) {
+            Button newSeanceButton = createTaskButton(title);
+            int colIndex = gridPane.getChildren().size() % 6; // Calculating column index
+            int rowIndex = gridPane.getChildren().size() / 6; // Calculating row index
+            gridPane.add(newSeanceButton, colIndex, rowIndex); 
+        }
+    }
 
 
     private List<String> getTasksTitles() {
@@ -117,9 +122,9 @@ public class AddProjetController {
     //     return new ArrayList<>(this.addProjetModel.getDocumentsSelectionnes().values());
     // }
 
-    // private List<String> getSeancesTitles() {
-    //     return new ArrayList<>(this.addProjetModel.getSeancesSelectionnees().values());
-    // }
+    private List<String> getSeancesTitles() {
+        return new ArrayList<>(this.addProjetModel.getSeancesSelectionnees().values());
+    }
 
     public void updateView(AddProjetView view) {
         view.setTitre(this.addProjetModel.getTitre());
@@ -131,7 +136,7 @@ public class AddProjetController {
     }
 
     //addTaskToList
-    public void addSeanceToList(String id, String task) {
+    public void addTaskToList(String id, String task) {
         this.addProjetModel.addTask(id, task);
     }
 
@@ -161,5 +166,21 @@ public class AddProjetController {
             }
     
         return newTaskButton;
+    }
+
+    public void handleAjouterDocumentButton(ActionEvent event) {
+        AddDocumentView addDocumentView = new AddDocumentView(this);
+        Stage stage = new Stage();
+        addDocumentView.start(stage);
+    }
+
+    public void handleAjouterSeanceButton(ActionEvent event) {
+        SceanceAjouteView sceanceAjouteView = new SceanceAjouteView(this);
+        Stage stage = new Stage();
+        sceanceAjouteView.start(stage);
+    }
+
+    public void setSeance(LinkedHashMap<String, String> Seance) {
+        this.addProjetModel.addSeance(Seance);
     }
 }

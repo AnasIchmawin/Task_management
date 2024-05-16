@@ -20,6 +20,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import presentation.NewProjet.AddProjetController;
 
 public class SceanceAjouteView extends Application {
     private static final Pos TOP_CENTER = Pos.TOP_CENTER;
@@ -43,8 +44,8 @@ public class SceanceAjouteView extends Application {
     private TextArea ZoneNote;
 
     // Constructor
-    public SceanceAjouteView() {
-        this.controller = new SceanceAjouteController(this);
+    public SceanceAjouteView(AddProjetController addProjetController) {
+        this.controller = new SceanceAjouteController(this, addProjetController);
         init();
         style();
         Action();
@@ -52,13 +53,15 @@ public class SceanceAjouteView extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        VBox navbarContainer = createNavbarContainer();
         StackPane container = createMainContent();
-        root = createBorderPane(navbarContainer, container);
-        Scene scene = new Scene(root, 1160, 652);
+        root = createBorderPane(container);
+        Scene scene = new Scene(root, 850, 500);
         scene.getStylesheets().add(getClass().getResource("SeanceStyle.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Formulaire de Séance");
+        //set position of show in screen
+        primaryStage.setX(180);
+        primaryStage.setY(70);
         primaryStage.show();
     }
 
@@ -88,32 +91,18 @@ public class SceanceAjouteView extends Application {
         sauvegarderButton.getStyleClass().add("footBtn-style");
     }
 
-    private BorderPane createBorderPane(VBox navbarContainer, StackPane container) {
+    private BorderPane createBorderPane( StackPane container) {
         root = new BorderPane();
-        root.setStyle("-fx-background-color: white;");
-        BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 20));
-        root.setTop(navbarContainer);
-        BorderPane.setMargin(container, new Insets(20, 20, 20, 20));
+        root.setStyle("-fx-background-color: #112D4E;");
+        root.setPadding(new Insets(20, 20, 20, 20));
         root.setCenter(container);
         return root;
     }
 
-    private VBox createNavbarContainer() {
-        HBox buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
-        HBox leftButtonBox = new HBox(20, leftButton);
-        HBox navbar = new HBox(30, leftButtonBox, buttonsBar);
-        navbar.setPadding(new Insets(10, 20, 10, 20));
-        navbar.getStyleClass().add("navbar");
-        VBox navbarContainer = new VBox(navbar);
-        navbarContainer.getStyleClass().add("navbar-container");
-        return navbarContainer;
-    }
-
+    
     private StackPane createMainContent() {
         // le background de la page gris
         StackPane container = new StackPane();
-        container.getStyleClass().add("container");
-        container.setPadding(new Insets(15, 70, 20, 55));
 
         // Créer un TextField pour l'heure de début et de fin
         TempsDebut = createTextField();
@@ -142,17 +131,17 @@ public class SceanceAjouteView extends Application {
         VBox dateFinContainer = createVboxDates(DateFinComplet, dateFin, TempsFin, labelFin, Space_Dates);
         HBox Dates = new HBox();
         Dates.getChildren().addAll(dateDebutContainer, Space_Dates, dateFinContainer);
-        HBox.setMargin(Dates, new Insets(30, 50, 20, 0));
+        HBox.setMargin(Dates, new Insets(0, 50, 20, 0));
 
         VBox containerTitle = CreateVbox(0, TOP_LEFT);
-        HBox.setMargin(containerTitle, new Insets(30, 50, 20, 0));
+        HBox.setMargin(containerTitle, new Insets(0, 50, 20, 0));
         Label labelTitle = createLabel("Titre");
         containerTitle.getChildren().addAll(labelTitle, titreField);
         topContainer.getChildren().addAll(containerTitle, Space_Btn_Dates, Dates);
         topContainer.getStyleClass().add("topContainer-style");
         mainContentContainer.getChildren().addAll(topContainer);
         HBox centerContainer = CreateHbox(20, CENTER_LEFT);
-        VBox leftBox = CreateVbox(15, TOP_LEFT);
+        VBox leftBox = CreateVbox(15, TOP_CENTER);
         VBox ContainerDescription = CreateVbox(1, TOP_LEFT);
         Label labelDescription = createLabel("Discription");
         ZoneDescription = createTextArea("Description", "ZoneDescription-Style");
@@ -356,6 +345,10 @@ public class SceanceAjouteView extends Application {
 
     public Stage getStage() {
         return (Stage) root.getScene().getWindow();
+    }
+
+    public void close() {
+        getStage().close();
     }
 
 }

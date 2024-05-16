@@ -53,16 +53,10 @@ public class GetSeancesController {
     }
 
     // Method to handle cancel button
-    public void handleCancelButton(ActionEvent eventAddList) {
-        if (this.addListController != null) {
-            AddListView view = new AddListView(this.addListController, this.listeFormController);
-            Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
-            view.start(stage);
-        } else {
-            AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
-            Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
-            view.start(stage);
-        }
+    public void handleCancelButton(ActionEvent eventAddList) { 
+        Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
+        AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
+        view.start(stage);
     }
 
     // Method to display seances
@@ -101,23 +95,13 @@ public class GetSeancesController {
                     String seance = checkBox.getText();
                     String id = getIdFromMap(GridCaseInfos, GridPane.getRowIndex(node), GridPane.getColumnIndex(node));
                     System.out.println("Seance selected: " + seance + " with id: " + id);
-                    if (this.addListController != null)
-                        this.addListController.addSeanceToList(id, seance);
-                    else {
-                        this.addProjetController.addSeanceToList(id, seance);
-                    }
+                    this.addProjetController.addTaskToList(id, seance);
                 }
             }
         }
-        if (this.addListController != null && this.addListController != null) {
-            AddListView view = new AddListView(this.addListController, this.listeFormController);
-            Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
-            view.start(stage);
-        } else {
-            AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
-            Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
-            view.start(stage);
-        }
+        AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
+        Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
+        view.start(stage);
     }
 
     // Method to create a checkbox

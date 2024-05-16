@@ -7,6 +7,7 @@ import com.mongodb.client.FindIterable;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import persistence.DAO.DAOTache;
+import presentation.GetSeances.GetSeancesController;
 import presentation.GetTasks.GetTasksController;
 import presentation.GetTasks.GetTasksView;
 import presentation.NewDocument.AddDocumentController;
@@ -42,10 +43,8 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
 
 
-        // ProjetsFormView projets = new ProjetsFormView();
-        // projets.start(primaryStage);
-
-        // ListeFormController controller = new ListeFormController();
+        ProjetsFormView projets = new ProjetsFormView();
+        projets.start(primaryStage);
 
         // ArchiveFormView archive = new ArchiveFormView();
         // archive.start(primaryStage);
@@ -59,9 +58,6 @@ public class App extends Application {
         // ProjetDetailController con = new ProjetDetailController() ;
         // Projet_Detail_View view = new Projet_Detail_View(con) ;
         // view.start(primaryStage) ;
-
-        // SeanceFormView seance = new SeanceFormView();
-        // seance.start(primaryStage);
 
         // SeanceFormView view = new SeanceFormView();
         // view.start(primaryStage);
@@ -88,10 +84,13 @@ public class App extends Application {
         // LoginFormView view = new LoginFormView(primaryStage) ;
         // view.start(primaryStage) ;
 
-
         // presentation.tache_detail.screen view = new presentation.tache_detail.screen() ;
         // presentation.tache_detail.controleur con = new presentation.tache_detail.controleur(view, null) ;
         // view.start(primaryStage) ;
+
+        // SceanceAjouteView view = new SceanceAjouteView() ;
+        // view.start(new Stage());
+
     }
 
     public static void main(String[] args) {

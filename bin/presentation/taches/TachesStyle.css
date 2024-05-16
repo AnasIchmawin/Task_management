@@ -105,7 +105,22 @@
     -fx-font-weight: bold;
     -fx-text-fill: #000000;
     -fx-background-color: transparent;
+    -fx-pref-width: 200px;
 }
+
+.description-confirm-btn-style {
+    -fx-background-color: #0078d7; /* Button background color */
+    -fx-text-fill: white; /* Text color */
+    -fx-padding: 5 15 5 15; /* Padding inside the button */
+    -fx-font-size: 14px; /* Font size */
+    -fx-background-radius: 5; /* Rounded corners */
+    -fx-cursor: hand; /* Hand cursor on hover */
+}
+
+.description-confirm-btn-style:hover {
+    -fx-background-color: #005a9e; /* Darker color on hover */
+}
+
 
 .index-style {
     -fx-font-size: 17px;

@@ -38,7 +38,7 @@ public class AddProjetView {
     private TextField TempsDebut;
     private TextField TempsFin;
 
-    private AddProjetController controleur;
+    private AddProjetController addProjetController;
     private ProjetsFormController projetFormController;
     private Button ajouterTacheButton;
     private Button ajouterSeanceButton;
@@ -48,7 +48,7 @@ public class AddProjetView {
 
     public AddProjetView(ProjetsFormController projetFormController) {
         this.projetFormController = projetFormController;
-        this.controleur = new AddProjetController(this);
+        this.addProjetController = new AddProjetController(this);
         init();
         style();
         action();
@@ -56,21 +56,21 @@ public class AddProjetView {
 
     public AddProjetView(AddProjetController controleur, ProjetsFormController projetFormController) {
         this.projetFormController = projetFormController;
-        this.controleur = controleur;
+        this.addProjetController = controleur;
         init();
         style();
         action();
-        this.controleur.updateView(this);
-        this.controleur.displayTasks(ZoneTaches);
-        this.controleur.displayDocuments(ZoneDocument);
-        this.controleur.displaySeances(ZoneSeance);
+        this.addProjetController.updateView(this);
+        this.addProjetController.displayTasks(ZoneTaches);
+        // this.controleur.displayDocuments(ZoneDocument);
+        this.addProjetController.displaySeances();
     }
 
     public void start(Stage primaryStage) {
         StackPane containerContent = createMainContent();
         root = createBorderPane(containerContent);
 
-        Scene scene = new Scene(root, 800, 450);
+        Scene scene = new Scene(root, 850, 500);
         scene.getStylesheets().add(getClass().getResource("AddProjetStyle.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Formulaire d'un Projet");
@@ -121,7 +121,7 @@ public class AddProjetView {
 
         HBox dateDebutContainer = CreateHbox(8, Pos.TOP_LEFT);
         Label labelDateDebut = createLabel("Date de debut : ");
-        dateDebutContainer.setPadding(new Insets(0, 0, 0, 0));
+        dateDebutContainer.setPadding(new Insets(0, 80, 0, 0));
         dateDebutContainer.getChildren().addAll(labelDateDebut, dateDebut, TempsDebut);
 
         HBox dateFinContainer = CreateHbox(8, Pos.TOP_LEFT);
@@ -139,7 +139,7 @@ public class AddProjetView {
         HBox topContainer = CreateHbox(10, Pos.TOP_LEFT);
         Label labelTitre = createLabel("Titre :  ");
         HBox ContainerTitle = CreateHbox(0, Pos.TOP_LEFT);
-        ContainerTitle.setPadding(new Insets(0, 100, 0, 0));
+        ContainerTitle.setPadding(new Insets(0, 120, 0, 0));
         TitreField.setPadding(new Insets(4, 4, 4, 12));
         ContainerTitle.getChildren().addAll(labelTitre, TitreField);
         topContainer.getChildren().addAll(ContainerTitle, ContenaireComboBox);
@@ -151,15 +151,17 @@ public class AddProjetView {
         mainContentContainer.getChildren().addAll(ContenaireDescription);
 
         VBox CentenaireTaches = CreateVbox(10, Pos.TOP_LEFT);
-        VBox Taches = createBox();
+        VBox Taches = createTacheBox();
+        CentenaireTaches.setPadding(new Insets(0, 30, 0, 0));
         CentenaireTaches.getChildren().addAll(Taches);
 
         VBox CentenaireDocument = CreateVbox(10, Pos.TOP_LEFT);
-        VBox Document = createBox();
+        VBox Document = createDocumentBox();
+        CentenaireDocument.setPadding(new Insets(0, 30, 0, 0));
         CentenaireDocument.getChildren().addAll(Document);
 
         VBox CentenaireSeance = CreateVbox(10, Pos.TOP_LEFT);
-        VBox Seance = createBox();
+        VBox Seance = createSeanceBox();
         CentenaireSeance.getChildren().addAll(Seance);
 
         HBox ContenaireAjout = CreateHbox(8, Pos.TOP_CENTER);
@@ -258,12 +260,32 @@ public class AddProjetView {
         return hbox;
     }
 
-    private VBox createBox() {
+    private VBox createTacheBox() {
         ScrollPane scrollTask = createScrollPane(ZoneTaches);
         scrollTask.getStyleClass().add("scroll-Style");
         VBox contenaire = CreateVbox(5, Pos.TOP_LEFT);
         contenaire.getStyleClass().add("contenaire-taches");
         contenaire.getChildren().addAll(scrollTask, ajouterTacheButton);
+        contenaire.setPadding(new Insets(10, 10, 5, 10));
+        return contenaire;
+    }
+
+    private VBox createDocumentBox() {
+        ScrollPane scrollTask = createScrollPane(ZoneDocument);
+        scrollTask.getStyleClass().add("scroll-Style");
+        VBox contenaire = CreateVbox(5, Pos.TOP_LEFT);
+        contenaire.getStyleClass().add("contenaire-taches");
+        contenaire.getChildren().addAll(scrollTask, ajouterDocumentButton);
+        contenaire.setPadding(new Insets(10, 10, 5, 10));
+        return contenaire;
+    }
+
+    private VBox createSeanceBox() {
+        ScrollPane scrollTask = createScrollPane(ZoneSeance);
+        scrollTask.getStyleClass().add("scroll-Style");
+        VBox contenaire = CreateVbox(5, Pos.TOP_LEFT);
+        contenaire.getStyleClass().add("contenaire-taches");
+        contenaire.getChildren().addAll(scrollTask, ajouterSeanceButton);
         contenaire.setPadding(new Insets(10, 10, 5, 10));
         return contenaire;
     }
@@ -280,7 +302,7 @@ public class AddProjetView {
     public void action() {
         Annuler.setOnAction(event -> {
             try {
-                this.controleur.closerWindow(event);
+                this.addProjetController.closerWindow(event);
             } catch (Exception e) {
                 System.out.println("Erreur pendant la fermeture AddList  : " + e.getMessage());
             }
@@ -288,16 +310,24 @@ public class AddProjetView {
 
         Enregistrer.setOnAction(event -> {
             try {
-                this.controleur.saveInfosProjet(event);
+                this.addProjetController.saveInfosProjet(event);
                 this.projetFormController.displayProjets(false);
-                this.controleur.closerWindow(event);
+                this.addProjetController.closerWindow(event);
             } catch (Exception e) {
                 System.out.println("Erreur pendant la fermeture du addlist : " + e.getMessage());
             }
         });
 
         ajouterTacheButton.setOnAction(event -> {
-            this.controleur.getTasksView(event, this.projetFormController);
+            this.addProjetController.getTasksView(event);
+        });
+
+        ajouterDocumentButton.setOnAction(event -> {
+            addProjetController.handleAjouterDocumentButton(event);
+        });
+
+        ajouterSeanceButton.setOnAction(event -> {
+            addProjetController.handleAjouterSeanceButton(event);
         });
     }
 
@@ -339,6 +369,10 @@ public class AddProjetView {
 
     public void setZoneTaches(GridPane newZoneTaches) {
         ZoneTaches = newZoneTaches;
+    }
+
+    public GridPane getZoneSeances() {
+        return ZoneSeance;
     }
 }
 

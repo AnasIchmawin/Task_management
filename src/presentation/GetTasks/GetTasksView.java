@@ -40,7 +40,7 @@ public class GetTasksView {
         init();
         style();
         action();
-      //  this.controller = new GetTasksController(this, addProjetController);
+       this.controller = new GetTasksController(this, addProjetController);
     }
 
     public void start(Stage primaryStage) {

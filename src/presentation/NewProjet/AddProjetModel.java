@@ -10,9 +10,10 @@ public class AddProjetModel {
     private String DateDebut;
     private String DateFin;
     private LinkedHashMap<String, String> TachesSelectionnees;
+    private LinkedHashMap<String, String> SeancesSelectionnees;
 
     public AddProjetModel(String titre, String description, String categorie, String type, String dateDebut, String dateFin,
-            LinkedHashMap<String, String> tachesSelectionnees) {
+            LinkedHashMap<String, String> tachesSelectionnees, LinkedHashMap<String, String> seancesSelectionnees) {
         this.Titre = titre;
         this.Description = description;
         this.Categorie = categorie;
@@ -20,6 +21,7 @@ public class AddProjetModel {
         this.DateDebut = dateDebut;
         this.DateFin = dateFin;
         this.TachesSelectionnees = tachesSelectionnees;
+        this.SeancesSelectionnees = seancesSelectionnees;
     }
 
     public String getTitre() {
@@ -80,6 +82,14 @@ public class AddProjetModel {
 
     public void addTask(String id, String titre) {
         TachesSelectionnees.put(id, titre);
+    }
+
+    public void addSeance(LinkedHashMap<String, String> seance) {
+        SeancesSelectionnees.putAll(seance);
+    }
+
+    public LinkedHashMap<String, String> getSeancesSelectionnees() {
+        return SeancesSelectionnees;
     }
 
 }
