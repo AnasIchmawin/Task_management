@@ -62,6 +62,7 @@ public class DAOTache {
     String tempsFin, List<String> list, String projet, String liste) {
         try {
             // Récupérer la collection "taches"
+            @SuppressWarnings("unused")
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("taches");
 
             // Créer les mises à jour à appliquer
@@ -108,11 +109,14 @@ public class DAOTache {
     }
 
     // Delete
-    public void delete(Integer id) {
+    public void delete(String tacheId) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("taches");
-            collection.deleteOne(Filters.eq("id", id));
+            // Convertir tacheId en ObjectId
+            ObjectId objectId = new ObjectId(tacheId);
+            // Supprimer la tâche correspondante à l'ID spécifié
+            collection.deleteOne(Filters.eq("_id", objectId));
         } catch (Exception e) {
             System.err.println("Erreur lors de la suppression de la tâche : " + e.getMessage());
         }
@@ -193,5 +197,45 @@ public class DAOTache {
             System.err.println("Error setting the state of the task: " + e.getMessage());
         }
     }
+
+    //getLastTacheId
+    public String getLastTacheId() {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            Document lastTache = collection.find().sort(new Document("_id", -1)).first();
+            if (lastTache != null) {
+                return lastTache.getObjectId("_id").toString();
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Error getting the last task ID: " + e.getMessage());
+            return null;
+        }
+    }
+
+
+
+
+    public void cloneTask(String tacheId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            Document tache = read(tacheId);
+            if (tache != null) {
+                Document clone = new Document(tache);
+                clone.remove("_id");
+                //change the title of the cloned task
+                clone.append("titre", tache.getString("titre"));
+                collection.insertOne(clone);
+            } else {
+                System.err.println("Task not found with ID: " + tacheId);
+            }
+        } catch (Exception e) {
+            System.err.println("Error cloning the task: " + e.getMessage());
+        }
+    }
+    
 
 }

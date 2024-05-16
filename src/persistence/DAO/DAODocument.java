@@ -7,6 +7,8 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import persistence.DBConnection;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,23 +16,20 @@ import java.util.List;
 public class DAODocument {
 
     // Create
-    public void create(String titre, String description, String path, String datedAjout, String idProjet, String idTache, String idSeance) {
+    public void create(String titre, String description, String path) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("documents");
             Document doc = new Document("titre", titre)
                     .append("description", description)
                     .append("path", path)
-                    .append("datedAjout", datedAjout)
-                    .append("idProjet", idProjet)
-                    .append("idTache", idTache)
-                    .append("idSeance", idSeance);
+                    .append("datedAjout", (LocalDate.now()).toString());
             collection.insertOne(doc);
         } catch (Exception e) {
             System.err.println("Erreur lors de la création du document : " + e.getMessage());
         }
     }
 
-    // Read
+
     public Document read(String id) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("documents");

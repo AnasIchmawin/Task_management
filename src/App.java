@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.bson.Document;
@@ -31,6 +32,8 @@ import presentation.tache_ajoute.ControllerFromTacheAjout;
 import presentation.tache_ajoute.addTacheview;
 import presentation.taches.TachesFormController;
 import presentation.taches.TachesFormView;
+import presentation.tache_detail.tacheDetailController;
+import presentation.tache_detail.tacheDetailView;
 
 import java.time.LocalDateTime;
 
@@ -41,17 +44,11 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        // ListeFormController controller = new ListeFormController();
-        // ListeFormView Seance = new ListeFormView();
-        // Seance.start(primaryStage);
 
         // ProjetsFormView projets = new ProjetsFormView();
         // projets.start(primaryStage);
 
         // ListeFormController controller = new ListeFormController();
-
-        // ListeFormView projets = new ListeFormView();
-        // projets.start(primaryStage);
 
         // ArchiveFormView archive = new ArchiveFormView();
         // archive.start(primaryStage);
@@ -73,14 +70,14 @@ public class App extends Application {
         // view.start(primaryStage);
 
 
-        Projet_Detail_View view = new Projet_Detail_View();
-        view.start(primaryStage);
+        // Projet_Detail_View view = new Projet_Detail_View();
+        // view.start(primaryStage);
 
         // SceanceAjouteView view = new SceanceAjouteView();
         // view.start(primaryStage);
         
-        TachesFormView view = new TachesFormView() ;
-        view.start(primaryStage) ;
+        // TachesFormView view = new TachesFormView() ;
+        // view.start(primaryStage) ;
 
         // SceanceFormController con = new SceanceFormController() ;
         // SeanceFormView view = new SeanceFormView(con) ;
@@ -91,10 +88,20 @@ public class App extends Application {
         // AddDocumentView view = new AddDocumentView(con) ;
         // view.start(primaryStage) ;
 
-
-        // presentation.tache_detail.screen view = new presentation.tache_detail.screen() ;
-        // presentation.tache_detail.controleur con = new presentation.tache_detail.controleur(view, null) ;
+        // LoginFormView view = new LoginFormView(primaryStage) ;
         // view.start(primaryStage) ;
+
+
+        tacheDetailView view = new tacheDetailView();
+        view.start(primaryStage) ;
+
+
+        // addTacheview view = new addTacheview() ;
+        // ControllerFromTacheAjout con = new ControllerFromTacheAjout(view) ;
+        // view.start(primaryStage) ;
+
+
+
     }
 
     public static void main(String[] args) {

@@ -95,4 +95,19 @@ public class DAOSeance {
             return null;
         }
     }
+
+   public List<Document>  getAllSeances(){
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("seances");
+            FindIterable<Document> iterDoc = collection.find();
+            List<Document> documents = new ArrayList<>();
+            for (Document doc : iterDoc) {
+                documents.add(doc);
+            }
+            return documents;
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération des séances : " + e.getMessage());
+            return null;
+        }
+   }
 }

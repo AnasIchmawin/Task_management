@@ -21,8 +21,7 @@ import metier.GestionnaireTache;
 import persistence.DAO.DAOProjet;
 import presentation.GetDocument.GetDocModel;
 import presentation.NewDocument.AddDocumentView;
-import presentation.tache_ajoute.addTacheview;
-import presentation.projet_detail.Projet_Detail_View;
+
 
 
 
@@ -103,6 +102,7 @@ public class ProjetDetailController {
 
 
     //handleajouterTacheButtonAction
+    @SuppressWarnings("static-access")
     public void handleAjouterTacheButtonAction(GridPane gridPane) {
         Button deleteButton = createButtonWithIcon("", "file:./Pictures/delete.png", 15, 15);
         Button cloneButton = createButtonWithIcon("", "file:./Pictures/cloner.png", 15, 15);

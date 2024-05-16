@@ -1,7 +1,5 @@
 package presentation.GetTaskFromCalendar;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -10,8 +8,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 
 public class TableViewPane extends VBox {
+    @SuppressWarnings("unused")
     private ObservableList<Item> data;
 
+    @SuppressWarnings("unchecked")
     public TableViewPane(ObservableList<Item> data) {
         this.data = data;
 

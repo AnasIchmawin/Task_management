@@ -3,43 +3,70 @@ package presentation.NewList;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import metier.GestionnaireListe;
-import metier.POJOListe;
+import javafx.util.Duration;
+import metier.Gestionnaire.GestionnaireListe;
+import metier.POJO.POJOListe;
 import metier.Errors.NonValidList;
-import presentation.GetTasks.GetTasksController;
 import presentation.GetTasks.GetTasksView;
 import presentation.listes.ListeFormController;
 
 public class AddListController {
-    private final GestionnaireListe gestionnaireListe;
-    private final AddListView addListView;
-    private final AddListModel addListModel;
+    private GestionnaireListe gestionnaireListe;
+    private AddListView addListView;
+    private AddListModel addListModel;
+    private ListeFormController listeFormController;
 
-    public AddListController(AddListView addListView) {
+    public AddListController(AddListView addListView, ListeFormController listeFormController) {
         this.gestionnaireListe = new GestionnaireListe();
         this.addListView = addListView;
-        this.addListModel = new AddListModel("", "",new LinkedHashMap<>());
+        this.listeFormController = listeFormController;
+        this.addListModel = new AddListModel("", "", new LinkedHashMap<>());
+        this.updateView(addListView);
+    }
+
+    public AddListController(AddListView addListView, AddListController addListController) {
+        this.gestionnaireListe = new GestionnaireListe();
+        this.addListView = addListView;
+        this.addListModel = addListController.getAddListModel();
+        this.listeFormController = addListController.getListeFormController();
+        this.updateView(addListView);
+        this.displayTasks(addListView.getZoneTaches());
+    }
+
+    public ListeFormController getListeFormController() {
+        return this.listeFormController;
     }
 
     public void saveInfosListe(ActionEvent event) {
-        if (!addListView.getTitre().isEmpty()) {
+        try {
             updateListModel();
-            POJOListe nouvelleListe = new POJOListe(this.addListModel);
-            this.gestionnaireListe.setListe(nouvelleListe);
+            String titre = addListModel.getTitre();
+            String description = addListModel.getDescription();
+            LinkedHashMap<String, String> taches = addListModel.getTachesSelectionnees();
 
-            try {
-                gestionnaireListe.creerListe();
-            } catch (NonValidList e) {
-                showAlert(Alert.AlertType.ERROR, "Erreur", e.getMessage());
-            }
+            POJOListe nouvelleListe = new POJOListe(titre, description, new ArrayList<>(taches.values()));
+            this.gestionnaireListe.setListe(nouvelleListe);
+            gestionnaireListe.creerListe();
+            listeFormController.addList();
+            showAlert(AlertType.INFORMATION, "Succès", "Liste créée avec succès", 
+            "La liste a été créée avec succès", Duration.seconds(1));
+            closerWindow(event);
+
+        } catch (NonValidList e) {
+            showAlert(AlertType.ERROR, "Erreur", "Erreur lors de la création de la liste", 
+            e.getMessage(), Duration.seconds(2));
         }
     }
 
@@ -47,29 +74,19 @@ public class AddListController {
         addListModel.setTitre(addListView.getTitre());
         addListModel.setDescription(addListView.getDescription());
     }
-
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    public void getTasksView(ActionEvent event, ListeFormController listeFormController) {
+    public void getTasksView(ActionEvent event) {
         String titre = addListView.getTitre();
         String description = addListView.getDescription();
         this.addListModel.setTitre(titre);
         this.addListModel.setDescription(description);
 
-        GetTasksController controller = new GetTasksController(this, listeFormController);
-        GetTasksView view = new GetTasksView(controller);
+        GetTasksView view = new GetTasksView(this);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         view.start(stage);
     }
 
     public void displayTasks(GridPane gridPane) {
-        List<String> mesTaches = new ArrayList<>(getTasksTitles());
+        List<String> mesTaches = addListModel.getTasksTitles();
 
         for (String title : mesTaches) {
             Button newTaskButton = createTaskButton(title);
@@ -77,10 +94,6 @@ public class AddListController {
             int rowIndex = gridPane.getChildren().size() / 6; // Calculating row index
             gridPane.add(newTaskButton, colIndex, rowIndex);
         }
-    }
-
-    private List<String> getTasksTitles() {
-        return new ArrayList<>(this.addListModel.getTachesSelectionnees().values());
     }
 
     public void updateView(AddListView view) {
@@ -92,13 +105,13 @@ public class AddListController {
         return this.addListModel;
     }
 
-    public void addSeanceToList(String id, String task) {
-        this.addListModel.addTask(id, task);
-    }
-
     public void closerWindow(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
+    }
+
+    public void addTask(String id, String title) {
+        this.addListModel.getTachesSelectionnees().put(id, title);
     }
 
     private Button createTaskButton(String title) {
@@ -122,4 +135,18 @@ public class AddListController {
 
         return newTaskButton;
     }
+
+    public static void showAlert(AlertType type, String title, String headerText, String contentText, Duration duration) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        alert.show();
+        Timeline timeline = new Timeline(new KeyFrame(duration, event -> {
+            alert.close();
+        }));
+        timeline.setCycleCount(1);
+        timeline.play();
+    }
+
 }

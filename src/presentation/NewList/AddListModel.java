@@ -1,6 +1,8 @@
 package presentation.NewList;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class AddListModel {
     private String Titre;
@@ -37,7 +39,13 @@ public class AddListModel {
         this.TachesSelectionnees = tachesSelectionnees;
     }
 
-    public void addTask(String id, String task) {
-        this.TachesSelectionnees.put(id, task);
+    public List<String> getTasksTitles() {
+        return new ArrayList<>(getTachesSelectionnees().values());
+    }
+
+    public void addList(String titre, String Description, LinkedHashMap<String, String> tachesSelectionnees) {
+        this.Titre = titre;
+        this.Description = Description;
+        this.TachesSelectionnees = tachesSelectionnees;
     }
 }
