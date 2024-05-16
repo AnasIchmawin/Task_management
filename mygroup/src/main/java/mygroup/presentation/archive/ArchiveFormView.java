@@ -159,12 +159,12 @@ public class ArchiveFormView extends Application {
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
-        ordonnerButton = createButtonWithIcon("Ordonner", "file:./Pictures/folder.png", 20, 20);
-        filtrerButton = createButtonWithIcon("filtrer", "file:./Pictures/folder.png", 20, 20);
-        searchButton = createButtonWithIcon("", "file:./Pictures/loupe.png", 20, 20);
+        ordonnerButton = createButtonWithIcon("Ordonner", "file:./mygroup/src/main/java/Pictures/folder.png", 20, 20);
+        filtrerButton = createButtonWithIcon("filtrer", "file:./mygroup/src/main/java/Pictures/folder.png", 20, 20);
+        searchButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/loupe.png", 20, 20);
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
-        RecycleIconView = createIcon("file:./Pictures/recycle.png", 130, 54);
+        RecycleIconView = createIcon("file:./mygroup/src/main/java/Pictures/recycle.png", 130, 54);
     }
 
     private void style() {

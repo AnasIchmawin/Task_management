@@ -79,8 +79,8 @@ public class GetDocView {
     private void init() {
         titleLabel = new Label("Liste des documents");
         root = new BorderPane();
-        confirmButton = createButton("Confirmer", "file:./Pictures/confirmer.png", 16, 16);
-        cancelButton = createButton("Annuler", "file:./Pictures/annuler.png", 20, 20);
+        confirmButton = createButton("Confirmer", "file:./mygroup/src/main/java/Pictures/onfirmer.png", 16, 16);
+        cancelButton = createButton("Annuler", "file:./mygroup/src/main/java/Pictures/annuler.png", 20, 20);
         scrollPane = createScrollPane(createTaskGridPane());
     }
 

@@ -66,13 +66,13 @@ public class SceanceAjouteView extends Application {
     }
 
     public void init() {
-        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
+        leftButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
         titreField = new TextField();
         titreField.setPromptText("Entrer le titre de la séance");
-        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/addIcon.png", 20, 20);
+        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./mygroup/src/main/java/Pictures/addIcon.png", 20, 20);
         sauvegarderButton = new Button("Sauvegarder");
 
     }

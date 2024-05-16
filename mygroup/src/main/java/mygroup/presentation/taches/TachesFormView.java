@@ -64,20 +64,20 @@ public class TachesFormView extends Application {
 
     // Initialisation
     public void init() {
-        leftButton = createButton("", "file:./Pictures/left-arrow.png", 35, 35);
+        leftButton = createButton("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
-        ordonnerButton = createButton("Ordonner", "file:./Pictures/folder.png", 20, 20);
-        searchButton = createButton("", "file:./Pictures/loupe.png", 20, 20);
-        ajouterButton = createButton("Ajouter une tache", "file:./Pictures/add.png", 20, 20);
+        ordonnerButton = createButton("Ordonner", "file:./mygroup/src/main/java/Pictures/folder.png", 20, 20);
+        searchButton = createButton("", "file:./mygroup/src/main/java/Pictures/loupe.png", 20, 20);
+        ajouterButton = createButton("Ajouter une tache", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
         ZoneTaches = createGridPane();
         ContainerGoogleCalendar = new VBox();
         ContainerGoogleCalendar.setPadding(new Insets(2, 2, 2, 2));
         ContainerGoogleCalendar.setSpacing(5);
-        confirmerButton = createButton("", "file:./Pictures/confirmer.png", 29, 29);
+        confirmerButton = createButton("", "file:./mygroup/src/main/java/Pictures/confirmer.png", 29, 29);
         navbarContainer = createNavbarContainer();
         container = createMainContent();
         root = createBorderPane(navbarContainer, container);
@@ -183,7 +183,7 @@ public class TachesFormView extends Application {
     private HBox createTitleContainer() {
         title = createTextField();
         HBox titleContainer = new HBox();
-        Button titleConfButton = createButton("", "file:./Pictures/check-mark.png", 12, 12);
+        Button titleConfButton = createButton("", "file:./mygroup/src/main/java/Pictures/check-mark.png", 12, 12);
         titleConfButton.setStyle("-fx-background-color: #transparant; -fx-border-radius: 50px; -fx-background-radius: 50px;");
         titleContainer.getChildren().addAll(titleConfButton, title);
         HBox.setMargin(titleConfButton, new Insets(10, 0, 0, 30));//

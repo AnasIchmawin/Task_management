@@ -63,8 +63,8 @@ public class GetSeancesView {
     private void init() {
         titleLabel = new Label("Liste des tâches");
         root = new BorderPane();
-        confirmButton = createButton("Confirmer", "file:./Pictures/confirmer.png", 16, 16);
-        cancelButton = createButton("Annuler", "file:./Pictures/annuler.png", 20, 20);
+        confirmButton = createButton("Confirmer", "file:./mygroup/src/main/java/Pictures/confirmer.png", 16, 16);
+        cancelButton = createButton("Annuler", "file:./mygroup/src/main/java/Pictures/annuler.png", 20, 20);
         scrollPane = createScrollPane(createTaskGridPane());
     }
 

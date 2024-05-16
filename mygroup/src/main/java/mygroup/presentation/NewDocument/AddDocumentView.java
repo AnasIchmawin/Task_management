@@ -64,7 +64,7 @@ public class AddDocumentView extends Application {
         browseButton.setOnAction(e -> browseFile());
         labelDescription = new Label("Description Document");
         ZoneDescription = new TextArea();
-        save = createButton("Enregistrer", "file:./Pictures/save.png", 10, 10);
+        save = createButton("Enregistrer", "file:./mygroup/src/main/java/Pictures/save.png", 10, 10);
         mainBox.getChildren().addAll(labelTitre, TitreField, labelURL, createURLBox(), labelDescription, ZoneDescription, save);
         return mainBox;
     }

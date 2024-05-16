@@ -322,11 +322,11 @@ public class Projet_Detail_View extends Application {
     }
 
     public void init() {
-        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
-        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/add.png", 20, 20);
-        ajouterSeanceButton = createButtonWithIcon("Ajouter une Seance", "file:./Pictures/add.png", 20, 20);
-        ajouterTacheButton = createButtonWithIcon("Ajouter une Tache", "file:./Pictures/add.png", 20, 20);
-        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
+        leftButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
+        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
+        ajouterSeanceButton = createButtonWithIcon("Ajouter une Seance", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
+        ajouterTacheButton = createButtonWithIcon("Ajouter une Tache", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
+        leftButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");

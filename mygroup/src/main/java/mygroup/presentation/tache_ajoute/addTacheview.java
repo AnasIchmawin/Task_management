@@ -84,13 +84,13 @@ public class addTacheview {
     
     public void init() {
         // Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 20, 20);
-        Annuler = createButtonWithIcon("Annuler", "file:./Pictures/annuler.png", 20, 20);
-        Sauvegarder = createButtonWithIcon("Ajouter", "file:./Pictures/add.png", 20, 20);
-        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
+        Annuler = createButtonWithIcon("Annuler", "file:./mygroup/src/main/java/Pictures/annuler.png", 20, 20);
+        Sauvegarder = createButtonWithIcon("Ajouter", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
+        leftButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         listesButton = createButton("Listes");
         projectsButton = createButton("Projets");
         archiveButton = createButton("Archive");
-        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/add.png", 20, 20);
+        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
         titreField = new TextField();
         titreField.setPromptText("Entrer le titre de la tache");
     }

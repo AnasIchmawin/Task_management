@@ -73,7 +73,7 @@ public class SeanceFormView extends Application {
     }
 
     private void Initialiser() {
-        leftButton = createButton("", "file:./Pictures/left-arrow.png", 35, 35);
+        leftButton = createButton("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
@@ -104,8 +104,8 @@ public class SeanceFormView extends Application {
         leftside.setSpacing(20);
         rightside = new VBox();
         centerContainer = new HBox();
-        ajoutDocButton = createButton("Ajouter un document", "file:./Pictures/addIcon.png", 20, 20);
-        sauvegardButton = createButton("Sauvegarder", "file:./Pictures/save.png", 15, 15);
+        ajoutDocButton = createButton("Ajouter un document", "file:./mygroup/src/main/java/Pictures/addIcon.png", 20, 20);
+        sauvegardButton = createButton("Sauvegarder", "file:./mygroup/src/main/java/Pictures/save.png", 15, 15);
         SectionDocs = createSeancesBox();
 
     }

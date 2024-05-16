@@ -1,7 +1,8 @@
 package mygroup.presentation.GetTaskFromCalendar;
 
-// import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-// import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+
 
 import javafx.collections.ObservableList;
 import mygroup.metier.Service.CalendarQuickstart;
@@ -28,13 +29,15 @@ public class GetTaskFromCalendarModel {
         data.add(task);
     }
 
-
+    @SuppressWarnings("unchecked")
     public ObservableList<Item> getDataFromGoogle(String myDate) {
         try {
-            @SuppressWarnings("unused")
-            CalendarQuickstart service = new CalendarQuickstart();
+            new CalendarQuickstart();
             System.out.println("Service created");
-         //   ObservableList data = service.getEvents(myDate);
+            // NetHttpTransport
+            NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+            @SuppressWarnings("rawtypes")
+            ObservableList data = CalendarQuickstart.getTasks(HTTP_TRANSPORT, myDate);
             System.out.println("Data retrieved");
             System.out.println(data);
             setData(data);

@@ -77,8 +77,8 @@ public class AddProjetView {
     }
 
     public void init() {
-        Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 13, 13);
-        Annuler = createButtonWithIcon("Annuler", "file:./Pictures/annuler.png", 20, 20);
+        Enregistrer = createButtonWithIcon("Enregistrer", "file:./mygroup/src/main/java/Pictures/save.png", 13, 13);
+        Annuler = createButtonWithIcon("Annuler", "file:./mygroup/src/main/java/Pictures/annuler.png", 20, 20);
         comboBox1 = createComboBox("Type", "These", "PFE", "Cours", "Examen", "Autres");
         comboBox2 = createComboBox("Categorie", "Enseignement", "Encadrement", "Autres");
         TitreField = createTextField("");
@@ -86,9 +86,9 @@ public class AddProjetView {
         ZoneTaches = creatZone();
         ZoneDocument = creatZone();
         ZoneSeance = creatZone();
-        ajouterTacheButton = createButtonWithIcon("Ajouter Tache", "file:./Pictures/addIcon.png", 20, 20);
-        ajouterSeanceButton = createButtonWithIcon("Ajouter Seance", "file:./Pictures/addIcon.png", 20, 20);
-        ajouterDocumentButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/addIcon.png", 20, 20);
+        ajouterTacheButton = createButtonWithIcon("Ajouter Tache", "file:./mygroup/src/main/java/Pictures/addIcon.png", 20, 20);
+        ajouterSeanceButton = createButtonWithIcon("Ajouter Seance", "file:./mygroup/src/main/java/Pictures/addIcon.png", 20, 20);
+        ajouterDocumentButton = createButtonWithIcon("Ajouter Document", "file:./mygroup/src/main/java/Pictures/addIcon.png", 20, 20);
         TempsDebut = createTextField();
         TempsFin = createTextField();
         dateDebut = DateTache();

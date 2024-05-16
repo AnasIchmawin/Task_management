@@ -26,8 +26,6 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -84,7 +82,7 @@ public class CalendarQuickstart {
                 String endDate = getFormattedDateTime(event.getEnd());
                 if (startDate.contains(date) || endDate.contains(date)) {
                     System.out.println("valid date");
-                   // items.add(new Item(false, title, startDate, endDate));
+                    // items.add(new Item(false, title, startDate, endDate));
                 }
             }
         }
@@ -92,44 +90,48 @@ public class CalendarQuickstart {
     }
 
     public static ObservableList<Item> getTasks(NetHttpTransport HTTP_TRANSPORT, String date)
-        throws IOException, GeneralSecurityException {
-    Credential credential = getCredentials(HTTP_TRANSPORT, SCOPES_TASKS);
-    Tasks tasksService = new Tasks.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
-            .setApplicationName(APPLICATION_NAME)
-            .build();
+            throws IOException, GeneralSecurityException {
 
-            TaskLists taskLists = tasksService.tasklists().list().execute();
-            ObservableList<Item> items = FXCollections.observableArrayList();
-            for (TaskList taskList : taskLists.getItems()) {
-                com.google.api.services.tasks.model.Tasks tasks = tasksService.tasks().list(taskList.getId()).execute();
-                for (Task task : tasks.getItems()) {
-                    String dueDate = getFormattedDueDate(task.getDue());
-                    if (!dueDate.isEmpty()) {
-                        System.out.println("Task: " + task.getTitle());
-                        System.out.println("Due Date: " + dueDate);
-                     //   items.add(new Item(false, task.getTitle(), "", dueDate));
-                    }
-                }
+        // Obtain the credentials
+        Credential credential = getCredentials(HTTP_TRANSPORT, SCOPES_TASKS);
+
+        // Build the tasks service
+        Tasks tasksService = new Tasks.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+
+        // Fetch the list of task lists
+        TaskLists taskLists = tasksService.tasklists().list().execute();
+        ObservableList<Item> items = FXCollections.observableArrayList();
+        for (TaskList taskList : taskLists.getItems()) {
+            com.google.api.services.tasks.model.Tasks tasks = tasksService.tasks().list(taskList.getId()).execute();
+            for (Task task : tasks.getItems()) {
+                String title = task.getTitle();
+                String description = task.getNotes();
+                String dueDate = getFormattedDateTime(task.getDue());
+                // if (dueDate != null && dueDate.contains(date)) {
+                System.out.println("Valid date: " + dueDate);
+                items.add(new Item(false, title, description, dueDate, dueDate));
             }
-            return items;
+        }
+        // }
+
+        return items;
+    }
+
+    private static String getFormattedDueDate(DateTime dueDate) {
+        if (dueDate == null) {
+            return "";
         }
 
-    
-        
-        private static String getFormattedDueDate(DateTime dueDate) {
-            if (dueDate == null) {
-                return "";
-            }
-        
-            long milliseconds = dueDate.getValue();
-            Date date = new Date(milliseconds);
-        
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // Remplacez "GMT" par votre fuseau horaire
-        
-            return sdf.format(date);
-        }
-        
+        long milliseconds = dueDate.getValue();
+        Date date = new Date(milliseconds);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // Remplacez "GMT" par votre fuseau horaire
+
+        return sdf.format(date);
+    }
 
     private static String getFormattedDateTime(EventDateTime eventDateTime) {
         if (eventDateTime == null) {
@@ -148,7 +150,7 @@ public class CalendarQuickstart {
         if (taskDateTime == null) {
             return "";
         }
-        String dateTimeString = ( taskDateTime != null) ? taskDateTime.toString()
+        String dateTimeString = (taskDateTime != null) ? taskDateTime.toString()
                 : taskDateTime.toString();
         String[] dateTimeParts = dateTimeString.split("T");
         String[] dateParts = dateTimeParts[0].split("-");

@@ -73,14 +73,14 @@ public class ProjetsFormView extends Application {
     }
 
     private void Initialiser() {
-        leftButton = createButton("", "file:./Pictures/left-arrow.png", 35, 35);
+        leftButton = createButton("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
-        ordonnerButton = createButton("Ordonner", "file:./Pictures/folder.png", 20, 20);
-        searchButton = createButton("", "file:./Pictures/loupe.png", 20, 20);
-        ajouterButton = createButton("Ajouter", "file:./Pictures/add.png", 20, 20);
-        supprimerButton = createButton("Supprimer un Projet", "file:./Pictures/delete.png", 20, 20);
+        ordonnerButton = createButton("Ordonner", "file:./mygroup/src/main/java/Pictures/folder.png", 20, 20);
+        searchButton = createButton("", "file:./mygroup/src/main/java/Pictures/loupe.png", 20, 20);
+        ajouterButton = createButton("Ajouter", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
+        supprimerButton = createButton("Supprimer un Projet", "file:./mygroup/src/main/java/Pictures/delete.png", 20, 20);
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
         TypeBox = createComboBox("Type", "Tous","These", "PFE", "Cours", "Examen", "Autres");
