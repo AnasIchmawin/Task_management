@@ -29,6 +29,11 @@ import javafx.stage.Stage;
 import presentation.tache_ajoute.ControllerFromTacheAjout;
 
 public class Projet_Detail_View extends Application {
+
+    private static final Pos TOP_CENTER = Pos.TOP_CENTER;
+    private static final Pos CENTRE = Pos.CENTER;
+    private static final Pos TOP_LEFT = Pos.TOP_LEFT;
+    private static final Pos CENTER_LEFT = Pos.CENTER_LEFT;
     private Button addDocButton;
     private Button leftButton;
     private Button ajouterTacheButton;
@@ -37,6 +42,7 @@ public class Projet_Detail_View extends Application {
     private Button projectsButton;
     private Button archiveButton;
     private BorderPane root;
+    private Button ajouterDocButton;
     private Label descriptionLabel;
     private GridPane ZoneDocuments;
     private ProjetDetailController controller ;
@@ -46,6 +52,7 @@ public class Projet_Detail_View extends Application {
         this.controller = new ProjetDetailController(this);
         init();
         style();
+        action();
     }
 
     @Override
@@ -95,7 +102,7 @@ public class Projet_Detail_View extends Application {
         // 20px padding bottom, 55px padding left
 
         // Créer un conteneur VBox pour contenir les éléments principaux
-        HBox HeadBox = BoxHead("la tache de la famille des taches", "12/21/2021", "13/12/2023", "Encadrement", "PFE");
+        HBox HeadBox = BoxHead("Mon Projet", "12/21/2021", "13/12/2023", "Encadrement", "PFE");
         HBox Descr_Seances = Descr_Seances();
         HBox Taches_doc = Taches_doc();
 
@@ -130,7 +137,7 @@ public class Projet_Detail_View extends Application {
         HBox.setHgrow(ajouterSeanceButton, Priority.ALWAYS);
 
         contenaireButton.getChildren().add(ajouterSeanceButton);
-        contenaireButton.setAlignment(Pos.BOTTOM_CENTER);
+        contenaireButton.setAlignment(Pos.CENTER);
 
         contenaireSeances.setPadding(new Insets(8, 8, 8, 8));
 
@@ -163,13 +170,43 @@ public class Projet_Detail_View extends Application {
 
 
     private HBox Taches_doc() {
+
+        VBox contenaireDocuments = CreateVbox(1, CENTRE);
+        VBox ZoneDocuments = createDocumentsSection();
+        contenaireDocuments.getChildren().addAll( ZoneDocuments);
         HBox hbox = new HBox(200);
         VBox vbox1 = creatTasksbox();
-        VBox DocSection = DocumentSection();
-        DocSection.setAlignment(Pos.TOP_RIGHT);
-        hbox.getChildren().addAll(vbox1, DocSection);
+        
+        hbox.getChildren().addAll(vbox1, contenaireDocuments);
         return hbox;
     }
+
+    private VBox createDocumentsSection() {
+        ZoneDocuments = creatZoneDocs();
+        ScrollPane scrollDocs = createScrollPane(ZoneDocuments);
+        scrollDocs.getStyleClass().add("Docs-Style");
+
+        VBox contenaireDocuments = CreateVbox(5, Pos.CENTER);
+        contenaireDocuments.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
+        contenaireDocuments.getChildren().addAll(scrollDocs, ajouterDocButton);
+        contenaireDocuments.setPadding(new Insets(10, 10, 10, 10));
+
+        return contenaireDocuments;
+    }
+
+    private VBox CreateVbox(int Spacing, Pos position) {
+        VBox vbox = new VBox();
+        vbox.setSpacing(Spacing);
+        vbox.setAlignment(position);
+        return vbox;
+    }
+
+    private Label createLabel(String text) {
+        Label label = new Label(text);
+        label.getStyleClass().add("Label-style");
+        return label;
+    }
+
 
     private VBox creatTasksbox() {
         GridPane gridPane = creatZoneDocs();
@@ -177,6 +214,8 @@ public class Projet_Detail_View extends Application {
         contenaire.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
 
         VBox contenaireTaches = new VBox(40);
+
+        contenaireTaches.setAlignment(Pos.CENTER);
 
         HBox contenaireButton = new HBox();
 
@@ -188,9 +227,9 @@ public class Projet_Detail_View extends Application {
         HBox.setHgrow(ajouterTacheButton, Priority.ALWAYS);
 
         contenaireButton.getChildren().add(ajouterTacheButton);
-        contenaireButton.setAlignment(Pos.BOTTOM_CENTER);
+        contenaireButton.setAlignment(Pos.CENTER);
 
-        contenaireTaches.setPadding(new Insets(8, 8, 8, 8));
+        contenaireTaches.setPadding(new Insets(0, 0, 0, 0));
 
         // Action for AjouterButton
         ajouterTacheButton.setOnAction(event -> {
@@ -218,72 +257,8 @@ public class Projet_Detail_View extends Application {
         return scrollPane;
     }
 
-    private VBox DocumentSection() {
-        VBox ZoneDocuments = new VBox(20);
-        HBox hboxContainer = new HBox(); // Utiliser HBox pour disposer les VBox horizontalement
-        ScrollPane Documentsplat = createScrollPaneWithButton(hboxContainer); 
-        Documentsplat.setMinSize(400, 220);// Créer le ScrollPane avec le HBox
-        Documentsplat.getStyleClass().add("scroll-pane-style");
-        // container
-        // definir la hauteur de la scrollPane
-        Documentsplat.setPrefHeight(220);
-        hboxContainer.setSpacing(10); // Espacement horizontal entre les VBox
-
-        // Gestionnaire d'événements pour le bouton
-        addDocButton.setOnAction(event -> {
-            this.controller.handleAjouterDocButtonAction();
-            VBox newVBox = new VBox(20);
-            newVBox.setPrefSize(170, 200);
-            newVBox.setStyle("-fx-border-color: #bdbdbd; -fx-border-width: 3px; -fx-border-radius: 15px; ");
-
-            // Ajouter un Label de texte à la nouvelle VBox
-            Button Systeme = new Button("Systeme d'exploitation 12.12.2023");
-            // wrap text
-            Systeme.setWrapText(true);
-            Systeme.setAlignment(Pos.CENTER);
-
-            Systeme.setOnAction(e -> {
-                // Chemin vers le fichier PDF
-                String cheminPDF = "C:\\Users\\imani\\OneDrive - Université Sultan Moulay Slimane\\Bureau\\ppt\\presentation\\tache_detail\\systeme.pdf";
-
-                // Vérifier si Desktop est pris en charge par la plateforme
-                if (Desktop.isDesktopSupported()) {
-                    Desktop desktop = Desktop.getDesktop();
-                    try {
-                        desktop.open(new File(cheminPDF));
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                } else {
-                    // Si Desktop n'est pas pris en charge, afficher un message d'erreur
-                    System.out.println("Desktop n'est pas pris en charge");
-                }
-            });
-
-            newVBox.getChildren().add(Systeme);
-            
-
-            // Ajouter la nouvelle VBox à droite de l'ancienne dans le HBox container
-            hboxContainer.getChildren().add(newVBox);
-            Systeme.setStyle(
-                    "-fx-min-height: 50px;-fx-font-size: 14px; -fx-max-height: 50px;-fx-min-width: 200px; -fx-max-width: 200px;-fx-font-weight: bold;-fx-background-color: #bdbdbd; -fx-background-radius: 10px;");
-        });
-
-        // Ajouter le ScrollPane et le bouton à la VBox principale
-        ZoneDocuments.getChildren().addAll(Documentsplat, addDocButton);
-
-        return ZoneDocuments;
-    }
-
-    private ScrollPane createScrollPaneWithButton(HBox hboxContainer) {
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(hboxContainer); // Définir le contenu du ScrollPane
-
-        // Vous pouvez également définir d'autres propriétés de ScrollPane ici selon vos
-        // besoins
-
-        return scrollPane;
-    }
+    
+  
 
     private VBox BoxDescription(String description) {
         Label indexdescription = new Label("Description: ");
@@ -307,7 +282,7 @@ public class Projet_Detail_View extends Application {
         Label categorieLabel = new Label(categorie);
         Label typeLabel = new Label(type);
         // Style
-        titleabel.getStyleClass().add("index-style");
+        titleabel.getStyleClass().add("index1-style");
         dateDebutLabel.getStyleClass().add("title-style");
         dateFinLabel.getStyleClass().add("title-style");
         categorieLabel.getStyleClass().add("title-style");
@@ -329,7 +304,7 @@ public class Projet_Detail_View extends Application {
         HBox hboxHead = new HBox(10);
 
         HBox hbox1 = new HBox(10);
-        HBox hbox2 = new HBox(30);
+        HBox hbox2 = new HBox(20);
 
         // Create HBox for labels
         VBox vbox1 = new VBox(5);
@@ -339,9 +314,9 @@ public class Projet_Detail_View extends Application {
 
         // centering
         hbox1.setAlignment(Pos.CENTER_LEFT);
-        hbox1.setPadding(new Insets(0, 0, 0, 30));
+        hbox1.setPadding(new Insets(0, 0, 0, 0));
         hbox2.setAlignment(Pos.CENTER_RIGHT);
-        hbox2.setPadding(new Insets(0, 30, 0, 0));
+        hbox2.setPadding(new Insets(0, 0, 0, 0));
         vbox1.setAlignment(Pos.CENTER);
         vbox2.setAlignment(Pos.CENTER);
         vbox3.setAlignment(Pos.CENTER);
@@ -366,7 +341,7 @@ public class Projet_Detail_View extends Application {
 
     public void init() {
         leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
-        addDocButton = createButtonWithIcon("Ajouter un document", "file:./Pictures/add.png", 20, 20);
+        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./Pictures/add.png", 20, 20);
         ajouterSeanceButton = createButtonWithIcon("Ajouter une Seance", "file:./Pictures/add.png", 20, 20);
         ajouterTacheButton = createButtonWithIcon("Ajouter une Tache", "file:./Pictures/add.png", 20, 20);
         leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
@@ -383,10 +358,17 @@ public class Projet_Detail_View extends Application {
         projectsButton.getStyleClass().add("button-style");
         archiveButton.getStyleClass().add("button-style");
         descriptionLabel.getStyleClass().add("description-label");
-        addDocButton.getStyleClass().add("ajout-style");
+        ajouterDocButton.getStyleClass().add("AjouterTache-style");
         ajouterSeanceButton.getStyleClass().add("ajout-style");
         ajouterTacheButton.getStyleClass().add("ajout-style");
     }
+
+    private void action() {
+        ajouterDocButton.setOnAction(event -> {
+            this.controller.handleAjouterDocButtonAction();
+        });
+    }
+
 
     private Button createButtonWithIcon(String name, String string, int i, int j) {
         Button button = new Button(name);
