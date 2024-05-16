@@ -184,7 +184,7 @@ public class TachesFormView extends Application {
         title = createTextField();
         HBox titleContainer = new HBox();
         Button titleConfButton = createButton("", "file:./mygroup/src/main/java/Pictures/check-mark.png", 12, 12);
-        titleConfButton.setStyle("-fx-background-color: transparent; -fx-border-radius: 50px; -fx-background-radius: 50px;");
+        titleConfButton.setStyle("-fx-background-color: #transparant; -fx-border-radius: 50px; -fx-background-radius: 50px;");
         titleContainer.getChildren().addAll(titleConfButton, title);
         HBox.setMargin(titleConfButton, new Insets(10, 0, 0, 30));//
         HBox.setMargin(title, new Insets(0, 0, 10, 5));
