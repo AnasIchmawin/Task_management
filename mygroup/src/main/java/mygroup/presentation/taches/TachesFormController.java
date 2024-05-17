@@ -398,4 +398,8 @@ public class TachesFormController {
             button.setCursor(javafx.scene.Cursor.DEFAULT);
         });
     }
+
+    public void handleTitleConfButtonAction() {
+        gestionnaireListe.updateListe(getListId(), tacheView.getTitle(), tacheView.getDescription());
+    }
 }
