@@ -4,10 +4,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.bson.Document;
 
+import com.google.api.services.tasks.model.Task;
 import com.mongodb.client.FindIterable;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import mygroup.metier.Service.CalendarQuickstart;
 import mygroup.persistence.DAO.DAOTache;
 import mygroup.presentation.GetTasks.GetTasksController;
 import mygroup.presentation.GetTasks.GetTasksView;
@@ -33,16 +35,12 @@ import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
 import mygroup.presentation.tache_ajoute.addTacheview;
 import mygroup.presentation.taches.TachesFormController;
 import mygroup.presentation.taches.TachesFormView;
-
-import java.time.LocalDateTime;
-
+import mygroup.metier.Service.TaskQuickstart;
 
 public class App extends Application {
 
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-
 
         // ProjetsFormView projets = new ProjetsFormView();
         // projets.start(primaryStage);
@@ -68,13 +66,12 @@ public class App extends Application {
         // SeanceFormView view = new SeanceFormView();
         // view.start(primaryStage);
 
-
         // Projet_Detail_View view = new Projet_Detail_View();
         // view.start(primaryStage);
 
         // SceanceAjouteView view = new SceanceAjouteView();
         // view.start(primaryStage);
-        
+
         // TachesFormView view = new TachesFormView() ;
         // view.start(primaryStage) ;
 
@@ -90,13 +87,22 @@ public class App extends Application {
         // LoginFormView view = new LoginFormView(primaryStage) ;
         // view.start(primaryStage) ;
 
-        ListeFormView view = new ListeFormView() ;
-        view.start(primaryStage) ;
+        ListeFormView view = new ListeFormView();
+        view.start(primaryStage);
 
-
-        // presentation.tache_detail.screen view = new presentation.tache_detail.screen() ;
-        // presentation.tache_detail.controleur con = new presentation.tache_detail.controleur(view, null) ;
+        // presentation.tache_detail.screen view = new
+        // presentation.tache_detail.screen() ;
+        // presentation.tache_detail.controleur con = new
+        // presentation.tache_detail.controleur(view, null) ;
         // view.start(primaryStage) ;
+    }
+
+    @Override
+    public void stop() throws Exception {
+        // Appel de la méthode pour effacer le contenu du token
+        TaskQuickstart.clearTokenContent();
+        CalendarQuickstart.clearTokenContent();
+        System.out.println("les tokens sont effacés");
     }
 
     public static void main(String[] args) {

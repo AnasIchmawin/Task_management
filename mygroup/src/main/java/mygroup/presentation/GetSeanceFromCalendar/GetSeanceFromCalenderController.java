@@ -1,5 +1,4 @@
-package mygroup.presentation.GetTaskFromCalendar;
-
+package mygroup.presentation.GetSeanceFromCalendar;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,35 +11,37 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import mygroup.metier.Gestionnaire.GestionnaireTache;
-import mygroup.metier.POJO.POJOTache;
+import mygroup.metier.Gestionnaire.GestionnaireSeance;
+import mygroup.metier.POJO.POJOSeance;
 
-public class GetTaskFromCalenderController {
-    private String dateTask;
-    private GestionnaireTache gestionnaireTache;
-    private ObservableList<ItemTask> listTasItems;
-    private GetTaskFromCalendar getTaskCalendar;
+public class GetSeanceFromCalenderController {
+    private String dateSeance;
+    private GestionnaireSeance gestionnaireSeance;
+    private ObservableList<ItemSeance> listTasItems;
+    private GetSeanceFromCalendar getSeanceFromCalendar;
 
-    public GetTaskFromCalenderController(GetTaskFromCalendar getTaskCalendar) {
-        this.gestionnaireTache = new GestionnaireTache();
-        this.getTaskCalendar = getTaskCalendar;
-        this.dateTask = this.getTaskCalendar.getDateTask();
+    public GetSeanceFromCalenderController(GetSeanceFromCalendar getSeanceFromCalendar) {
+        this.gestionnaireSeance = new GestionnaireSeance();
+        this.getSeanceFromCalendar = getSeanceFromCalendar;
+        this.dateSeance = this.getSeanceFromCalendar.getDateSeance();
     }
 
     public void handleConfirmButton(ActionEvent event) {
         System.out.println("Confirm Button Clicked");
         System.out.println("Selected Tasks : ");
-        for (ItemTask item : listTasItems) {
+        for (ItemSeance item : listTasItems) {
             if (item.isSelected()) {
                 try {
-                    POJOTache tache = new POJOTache();
-                    tache.setTitre(item.getTitle());
-                    tache.setDescription(item.getDescription());
-                    tache.setDateDebut(item.getStartDate());
-                    this.gestionnaireTache.setTache(tache);
-                    gestionnaireTache.createTacheCalendar() ;
+                    POJOSeance seance = new POJOSeance();
+                    seance.setTitre(item.getTitle());
+                    seance.setDescription(item.getDescription());
+                    seance.setDateDebut(item.getStartDate());
+                    seance.setDateFin(item.getEndDate());
+                    this.gestionnaireSeance.setSeance(seance);
+                    gestionnaireSeance.createSeance();
                     alert("Tâche ajoutée", "La tâche a été ajoutée avec succès");
                     this.handleCancelButtonAction(event);
+
                 } catch (Exception e) {
                     alert("Erreur", "Une erreur s'est produite lors de l'ajout de la tâche");
                     e.printStackTrace();
@@ -56,9 +57,9 @@ public class GetTaskFromCalenderController {
 
     }
 
-    public ObservableList<ItemTask> getDataTasks() {
-        GetTaskFromCalendarModel model = new GetTaskFromCalendarModel();
-        listTasItems = model.getDataFromGoogle(this.dateTask);
+    public ObservableList<ItemSeance> getDataSeance() {
+        GetSeanceFromCalendarModel model = new GetSeanceFromCalendarModel();
+        listTasItems = model.getDataFromGoogle(this.dateSeance);
         return listTasItems;
     }
 
@@ -68,7 +69,7 @@ public class GetTaskFromCalenderController {
         return dateTime;
     }
 
-      public void alert(String titre, String message) {
+    public void alert(String titre, String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(titre);
         alert.setHeaderText(null);

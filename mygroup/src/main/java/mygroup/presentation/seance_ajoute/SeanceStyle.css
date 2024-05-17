@@ -40,7 +40,7 @@
 .Label-style {
     -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: #fff;
 }
 
 .date-picker {
@@ -64,7 +64,7 @@
     -fx-border-width: 0px;
     -fx-focus-color: transparent;
     -fx-max-width: 300px;
-    -fx-min-height: 354px ;
+    -fx-max-height: 200px ;
 }
 
 .Docs-Style {
@@ -95,4 +95,28 @@
     -fx-background-radius: 15px;
     -fx-font-size: 15px;
     -fx-font-weight: bold;
+}
+
+.google-calendar-style{
+    -fx-background-color: #3F72AF;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-pref-width: 175px;
+    -fx-pref-height: 100px;
+}
+
+
+.google-calendar-label-style {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+}
+
+.confirm-btn-style {
+    -fx-background-color: #8E9EB2;
+    -fx-min-width: 25px;
+    -fx-min-height: 20px;
+    -fx-max-width: 25px;
+    -fx-max-height: 20px;
+    -fx-background-radius: 25px;
 }

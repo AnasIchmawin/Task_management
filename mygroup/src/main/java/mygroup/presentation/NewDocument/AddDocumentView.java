@@ -76,6 +76,7 @@ public class AddDocumentView extends Application {
         scene = new Scene(root, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Ajouter un document");
+        primaryStage.setOnCloseRequest(e -> controller.close());
         primaryStage.show();
     }
 
