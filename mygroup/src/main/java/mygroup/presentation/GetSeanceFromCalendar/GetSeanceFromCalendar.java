@@ -1,4 +1,4 @@
-package mygroup.presentation.GetTaskFromCalendar;
+package mygroup.presentation.GetSeanceFromCalendar;
 
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -16,35 +16,54 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import mygroup.presentation.taches.TachesFormController;
+import mygroup.presentation.seance_ajoute.SceanceAjouteController;
 
-public class GetTaskFromCalendar {
+public class GetSeanceFromCalendar {
 
-    private GetTaskFromCalenderController controller;
-    private TachesFormController tachesFormController;
+    private GetSeanceFromCalenderController controller;
+    private SceanceAjouteController sceanceAjouteController;
     private Label titleLabel;
     private BorderPane root;
     private Button confirmButton;
     private Button cancelButton;
     private ScrollPane scrollPane;
-    private HBox buttonContainer ;
     GridPane ZoneTasks;
     TableViewPane tableViewPane;
 
-
-    public GetTaskFromCalendar(TachesFormController tachesFormController) {
-        this.tachesFormController = tachesFormController;
-        this.controller = new GetTaskFromCalenderController(this) ;
+    public GetSeanceFromCalendar(SceanceAjouteController sceanceAjouteController) {
+        this.sceanceAjouteController = sceanceAjouteController;
+        this.controller = new GetSeanceFromCalenderController(this);
         init();
         style();
-        dessiner();
         action();
     }
 
     public void start(Stage primaryStage) {
-        Scene scene = new Scene(root, 586, 570);
+        VBox taskContainer = createVBox(5, Pos.TOP_CENTER);
+        taskContainer.setPadding(new Insets(20, 0, 0, 20));
+
+        tableViewPane = new TableViewPane(this.controller.getDataSeance());
+       scrollPane.setContent(tableViewPane);
+        root.setCenter(scrollPane);
+
+        HBox buttonContainer = createHBox(25, Pos.CENTER);
+        buttonContainer.getChildren().addAll(confirmButton, cancelButton);
+        buttonContainer.setPadding(new Insets(20, 0, 0, 0));
+
+        root.setTop(titleLabel);
+        root.setBottom(buttonContainer);
+        BorderPane.setAlignment(titleLabel, Pos.CENTER);
+        Insets labelMargin = new Insets(13, 0, 0, 0);
+        BorderPane.setMargin(titleLabel, labelMargin);
+
+        Insets buttonMargin = new Insets(0, 0, 20, 0);
+
+        // Applying margins to button container
+        BorderPane.setMargin(buttonContainer, buttonMargin);
+
+        Scene scene = new Scene(root, 650, 570);
         primaryStage.setResizable(false);
-        scene.getStylesheets().add(getClass().getResource("GetTaskFromCalendar.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("GetSeanceCalendar.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Liste des tâches");
         primaryStage.show();
@@ -56,13 +75,6 @@ public class GetTaskFromCalendar {
         confirmButton = createButton("Confirmer", "file:./mygroup/src/main/java/Pictures/confirmer.png", 16, 16);
         cancelButton = createButton("Annuler", "file:./mygroup/src/main/java/Pictures/annuler.png", 20, 20);
         scrollPane = createScrollPane(createTaskGridPane());
-        VBox taskContainer = createVBox(5, Pos.TOP_CENTER);
-        taskContainer.setPadding(new Insets(20, 0, 0, 20));
-        tableViewPane = new TableViewPane(this.controller.getDataTasks());
-        scrollPane.setContent(tableViewPane);
-        root.setCenter(scrollPane);
-         buttonContainer = createHBox(25, Pos.CENTER);
-
     }
 
     private void style() {
@@ -71,18 +83,6 @@ public class GetTaskFromCalendar {
         confirmButton.getStyleClass().add("footBtn-style");
         cancelButton.getStyleClass().add("footBtn-style");
         scrollPane.getStyleClass().add("scroll-pane-style");
-    }
-
-    private void dessiner() {
-        buttonContainer.getChildren().addAll(confirmButton, cancelButton);
-        buttonContainer.setPadding(new Insets(20, 0, 0, 0));
-        root.setTop(titleLabel);
-        root.setBottom(buttonContainer);
-        BorderPane.setAlignment(titleLabel, Pos.CENTER);
-        Insets labelMargin = new Insets(13, 0, 0, 0);
-        BorderPane.setMargin(titleLabel, labelMargin);
-        Insets buttonMargin = new Insets(0, 0, 20, 0);
-        BorderPane.setMargin(buttonContainer, buttonMargin);
     }
 
     public void showView(Stage primaryStage, ActionEvent event) {
@@ -151,8 +151,9 @@ public class GetTaskFromCalendar {
         });
 
     }
-    public String getDateTask() {
-        return this.tachesFormController.getDateTaskFormated(); 
+
+    public String getDateSeance() {
+        return this.sceanceAjouteController.getDateSeanceFormated();
     }
 
 }

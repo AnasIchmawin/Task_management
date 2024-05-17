@@ -9,42 +9,39 @@ import javafx.scene.layout.VBox;
 
 public class TableViewPane extends VBox {
     @SuppressWarnings("unused")
-    private ObservableList<Item> data;
+    private ObservableList<ItemTask> data;
 
     @SuppressWarnings("unchecked")
-    public TableViewPane(ObservableList<Item> data) {
+    public TableViewPane(ObservableList<ItemTask> data) {
         this.data = data;
 
-        TableView<Item> table = new TableView<>();
+        TableView<ItemTask> table = new TableView<>();
         table.setEditable(true);
 
-        TableColumn<Item, Boolean> checkBoxCol = new TableColumn<>("Checkbox");
+        TableColumn<ItemTask, Boolean> checkBoxCol = new TableColumn<>("Checkbox");
         checkBoxCol.setCellValueFactory(new PropertyValueFactory<>("selected"));
         checkBoxCol.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxCol));
-        checkBoxCol.setPrefWidth(70);
+        checkBoxCol.setPrefWidth(90);
 
-        TableColumn<Item, String> titleCol = new TableColumn<>("Title");
+        TableColumn<ItemTask, String> titleCol = new TableColumn<>("Title");
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-        titleCol.setPrefWidth(120);
+        titleCol.setPrefWidth(110);
 
-        TableColumn<Item, String> descriptionCol = new TableColumn<>("Description");
+        TableColumn<ItemTask, String> descriptionCol = new TableColumn<>("Description");
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-        descriptionCol.setPrefWidth(150);
+        descriptionCol.setPrefWidth(230);
 
-        TableColumn<Item, String> startDateCol = new TableColumn<>("Start Date");
+        TableColumn<ItemTask, String> startDateCol = new TableColumn<>("Start Date");
         startDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-        startDateCol.setPrefWidth(160);
+        startDateCol.setPrefWidth(150);
 
-        TableColumn<Item, String> endDateCol = new TableColumn<>("End Date");
-        endDateCol.setCellValueFactory(new PropertyValueFactory<>("endDate"));
-        endDateCol.setPrefWidth(160);
 
         table.setItems(data);
-        table.getColumns().addAll(checkBoxCol, titleCol, descriptionCol, startDateCol, endDateCol);
+        table.getColumns().addAll(checkBoxCol, titleCol, descriptionCol, startDateCol);
 
-        // Add listener to each item's selected property
-        for (Item item : data) {
-            item.selectedProperty().addListener((observable, oldValue, newValue) -> {
+        // Add listener to each ItemTask's selected property
+        for (ItemTask ItemTask : data) {
+            ItemTask.selectedProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue) {
                     System.out.println("La case à cocher est sélectionnée");
                 } else {
