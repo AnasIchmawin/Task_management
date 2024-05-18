@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import mygroup.metier.Gestionnaire.GestionnaireListe;
+import mygroup.metier.Gestionnaire.GestionnaireTache;
 import mygroup.metier.POJO.POJOListe;
 import mygroup.metier.Errors.NonValidList;
 import mygroup.presentation.listes.ListeFormController;
@@ -26,7 +27,7 @@ public class AddListController {
     private AddListView addListView;
     private AddListModel addListModel;
     private ListeFormController listeFormController;
-
+    private GestionnaireTache gestionnaireTache;
 
     public AddListController(AddListView addListView, ListeFormController listeFormController) {
         this.gestionnaireListe = new GestionnaireListe();
@@ -56,29 +57,34 @@ public class AddListController {
             String description = addListModel.getDescription();
             LinkedHashMap<String, String> taches = addListModel.getTachesSelectionnees();
 
-
             POJOListe nouvelleListe = new POJOListe(titre, description, new ArrayList<>(taches.keySet()));
             this.gestionnaireListe.setListe(nouvelleListe);
             gestionnaireListe.creerListe();
             listeFormController.addList();
-            // mettre id list to  taches : 
-            // get last id list 
             String lastListId = gestionnaireListe.getLastListId();
-            for(String id : taches.keySet()){
-                //
-            }
-            
+            updateListIdForTask(taches, lastListId);
             showAlert(AlertType.INFORMATION, "Succès", "Liste créée avec succès",
                     "La liste a été créée avec succès", Duration.seconds(1));
-
 
         } catch (NonValidList e) {
             showAlert(AlertType.ERROR, "Erreur", "Erreur lors de la création de la liste",
                     e.getMessage(), Duration.seconds(2));
-        }
-        finally {
+        } finally {
             closerWindow(event);
         }
+    }
+
+    public void updateListIdForTask(LinkedHashMap<String, String> taches, String lastListId) {
+        try {
+            this.gestionnaireTache = new GestionnaireTache();
+            for (String id : taches.keySet()) {
+                this.gestionnaireTache.updateIdListForTask(id, lastListId);
+            }
+        } catch (Exception e) {
+            System.out.println("errur pendant le mise a jour du id liste dans la tache");
+            System.out.println(e.getMessage());
+        }
+
     }
 
     private void updateListModel() {
@@ -92,8 +98,6 @@ public class AddListController {
         view.start(stage);
     }
 
-
-
     public void displayTasks() {
         this.addListView.getZoneTaches().getChildren().clear();
         List<String> mesTaches = addListModel.getTasksTitles();
@@ -105,8 +109,6 @@ public class AddListController {
             addListView.getZoneTaches().add(newTaskButton, colIndex, rowIndex);
         }
     }
-
-
 
     public void updateView() {
         addListView.setTitre(this.addListModel.getTitre());
@@ -122,7 +124,7 @@ public class AddListController {
         stage.close();
     }
 
-    public void addNewTask(String Id , String title) {
+    public void addNewTask(String Id, String title) {
         this.addListModel.getTachesSelectionnees().put(Id, title);
     }
 
@@ -147,8 +149,6 @@ public class AddListController {
 
         return newTaskButton;
     }
-
-
 
     public static void showAlert(AlertType type, String title, String headerText, String contentText,
             Duration duration) {

@@ -48,13 +48,22 @@ public class GetTasksController {
     public LinkedHashMap<String, String> getTasksMap() {
         LinkedHashMap<String, String> tasksMap = new LinkedHashMap<>();
         List<Document> tasks = this.gestionnaireTache.getAllTasks();
+    
         for (Document task : tasks) {
+            // Récupérer l'identifiant et le titre de la tâche
             String id = task.getObjectId("_id").toString();
             String title = task.getString("titre");
-            tasksMap.put(id, title);
+            String liste = task.getString("liste");
+    
+            // Vérifier si le titre n'est pas null et pas vide, et si le champ 'liste' est vide
+            if (title != null && !title.trim().isEmpty() && (liste == null || liste.trim().isEmpty())) {
+                tasksMap.put(id, title);
+            }
         }
         return tasksMap;
     }
+    
+    
 
     // Method to handle cancel button
     public void handleCancelButton(ActionEvent eventAddList) {

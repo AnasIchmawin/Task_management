@@ -52,8 +52,7 @@ public class AddProjetView {
         this.addProjetController = new AddProjetController(this);
     }
 
-    public AddProjetView(AddProjetController controleur, ProjetsFormController projetFormController) {
-       
+    public AddProjetView(AddProjetController controleur, ProjetsFormController projetFormController) {      
         init();
         style();
         action(); 
