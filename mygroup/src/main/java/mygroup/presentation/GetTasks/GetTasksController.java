@@ -73,6 +73,7 @@ public class GetTasksController {
     public void displayTasks() {
         System.out.println("Displaying tasks");
         GridCaseInfos = new LinkedHashMap<>();
+        System.out.println("girdinfo");
 
         if (getTasksMap().isEmpty()) {
             System.out.println("No tasks available");

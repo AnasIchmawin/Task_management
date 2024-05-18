@@ -136,7 +136,7 @@ public class AddDocumentView extends Application {
         browseButton.setOnAction(e -> browseFile());
         // rendre cette == different
         // ``````````````````````````````````````````````````````````````````````````````````
-        if (controllerFromTacheAjout == null) {
+        if (controllerFromTacheAjout != null) {
             save.setOnAction(e -> this.controller.saveDocumentFromeTacheAjout());
         } else if (controllerFromTacheDetail != null)
             save.setOnAction(e -> this.controller.saveDocumentFromTacheDetail());

@@ -89,6 +89,7 @@ public class AddDocumentController {
         String titre = view.getTitreField();
         String url = view.getURL();
         String desc = view.getDescription();
+        System.out.println("nous omme dans le control");
     
         // Vérifiez si l'URL est accessible
         if (gestionnaireDocument.isUrlAccessible(url)) {

@@ -195,6 +195,7 @@ public class ControllerFromTacheAjout {
             if (this.addListController != null) {
                 System.out.println("id" + tacheId + "titre" + titre);
                 addListController.addNewTask(tacheId, titre);
+                addListController.displayTasks();
             }
 
         } catch (Exception e) {
@@ -205,7 +206,6 @@ public class ControllerFromTacheAjout {
             // stack
             System.out.println(e.getMessage());
         } finally {
-            this.addListController.displayTasks();
             closerWindow();
         }
     }
