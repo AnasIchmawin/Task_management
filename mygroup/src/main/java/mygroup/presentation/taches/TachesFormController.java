@@ -1,24 +1,18 @@
 package mygroup.presentation.taches;
 
-import java.util.Arrays;
+import java.awt.event.ActionEvent;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mygroup.metier.Gestionnaire.GestionnaireListe;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
@@ -28,9 +22,7 @@ import mygroup.presentation.listes.ListeFormController;
 import mygroup.presentation.listes.ListeFormView;
 import mygroup.presentation.projets.ProjetsFormView;
 import mygroup.presentation.tache_ajoute.addTacheview;
-import mygroup.presentation.tache_detail.tacheDetailController;
-
-
+import mygroup.presentation.tache_detail.tacheDetailView ;
 
 public class TachesFormController {
     private TachesFormView tacheView;
@@ -51,7 +43,7 @@ public class TachesFormController {
 
     public void handleAjouterButtonAction() {
         addTacheview view = new addTacheview(this);
-        view.start(new Stage());   
+        view.start(new Stage());
     }
 
     public void handleSaveButtonAction() {
@@ -65,55 +57,52 @@ public class TachesFormController {
 
     // displayTaches
     public void displayedTasks(boolean isSorted) {
-        tacheModel.setdisplayedTasks(getTacheMap());
+        tacheModel.setDisplayedTasks(getTacheMap());
         if (isSorted) {
             tacheModel.sortTasksByTitle();
         }
         tacheView.getZoneTaches().getChildren().clear();
         int colCount = 0;
         int rowCount = 0;
+        int rowTask = 0;
 
-        for (Map.Entry<String, String> entry : tacheModel.getdisplayedTasks().entrySet()) {
-            createTask(tacheView.getZoneTaches(), entry.getValue(), getTaskEtat(entry.getKey()), entry.getKey());
-            tacheModel.putInGridInfoCase(rowCount, colCount, entry.getKey());
+        for (Map.Entry<String, String> entry : tacheModel.getDisplayedTasks().entrySet()) {
+            Button taskButton = createTask(entry.getValue(), getTaskEtat(entry.getKey()), entry.getKey());
+            taskButton.setOnAction(event -> handleButtonTaskAction(taskButton));
+            tacheModel.putInGridInfoCase(rowTask, entry.getKey());
+            System.out.println("voici le id" + entry.getKey() + "voici le row " + rowTask);
+            rowTask++;
 
             if (++colCount == 3) {
                 colCount = 0;
                 rowCount++;
             }
+
         }
     }
 
-    private void handleButtonTaskAction(Button newListButton) {
-        String taskId = getTaskIdFromButton(newListButton);
-        System.out.println(taskId);
-        tacheModel.setTaskID(taskId);
-        // startTachesFormView();
-    }
+    // ----------------
 
-    private String getTaskIdFromButton(Button button) {
-        List<List<String>> caseInfo = new LinkedList<>();
-        caseInfo.add(Arrays.asList(GridPane.getRowIndex(button).toString(),
-                GridPane.getColumnIndex(button).toString()));
-        return tacheModel.getGridInfoCase().get(caseInfo);
-    }
     // create task
-    public void createTask(GridPane gridPane, String taskName, Boolean isChecked, String tacheId) {
+    public Button createTask(String taskName, Boolean isChecked, String tacheId) {
         Button cloneButton = createButtonWithIcon("file:Pictures/clone.png");
         Button deleteButton = createButtonWithIcon("file:Pictures/delete.png");
         Button taskButton = new Button("");
         CheckBox taskCheckBox = createTaskCheckBox(taskName, isChecked);
 
-        configureButtons(gridPane, cloneButton, deleteButton, taskButton, taskCheckBox, isChecked, tacheId);
-        setTaskRow(gridPane, deleteButton, cloneButton, taskCheckBox, taskButton);
+        configureButtons(this.tacheView.getZoneTaches(), cloneButton, deleteButton, taskButton, taskCheckBox, isChecked,
+                tacheId);
+        setTaskRow(this.tacheView.getZoneTaches(), deleteButton, cloneButton, taskCheckBox, taskButton);
         updateTaskState(taskCheckBox, deleteButton, cloneButton, tacheId, isChecked);
         configureTaskCheckBoxListener(taskCheckBox, deleteButton, cloneButton, tacheId);
+
+        return taskButton;
     }
 
     private void FillChamps() {
         this.tacheView.setTitle(getListTitle());
         this.tacheView.setDescription(getListDescription());
-        this.displayedTasks(true);
+        this.displayedTasks(false);
         this.ServeillerButtons();
     }
 
@@ -175,7 +164,7 @@ public class TachesFormController {
 
     private void configureCloneButton(GridPane gridPane, Button cloneButton, String tacheId) {
         cloneButton.setOnAction(e -> {
-            createTask(gridPane, getnameTask(tacheId), tacheModel.getTaskEtat(tacheId), tacheId);
+            createTask(getnameTask(tacheId), tacheModel.getTaskEtat(tacheId), tacheId);
             gestionnaireTache.cloneTask(tacheId);
             gestionnaireListe.setTacheToListe(listeFormController.getListId(), gestionnaireTache.getLastTacheId());
         });
@@ -199,7 +188,7 @@ public class TachesFormController {
 
     // retourne le nom de la tache
     private String getnameTask(String tacheId) {
-        for (Map.Entry<String, String> entry : tacheModel.getdisplayedTasks().entrySet()) {
+        for (Map.Entry<String, String> entry : tacheModel.getDisplayedTasks().entrySet()) {
             if (entry.getKey().equals(tacheId)) {
                 return entry.getValue();
             }
@@ -231,8 +220,10 @@ public class TachesFormController {
     }
 
     private void displayMessageDialog() {
-        
-        tacheDetailController tacheDetailController = new tacheDetailController(this);
+
+        // tacheDetailController tacheDetailController = new
+        // tacheDetailController(this);
+        System.out.println("nous sommes dans deplaymessage");
 
     }
 
@@ -293,11 +284,11 @@ public class TachesFormController {
 
         tacheView.getZoneTaches().getChildren().clear();
 
-        for (Map.Entry<String, String> entry : tacheModel.getdisplayedTasks().entrySet()) {
+        for (Map.Entry<String, String> entry : tacheModel.getDisplayedTasks().entrySet()) {
             String taskName = entry.getValue().toLowerCase();
             if (taskName.contains(searchText.toLowerCase())) {
-                createTask(tacheView.getZoneTaches(), taskName, getTaskEtat(entry.getKey()), entry.getKey());
-                tacheModel.putInGridInfoCase(rowCount, colCount, entry.getKey());
+                createTask(taskName, getTaskEtat(entry.getKey()), entry.getKey());
+                tacheModel.putInGridInfoCase(rowCount, entry.getKey());
                 rowCount++;
             }
         }
@@ -409,11 +400,21 @@ public class TachesFormController {
         gestionnaireListe.updateListe(getListId(), tacheView.getTitle(), tacheView.getDescription());
     }
 
-    public String getIdTacheClicked() {
-        return tacheModel.getIdTacheClicked();
+    private void handleButtonTaskAction(Button tasButton) {
+        String listId = getTaskIdFromButton(tasButton);
+        tacheModel.setTaskSelectedId(listId);
+        tacheDetailView tacheview = new tacheDetailView(this) ;
+        Stage stage = (Stage) tacheView.getZoneTaches().getScene().getWindow();
+        tacheview.start(stage);
     }
 
-    public void setIdTacheClicked(String idTacheClicked) {
-        tacheModel.setIdTacheClicked(idTacheClicked);
+    private String getTaskIdFromButton(Button taskbutton) {
+        int rowButton = GridPane.getRowIndex(taskbutton);
+        return this.tacheModel.getValueGrid(rowButton);
+
+    }
+
+    public String getTaskSelectedId() {
+        return tacheModel.getTaskSelectedId();
     }
 }

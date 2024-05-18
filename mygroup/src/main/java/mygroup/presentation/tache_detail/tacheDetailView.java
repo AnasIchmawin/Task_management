@@ -22,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import mygroup.presentation.taches.TachesFormController;
 
 public class tacheDetailView extends Application {
     private VBox vbox1;
@@ -56,10 +57,11 @@ public class tacheDetailView extends Application {
     private Button Update;
 
     // Constructor
-    public tacheDetailView() {
+    public tacheDetailView(TachesFormController tachesFormController) {
         init();
         style();
         action();
+        this.controller = new tacheDetailController(this, tachesFormController) ;
     }
 
     @Override
@@ -69,6 +71,18 @@ public class tacheDetailView extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Tache details");
         primaryStage.show();
+    }
+
+    public void init() {
+        initLabels();
+        initIndexes();
+        initButton();
+        initBoxes();
+        VBox navbarContainer = createNavbarContainer();
+        StackPane container = Designer();
+        getChildren();
+        Alignement();
+        root = createBorderPane(navbarContainer, container);
     }
 
     private BorderPane createBorderPane(VBox navbarContainer, StackPane container) {
@@ -136,18 +150,7 @@ public class tacheDetailView extends Application {
     }
 
 
-    public void init() {
-        initLabels();
-        initIndexes();
-        initButton();
-        initBoxes();
-        VBox navbarContainer = createNavbarContainer();
-        StackPane container = Designer();
-        getChildren();
-        Alignement();
-        root = createBorderPane(navbarContainer, container);
-        controller = new tacheDetailController(this);
-    }
+   
 
     public void initLabels() {
         descriptionLabel = new TextField();
