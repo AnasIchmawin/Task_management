@@ -47,6 +47,7 @@ public class AddDocumentView extends Application {
 
     public AddDocumentView(ControllerFromTacheAjout controllerFromTacheAjout) {
         this.controller = new AddDocumentController(this, controllerFromTacheAjout);
+        this.controllerFromTacheAjout = controllerFromTacheAjout;
     }
 
     public AddDocumentView(AddProjetController addProjetController) {
@@ -65,7 +66,8 @@ public class AddDocumentView extends Application {
         labelDescription = new Label("Description Document");
         ZoneDescription = new TextArea();
         save = createButton("Enregistrer", "file:./mygroup/src/main/java/Pictures/save.png", 10, 10);
-        mainBox.getChildren().addAll(labelTitre, TitreField, labelURL, createURLBox(), labelDescription, ZoneDescription, save);
+        mainBox.getChildren().addAll(labelTitre, TitreField, labelURL, createURLBox(), labelDescription,
+                ZoneDescription, save);
         return mainBox;
     }
 
@@ -76,7 +78,6 @@ public class AddDocumentView extends Application {
         scene = new Scene(root, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Ajouter un document");
-        primaryStage.setOnCloseRequest(e -> controller.close());
         primaryStage.show();
     }
 
@@ -133,16 +134,15 @@ public class AddDocumentView extends Application {
 
     public void Actions() {
         browseButton.setOnAction(e -> browseFile());
-        //rendre cette == different
-        //``````````````````````````````````````````````````````````````````````````````````
-        if(controllerFromTacheAjout == null){
+        // rendre cette == different
+        // ``````````````````````````````````````````````````````````````````````````````````
+        if (controllerFromTacheAjout == null) {
             save.setOnAction(e -> this.controller.saveDocumentFromeTacheAjout());
-        }
-        else if(controllerFromTacheDetail != null)
+        } else if (controllerFromTacheDetail != null)
             save.setOnAction(e -> this.controller.saveDocumentFromTacheDetail());
-        else if(SceanceAjouteController != null)
+        else if (SceanceAjouteController != null)
             save.setOnAction(e -> this.controller.saveDocumentFromeSeanceAjout());
-        else if(addProjetController != null)
+        else if (addProjetController != null)
             save.setOnAction(e -> this.controller.saveDocumentFromProjet());
     }
 
@@ -162,5 +162,11 @@ public class AddDocumentView extends Application {
         Stage stage = (Stage) root.getScene().getWindow();
         stage.close();
     }
+
+    // getstage
+    
+  public Stage getStage(){
+    return (Stage) root.getScene().getWindow();
+  }
 
 }

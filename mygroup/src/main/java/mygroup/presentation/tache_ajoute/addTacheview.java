@@ -1,6 +1,5 @@
 package mygroup.presentation.tache_ajoute;
 
-
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.geometry.Pos;
@@ -21,8 +20,10 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import mygroup.presentation.NewList.AddListController;
 import mygroup.presentation.taches.TachesFormController;
 import javafx.scene.control.ComboBox;
+
 //mod
 public class addTacheview {
 
@@ -31,7 +32,7 @@ public class addTacheview {
     private static final Pos CENTER_LEFT = Pos.CENTER_LEFT;
     private TextField titreField;
     private TextArea ZoneDescription;
-    private ComboBox<String>  categorie;
+    private ComboBox<String> categorie;
     private DatePicker dateDebut;
     private DatePicker dateFin;
     private TextField TempsDebut;
@@ -44,13 +45,21 @@ public class addTacheview {
     private Button projectsButton;
     private Button archiveButton;
     private Button ajouterDocButton;
+    private Button importButton;
     private GridPane ZoneDocuments;
     private ControllerFromTacheAjout controller;
     private BorderPane root;
-
+    private AddListController addlistController;
 
     public addTacheview() {
         this.controller = new ControllerFromTacheAjout(this);
+        init();
+        style();
+        action();
+    }
+
+    public addTacheview(ControllerFromTacheAjout controllerFromTacheAjout) {
+        this.controller = controllerFromTacheAjout;
         init();
         style();
         action();
@@ -62,35 +71,42 @@ public class addTacheview {
         style();
         action();
     }
-    
+
+    public addTacheview(AddListController addListController) {
+        this.controller = new ControllerFromTacheAjout(this, addListController);
+        init();
+        style();
+        action();
+        this.addlistController = addListController;
+    }
+
     public void start(Stage primaryStage) {
-        // Create the main content
-        StackPane container = createMainContent();
-        // Create the root layout
-        root = createBorderPane(container);
-        // Create the scene
         Scene scene = new Scene(root, 850, 500);
-        // Add the CSS file
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-        // Set the scene
         primaryStage.setScene(scene);
         primaryStage.setTitle("Responsive Page with Navbar");
         primaryStage.show();
 
     }
 
-    
     public void init() {
-        // Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png", 20, 20);
+        // Enregistrer = createButtonWithIcon("Enregistrer", "file:./Pictures/save.png",
+        // 20, 20);
         Annuler = createButtonWithIcon("Annuler", "file:./mygroup/src/main/java/Pictures/annuler.png", 20, 20);
         Sauvegarder = createButtonWithIcon("Ajouter", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
         leftButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         listesButton = createButton("Listes");
         projectsButton = createButton("Projets");
         archiveButton = createButton("Archive");
-        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
+        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./mygroup/src/main/java/Pictures/add.png", 20,
+                20);
+        importButton = createButtonWithIcon("Importer", "file:./mygroup/src/main/java/Pictures/import.png", 20, 20);
         titreField = new TextField();
         titreField.setPromptText("Entrer le titre de la tache");
+        // Create the main content
+        StackPane container = createMainContent();
+        root = createBorderPane(container);
+
     }
 
     private void style() {
@@ -102,8 +118,9 @@ public class addTacheview {
         projectsButton.getStyleClass().add("button-style");
         archiveButton.getStyleClass().add("button-style");
         ajouterDocButton.getStyleClass().add("AjouterTache-style");
+        importButton.getStyleClass().add("footBtn-style");
         titreField.getStyleClass().add("Titre-style");
-        
+
     }
 
     private BorderPane createBorderPane(StackPane container) {
@@ -155,13 +172,13 @@ public class addTacheview {
         categorie.getStyleClass().add("category-combobox-style");
 
         VBox catgContainer = new VBox();
-        catgContainer.getChildren().addAll(labelCategorie,categorie);
+        catgContainer.getChildren().addAll(labelCategorie, categorie);
 
         // Créer un conteneur HBox pour les deux dates
         HBox Dates = new HBox();
-      //  Dates.getChildren().addAll(dateDebutContainer, Space_Dates, dateFinContainer, Space_Dates, categoryComboBox);
-        Dates.getChildren().addAll(dateDebutContainer, Space_Dates, dateFinContainer,Space_element, catgContainer);
-
+        // Dates.getChildren().addAll(dateDebutContainer, Space_Dates, dateFinContainer,
+        // Space_Dates, categoryComboBox);
+        Dates.getChildren().addAll(dateDebutContainer, Space_Dates, dateFinContainer, Space_element, catgContainer);
 
         HBox.setMargin(Dates, new Insets(0, 50, 0, 0)); // Margin (top, right, bottom, left)
 
@@ -183,7 +200,7 @@ public class addTacheview {
         Label labelDocs = createLabel("Documents Ajoutés");
         VBox ZoneDocuments = createDocumentsSection();
         contenaireDocuments.getChildren().addAll(labelDocs, ZoneDocuments);
-        HBox buttons = new HBox(10, Sauvegarder, Annuler);
+        HBox buttons = new HBox(10, Sauvegarder, importButton, Annuler);
 
         leftBox.getChildren().add(labelTitle);
         leftBox.getChildren().add(titreField);
@@ -192,7 +209,7 @@ public class addTacheview {
         leftBox.getChildren().add(ZoneDescription);
         leftBox.getChildren().add(verticalSpace1);
         leftBox.getChildren().add(labelDocs);
-        leftBox.getChildren().addAll(contenaireDocuments,verticalSpace, buttons);
+        leftBox.getChildren().addAll(contenaireDocuments, verticalSpace, buttons);
 
         centerContainer.getChildren().addAll(leftBox);
 
@@ -221,7 +238,6 @@ public class addTacheview {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide horizontal scrollbar
         return scrollPane;
     }
-
 
     private Button createButtonWithIcon(String name, String string, int i, int j) {
         Button button = new Button(name);
@@ -268,7 +284,6 @@ public class addTacheview {
         return text;
     }
 
-
     private VBox CreateVbox(int Spacing, Pos position) {
         VBox vbox = new VBox();
         vbox.setSpacing(Spacing);
@@ -289,6 +304,7 @@ public class addTacheview {
         HBox.setHgrow(spacer, Priority.ALWAYS);
         return spacer;
     }
+
     private Region createVerticalSpace(int height) {
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
@@ -316,6 +332,7 @@ public class addTacheview {
 
         return contenaireDocuments;
     }
+
     private Button createButton(String text) {
         Button button = new Button(text);
 
@@ -325,20 +342,24 @@ public class addTacheview {
         return button;
     }
 
+    // get root
+    public BorderPane getRoot() {
+        return root;
+    }
+
     public void action() {
-        
 
         listesButton.setOnAction(event -> {
             this.controller.handleListesButton();
         });
-       
+
         projectsButton.setOnAction(event -> {
             this.controller.handleProjetsButton();
         });
 
         archiveButton.setOnAction(event -> {
             this.controller.handleArchiveButton();
-        }); 
+        });
         leftButton.setOnAction(event -> {
             System.out.println("Ajouter Document button clicked left ");
         });
@@ -348,16 +369,23 @@ public class addTacheview {
         Sauvegarder.setOnAction(event -> {
             this.controller.handleSauvegarderButtonAction();
         });
+        importButton.setOnAction(event -> {
+            this.controller.handleImportButtonAction(event);
+        });
         // Enregistrer.setOnAction(event -> {
-        //     this.controller.handleUpdateButtonAction();
+        // this.controller.handleUpdateButtonAction();
         // });
         Annuler.setOnAction(event -> {
             try {
-                this.controller.closerWindow(event);
+                this.controller.closerWindow();
             } catch (Exception e) {
                 System.out.println("Erreur pendant la fermeture AddList  : " + e.getMessage());
             }
         });
+    }
+
+    public AddListController getAddListController() {
+        return this.addlistController;
     }
 
     public String getDateDebut() {
@@ -380,7 +408,6 @@ public class addTacheview {
         return categorie.getValue();
     }
 
-
     public String getTempsDebut() {
         return TempsDebut.getText();
     }
@@ -396,10 +423,5 @@ public class addTacheview {
     public Stage getStage() {
         return (Stage) root.getScene().getWindow();
     }
-
-
-    
-
-    
 
 }

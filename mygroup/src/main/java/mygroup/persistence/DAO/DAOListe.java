@@ -230,4 +230,20 @@ public class DAOListe {
                         return null;
                 }
         }
+
+        public String getLastListId() {
+                try {
+                        MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                                        .getCollection("listes");
+                        Document lastList = collection.find().sort(new Document("_id", -1)).first();
+                        if (lastList != null) {
+                                return lastList.getObjectId("_id").toString();
+                        } else {
+                                System.err.println("Aucune liste trouvée");
+                        }
+                } catch (Exception e) {
+                        System.err.println("Erreur lors de la récupération de l'ID de la dernière liste : " + e.getMessage());
+                }
+                return null;
+        }
 }

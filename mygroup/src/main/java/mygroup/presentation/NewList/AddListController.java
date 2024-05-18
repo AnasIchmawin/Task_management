@@ -13,14 +13,13 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import mygroup.metier.Gestionnaire.GestionnaireListe;
 import mygroup.metier.POJO.POJOListe;
 import mygroup.metier.Errors.NonValidList;
-import mygroup.presentation.GetTasks.GetTasksView;
 import mygroup.presentation.listes.ListeFormController;
+import mygroup.presentation.tache_ajoute.addTacheview;
 
 public class AddListController {
     private GestionnaireListe gestionnaireListe;
@@ -28,12 +27,13 @@ public class AddListController {
     private AddListModel addListModel;
     private ListeFormController listeFormController;
 
+
     public AddListController(AddListView addListView, ListeFormController listeFormController) {
         this.gestionnaireListe = new GestionnaireListe();
         this.addListView = addListView;
         this.listeFormController = listeFormController;
         this.addListModel = new AddListModel("", "", new LinkedHashMap<>());
-        this.updateView(addListView);
+        this.updateView();
     }
 
     public AddListController(AddListView addListView, AddListController addListController) {
@@ -41,8 +41,8 @@ public class AddListController {
         this.addListView = addListView;
         this.addListModel = addListController.getAddListModel();
         this.listeFormController = addListController.getListeFormController();
-        this.updateView(addListView);
-        this.displayTasks(addListView.getZoneTaches());
+        this.updateView();
+        this.displayTasks();
     }
 
     public ListeFormController getListeFormController() {
@@ -56,17 +56,28 @@ public class AddListController {
             String description = addListModel.getDescription();
             LinkedHashMap<String, String> taches = addListModel.getTachesSelectionnees();
 
-            POJOListe nouvelleListe = new POJOListe(titre, description, new ArrayList<>(taches.values()));
+
+            POJOListe nouvelleListe = new POJOListe(titre, description, new ArrayList<>(taches.keySet()));
             this.gestionnaireListe.setListe(nouvelleListe);
             gestionnaireListe.creerListe();
             listeFormController.addList();
-            showAlert(AlertType.INFORMATION, "Succès", "Liste créée avec succès", 
-            "La liste a été créée avec succès", Duration.seconds(1));
-            closerWindow(event);
+            // mettre id list to  taches : 
+            // get last id list 
+            String lastListId = gestionnaireListe.getLastListId();
+            for(String id : taches.keySet()){
+                //
+            }
+            
+            showAlert(AlertType.INFORMATION, "Succès", "Liste créée avec succès",
+                    "La liste a été créée avec succès", Duration.seconds(1));
+
 
         } catch (NonValidList e) {
-            showAlert(AlertType.ERROR, "Erreur", "Erreur lors de la création de la liste", 
-            e.getMessage(), Duration.seconds(2));
+            showAlert(AlertType.ERROR, "Erreur", "Erreur lors de la création de la liste",
+                    e.getMessage(), Duration.seconds(2));
+        }
+        finally {
+            closerWindow(event);
         }
     }
 
@@ -74,31 +85,32 @@ public class AddListController {
         addListModel.setTitre(addListView.getTitre());
         addListModel.setDescription(addListView.getDescription());
     }
-    public void getTasksView(ActionEvent event) {
-        String titre = addListView.getTitre();
-        String description = addListView.getDescription();
-        this.addListModel.setTitre(titre);
-        this.addListModel.setDescription(description);
 
-        GetTasksView view = new GetTasksView(this);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    public void getTasksView(ActionEvent event) {
+        addTacheview view = new addTacheview(this);
+        Stage stage = new Stage();
         view.start(stage);
     }
 
-    public void displayTasks(GridPane gridPane) {
+
+
+    public void displayTasks() {
+        this.addListView.getZoneTaches().getChildren().clear();
         List<String> mesTaches = addListModel.getTasksTitles();
 
         for (String title : mesTaches) {
             Button newTaskButton = createTaskButton(title);
-            int colIndex = gridPane.getChildren().size() % 6; // Calculating column index
-            int rowIndex = gridPane.getChildren().size() / 6; // Calculating row index
-            gridPane.add(newTaskButton, colIndex, rowIndex);
+            int colIndex = addListView.getZoneTaches().getChildren().size() % 6; // Calculating column index
+            int rowIndex = addListView.getZoneTaches().getChildren().size() / 6; // Calculating row index
+            addListView.getZoneTaches().add(newTaskButton, colIndex, rowIndex);
         }
     }
 
-    public void updateView(AddListView view) {
-        view.setTitre(this.addListModel.getTitre());
-        view.setDescription(this.addListModel.getDescription());
+
+
+    public void updateView() {
+        addListView.setTitre(this.addListModel.getTitre());
+        addListView.setDescription(this.addListModel.getDescription());
     }
 
     public AddListModel getAddListModel() {
@@ -110,8 +122,8 @@ public class AddListController {
         stage.close();
     }
 
-    public void addTask(String id, String title) {
-        this.addListModel.getTachesSelectionnees().put(id, title);
+    public void addNewTask(String Id , String title) {
+        this.addListModel.getTachesSelectionnees().put(Id, title);
     }
 
     private Button createTaskButton(String title) {
@@ -136,7 +148,10 @@ public class AddListController {
         return newTaskButton;
     }
 
-    public static void showAlert(AlertType type, String title, String headerText, String contentText, Duration duration) {
+
+
+    public static void showAlert(AlertType type, String title, String headerText, String contentText,
+            Duration duration) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(headerText);

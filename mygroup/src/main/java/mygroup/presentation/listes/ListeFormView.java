@@ -195,6 +195,11 @@ public class ListeFormView extends Application {
         return searchField.getText();
     }
 
+      // get root 
+    public BorderPane getRoot() {
+        return root;
+    }
+
     public void SurveillerButton(Button button, String width, String height, String color) {
         button.setOnMouseEntered(event -> {
             button.setStyle("-fx-background-radius: 10px; " +

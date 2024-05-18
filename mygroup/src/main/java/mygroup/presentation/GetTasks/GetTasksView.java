@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mygroup.presentation.NewList.AddListController;
 import mygroup.presentation.NewProjet.AddProjetController;
+import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
 
 public class GetTasksView {
 
@@ -29,11 +30,11 @@ public class GetTasksView {
     private ScrollPane scrollPane;
     private GridPane ZoneTasks;
 
-    public GetTasksView(AddListController addListController) {
+    public GetTasksView(AddListController addListController ,ControllerFromTacheAjout controllerFromTacheAjout) {
         init();
         style();
         action();
-        this.controller = new GetTasksController(this, addListController);
+        this.controller = new GetTasksController(this, addListController, controllerFromTacheAjout);
     }
 
     public GetTasksView(AddProjetController addProjetController) {

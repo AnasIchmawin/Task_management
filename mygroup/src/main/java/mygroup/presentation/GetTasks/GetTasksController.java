@@ -14,22 +14,25 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
 import mygroup.presentation.NewList.AddListController;
-import mygroup.presentation.NewList.AddListView;
 import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.NewProjet.AddProjetView;
 import mygroup.presentation.projets.ProjetsFormController;
+import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
+import mygroup.presentation.tache_ajoute.addTacheview;
 
 public class GetTasksController {
     private GestionnaireTache gestionnaireTache;
-    private AddListController addListController;
+    private ControllerFromTacheAjout controllerFromTacheAjout;
     private AddProjetController addProjetController;
     private LinkedHashMap<List<Integer>, List<String>> GridCaseInfos;
     private ProjetsFormController projetsFormController;
     private GetTasksView getTasksView;
+    private AddListController addListController;
 
-    public GetTasksController(GetTasksView getTasksView, AddListController addListController) {
+    public GetTasksController(GetTasksView getTasksView,AddListController addListController, ControllerFromTacheAjout controllerFromTacheAjout) {
         this.getTasksView = getTasksView;
         this.gestionnaireTache = new GestionnaireTache();
+        this.controllerFromTacheAjout = controllerFromTacheAjout;
         this.addListController = addListController;
         this.displayTasks();
     }
@@ -55,9 +58,9 @@ public class GetTasksController {
 
     // Method to handle cancel button
     public void handleCancelButton(ActionEvent eventAddList) {
-        if (this.addListController != null) {
+        if (this.controllerFromTacheAjout != null) {
             Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
-            AddListView view = new AddListView(this.addListController);
+            addTacheview view = new addTacheview(this.controllerFromTacheAjout);
             view.start(stage);
         } else {
             AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
@@ -103,23 +106,26 @@ public class GetTasksController {
                     String task = checkBox.getText();
                     String id = getIdFromMap(GridCaseInfos, GridPane.getRowIndex(node), GridPane.getColumnIndex(node));
                     System.out.println("Task selected: " + task + " with id: " + id);
-                    if (this.addListController != null)
-                        this.addListController.addTask(id, task);
-                    else {
+                    if (this.addListController != null) {
+                        this.addListController.addNewTask(id, task);
+                        this.addListController.displayTasks();
+                        this.closerWindow(eventAddList);
+                    } else {
                         this.addProjetController.addTaskToList(id, task);
                     }
                 }
             }
         }
-        if (this.addListController != null) {
-            Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
-            AddListView view = new AddListView(this.addListController);
-            view.start(stage);
-        } else {
+        if(this.controllerFromTacheAjout != null) {
             AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
             Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
             view.start(stage);
         }
+    }
+
+    public void closerWindow(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
     }
 
     // Method to create a checkbox
