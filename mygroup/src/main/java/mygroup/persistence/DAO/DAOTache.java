@@ -59,7 +59,7 @@ public class DAOTache {
     // Update
     public void update(String titre,Boolean etat , String categorie, String description, 
     String dateDebut, String tempsDebut, String dateFin,
-    String tempsFin, List<String> list, String projet, String liste) {
+    String tempsFin, List<String> docs, String projet, String liste) {
         try {
             // Récupérer la collection "taches"
             @SuppressWarnings("unused")
@@ -93,8 +93,8 @@ public class DAOTache {
             if (tempsFin != null) {
                 updates.add(new Document("$set", new Document("HeureDebut", tempsFin)));
             }
-            if (list != null) {
-                updates.add(new Document("$set", new Document("documents", list)));
+            if (docs != null) {
+                updates.add(new Document("$set", new Document("documents", docs)));
             }
             if (projet != null) {
                 updates.add(new Document("$set", new Document("projet", projet)));
@@ -108,31 +108,24 @@ public class DAOTache {
         }
     }
 
-    public void updateListe(String title, String description, String listId) {
+    public void updateListId(String task_Id , String list_Id) {
         try {
+            ObjectId taskObjectId = new ObjectId(task_Id);
+    
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                    .getCollection("listes");
-            
-            // Convert listId to ObjectId
-            ObjectId objectId = new ObjectId(listId);
-            
-            Document liste = collection.find(Filters.eq("_id", objectId)).first();
-            if (liste != null) {
-                Document doc = new Document();
-                if (title != null) {
-                    doc.append("titre", title);
-                }
-                if (description != null) {
-                    doc.append("description", description);
-                }
-                collection.updateOne(Filters.eq("_id", objectId), new Document("$set", doc));
-            } else {
-                System.err.println("List not found with ID: " + listId);
-            }
+                    .getCollection("taches");
+    
+            Document updateDoc = new Document("$set", new Document("liste", list_Id));
+    
+            collection.updateOne(Filters.eq("_id", taskObjectId), updateDoc);
+    
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid ObjectId format: " + e.getMessage());
         } catch (Exception e) {
             System.err.println("Error updating the list: " + e.getMessage());
-   }
-}
+        }
+    }
+
 
     public void updateTask(String title, String description, String taskId) {
         try {
@@ -374,6 +367,4 @@ public class DAOTache {
             System.err.println("Error cloning the task: " + e.getMessage());
         }
     }
-    
-
 }

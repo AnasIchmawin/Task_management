@@ -197,4 +197,9 @@ public class GestionnaireTache {
         }
     }
 
+    public void updateIdListForTask(String Task_ID , String List_ID){
+        if(!Task_ID.isEmpty())
+        this.daoTache.updateListId(Task_ID , List_ID) ;
+      }
+
 }
