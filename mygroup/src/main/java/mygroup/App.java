@@ -31,6 +31,8 @@ import mygroup.presentation.seance_ajoute.SceanceAjouteView;
 import mygroup.presentation.seance.SeanceFormView;
 import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
 import mygroup.presentation.tache_ajoute.addTacheview;
+import mygroup.presentation.tache_detail.tacheDetailController;
+import mygroup.presentation.tache_detail.tacheDetailView;
 import mygroup.presentation.taches.TachesFormController;
 import mygroup.presentation.taches.TachesFormView;
 
@@ -97,6 +99,8 @@ public class App extends Application {
         // presentation.tache_detail.screen view = new presentation.tache_detail.screen() ;
         // presentation.tache_detail.controleur con = new presentation.tache_detail.controleur(view, null) ;
         // view.start(primaryStage) ;
+
+        // tacheDetailController con = new tacheDetailController("663bbacc6d8e33b7e243ded3", primaryStage) ;
     }
 
     public static void main(String[] args) {
