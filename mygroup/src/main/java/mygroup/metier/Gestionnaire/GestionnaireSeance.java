@@ -40,12 +40,6 @@ public class GestionnaireSeance {
                 || this.seance.getDateFin() == null || this.seance.getHeureFin() == null) {
             throw new NonValidSeance("Tous les champs de la séance doivent être remplis");
         }
-
-        if (!validateSeance(this.seance.getDateDebut(), this.seance.getHeureDebut(), this.seance.getDateFin(),
-                this.seance.getHeureFin())) {
-            throw new NonValidSeance("Les dates ou heures de la séance ne sont pas valides");
-        }
-
         this.daoSeance.create(this.seance.getTitre(),
                 this.seance.getDateDebut(),
                 this.seance.getHeureDebut(),
@@ -55,6 +49,8 @@ public class GestionnaireSeance {
                 this.seance.getNote(),
                 this.seance.getDocuments());
     }
+
+   
 
     public static boolean validateDate(String date) {
         try {

@@ -1,6 +1,5 @@
 package mygroup.presentation.tache_detail;
 
-import javax.swing.text.StyledEditorKit;
 
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;

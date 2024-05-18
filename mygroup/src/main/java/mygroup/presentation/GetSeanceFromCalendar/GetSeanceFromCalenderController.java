@@ -35,15 +35,24 @@ public class GetSeanceFromCalenderController {
                     POJOSeance seance = new POJOSeance();
                     seance.setTitre(item.getTitle());
                     seance.setDescription(item.getDescription());
-                    seance.setDateDebut(item.getStartDate());
-                    seance.setDateFin(item.getEndDate());
+
+                    // date debut
+                    String[] dateDebut = item.getStartDate().split(" ");
+                    seance.setDateDebut(dateDebut[0]);
+                    seance.setHeureDebut(dateDebut[1]);
+                    // date fin
+                    String[] dateFin = item.getEndDate().split(" ");
+                    seance.setDateFin(dateFin[0]);
+                    seance.setHeureFin(dateFin[1]);
+
+                    // create seance
                     this.gestionnaireSeance.setSeance(seance);
                     gestionnaireSeance.createSeance();
-                    alert("Tâche ajoutée", "La tâche a été ajoutée avec succès");
+                    alert("Seance ajoutée", "La tâche a été ajoutée avec succès");
                     this.handleCancelButtonAction(event);
 
                 } catch (Exception e) {
-                    alert("Erreur", "Une erreur s'est produite lors de l'ajout de la tâche");
+                    alert("Erreur", "Une erreur s'est produite lors de l'ajout de la seance");
                     e.printStackTrace();
                 }
             }
