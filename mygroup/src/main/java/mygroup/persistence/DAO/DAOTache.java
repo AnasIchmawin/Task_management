@@ -246,7 +246,7 @@ public class DAOTache {
                     .getCollection("taches");
             Document tache = collection.find(Filters.eq("_id", new ObjectId(tacheId))).first();
             if (tache != null) {
-                return tache.getString("title");
+                return tache.getString("titre");
             } else {
                 System.err.println("Task not found with ID: " + tacheId);
                 return null;

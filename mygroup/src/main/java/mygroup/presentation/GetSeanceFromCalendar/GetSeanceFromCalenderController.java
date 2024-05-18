@@ -28,7 +28,7 @@ public class GetSeanceFromCalenderController {
 
     public void handleConfirmButton(ActionEvent event) {
         System.out.println("Confirm Button Clicked");
-        System.out.println("Selected Tasks : ");
+        System.out.println("Selected events : ");
         for (ItemSeance item : listTasItems) {
             if (item.isSelected()) {
                 try {

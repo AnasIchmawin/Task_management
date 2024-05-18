@@ -1,5 +1,7 @@
 package mygroup.presentation.tache_detail;
 
+import javax.swing.text.StyledEditorKit;
+
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
@@ -37,6 +39,8 @@ public class tacheDetailController {
         String Type = model.getType();
         String Description = model.getDescription();
 
+        System.out.println("Title : " +Title);
+
         view.setTitleLabel(Title);
         view.setDateDebutLabel(DateDebut);
         view.setDateFinLabel(DateFin);
@@ -60,7 +64,6 @@ public class tacheDetailController {
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         ListeFormView listes = new ListeFormView();
         listes.start(stage);
-
     }
 
 }
