@@ -1,63 +1,86 @@
 package mygroup.presentation.tache_detail;
 
-import org.bson.Document;
-
 import javafx.event.ActionEvent;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
-import mygroup.persistence.Connexion;
+import mygroup.presentation.archive.modele;
 import mygroup.presentation.listes.ListeFormView;
+import mygroup.presentation.taches.TachesFormController;
 
 public class tacheDetailController {
-    private tacheDetailView sc;
-    private tacheDetailModel md;
-    private Label titleabel;
-    Connexion con;
-    GestionnaireTache gt;
+    private tacheDetailModel model;
+    private GestionnaireTache gestionnaireTache;
+    private tacheDetailView view;
+    private TachesFormController tachesFormController;
+    private String Title;
+    private String DateDebut;
+    private String DateFin;
+    private String Categorie;
+    private String Type;
+    private String Description;
+    private String id;
 
-    // labels
-    Label dateDebutLabel;
-    Label dateFinLabel;
-    Label categorieLabel;
-    Label typeLabel;
-    Label descriptionLabel;
-
-    // constructor
-    public tacheDetailController(tacheDetailView sc, tacheDetailModel md) {
-        gt = new GestionnaireTache();
-        titleabel = sc.getTitleabel();
-        dateDebutLabel = sc.getDateDebutLabel();
-        dateFinLabel = sc.getDateFinLabel();
-        categorieLabel = sc.getCategorieLabel();
-        typeLabel = sc.getTypeLabel();
-        descriptionLabel = sc.getDescriptionLabel();
-        BoxHead();
+    public tacheDetailController(String idTache, Stage primaryStage) {
+        gestionnaireTache = new GestionnaireTache();
+        view = new tacheDetailView();
+        modeleCreate(idTache);
+        implementVariables();
+        implementView();
+        id = idTache;
+        view.start(primaryStage);
     }
 
-    private void BoxHead() {
-        // Box Head
-        Document taches = gt.readTask("663bbacc6d8e33b7e243ded3");
-        String title = taches.getString("title");
-        String dateDebut = taches.getString("dateDebut");
-        String dateFin = taches.getString("dateFin");
-        String categorie = taches.getString("categorie");
-        String type = taches.getString("type");
-        String description = taches.getString("description");
-        // Titre
-        titleabel.setText(title);
-        dateDebutLabel.setText(dateDebut);
-        dateFinLabel.setText(dateFin);
-        categorieLabel.setText(categorie);
-        typeLabel.setText(type);
-        descriptionLabel.setText(description);
+    public tacheDetailController(TachesFormController tachesFormController) {
+        this.tachesFormController = tachesFormController;
+        gestionnaireTache = new GestionnaireTache();
+        view = new tacheDetailView();
+        String idTache = tachesFormController.getIdTacheClicked();
+        modeleCreate(idTache);
+        implementVariables();
+        implementView();
+        view.start(primaryStage);
+    }
+
+    public void modeleCreate(String idTache) {
+        model = new tacheDetailModel(gestionnaireTache.getTitle(idTache), gestionnaireTache.getStartDate(idTache),
+                gestionnaireTache.getEndDate(idTache), gestionnaireTache.getCategorie(idTache),
+                gestionnaireTache.getType(idTache), gestionnaireTache.getDescription(idTache));
+    }
+
+    public void implementVariables() {
+        Title = model.getTitleLable();
+        DateDebut = model.getDateDebut();
+        DateFin = model.getDateFin();
+        Categorie = model.getCategorie();
+        Type = model.getType();
+        Description = model.getDescription();
+    }
+
+    public void implementView() {
+        view.setTitleLabel(Title);
+        view.setDateDebutLabel(DateDebut);
+        view.setDateFinLabel(DateFin);
+        view.setCategorieLabel(Categorie);
+        view.setTypeLabel(Type);
+        view.setDescriptionLabel(Description);
+    }
+
+    public void UpdateButtonAction(ActionEvent event) {
+        Title = view.getTitleLabel();
+        Description = view.getDescriptionLabel();
+        if (Title.equals("") || Description.equals("")) {
+            System.out.println("Veuillez remplir tous les champs");
+        } else {
+            gestionnaireTache.updateTask(Title, Description, id);
+            System.out.println("Tache modifiée avec succès");
+        }
     }
 
     public void listesButtonAction(ActionEvent event) {
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         ListeFormView listes = new ListeFormView();
         listes.start(stage);
-        
+
     }
 
 }

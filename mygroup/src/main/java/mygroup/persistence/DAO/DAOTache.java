@@ -108,6 +108,58 @@ public class DAOTache {
         }
     }
 
+    public void updateListe(String title, String description, String listId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("listes");
+            
+            // Convert listId to ObjectId
+            ObjectId objectId = new ObjectId(listId);
+            
+            Document liste = collection.find(Filters.eq("_id", objectId)).first();
+            if (liste != null) {
+                Document doc = new Document();
+                if (title != null) {
+                    doc.append("titre", title);
+                }
+                if (description != null) {
+                    doc.append("description", description);
+                }
+                collection.updateOne(Filters.eq("_id", objectId), new Document("$set", doc));
+            } else {
+                System.err.println("List not found with ID: " + listId);
+            }
+        } catch (Exception e) {
+            System.err.println("Error updating the list: " + e.getMessage());
+   }
+}
+
+    public void updateTask(String title, String description, String taskId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            
+            // Convert taskId to ObjectId
+            ObjectId objectId = new ObjectId(taskId);
+            
+            Document tache = collection.find(Filters.eq("_id", objectId)).first();
+            if (tache != null) {
+                Document doc = new Document();
+                if (title != null) {
+                    doc.append("title", title);
+                }
+                if (description != null) {
+                    doc.append("description", description);
+                }
+                collection.updateOne(Filters.eq("_id", objectId), new Document("$set", doc));
+            } else {
+                System.err.println("Task not found with ID: " + taskId);
+            }
+        } catch (Exception e) {
+            System.err.println("Error updating the task: " + e.getMessage());
+        }
+    }
+
     // Delete
     public void delete(String tacheId) {
         try {
@@ -135,28 +187,6 @@ public class DAOTache {
             return taches;
         } catch (Exception e) {
             System.err.println("Erreur lors de la récupération des tâches au niveau de Dao: " + e.getMessage());
-            return null;
-        }
-    }
-
-    // GetTitre
-    public String getTitre(String tacheId) {
-        try {
-            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                    .getCollection("taches");
-            
-            // Convert tacheId to ObjectId
-            ObjectId objectId = new ObjectId(tacheId);
-            
-            Document tache = collection.find(Filters.eq("_id", objectId)).first();
-            if (tache != null) {
-                return tache.getString("titre");
-            } else {
-                System.err.println("Task not found with ID: " + tacheId);
-                return null;
-            }
-        } catch (Exception e) {
-            System.err.println("Error retrieving the title of the task: " + e.getMessage());
             return null;
         }
     }
@@ -195,6 +225,114 @@ public class DAOTache {
             collection.updateOne(Filters.eq("_id", objectId), Updates.set("etat", etat));
         } catch (Exception e) {
             System.err.println("Error setting the state of the task: " + e.getMessage());
+        }
+    }
+
+    //get date debut
+    public String getDateDebut(String tacheId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            Document tache = collection.find(Filters.eq("_id", new ObjectId(tacheId))).first();
+            if (tache != null) {
+                return tache.getString("dateDebut");
+            } else {
+                System.err.println("Task not found with ID: " + tacheId);
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Error getting the start date of the task: " + e.getMessage());
+            return null;
+        }
+    }
+
+    //get titre
+    public String getTitre(String tacheId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            Document tache = collection.find(Filters.eq("_id", new ObjectId(tacheId))).first();
+            if (tache != null) {
+                return tache.getString("title");
+            } else {
+                System.err.println("Task not found with ID: " + tacheId);
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Error getting the title of the task: " + e.getMessage());
+            return null;
+        }
+    }
+
+    //get date fin
+    public String getDateFin(String tacheId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            Document tache = collection.find(Filters.eq("_id", new ObjectId(tacheId))).first();
+            if (tache != null) {
+                return tache.getString("dateFin");
+            } else {
+                System.err.println("Task not found with ID: " + tacheId);
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Error getting the end date of the task: " + e.getMessage());
+            return null;
+        }
+    }
+
+    //get categorie
+    public String getCategorie(String tacheId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            Document tache = collection.find(Filters.eq("_id", new ObjectId(tacheId))).first();
+            if (tache != null) {
+                return tache.getString("categorie");
+            } else {
+                System.err.println("Task not found with ID: " + tacheId);
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Error getting the category of the task: " + e.getMessage());
+            return null;
+        }
+    }
+
+    //get description
+    public String getDescription(String tacheId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            Document tache = collection.find(Filters.eq("_id", new ObjectId(tacheId))).first();
+            if (tache != null) {
+                return tache.getString("description");
+            } else {
+                System.err.println("Task not found with ID: " + tacheId);
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Error getting the description of the task: " + e.getMessage());
+            return null;
+        }
+    }
+
+    //get type
+    public String getType(String tacheId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            Document tache = collection.find(Filters.eq("_id", new ObjectId(tacheId))).first();
+            if (tache != null) {
+                return tache.getString("type");
+            } else {
+                System.err.println("Task not found with ID: " + tacheId);
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Error getting the type of the task: " + e.getMessage());
+            return null;
         }
     }
 

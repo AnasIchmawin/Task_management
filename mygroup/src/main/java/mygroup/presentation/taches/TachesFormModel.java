@@ -1,5 +1,7 @@
 package mygroup.presentation.taches;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +10,8 @@ import java.util.Map;
 public class TachesFormModel {
     private LinkedHashMap<String, String> displayedTasks;
     private LinkedHashMap<String, Boolean> displayedTasksEtat;
-    private LinkedHashMap<List<Integer>, String> gridInfosCase;
+    private LinkedHashMap<List<List<String>>,String> gridInfosCase;
+    private String idTacheClicked;
 
     public TachesFormModel(LinkedHashMap<String, String> displayedTasks) {
         this.displayedTasks = displayedTasks;
@@ -36,11 +39,11 @@ public class TachesFormModel {
         this.displayedTasksEtat.put(id, etat);
     }
 
-    public LinkedHashMap<List<Integer>, String> getGridInfosCase() {
+    public LinkedHashMap<List<List<String>>, String> getGridInfosCase() {
         return gridInfosCase;
     }
 
-    public void setGridInfosCase(LinkedHashMap<List<Integer>, String> gridInfosCase) {
+    public void setGridInfosCase(LinkedHashMap<List<List<String>>, String> gridInfosCase) {
         this.gridInfosCase = gridInfosCase;
     }
 
@@ -72,9 +75,7 @@ public class TachesFormModel {
         displayedTasksEtat.put(id, etat);
     }
 
-    public void addGridInfosCase(List<Integer> caseId, String taskId) {
-        gridInfosCase.put(caseId, taskId);
-    }
+    
 
     // sortdisplayedTasks
     public void sortTasksByTitle() {
@@ -82,6 +83,29 @@ public class TachesFormModel {
         list.sort(Map.Entry.comparingByValue());
         displayedTasks.clear();
         list.forEach(entry -> displayedTasks.put(entry.getKey(), entry.getValue()));
+    }
+
+    public void setIdTacheClicked(String idTacheClicked) {
+        this.idTacheClicked = idTacheClicked;
+    }
+
+    public String getIdTacheClicked() {
+        return idTacheClicked;
+    }
+
+    public void setTaskID(String taskId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setTaskID'");
+    }
+
+    public LinkedHashMap<List<List<String>>, String> getGridInfoCase() {
+        return gridInfosCase;
+    }
+
+    public void putInGridInfoCase(Integer Row, Integer Column, String id) {
+        List<List<String>> caseInfo = new ArrayList<>();
+        caseInfo.add(Arrays.asList(Row.toString(), Column.toString()));
+        gridInfosCase.put(caseInfo, id);
     }
 
 }

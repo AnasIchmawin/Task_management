@@ -1,6 +1,6 @@
 package mygroup.presentation.tache_detail;
 
-import java.util.LinkedHashMap;
+
 
 public class tacheDetailModel {
     private String title;
@@ -20,12 +20,8 @@ public class tacheDetailModel {
         this.description = description;
     }
 
-    public tacheDetailModel(LinkedHashMap<String, String> mapTaches, Object object) {
-        //TODO Auto-generated constructor stub
-    }
-
     // Getters and Setters
-    public String getTitle() {
+    public String getTitleLable() {
         return title;
     }
 

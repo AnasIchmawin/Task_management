@@ -231,6 +231,32 @@ public class DAOListe {
                 }
         }
 
+        public void updateListe(String listId, String title, String description) {
+                try {
+                    MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                            .getCollection("listes");
+                    
+                    // Convert listId to ObjectId
+                    ObjectId objectId = new ObjectId(listId);
+                    
+                    Document liste = collection.find(Filters.eq("_id", objectId)).first();
+                    if (liste != null) {
+                        Document doc = new Document();
+                        if (title != null) {
+                            doc.append("titre", title);
+                        }
+                        if (description != null) {
+                            doc.append("description", description);
+                        }
+                        collection.updateOne(Filters.eq("_id", objectId), new Document("$set", doc));
+                    } else {
+                        System.err.println("List not found with ID: " + listId);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error updating the list: " + e.getMessage());
+                }
+        }
+
         public String getLastListId() {
                 try {
                         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
