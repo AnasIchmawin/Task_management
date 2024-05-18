@@ -49,8 +49,8 @@ public class App extends Application {
 
         // ListeFormController controller = new ListeFormController();
 
-        // ArchiveFormView archive = new ArchiveFormView();
-        // archive.start(primaryStage);
+        ArchiveFormView archive = new ArchiveFormView();
+        archive.start(primaryStage);
 
         // LoginFormView login = new LoginFormView(primaryStage);
         // login.start(primaryStage);
@@ -89,8 +89,8 @@ public class App extends Application {
         // LoginFormView view = new LoginFormView(primaryStage) ;
         // view.start(primaryStage) ;
 
-        ListeFormView view = new ListeFormView();
-        view.start(primaryStage);
+        // ListeFormView view = new ListeFormView();
+        // view.start(primaryStage);
 
         // presentation.tache_detail.screen view = new
         // presentation.tache_detail.screen() ;

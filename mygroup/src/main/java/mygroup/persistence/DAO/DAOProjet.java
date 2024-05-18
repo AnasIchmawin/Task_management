@@ -1,6 +1,7 @@
 package mygroup.persistence.DAO ;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -84,5 +85,20 @@ public class DAOProjet {
             System.err.println("Erreur lors de la récupération de la liste des projets : " + e.getMessage());
         }
         return allProjets;
+    }
+
+    public LinkedHashMap<String, String> getArchivedProjects() {
+        LinkedHashMap<String, String> archivedProjects = new LinkedHashMap<>();
+        String currentDate = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString().substring(0, 5);
+        List<Document> allProjets = getAllProjects();
+        for (Document projet : allProjets) {
+            String dateFin = projet.getString("dateFin");
+            if (dateFin.compareTo(currentDate) < 0) {
+                String id = projet.getObjectId("_id").toString();
+                String titre = projet.getString("titre");
+                archivedProjects.put(id, titre);
+            }
+        }
+        return archivedProjects;
     }
 }

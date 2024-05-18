@@ -1,6 +1,7 @@
 package mygroup.metier.Gestionnaire ;
 import mygroup.metier.POJO.POJOProjet;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import org.bson.Document;
 
@@ -69,6 +70,11 @@ public class GestionnaireProjet {
     //obtenirProjet
     public Document obtenirProjet(String id) {
         return this.daoProjet.read(id);
+    }
+
+
+    public LinkedHashMap<String, String> getProjetsArchiver() {
+        return this.daoProjet.getArchivedProjects();
     }
 
 }
