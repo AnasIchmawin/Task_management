@@ -62,7 +62,7 @@ public class GetTasksController {
             Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
             addTacheview view = new addTacheview(this.controllerFromTacheAjout);
             view.start(stage);
-        } else {
+        } if(this.addProjetController != null) {
             AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
             Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
             view.start(stage);
@@ -111,13 +111,13 @@ public class GetTasksController {
                         this.addListController.addNewTask(id, task);
                         this.addListController.displayTasks();
                         this.closerWindow(eventAddList);
-                    } else {
+                    } if(this.addProjetController != null) {
                         this.addProjetController.addTaskToList(id, task);
                     }
                 }
             }
         }
-        if(this.controllerFromTacheAjout != null) {
+        if(this.addProjetController != null) {
             AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
             Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
             view.start(stage);
