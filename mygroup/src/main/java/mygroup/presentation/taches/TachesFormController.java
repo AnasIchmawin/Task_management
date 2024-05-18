@@ -405,6 +405,10 @@ public class TachesFormController {
         });
     }
 
+    public void handleTitleConfButtonAction() {
+        gestionnaireListe.updateListe(getListId(), tacheView.getTitle(), tacheView.getDescription());
+    }
+
     public String getIdTacheClicked() {
         return tacheModel.getIdTacheClicked();
     }

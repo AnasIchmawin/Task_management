@@ -185,4 +185,16 @@ public class GestionnaireTache {
         daoTache.cloneTask(tacheId);
     }
 
+    public void createTacheCalendar() {
+        try{
+        daoTache.create(this.pojoTache.gettitre(), this.pojoTache.getetat(), this.pojoTache.getCategorie(),
+                this.pojoTache.getDescription(), this.pojoTache.getDateDebut(), this.pojoTache.getTempsDebut(),
+                this.pojoTache.getDateFin(), this.pojoTache.getTempsFin(), this.pojoTache.getDocuments(),
+                this.pojoTache.getprojet(), this.pojoTache.getliste());
+        }catch(Exception e){
+            System.out.println("Erreur lors de la création de la tâche calendrier");
+            e.printStackTrace();
+        }
+    }
+
 }
