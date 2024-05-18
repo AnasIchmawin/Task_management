@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bson.Document;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;

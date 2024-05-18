@@ -3,7 +3,6 @@ package mygroup.presentation.tache_detail;
 
 
 public class tacheDetailModel {
-    private String Id ;
     private String title;
     private String dateDebut;
     private String dateFin;
@@ -20,10 +19,6 @@ public class tacheDetailModel {
         this.type = type;
         this.description = description;
     }
-
-
-
-
     // Getters and Setters
     public String getTitleLable() {
         return title;

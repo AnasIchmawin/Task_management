@@ -1,9 +1,7 @@
 package mygroup.presentation.taches;
 
-import java.awt.event.ActionEvent;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -22,7 +20,7 @@ import mygroup.presentation.listes.ListeFormController;
 import mygroup.presentation.listes.ListeFormView;
 import mygroup.presentation.projets.ProjetsFormView;
 import mygroup.presentation.tache_ajoute.addTacheview;
-import mygroup.presentation.tache_detail.tacheDetailView ;
+import mygroup.presentation.tache_detail.tacheDetailView;
 
 public class TachesFormController {
     private TachesFormView tacheView;
@@ -63,6 +61,7 @@ public class TachesFormController {
         }
         tacheView.getZoneTaches().getChildren().clear();
         int colCount = 0;
+        @SuppressWarnings("unused")
         int rowCount = 0;
         int rowTask = 0;
 
@@ -208,6 +207,7 @@ public class TachesFormController {
     }
 
     // Autres méthodes auxiliaires
+    @SuppressWarnings("static-access")
     private void removeTask(GridPane gridPane, CheckBox taskCheckBox, Button deleteButton, Button cloneButton) {
         gridPane.getChildren().removeAll(taskCheckBox, deleteButton, cloneButton);
         // Suppression de l'espace de la tâche supprimée
@@ -279,6 +279,7 @@ public class TachesFormController {
     }
 
     public void searchTache(String searchText) {
+        @SuppressWarnings("unused")
         int colCount = 5;
         int rowCount = 0;
 
@@ -403,7 +404,7 @@ public class TachesFormController {
     private void handleButtonTaskAction(Button tasButton) {
         String listId = getTaskIdFromButton(tasButton);
         tacheModel.setTaskSelectedId(listId);
-        tacheDetailView tacheview = new tacheDetailView(this) ;
+        tacheDetailView tacheview = new tacheDetailView(this);
         Stage stage = (Stage) tacheView.getZoneTaches().getScene().getWindow();
         tacheview.start(stage);
     }

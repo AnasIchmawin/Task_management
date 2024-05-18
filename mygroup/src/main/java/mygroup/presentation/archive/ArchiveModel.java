@@ -1,7 +1,6 @@
 package mygroup.presentation.archive;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class ArchiveModel {
     private LinkedHashMap<String, String> projets;
