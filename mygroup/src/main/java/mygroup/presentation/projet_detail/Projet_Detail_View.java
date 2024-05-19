@@ -58,7 +58,6 @@ public class Projet_Detail_View extends Application {
 
 
     public Projet_Detail_View() {
-        
         init();
         style();
         action();    
