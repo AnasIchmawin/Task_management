@@ -67,6 +67,7 @@ public class SceanceAjouteController {
     public void addDocToSeance(String id, String doc) {
         this.model.addDocumentToSeance(id, doc);
         System.out.println("Document added to seance: " + doc);
+        displayDocuments();
     }
 
     public void displayDocuments() {

@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
+import mygroup.presentation.tache_detail.tacheDetailController;
 import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.seance.SeanceFormController;
 import mygroup.presentation.seance_ajoute.SceanceAjouteController;
@@ -36,6 +37,8 @@ public class AddDocumentView extends Application {
     private AddDocumentController controller;
     @SuppressWarnings("unused")
     private ControllerFromTacheAjout controllerFromTacheAjout;
+    @SuppressWarnings("unused")
+    private tacheDetailController tachedetailController;
 
     @Override
     public void start(Stage primaryStage) {
@@ -47,6 +50,11 @@ public class AddDocumentView extends Application {
     public AddDocumentView(ControllerFromTacheAjout controllerFromTacheAjout) {
         this.controller = new AddDocumentController(this, controllerFromTacheAjout);
         this.controllerFromTacheAjout = controllerFromTacheAjout;
+    }
+
+    public AddDocumentView(tacheDetailController tacheDetailController) {
+        this.controller = new AddDocumentController(this, tacheDetailController);
+        this.tachedetailController = tacheDetailController;
     }
 
     public AddDocumentView(AddProjetController addProjetController) {
