@@ -1,4 +1,4 @@
-package mygroup.persistence.DAO ;
+package mygroup.persistence.DAO;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -97,7 +97,7 @@ public class DAOSeance {
         }
     }
 
-   public List<Document>  getAllSeances(){
+    public List<Document> getAllSeances() {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("seances");
             FindIterable<Document> iterDoc = collection.find();
@@ -110,9 +110,9 @@ public class DAOSeance {
             System.err.println("Erreur lors de la récupération des séances : " + e.getMessage());
             return null;
         }
-   }
+    }
 
-public LinkedHashMap<String, String> getLastSeance() {
+    public LinkedHashMap<String, String> getLastSeance() {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("seances");
             Document lastS = collection.find().sort(new Document("_id", -1)).first();
@@ -123,9 +123,9 @@ public LinkedHashMap<String, String> getLastSeance() {
             System.err.println("Erreur lors de la récupération de la dernière séance : " + e.getMessage());
             return null;
         }
-}
+    }
 
-public void setProjetId(List<String> seanceIds, String lastProjetId) {
+    public void setProjetId(List<String> seanceIds, String lastProjetId) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("seances");
             for (String seanceId : seanceIds) {

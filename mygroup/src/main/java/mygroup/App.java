@@ -73,8 +73,8 @@ public class App extends Application {
         // view.start(primaryStage) ;
 
         // SceanceFormController con = new SceanceFormController() ;
-        // SeanceFormView view = new SeanceFormView(con) ;
-        // view.start(primaryStage) ;
+        SeanceFormView view = new SeanceFormView() ;
+        view.start(primaryStage) ;
 
         // addTacheview vue = new addTacheview() ;
         // ControllerFromTacheAjout con = new ControllerFromTacheAjout(vue) ;

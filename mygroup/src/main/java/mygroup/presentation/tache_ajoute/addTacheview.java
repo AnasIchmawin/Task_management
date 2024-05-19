@@ -39,7 +39,6 @@ public class addTacheview {
     private DatePicker dateFin;
     private TextField TempsDebut;
     private TextField TempsFin;
-    // private Button Enregistrer;
     private Button Annuler;
     private Button Sauvegarder;
     private Button leftButton;
@@ -49,7 +48,6 @@ public class addTacheview {
     private Button ajouterDocButton;
     private Button importButton;
     private GridPane ZoneDocuments;
-    // private ControllerFromTacheAjout controller;
     private ControllerFromTacheAjout controller;
     private BorderPane root;
     private AddListController addlistController;
