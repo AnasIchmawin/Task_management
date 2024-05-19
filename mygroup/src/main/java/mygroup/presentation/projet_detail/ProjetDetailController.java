@@ -46,10 +46,7 @@ public class ProjetDetailController {
         this.projectDetailModel.setProjetID(this.projetsFormController.getSelectedProjetId());
         this.FillChamps();
 
-
     }
-
-
 
     public void handleAjouterButtonAction(GridPane gridPane) {
         Button newListButton = new Button("Seance  1");
@@ -69,18 +66,32 @@ public class ProjetDetailController {
 
     private void FillChamps() {
         this.projetDetailView.settitle(getProjetTitle());
+        System.out.println("Title : " + getProjetTitle());
         this.projetDetailView.setDescription(getProjetDescription());
+        System.out.println("Description : " + getProjetDescription());
         this.projetDetailView.setDateDebut(getStartDate());
+        System.out.println("Date de début : " + getStartDate());
         this.projetDetailView.setDateFin(getEndDate());
+        System.out.println("Date de fin : " + getEndDate());
         this.projetDetailView.setCategorie(getCategory());
+        System.out.println("Categorie : " + getCategory());
         this.projetDetailView.setType(getType());
+        System.out.println("Type : " + getType());
         this.displayedTasks();
         this.displayedSeances();
         this.ServeillerButtons();
     }
 
     public void displayedTasks() {
+
         projectDetailModel.setDisplayedTasks(getTacheMap());
+
+        if (projectDetailModel.getDisplayedTasks().isEmpty())
+            return;
+        else {
+           System.out.println("-------on a des taches-------");
+            
+        }
         projetDetailView.getZoneTaches().getChildren().clear();
         int colCount = 0;
         int rowCount = 0;
@@ -308,7 +319,12 @@ public class ProjetDetailController {
                 "-fx-font-size: 17px;" +
                 "-fx-padding: 0px 0px 0px 5px;");
         taskCheckBox.setAlignment(Pos.CENTER_LEFT);
-        taskCheckBox.setSelected(isChecked);
+        if (isChecked != null) {
+            taskCheckBox.setSelected(isChecked);
+        } else {
+            // Default behavior if isChecked is null
+            taskCheckBox.setSelected(false); // or true, depending on your application's logic
+        }
         return taskCheckBox;
     }
 
@@ -317,8 +333,12 @@ public class ProjetDetailController {
     }
 
     private LinkedHashMap<String, String> getTacheMap() {
+        System.out.println("Projet ID : " + projectDetailModel.getProjetID());
         LinkedHashMap<String, Boolean> taches = gestionnaireProjet
                 .getTaches(projectDetailModel.getProjetID());
+
+        if (taches == null)
+            return new LinkedHashMap<>();
 
         LinkedHashMap<String, String> tacheMap = new LinkedHashMap<>();
         for (String tacheId : taches.keySet()) {
@@ -410,10 +430,10 @@ public class ProjetDetailController {
         projets.start(stage);
     }
 
-	public void addTask(String tacheId, String titre) {
+    public void addTask(String tacheId, String titre) {
         projectDetailModel.addTask(tacheId, titre);
         Button taskButton = createTask(projetDetailView.getZoneTaches(), titre, false, tacheId);
         projetDetailView.getZoneTaches().getChildren().add(taskButton);
-	}
+    }
 
 }

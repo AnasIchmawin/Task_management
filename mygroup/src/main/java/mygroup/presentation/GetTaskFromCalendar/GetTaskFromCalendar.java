@@ -23,6 +23,7 @@ public class GetTaskFromCalendar {
 
     private GetTaskFromCalenderController controller;
     private TachesFormController tachesFormController;
+    @SuppressWarnings("unused")
     private ProjetDetailController projetDetailController;
     private Label titleLabel;
     private BorderPane root;

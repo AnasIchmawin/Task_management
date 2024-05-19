@@ -1,6 +1,6 @@
 package mygroup.presentation.projet_detail;
 
-
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -9,8 +9,6 @@ public class ProjectDetailModel {
     private LinkedHashMap<String, String> displayedSeances;
     private LinkedHashMap<String, Boolean> displayedTasksEtat;
     private String ProjetID;
-
-
     private String title;
     private String description;
     private String categorie;
@@ -22,7 +20,8 @@ public class ProjectDetailModel {
     private List<String> seances;
 
     public ProjectDetailModel(String title, String description, String categorie, String type, String dateDebut,
-    String dateFin, List<String> taches, List<String> documents, List<String> seances, LinkedHashMap<String, String> displayedTasks, LinkedHashMap<String, String> displayedSeances) {
+            String dateFin, List<String> taches, List<String> documents, List<String> seances,
+            LinkedHashMap<String, String> displayedTasks, LinkedHashMap<String, String> displayedSeances) {
         this.title = title;
         this.description = description;
         this.categorie = categorie;
@@ -39,7 +38,13 @@ public class ProjectDetailModel {
     }
 
     public ProjectDetailModel() {
-        //TODO Auto-generated constructor stub
+        displayedTasks = new LinkedHashMap<>();
+        displayedSeances = new LinkedHashMap<>();
+        displayedTasksEtat = new LinkedHashMap<>();
+        taches = new ArrayList<>();
+        documents = new ArrayList<>();
+        seances = new ArrayList<>();
+
     }
 
     // Getters and Setters
@@ -154,6 +159,5 @@ public class ProjectDetailModel {
     public void addTask(String tacheId, String titre) {
         this.displayedTasks.put(tacheId, titre);
     }
-
 
 }

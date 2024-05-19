@@ -23,7 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mygroup.presentation.NewProjet.AddProjetController;
-import mygroup.presentation.projet_detail.ProjetDetailController;
+
 
 public class SceanceAjouteView extends Application {
     private static final Pos TOP_CENTER = Pos.TOP_CENTER;

@@ -28,6 +28,7 @@ public class SceanceAjouteController {
     private GestionnaireSeance gestionnaireSeance;
     private AddProjetController addProjetController;
     private String dateSeanceFormated;
+    @SuppressWarnings("unused")
     private ProjetDetailController projetDetailController;
 
     public SceanceAjouteController(SceanceAjouteView seanceAjouteView, AddProjetController addProjetController) {

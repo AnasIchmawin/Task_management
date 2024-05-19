@@ -172,7 +172,7 @@ public String getType(String id) {
                 List<Document> tachesList = (List<Document>) projet.get("taches");
                 if (tachesList != null) {
                     for (Document tache : tachesList) {
-                        taches.put(tache.getString("id"), tache.getBoolean("checked"));
+                        taches.put(tache.getString("Id"), tache.getBoolean("checked"));
                     }
                 }
             } else {

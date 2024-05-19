@@ -20,7 +20,7 @@ import mygroup.presentation.NewList.AddListController;
 import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
 import mygroup.presentation.taches.TachesFormController;
-import mygroup.presentation.projet_detail.ProjetDetailController;
+
 
 public class GetTasksView {
 
