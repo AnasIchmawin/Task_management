@@ -323,7 +323,7 @@ public void deleteTacheFromProjet(String listId, String tacheId) {
                 List<Document> seancesList = (List<Document>) projet.get("seances");
                 if (seancesList != null) {
                     for (Document seance : seancesList) {
-                        seances.add(seance.getString("id"));
+                        seances.add(seance.getString("Id"));
                     }
                 }
             } else {
