@@ -37,12 +37,7 @@ public class GetTasksView {
         action();
         this.controller = new GetTasksController(this, addListController, controllerFromTacheAjout);
     }
-    public GetTasksView(ProjetDetailController projetDetailController) {
-        init();
-        style();
-        action();
-       this.controller = new GetTasksController(this, projetDetailController);
-    }
+
 
     public GetTasksView(AddProjetController addProjetController , ControllerFromTacheAjout controllerFromTacheAjout) {
         init();

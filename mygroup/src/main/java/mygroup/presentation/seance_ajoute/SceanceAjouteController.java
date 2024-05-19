@@ -30,19 +30,14 @@ public class SceanceAjouteController {
     private String dateSeanceFormated;
     private ProjetDetailController projetDetailController;
 
-    // public SceanceAjouteController(SceanceAjouteView seanceAjouteView, AddProjetController addProjetController) {
-    //     this.seanceAjouteView = seanceAjouteView;
-    //     this.addProjetController = addProjetController;
-    //     this.model = new GetDocModel();
-    //     this.gestionnaireSeance = new GestionnaireSeance();
-    // }
-
-    public SceanceAjouteController(SceanceAjouteView seanceAjouteView, ProjetDetailController ProjetDetailController) {
+    public SceanceAjouteController(SceanceAjouteView seanceAjouteView, AddProjetController addProjetController) {
         this.seanceAjouteView = seanceAjouteView;
-        this.projetDetailController = projetDetailController;
+        this.addProjetController = addProjetController;
         this.model = new GetDocModel();
         this.gestionnaireSeance = new GestionnaireSeance();
     }
+
+
 
 
     public void handleListesButton() {

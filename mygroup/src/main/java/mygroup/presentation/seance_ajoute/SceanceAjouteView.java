@@ -50,19 +50,14 @@ public class SceanceAjouteView extends Application {
     Button confirmerButton;
 
     // Constructor
-    // public SceanceAjouteView(AddProjetController addProjetController) {
-    //     this.controller = new SceanceAjouteController(this, addProjetController);
-    //     init();
-    //     style();
-    //     Action();
-    // }
-
-    public SceanceAjouteView(ProjetDetailController ProjetDetailController) {
-        this.controller = new SceanceAjouteController(this, ProjetDetailController);
+    public SceanceAjouteView(AddProjetController addProjetController) {
+        this.controller = new SceanceAjouteController(this, addProjetController);
         init();
         style();
         Action();
     }
+
+
 
     @Override
     public void start(Stage primaryStage) {

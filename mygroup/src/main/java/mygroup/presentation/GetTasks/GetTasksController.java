@@ -36,15 +36,10 @@ public class GetTasksController {
         this.gestionnaireTache = new GestionnaireTache();
         this.controllerFromTacheAjout = controllerFromTacheAjout;
         this.addListController = addListController;
-        this.displayTasks();
+        this.displayTasksForList();
     }
 
-    public GetTasksController(GetTasksView getTasksView, ProjetDetailController projetDetailController) {
-        this.getTasksView = getTasksView;
-        this.gestionnaireTache = new GestionnaireTache();
-        this.projetDetailController = projetDetailController;
-        this.displayTasks();
-    }
+
 
     public GetTasksController(GetTasksView getTasksView, AddProjetController addProjetController , ControllerFromTacheAjout controllerFromTacheAjout) {
         this.getTasksView = getTasksView;
