@@ -21,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import mygroup.presentation.NewProjet.AddProjetController;
+import mygroup.presentation.projets.ProjetsFormController;
 import mygroup.presentation.taches.TachesFormView;
 
 
@@ -64,7 +65,14 @@ public class ProjetDetailView extends Application {
         init();
         style();
         action();    
-        this.controller = new ProjetDetailController(this);
+        // this.controller = new ProjetDetailController(this);
+    }
+
+    public ProjetDetailView(ProjetsFormController projetsFormController) {
+        init();
+        style();
+        action();    
+        this.controller = new ProjetDetailController(this , projetsFormController);
     }
     
     @Override

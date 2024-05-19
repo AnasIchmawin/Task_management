@@ -1,7 +1,9 @@
 package mygroup.presentation.projets;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,12 +12,15 @@ import org.bson.Document;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import mygroup.metier.Gestionnaire.GestionnaireProjet ;
+import mygroup.metier.Gestionnaire.GestionnaireProjet;
 import mygroup.presentation.GetProjets.GetProjetsView;
 import mygroup.presentation.NewProjet.AddProjetView;
 import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormView;
+import mygroup.presentation.projet_detail.ProjetDetailView;
+import mygroup.presentation.taches.TachesFormView;
 
 public class ProjetsFormController {
     private static final int MAX_COLUMNS = 5;
@@ -27,7 +32,7 @@ public class ProjetsFormController {
             + "-fx-min-height: " + BUTTON_HEIGHT + "px; "
             + "-fx-text-fill: #ffffff; "
             + "-fx-font-size: 18px;";
-            
+
     private GestionnaireProjet gestionnaireProjet;
     private ProjetsFormView projetView;
     private ProjetsModel projetsModel;
@@ -36,14 +41,13 @@ public class ProjetsFormController {
     public ProjetsFormController(ProjetsFormView projetsFormView) {
         this.gestionnaireProjet = new GestionnaireProjet();
         this.projetView = projetsFormView;
-        this.projetsModel = new ProjetsModel(getProjetsMap());
+        this.projetsModel = new ProjetsModel(getProjetsMap(), new LinkedHashMap<>());
     }
 
     public ProjetsFormController() {
         this.gestionnaireProjet = new GestionnaireProjet();
-        this.projetsModel = new ProjetsModel(getProjetsMap());
+        this.projetsModel = new ProjetsModel(getProjetsMap(), new LinkedHashMap<>());
     }
-
 
     // Affiche le formulaire d'ajout de projet
     public void handleAjouterButtonAction() {
@@ -69,23 +73,45 @@ public class ProjetsFormController {
     // Affiche les projets dans la vue projet
     public void displayProjets(boolean isSorted) {
         projetsModel.setProjets(getProjetsMap());
-        if(isSorted) {
+        if (isSorted) {
             projetsModel.sortProjets();
         }
         this.projetView.getZoneProjets().getChildren().clear();
         gridCaseInfos = new HashMap<>();
         int colCount = 0;
         int rowCount = 0;
-        
+
         for (Map.Entry<String, String> entry : projetsModel.getProjets().entrySet()) {
             Button button = createProjectButton(entry.getValue());
+            button.setOnAction(event -> handleButtonProjectAction(button));
             addProjetButton(button, colCount, rowCount);
+            projetsModel.putInGridInfoCase(rowCount, colCount, entry.getKey());
+
             colCount++;
             if (colCount == MAX_COLUMNS) {
                 colCount = 0;
                 rowCount++;
             }
         }
+    }
+
+    private void handleButtonProjectAction(Button button) {
+        String projetId = getProjectIdFromButton(button);
+        projetsModel.setSelectedProjetId(projetId);
+        startProjetDetail();
+    }
+
+    private void startProjetDetail() {
+        ProjetDetailView tachesFormView = new ProjetDetailView(this);
+        Stage stage = (Stage) projetView.getZoneProjets().getScene().getWindow();
+        tachesFormView.start(stage);
+    }
+
+    private String getProjectIdFromButton(Button button) {
+        List<List<String>> caseInfo = new LinkedList<>();
+        caseInfo.add(Arrays.asList(GridPane.getRowIndex(button).toString(),
+                GridPane.getColumnIndex(button).toString()));
+        return projetsModel.getGridInfoCase().get(caseInfo);
     }
 
     private void addProjetButton(Button projetButton, int colCount, int rowCount) {
@@ -111,11 +137,11 @@ public class ProjetsFormController {
 
         newProjetButton.setOnMouseEntered(event -> {
             newProjetButton.setStyle("-fx-background-color: #8E9EB2; "
-            + "-fx-background-radius: 10px; "
-            + "-fx-min-width: " + BUTTON_WIDTH + "px; "
-            + "-fx-min-height: " + BUTTON_HEIGHT + "px; "
-            + "-fx-text-fill: #ffffff; "
-            + "-fx-font-size: 18px;");
+                    + "-fx-background-radius: 10px; "
+                    + "-fx-min-width: " + BUTTON_WIDTH + "px; "
+                    + "-fx-min-height: " + BUTTON_HEIGHT + "px; "
+                    + "-fx-text-fill: #ffffff; "
+                    + "-fx-font-size: 18px;");
             newProjetButton.setCursor(javafx.scene.Cursor.HAND);
         });
 
@@ -174,24 +200,26 @@ public class ProjetsFormController {
         }
     }
 
-    //handleTypeBoxAction
+    // handleTypeBoxAction
     public void handleBoxsAction() {
         String type = projetView.getTypeBoxValue();
         String categorie = projetView.getCategorieBoxValue();
-            // Réinitialisation des compteurs de colonnes et de lignes
+        // Réinitialisation des compteurs de colonnes et de lignes
         int colCount = 0;
         int rowCount = 0;
 
         projetView.getZoneProjets().getChildren().clear();
 
-        //afficher les projet qui ont la valeur de key (type) est egale a type selectionner
+        // afficher les projet qui ont la valeur de key (type) est egale a type
+        // selectionner
         for (Map.Entry<String, String> entry : projetsModel.getProjets().entrySet()) {
             String id = entry.getKey();
             String titre = entry.getValue();
             Document projet = gestionnaireProjet.obtenirProjet(id);
             String typeProjet = projet.getString("type");
             String categorieProjet = projet.getString("categorie");
-            if ((typeProjet.equals(type) || type.equals("Tous")) && (categorieProjet.equals(categorie) || categorie.equals("Tous"))) {
+            if ((typeProjet.equals(type) || type.equals("Tous"))
+                    && (categorieProjet.equals(categorie) || categorie.equals("Tous"))) {
                 Button button = createProjectButton(titre);
                 addProjetButton(button, colCount, rowCount);
                 gridCaseInfos.put(List.of(colCount, rowCount), List.of(id, titre));
@@ -204,8 +232,8 @@ public class ProjetsFormController {
         }
     }
 
-    //getSelectedProjetId
-    public String getSelectedProjetId(){
+    // getSelectedProjetId
+    public String getSelectedProjetId() {
         return projetsModel.getSelectedProjetId();
     }
 

@@ -1,47 +1,29 @@
 package mygroup.presentation.projet_detail;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mygroup.metier.Gestionnaire.GestionnaireDocument;
 import mygroup.metier.Gestionnaire.GestionnaireProjet;
 import mygroup.metier.Gestionnaire.GestionnaireSeance;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
-import mygroup.persistence.DAO.DAOProjet;
-import mygroup.presentation.GetDocument.GetDocModel;
 import mygroup.presentation.tache_ajoute.addTacheview;
-import mygroup.presentation.NewDocument.AddDocumentView;
 import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormView;
 import mygroup.presentation.projets.ProjetsFormController;
 import mygroup.presentation.projets.ProjetsFormView;
-import mygroup.presentation.seance_ajoute.SceanceAjouteView;
-import mygroup.presentation.taches.TachesFormController;
-import mygroup.presentation.taches.TachesFormModel;
-import mygroup.presentation.taches.TachesFormView;
-import mygroup.presentation.seance_ajoute.SceanceAjouteView;
-
 
 public class ProjetDetailController {
     private GestionnaireDocument gestionnaireDocument;
@@ -52,20 +34,22 @@ public class ProjetDetailController {
     private ProjetDetailView projetDetailView;
     private ProjetsFormController projetsFormController;
 
-    public ProjetDetailController(ProjetDetailView view){
-        this.gestionnaireTache = new GestionnaireTache(); 
+    public ProjetDetailController(ProjetDetailView view, ProjetsFormController projetsFormController) {
+        this.projetsFormController = projetsFormController;
+        this.gestionnaireTache = new GestionnaireTache();
         this.gestionnaireProjet = new GestionnaireProjet();
-        this.projetsFormController = new ProjetsFormController();
         this.gestionnaireSeance = new GestionnaireSeance();
         this.gestionnaireDocument = new GestionnaireDocument();
-        this.projectDetailModel = new ProjectDetailModel("", "", "", "", "", "", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), getTacheMap(), getSeanceMap());
-        
         this.projetDetailView = view;
-       
+        this.projectDetailModel = new ProjectDetailModel();
+        this.projectDetailModel.setProjetID(this.projetsFormController.getSelectedProjetId());
         this.FillChamps();
 
+
     }
-    
+
+
+
     public void handleAjouterButtonAction(GridPane gridPane) {
         Button newListButton = new Button("Seance  1");
         newListButton.getStyleClass().add("AjouterSeance-Style");
@@ -94,8 +78,6 @@ public class ProjetDetailController {
         this.ServeillerButtons();
     }
 
-    
-
     private void displayedTasks() {
         projectDetailModel.setDisplayedTasks(getTacheMap());
         projetDetailView.getZoneTaches().getChildren().clear();
@@ -104,7 +86,9 @@ public class ProjetDetailController {
         // int rowTask = 0;
 
         for (Map.Entry<String, String> entry : projectDetailModel.getDisplayedTasks().entrySet()) {
-            Button taskButton = createTask(projetDetailView.getZoneTaches(), entry.getValue(), getTaskEtat(entry.getKey()), entry.getKey());
+            @SuppressWarnings("unused")
+            Button taskButton = createTask(projetDetailView.getZoneTaches(), entry.getValue(),
+                    getTaskEtat(entry.getKey()), entry.getKey());
             projectDetailModel.putInGridInfoCase(rowCount, entry.getKey());
 
             // rowTask++;
@@ -129,7 +113,7 @@ public class ProjetDetailController {
     }
 
     private List<String> getSeancesTitles() {
-        return new ArrayList<>(this.projectDetailModel.getDisplayedSeances().values()); 
+        return new ArrayList<>(this.projectDetailModel.getDisplayedSeances().values());
     }
 
     private Button createSeanceButton(String title) {
@@ -167,8 +151,6 @@ public class ProjetDetailController {
 
         return taskButton;
     }
-
-    
 
     private void configureTaskCheckBoxListener(CheckBox taskCheckBox, Button deleteButton, Button cloneButton,
             String tacheId) {
@@ -233,10 +215,10 @@ public class ProjetDetailController {
         SurveillerButton(projetDetailView.getArchiveButton(), "100", "40", "#3F72AF");
         SurveillerButton(projetDetailView.getLeftButton(), "150", "40", "#3F72AF");
     }
-    public void handleAjouterDocButtonAction() {
-        //-----------------------------
-    }
 
+    public void handleAjouterDocButtonAction() {
+        // -----------------------------
+    }
 
     private Button createDocButton(String doc) {
         Button newTaskButton = new Button(doc);
@@ -260,11 +242,11 @@ public class ProjetDetailController {
         return newTaskButton;
     }
 
-    public void getTasksView(ActionEvent event){
+    public void getTasksView(ActionEvent event) {
 
         addTacheview View = new addTacheview(this);
         Stage stage = new Stage();
-                View.start(stage);
+        View.start(stage);
     }
 
     public String getProjetId() {
@@ -287,9 +269,8 @@ public class ProjetDetailController {
     }
 
     private static void displayMessageDialog() {
-        //---------------------------
+        // ---------------------------
     }
-
 
     private static void setTaskRow(GridPane gridPane, Button deleteButton, Button cloneButton, CheckBox taskCheckBox,
             Button taskButton) {
@@ -298,7 +279,6 @@ public class ProjetDetailController {
         gridPane.add(taskButton, 1, row);
         GridPane.setHalignment(taskButton, HPos.RIGHT);
     }
-
 
     private static Button createButtonWithIcon(String imagePath) {
         Button button = new Button("");
@@ -331,12 +311,12 @@ public class ProjetDetailController {
     }
 
     public void handleAjouterSeanceButton(ActionEvent event) {
-        //-----------------------------------------
+        // -----------------------------------------
     }
 
-
     private LinkedHashMap<String, String> getTacheMap() {
-        LinkedHashMap<String, Boolean> taches = gestionnaireProjet.getTaches(projetsFormController.getSelectedProjetId());
+        LinkedHashMap<String, Boolean> taches = gestionnaireProjet
+                .getTaches(projectDetailModel.getProjetID());
 
         LinkedHashMap<String, String> tacheMap = new LinkedHashMap<>();
         for (String tacheId : taches.keySet()) {
@@ -347,7 +327,7 @@ public class ProjetDetailController {
     }
 
     private LinkedHashMap<String, String> getSeanceMap() {
-        List<String> seancesId = gestionnaireProjet.getSeances(projetsFormController.getSelectedProjetId());
+        List<String> seancesId = gestionnaireProjet.getSeances(projectDetailModel.getProjetID());
         LinkedHashMap<String, String> seances = new LinkedHashMap<>();
         for (String seanceId : seancesId) {
             String seanceTitle = gestionnaireSeance.getTitle(seanceId);
@@ -364,7 +344,6 @@ public class ProjetDetailController {
         gestionnaireTache.setTaskEtat(tacheId, etat);
         projectDetailModel.addTaskEtat(tacheId, etat);
     }
-
 
     public void SurveillerButton(Button button, String width, String height, String color) {
         button.setOnMouseEntered(event -> {
@@ -418,7 +397,7 @@ public class ProjetDetailController {
     }
 
     public void handleArchiveButtonAction() {
-         Stage stage = (Stage) projetDetailView.getZoneTaches().getScene().getWindow();
+        Stage stage = (Stage) projetDetailView.getZoneTaches().getScene().getWindow();
         ArchiveFormView archive = new ArchiveFormView();
         archive.start(stage);
     }

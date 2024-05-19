@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ProjectDetailModel {
-    private String ProjetID = "6641251cc5f85d3ab8b28362";
+    private String ProjetID = "6649d7cf05adf95ccaa9d0be";
     private LinkedHashMap<String, String> displayedTasks;
     private LinkedHashMap<String, String> displayedSeances;
     private LinkedHashMap<String, Boolean> displayedTasksEtat;
@@ -37,6 +37,10 @@ public class ProjectDetailModel {
         this.displayedTasksEtat = new LinkedHashMap<>();
         this.displayedTasks = displayedTasks;
         this.displayedSeances = displayedSeances;
+    }
+
+    public ProjectDetailModel() {
+        //TODO Auto-generated constructor stub
     }
 
     // Getters and Setters

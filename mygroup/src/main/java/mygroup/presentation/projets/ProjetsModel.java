@@ -3,28 +3,41 @@ package mygroup.presentation.projets;
 import java.util.*;
 
 public class ProjetsModel {
-    private LinkedHashMap<String, String> projets;
-    private String selectedProjetId="6641251cc5f85d3ab8b28362";
+    private LinkedHashMap<String, String> DisplayedProjects;
+    private LinkedHashMap<List<List<String>>, String> gridInfoCase;
+    private String selectedProjetId;
 
-    public ProjetsModel(LinkedHashMap<String, String> projets) {
-        this.projets = projets;
+    public ProjetsModel(LinkedHashMap<String, String> projets ,LinkedHashMap<List<List<String>>, String> gridInfoCase) {
+        this.DisplayedProjects = projets;
+        this.gridInfoCase = gridInfoCase;
     }
 
     public ProjetsModel() {
         super();
+        gridInfoCase = new LinkedHashMap<>();
+    }
+
+
+
+    public String getSelectedProjetId() {
+        return selectedProjetId;
+    }
+
+    public void setSelectedProjetId(String selectedProjetId) {
+        this.selectedProjetId = selectedProjetId;
     }
 
     public LinkedHashMap<String, String> getProjets() {
-        return projets;
+        return DisplayedProjects;
     }
 
     public void setProjets(LinkedHashMap<String, String> projets) {
-        this.projets = projets;
+        this.DisplayedProjects = projets;
     }
 
     public void sortProjets() {
         // trier liste par le titre
-        List<Map.Entry<String, String>> list = new LinkedList<>(projets.entrySet());
+        List<Map.Entry<String, String>> list = new LinkedList<>(DisplayedProjects.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<String, String>>() {
             public int compare(Map.Entry<String, String> o1, Map.Entry<String, String> o2) {
                 return o1.getValue().compareTo(o2.getValue());
@@ -37,7 +50,15 @@ public class ProjetsModel {
         this.setProjets(sortedList);
     }
 
-    public String getSelectedProjetId() {
-        return selectedProjetId;
+  
+    public void putInGridInfoCase(Integer Row, Integer Column, String id) {
+        List<List<String>> caseInfo = new ArrayList<>();
+        caseInfo.add(Arrays.asList(Row.toString(), Column.toString()));
+        gridInfoCase.put(caseInfo, id);
+    }
+
+
+    public LinkedHashMap<List<List<String>>, String> getGridInfoCase() {
+        return gridInfoCase;
     }
 }
