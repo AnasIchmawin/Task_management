@@ -88,4 +88,8 @@ public class GestionnaireSeance {
     public LinkedHashMap<String, String> getLastSeance() {
         return daoSeance.getLastSeance();
     }
+
+    public void setProjetId(List<String> seanceIds, String lastProjetId) {
+        daoSeance.setProjetId(seanceIds, lastProjetId);
+    }
 }

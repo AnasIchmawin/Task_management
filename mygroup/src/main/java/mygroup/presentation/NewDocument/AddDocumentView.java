@@ -15,11 +15,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import mygroup.presentation.tache_detail.tacheDetailController;
 import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
 import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.seance_ajoute.SceanceAjouteController;
+
 
 public class AddDocumentView extends Application {
     private BorderPane root;
@@ -34,11 +34,8 @@ public class AddDocumentView extends Application {
     private VBox mainBox;
     private Scene scene;
     private AddDocumentController controller;
+    @SuppressWarnings("unused")
     private ControllerFromTacheAjout controllerFromTacheAjout;
-    private tacheDetailController controllerFromTacheDetail;
-    private SceanceAjouteController SceanceAjouteController;
-    private AddProjetController addProjetController;
-    private ProjetDetailController projetDetailController;
 
     @Override
     public void start(Stage primaryStage) {
@@ -56,8 +53,8 @@ public class AddDocumentView extends Application {
         this.controller = new AddDocumentController(this, addProjetController);
     }
 
-    public AddDocumentView(ProjetDetailController projetDetailController) {
-        this.controller = new AddDocumentController(this, projetDetailController);
+    public AddDocumentView(SceanceAjouteController sceanceAjouteController) {
+        this.controller = new AddDocumentController(this , sceanceAjouteController);
     }
 
     private VBox createMainBox() {
@@ -142,14 +139,7 @@ public class AddDocumentView extends Application {
         browseButton.setOnAction(e -> browseFile());
         // rendre cette == different
         // ``````````````````````````````````````````````````````````````````````````````````
-        if (controllerFromTacheAjout != null) {
-            save.setOnAction(e -> this.controller.saveDocumentFromeTacheAjout());
-        } else if (controllerFromTacheDetail != null)
-            save.setOnAction(e -> this.controller.saveDocumentFromTacheDetail());
-        else if (SceanceAjouteController != null)
-            save.setOnAction(e -> this.controller.saveDocumentFromeSeanceAjout());
-        else if (addProjetController != null)
-            save.setOnAction(e -> this.controller.saveDocumentFromProjet());
+       save.setOnAction(e -> controller.handleSaveButtonAction());
     }
 
     public String getTitreField() {

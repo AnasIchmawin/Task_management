@@ -1,9 +1,7 @@
-package mygroup.metier.POJO ;
+package mygroup.metier.POJO;
 
-import java.util.ArrayList;
+
 import java.util.List;
-
-import mygroup.presentation.NewProjet.AddProjetModel;
 
 public class POJOProjet {
     private String titre;
@@ -13,22 +11,24 @@ public class POJOProjet {
     private String DateDebut;
     private String DateFin;
     private List<String> Taches;
+    private List<String> Documents;
     private List<String> Seances;
 
     public POJOProjet() {
     }
 
-    public POJOProjet(AddProjetModel addProjetModel) {
-        this.titre = addProjetModel.getTitre();
-        this.description = addProjetModel.getDescription();
-        this.Categorie = addProjetModel.getCategorie();
-        this.Type = addProjetModel.getType();
-        this.DateDebut = addProjetModel.getDateDebut();
-        this.DateFin = addProjetModel.getDateFin();
-        this.Taches = new ArrayList<>(addProjetModel.getTachesSelectionnees().keySet());
-        this.Seances = new ArrayList<>(addProjetModel.getSeancesSelectionnees().keySet());
+    public POJOProjet(String titre, String description, String categorie, String type, String dateDebut, String dateFin,
+            List<String> taches, List<String> documents, List<String> seances) {
+        this.titre = titre;
+        this.description = description;
+        Categorie = categorie;
+        Type = type;
+        DateDebut = dateDebut;
+        DateFin = dateFin;
+        Taches = taches;
+        Documents = documents;
+        Seances = seances;
     }
-
 
     public String getTitre() {
         return titre;
@@ -46,6 +46,38 @@ public class POJOProjet {
         this.description = description;
     }
 
+    public String getCategorie() {
+        return Categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        Categorie = categorie;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
+
+    public String getDateDebut() {
+        return DateDebut;
+    }
+
+    public void setDateDebut(String dateDebut) {
+        DateDebut = dateDebut;
+    }
+
+    public String getDateFin() {
+        return DateFin;
+    }
+
+    public void setDateFin(String dateFin) {
+        DateFin = dateFin;
+    }
+
     public List<String> getTaches() {
         return Taches;
     }
@@ -54,28 +86,28 @@ public class POJOProjet {
         Taches = taches;
     }
 
-    public String getCategorie() {
-        return Categorie;
+    public List<String> getDocuments() {
+        return Documents;
     }
 
-    public String getDateDebut() {
-        return DateDebut;
-    }
-
-    public String getDateFin() {
-        return DateFin;
-    }
-
-    public String getType() {
-        return Type;
+    public void setDocuments(List<String> documents) {
+        Documents = documents;
     }
 
     public List<String> getSeances() {
         return Seances;
     }
 
+    public void setSeances(List<String> seances) {
+        Seances = seances;
+    }
+
     @Override
     public String toString() {
-        return "POJOListe [titre=" + titre + ", description=" + description + ", Taches=" + Taches + "]";
+        return "POJOProjet [titre=" + titre + ", description=" + description + ", Categorie=" + Categorie + ", Type="
+                + Type + ", DateDebut=" + DateDebut + ", DateFin=" + DateFin + ", Taches=" + Taches + ", Documents="
+                + Documents + ", Seances=" + Seances + "]";
     }
+
+  
 }

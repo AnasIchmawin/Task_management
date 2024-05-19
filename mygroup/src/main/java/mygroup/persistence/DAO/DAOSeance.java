@@ -124,4 +124,18 @@ public LinkedHashMap<String, String> getLastSeance() {
             return null;
         }
 }
+
+public void setProjetId(List<String> seanceIds, String lastProjetId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("seances");
+            for (String seanceId : seanceIds) {
+                ObjectId objId = new ObjectId(seanceId);
+                Document updateDoc = new Document("$set", new Document().append("projet", lastProjetId));
+                collection.updateOne(Filters.eq("_id", objId), updateDoc);
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la mise à jour des séances : " + e.getMessage());
+        }
+    
+}
 }

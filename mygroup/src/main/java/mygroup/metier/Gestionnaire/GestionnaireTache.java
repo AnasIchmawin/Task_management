@@ -202,4 +202,10 @@ public class GestionnaireTache {
         this.daoTache.updateListId(Task_ID , List_ID) ;
       }
 
+    public void setProjetId(List<String> ListTaskIds, String lastProjetId) {
+        this.daoTache.setProjetId(ListTaskIds, lastProjetId);
+    }
+
+
+
 }

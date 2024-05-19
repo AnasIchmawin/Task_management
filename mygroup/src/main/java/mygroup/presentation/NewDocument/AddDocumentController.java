@@ -1,6 +1,7 @@
 package mygroup.presentation.NewDocument;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -60,7 +61,7 @@ public class AddDocumentController {
         String titre = view.getTitreField();
         String url = view.getURL();
         String desc = view.getDescription();
-    
+
         // Vérifiez si l'URL est accessible
         if (gestionnaireDocument.isUrlAccessible(url)) {
             System.out.println("L'URL est accessible.");
@@ -68,7 +69,8 @@ public class AddDocumentController {
             POJODocument document = new POJODocument(titre, desc, url);
             this.gestionnaireDocument.setPojoDocument(document);
             this.gestionnaireDocument.creerDocument();
-            // controllerFromTacheDetail.addDocToTache(this.gestionnaireDocument.getIdLastDoc(), titre);
+            // controllerFromTacheDetail.addDocToTache(this.gestionnaireDocument.getIdLastDoc(),
+            // titre);
         } else {
             NonEnregistre();
         }
@@ -78,7 +80,7 @@ public class AddDocumentController {
         String titre = view.getTitreField();
         String url = view.getURL();
         String desc = view.getDescription();
-    
+
         // Vérifiez si l'URL est accessible
         if (gestionnaireDocument.isUrlAccessible(url)) {
             System.out.println("L'URL est accessible.");
@@ -86,7 +88,12 @@ public class AddDocumentController {
             POJODocument document = new POJODocument(titre, desc, url);
             this.gestionnaireDocument.setPojoDocument(document);
             this.gestionnaireDocument.creerDocument();
-            // addProjetController.addDocToProjet(this.gestionnaireDocument.getIdLastDoc(), titre);
+            LinkedHashMap<String, String> doc = new LinkedHashMap<>();
+            doc.put( this.gestionnaireDocument.getIdLastDoc(),titre);
+            addProjetController.addDocument(doc);
+            addProjetController.displayDocuments();
+            // addProjetController.addDocToProjet(this.gestionnaireDocument.getIdLastDoc(),
+            // titre);
         } else {
             NonEnregistre();
         }
@@ -98,7 +105,7 @@ public class AddDocumentController {
         String url = view.getURL();
         String desc = view.getDescription();
         System.out.println("nous omme dans le control");
-    
+
         // Vérifiez si l'URL est accessible
         if (gestionnaireDocument.isUrlAccessible(url)) {
             System.out.println("L'URL est accessible.");
@@ -112,11 +119,11 @@ public class AddDocumentController {
         }
     }
 
-    public void saveDocumentFromeSeanceAjout(){
+    public void saveDocumentFromeSeanceAjout() {
         String titre = view.getTitreField();
         String url = view.getURL();
         String desc = view.getDescription();
-    
+
         // Vérifiez si l'URL est accessible
         if (gestionnaireDocument.isUrlAccessible(url)) {
             System.out.println("L'URL est accessible.");
@@ -125,12 +132,11 @@ public class AddDocumentController {
             this.gestionnaireDocument.setPojoDocument(document);
             this.gestionnaireDocument.creerDocument();
             SceanceAjouteController.addDocToSeance(this.gestionnaireDocument.getIdLastDoc(), titre);
+            SceanceAjouteController.displayDocuments();
         } else {
             NonEnregistre();
         }
     }
-
-
 
     public void BienEnregistre() {
         Platform.runLater(() -> {
@@ -139,7 +145,7 @@ public class AddDocumentController {
             alert.setHeaderText(null);
             alert.setContentText("Le document a été enregistré avec succès.");
             alert.showAndWait();
-            //close the window when the button ok is clicked
+            // close the window when the button ok is clicked
             if (alert.getResult() == ButtonType.OK) {
                 view.close();
             }
@@ -155,10 +161,19 @@ public class AddDocumentController {
             alert.showAndWait();
         });
     }
-    
 
     public void close() {
         Platform.exit();
     }
-}
 
+    public void handleSaveButtonAction() {
+        if (controllerFromTacheAjout != null) {
+            this.saveDocumentFromeTacheAjout();
+        } else if (controllerFromTacheDetail != null)
+            this.saveDocumentFromTacheDetail();
+        else if (SceanceAjouteController != null)
+            this.saveDocumentFromeSeanceAjout();
+        else if (addProjetController != null)
+            this.saveDocumentFromProjet();
+    }
+}
