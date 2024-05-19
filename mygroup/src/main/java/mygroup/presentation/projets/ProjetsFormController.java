@@ -20,7 +20,7 @@ import mygroup.presentation.NewProjet.AddProjetView;
 import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormView;
 import mygroup.presentation.projet_detail.ProjetDetailView;
-import mygroup.presentation.taches.TachesFormView;
+
 
 public class ProjetsFormController {
     private static final int MAX_COLUMNS = 5;

@@ -4,10 +4,8 @@ package mygroup.presentation.projet_detail;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -28,7 +26,6 @@ import mygroup.presentation.taches.TachesFormView;
 public class ProjetDetailView extends Application {
 
     private static final Pos RIGHT = Pos.BOTTOM_RIGHT;
-    private static final Pos CENTER_RIGHT = Pos.CENTER_RIGHT;
     private static final Pos BOTTOM = Pos.BOTTOM_CENTER;
 
     @SuppressWarnings("unused")

@@ -26,6 +26,7 @@ import mygroup.presentation.projets.ProjetsFormController;
 import mygroup.presentation.projets.ProjetsFormView;
 
 public class ProjetDetailController {
+    @SuppressWarnings("unused")
     private GestionnaireDocument gestionnaireDocument;
     private GestionnaireSeance gestionnaireSeance;
     private GestionnaireProjet gestionnaireProjet;
@@ -78,7 +79,7 @@ public class ProjetDetailController {
         this.ServeillerButtons();
     }
 
-    private void displayedTasks() {
+    public void displayedTasks() {
         projectDetailModel.setDisplayedTasks(getTacheMap());
         projetDetailView.getZoneTaches().getChildren().clear();
         int colCount = 0;
@@ -220,6 +221,7 @@ public class ProjetDetailController {
         // -----------------------------
     }
 
+    @SuppressWarnings("unused")
     private Button createDocButton(String doc) {
         Button newTaskButton = new Button(doc);
         newTaskButton.setStyle("-fx-background-color: #112D4E; " +
