@@ -246,7 +246,7 @@ public class TachesFormView extends Application {
         ScrollPane descriptionScrollPane = new ScrollPane(description);
         descriptionScrollPane.setFitToWidth(true);
         descriptionScrollPane.setStyle("-fx-background-color: transparent;");
-        descriptionScrollPane.setPadding(new Insets(0, 40, 0, 10));
+        descriptionScrollPane.setPadding(new Insets(0, 40, 0, 10));//-----------------
         descriptionScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         return descriptionScrollPane;
     }
@@ -301,8 +301,9 @@ public class TachesFormView extends Application {
         descriptionLabel.getStyleClass().add("description-style");
         descriptionLabel.setWrapText(true);
         VBox vbox = new VBox();
-        vbox.setPrefHeight(340);
-        vbox.setPrefWidth(1000);
+        // vbox.setPrefHeight(340);
+        vbox.setPrefWidth(1200);
+        vbox.setPadding(new Insets(0, 0, 0, 40));
         vbox.getChildren().addAll(descriptionLabel);
         return vbox;
     }
