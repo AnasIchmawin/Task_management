@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.seance_ajoute.SceanceAjouteController;
 
 public class GetSeanceFromCalendar {
@@ -30,9 +31,9 @@ public class GetSeanceFromCalendar {
     GridPane ZoneTasks;
     TableViewPane tableViewPane;
 
-    public GetSeanceFromCalendar(SceanceAjouteController sceanceAjouteController) {
+    public GetSeanceFromCalendar(SceanceAjouteController sceanceAjouteController ,AddProjetController addProjetController) {
         this.sceanceAjouteController = sceanceAjouteController;
-        this.controller = new GetSeanceFromCalenderController(this);
+        this.controller = new GetSeanceFromCalenderController(this , addProjetController);
         init();
         style();
         action();
@@ -143,7 +144,7 @@ public class GetSeanceFromCalendar {
 
     private void action() {
         confirmButton.setOnAction(event -> {
-            this.controller.handleConfirmButton(event);
+            this.controller.handleConfirmButton(event , this.sceanceAjouteController);
         });
 
         cancelButton.setOnAction(event -> {

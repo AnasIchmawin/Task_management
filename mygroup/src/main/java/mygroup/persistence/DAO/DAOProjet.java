@@ -1,4 +1,4 @@
-package mygroup.persistence.DAO ;
+package mygroup.persistence.DAO;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -11,22 +11,25 @@ import com.mongodb.client.model.Filters;
 
 import mygroup.persistence.DBConnection;
 
-
 public class DAOProjet {
-    
+
     // Create
-    public void create(String titre, String description, String categorie, String type, String dateDebut, String dateFin, List<String> taches, List<String> seances) {
+    public void create(String titre, String description, String categorie, String type, String dateDebut,
+            String dateFin, List<String> taches, List<String> documents, List<String> seances) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
-            Document doc = new Document("titre", titre).append("description", description).append("categorie", categorie)
-                            .append("type", type).append("dateDebut", dateDebut).append("dateFin", dateFin).append("taches", taches)
-                            .append("seances", seances);
+            Document doc = new Document("titre", titre).append("description", description)
+                    .append("categorie", categorie)
+                    .append("type", type).append("dateDebut", dateDebut).append("dateFin", dateFin)
+                    .append("taches", taches)
+                    .append("documents", documents)
+                    .append("seances", seances);
             collection.insertOne(doc);
         } catch (Exception e) {
             System.err.println("Erreur lors de la création du projet : " + e.getMessage());
         }
     }
-    
+
     // Read
     public Document read(String id) {
         Document projet = null;
@@ -64,11 +67,11 @@ public class DAOProjet {
     public void delete(String id) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                            .getCollection("projets");
+                    .getCollection("projets");
             ObjectId objId = new ObjectId(id);
             collection.deleteOne(Filters.eq("_id", objId));
         } catch (Exception e) {
-                System.err.println("Erreur lors de la suppression de la projet : " + e.getMessage());
+            System.err.println("Erreur lors de la suppression de la projet : " + e.getMessage());
         }
     }
 
@@ -89,7 +92,8 @@ public class DAOProjet {
 
     public LinkedHashMap<String, String> getArchivedProjects() {
         LinkedHashMap<String, String> archivedProjects = new LinkedHashMap<>();
-        String currentDate = java.time.LocalDate.now().toString() + " " + java.time.LocalTime.now().toString().substring(0, 5);
+        String currentDate = java.time.LocalDate.now().toString() + " "
+                + java.time.LocalTime.now().toString().substring(0, 5);
         List<Document> allProjets = getAllProjects();
         for (Document projet : allProjets) {
             String dateFin = projet.getString("dateFin");
@@ -100,5 +104,19 @@ public class DAOProjet {
             }
         }
         return archivedProjects;
+    }
+
+    public String getLastProjetId() {
+        String lastProjetId = null;
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
+            FindIterable<Document> cursor = collection.find().sort(new Document("_id", -1)).limit(1);
+            for (Document document : cursor) {
+                lastProjetId = document.getObjectId("_id").toString();
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération du dernier projet : " + e.getMessage());
+        }
+        return lastProjetId;
     }
 }

@@ -26,6 +26,7 @@ import mygroup.presentation.GetDocument.GetDocModel;
 import mygroup.presentation.GetTasks.GetTasksView;
 import mygroup.presentation.NewDocument.AddDocumentView;
 import mygroup.presentation.NewList.AddListController;
+import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.NewDocument.AddDocumentController;
 // import presentation.GetDocument.GetDocView;
 // import presentation.GetDocument.GetDocView;
@@ -45,6 +46,7 @@ import mygroup.presentation.taches.TachesFormController;
 // import presentation.projets.ProjetsFormView;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.http.impl.client.SystemDefaultCredentialsProvider;
@@ -58,6 +60,7 @@ public class ControllerFromTacheAjout {
     private GetDocModel model;
     private ModuleFromTacheAjout moduleFromTacheAjout;
     private AddListController addListController;
+    private AddProjetController addProjetController;
 
     public ControllerFromTacheAjout(addTacheview addTacheview) {
         this.addTacheview = addTacheview;
@@ -80,6 +83,15 @@ public class ControllerFromTacheAjout {
 
     public ControllerFromTacheAjout(addTacheview addTacheview, AddListController addListController) {
         this.addListController = addListController;
+        this.addTacheview = addTacheview;
+        this.model = new GetDocModel();
+        this.gestionnaireTache = new GestionnaireTache();
+        this.gestionnaireListe = new GestionnaireListe();
+
+    }
+
+    public ControllerFromTacheAjout(addTacheview addTacheview, AddProjetController addProjetController) {
+        this.addProjetController = addProjetController;
         this.addTacheview = addTacheview;
         this.model = new GetDocModel();
         this.gestionnaireTache = new GestionnaireTache();
@@ -190,6 +202,12 @@ public class ControllerFromTacheAjout {
             if (liste != "") {
                 gestionnaireListe.setTacheToListe(liste, tacheId);
             }
+            if (addProjetController != null) {
+                LinkedHashMap<String, String> task = new LinkedHashMap<>();
+                task.put(tacheId, titre);
+                addProjetController.addTask(task);
+                addProjetController.displayTasks();
+            }
             alert("Tache créée", "La tache a été créée avec succès");
             // get stage et close
             if (this.addListController != null) {
@@ -263,9 +281,17 @@ public class ControllerFromTacheAjout {
     }
 
     public void handleImportButtonAction(ActionEvent event) {
-        GetTasksView view = new GetTasksView(addTacheview.getAddListController(),this);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        view.start(stage);
+        if(this.addProjetController != null) {
+            GetTasksView view = new GetTasksView(this.addProjetController , this);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            view.start(stage);
+        }
+        else if(this.addListController != null) {
+            GetTasksView view = new GetTasksView(addTacheview.getAddListController(), this);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            view.start(stage);
+        }
+  
 
     }
 

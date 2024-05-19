@@ -367,4 +367,25 @@ public class DAOTache {
             System.err.println("Error cloning the task: " + e.getMessage());
         }
     }
+
+
+
+
+
+    public void setProjetId(List<String> listTaskIds, String lastProjetId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            for (String taskId : listTaskIds) {
+                collection.updateOne(Filters.eq("_id", new ObjectId(taskId)), Updates.set("projet", lastProjetId));
+            }
+        } catch (Exception e) {
+            System.err.println("Error setting the project ID for the tasks: " + e.getMessage());
+        }
+    }
+
+
+
+
+       
 }

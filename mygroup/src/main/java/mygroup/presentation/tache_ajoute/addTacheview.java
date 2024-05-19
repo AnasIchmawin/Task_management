@@ -21,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import mygroup.presentation.NewList.AddListController;
+import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.taches.TachesFormController;
 import javafx.scene.control.ComboBox;
 
@@ -80,11 +81,18 @@ public class addTacheview {
         this.addlistController = addListController;
     }
 
+    public addTacheview(AddProjetController addProjetController) {
+        this.controller = new ControllerFromTacheAjout(this, addProjetController);
+        init();
+        style();
+        action();
+    }
+
     public void start(Stage primaryStage) {
         Scene scene = new Scene(root, 850, 500);
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Responsive Page with Navbar");
+        primaryStage.setTitle("Formualire d'ajout de tache");
         primaryStage.show();
 
     }
@@ -190,9 +198,9 @@ public class addTacheview {
 
         VBox leftBox = CreateVbox(3, TOP_LEFT);
 
-        Label labelTitle = createLabel("Titre");
+        Label labelTitle = createLabel("Titre du tache");
 
-        Label labelDescription = createLabel("Discription");
+        Label labelDescription = createLabel("Discription du tache");
 
         ZoneDescription = createTextArea("Description", "ZoneDescription-Style");
 
@@ -347,43 +355,6 @@ public class addTacheview {
         return root;
     }
 
-    public void action() {
-
-        listesButton.setOnAction(event -> {
-            this.controller.handleListesButton();
-        });
-
-        projectsButton.setOnAction(event -> {
-            this.controller.handleProjetsButton();
-        });
-
-        archiveButton.setOnAction(event -> {
-            this.controller.handleArchiveButton();
-        });
-        leftButton.setOnAction(event -> {
-            System.out.println("Ajouter Document button clicked left ");
-        });
-        ajouterDocButton.setOnAction(event -> {
-            this.controller.handleAjouterButtonAction();
-        });
-        Sauvegarder.setOnAction(event -> {
-            this.controller.handleSauvegarderButtonAction();
-        });
-        importButton.setOnAction(event -> {
-            this.controller.handleImportButtonAction(event);
-        });
-        // Enregistrer.setOnAction(event -> {
-        // this.controller.handleUpdateButtonAction();
-        // });
-        Annuler.setOnAction(event -> {
-            try {
-                this.controller.closerWindow();
-            } catch (Exception e) {
-                System.out.println("Erreur pendant la fermeture AddList  : " + e.getMessage());
-            }
-        });
-    }
-
     public AddListController getAddListController() {
         return this.addlistController;
     }
@@ -422,6 +393,40 @@ public class addTacheview {
 
     public Stage getStage() {
         return (Stage) root.getScene().getWindow();
+    }
+
+    public void action() {
+
+        listesButton.setOnAction(event -> {
+            this.controller.handleListesButton();
+        });
+
+        projectsButton.setOnAction(event -> {
+            this.controller.handleProjetsButton();
+        });
+
+        archiveButton.setOnAction(event -> {
+            this.controller.handleArchiveButton();
+        });
+        leftButton.setOnAction(event -> {
+            System.out.println("Ajouter Document button clicked left ");
+        });
+        ajouterDocButton.setOnAction(event -> {
+            this.controller.handleAjouterButtonAction();
+        });
+        Sauvegarder.setOnAction(event -> {
+            this.controller.handleSauvegarderButtonAction();
+        });
+        importButton.setOnAction(event -> {
+            this.controller.handleImportButtonAction(event);
+        });
+        Annuler.setOnAction(event -> {
+            try {
+                this.controller.closerWindow();
+            } catch (Exception e) {
+                System.out.println("Erreur pendant la fermeture AddList  : " + e.getMessage());
+            }
+        });
     }
 
 }

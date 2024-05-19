@@ -104,9 +104,9 @@ public class App extends Application {
     @Override
     public void stop() throws Exception {
         // Appel de la méthode pour effacer le contenu du token
-        TaskQuickstart.clearTokenContent();
-        CalendarQuickstart.clearTokenContent();
-        System.out.println("les tokens sont effacés");
+        // TaskQuickstart.clearTokenContent();
+        // CalendarQuickstart.clearTokenContent();
+        // System.out.println("les tokens sont effacés");
     }
 
     public static void main(String[] args) {

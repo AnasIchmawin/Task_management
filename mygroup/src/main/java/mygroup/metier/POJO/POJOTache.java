@@ -141,4 +141,8 @@ public String toString() {
 }
 //mod
 
+    public void setprojetID(String lastProjetId) {
+        projet = lastProjetId;
+    }
+
 }

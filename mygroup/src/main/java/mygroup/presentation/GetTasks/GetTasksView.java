@@ -37,11 +37,11 @@ public class GetTasksView {
         this.controller = new GetTasksController(this, addListController, controllerFromTacheAjout);
     }
 
-    public GetTasksView(AddProjetController addProjetController) {
+    public GetTasksView(AddProjetController addProjetController , ControllerFromTacheAjout controllerFromTacheAjout) {
         init();
         style();
         action();
-        this.controller = new GetTasksController(this, addProjetController);
+        this.controller = new GetTasksController(this, addProjetController ,controllerFromTacheAjout);
     }
 
     public void start(Stage primaryStage) {

@@ -14,8 +14,8 @@ import javafx.stage.Stage;
 import mygroup.metier.Gestionnaire.GestionnaireSeance;
 import mygroup.metier.POJO.POJOSeance;
 import mygroup.presentation.GetDocument.GetDocModel;
-import mygroup.presentation.GetDocument.GetDocView;
 import mygroup.presentation.GetSeanceFromCalendar.GetSeanceFromCalendar;
+import mygroup.presentation.NewDocument.AddDocumentView;
 import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormView;
@@ -54,9 +54,9 @@ public class SceanceAjouteController {
     }
 
     public void handleAjouterButtonAction() {
-        GetDocView view = new GetDocView(this);
+        AddDocumentView addDocumentView = new AddDocumentView(this);
         Stage stage = new Stage();
-        view.start(stage);
+        addDocumentView.start(stage);
     }
 
     public void addDocToSeance(String id, String doc) {
@@ -65,6 +65,7 @@ public class SceanceAjouteController {
     }
 
     public void displayDocuments() {
+        this.seanceAjouteView.getZoneDocuments().getChildren().clear();
         List<String> mesDocs = new ArrayList<>(this.model.getListOfDocuments().values());
 
         for (String doc : mesDocs) {
@@ -98,7 +99,7 @@ public class SceanceAjouteController {
         return newTaskButton;
     }
 
-    public void handleSauvegarderButtonAction()  {
+    public void handleSauvegarderButtonAction() {
         try {
             String titre = this.seanceAjouteView.getTitre();
             String dateDebut = this.seanceAjouteView.getDateDebut();
@@ -108,8 +109,9 @@ public class SceanceAjouteController {
             String description = this.seanceAjouteView.getDescription();
             String note = this.seanceAjouteView.getZoneNote();
             List<String> IdsDoc = this.model.getListOfDocuments().keySet().stream().toList();
-            POJOSeance seance = new POJOSeance(titre, dateDebut, heureDebut, dateFin, heureFin, description, note,
-                    IdsDoc);
+
+            POJOSeance seance = new POJOSeance(titre, dateDebut, heureDebut, dateFin, heureFin,
+                    description, note, IdsDoc);
             this.gestionnaireSeance.setSeance(seance);
             this.gestionnaireSeance.createSeance();
             this.addProjetController.setSeance(gestionnaireSeance.getLastSeance());
@@ -146,13 +148,13 @@ public class SceanceAjouteController {
     }
 
     public void handleConfirmerButtonAction() {
-          try {
+        try {
             String dateSeance = this.seanceAjouteView.getDateSeance();
             // convert format to DD/MM/YYYY
             System.out.println("Date Seance: " + dateSeance);
             String[] date = dateSeance.split("-");
             this.setDateSeanceFormated(date[2] + "/" + date[1] + "/" + date[0]);
-            GetSeanceFromCalendar GetSeanceFromCalendar = new GetSeanceFromCalendar(this);
+            GetSeanceFromCalendar GetSeanceFromCalendar = new GetSeanceFromCalendar(this, addProjetController);
             GetSeanceFromCalendar.start(new Stage());
         } catch (Exception e) {
             e.printStackTrace();
@@ -162,6 +164,10 @@ public class SceanceAjouteController {
             alert.setContentText("Veuillez saisir une date valide");
             alert.showAndWait();
         }
-      
+
+    }
+
+    public void closeWindow() {
+        this.seanceAjouteView.close();
     }
 }

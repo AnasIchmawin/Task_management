@@ -57,4 +57,8 @@ public class GestionnaireDocument {
         }
     }
 
+    public void setProjetId(List<String> documentsIds, String lastProjetId) {
+        daoDocument.setProjetId(documentsIds, lastProjetId);
+    }
+
 }

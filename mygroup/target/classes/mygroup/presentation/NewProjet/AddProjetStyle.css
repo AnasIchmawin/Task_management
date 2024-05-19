@@ -121,3 +121,29 @@
     -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
+
+
+.date-picker {
+    -fx-font-size: 12px;
+    -fx-border-width: 0px;
+    -fx-focus-color: transparent;
+    -fx-pref-width: 120px;
+    -fx-pref-height: 25px;
+}
+
+.Hour-Minute-Style {
+    -fx-font-size: 12px;
+    -fx-border-width: 0px;
+    -fx-focus-color: transparent;
+    -fx-prompt-text-fill: rgba(0, 0, 0, 0.5);
+    -fx-pref-width: 65px;
+}
+
+
+.Titre-style{
+    -fx-font-size: 14px;
+    -fx-border-width: 0px;
+    -fx-focus-color: transparent;
+    -fx-prompt-text-fill: rgba(0, 0, 0, 0.5);
+    -fx-pref-width: 250px;
+}

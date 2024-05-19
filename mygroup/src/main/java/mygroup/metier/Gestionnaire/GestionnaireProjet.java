@@ -1,4 +1,5 @@
-package mygroup.metier.Gestionnaire ;
+package mygroup.metier.Gestionnaire;
+
 import mygroup.metier.POJO.POJOProjet;
 
 import java.util.LinkedHashMap;
@@ -14,9 +15,8 @@ public class GestionnaireProjet {
 
     public GestionnaireProjet() {
         this.daoProjet = new DAOProjet();
-        this.projet = new POJOProjet() ;
+        this.projet = new POJOProjet();
     }
-
 
     public DAOProjet getDaoProjet() {
         return daoProjet;
@@ -38,8 +38,10 @@ public class GestionnaireProjet {
         if (projet.getTitre().isEmpty()) {
             throw new NonValidList("Le projet doit avoir un nom !");
         }
-        daoProjet.create(this.projet.getTitre(), this.projet.getDescription(), this.projet.getCategorie(), this.projet.getType(),
-                            this.projet.getDateDebut(), this.projet.getDateFin(), this.projet.getTaches(), this.projet.getSeances());
+        daoProjet.create(this.projet.getTitre(), this.projet.getDescription(), this.projet.getCategorie(),
+                this.projet.getType(),
+                this.projet.getDateDebut(), this.projet.getDateFin(), this.projet.getTaches(),
+                this.projet.getDocuments(), this.projet.getSeances());
     }
 
     // Method to retrieve a projet by its ID
@@ -67,14 +69,17 @@ public class GestionnaireProjet {
         return this.daoProjet.getAllProjects();
     }
 
-    //obtenirProjet
+    // obtenirProjet
     public Document obtenirProjet(String id) {
         return this.daoProjet.read(id);
     }
 
-
     public LinkedHashMap<String, String> getProjetsArchiver() {
         return this.daoProjet.getArchivedProjects();
+    }
+
+    public String getLastProjetId() {
+       return this.daoProjet.getLastProjetId();
     }
 
 }

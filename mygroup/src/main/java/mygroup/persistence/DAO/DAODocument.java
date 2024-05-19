@@ -93,4 +93,18 @@ public class DAODocument {
             return null;
         }
     }
+
+
+    public void setProjetId(List<String> docIds, String lastProjetId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("documents");
+            for (String docId : docIds) {
+                ObjectId objId = new ObjectId(docId);
+                Document updateDoc = new Document("$set", new Document("projet", lastProjetId));
+                collection.updateOne(Filters.eq("_id", objId), updateDoc);
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la mise à jour du projetId des documents : " + e.getMessage());
+        }
+    }
 }

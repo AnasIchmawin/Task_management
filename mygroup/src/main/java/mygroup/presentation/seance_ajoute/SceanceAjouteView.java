@@ -143,10 +143,9 @@ public class SceanceAjouteView extends Application {
         HBox Dates = new HBox();
         Dates.getChildren().addAll(dateDebutContainer, Space_Dates, dateFinContainer);
         HBox.setMargin(Dates, new Insets(0, 50, 20, 0));
-
         VBox containerTitle = CreateVbox(0, TOP_LEFT);
         HBox.setMargin(containerTitle, new Insets(0, 50, 20, 0));
-        Label labelTitle = createLabel("Titre");
+        Label labelTitle = createLabel("Titre de la séance");
         containerTitle.getChildren().addAll(labelTitle, titreField);
         topContainer.getChildren().addAll(containerTitle, Space_Btn_Dates, Dates);
         topContainer.getStyleClass().add("topContainer-style");
@@ -154,14 +153,12 @@ public class SceanceAjouteView extends Application {
         HBox centerContainer = CreateHbox(20, CENTER_LEFT);
         VBox leftBox = CreateVbox(15, TOP_CENTER);
         VBox ContainerDescription = CreateVbox(1, TOP_LEFT);
-        Label labelDescription = createLabel("Discription");
+        Label labelDescription = createLabel("Discription de la séance");
         ZoneDescription = createTextArea("Description", "ZoneDescription-Style");
-
         VBox contenaireDocuments = CreateVbox(1, TOP_LEFT);
         Label labelDocs = createLabel("Documents Ajoutés");
         VBox ZoneDocuments = createDocumentsSection();
         contenaireDocuments.getChildren().addAll(labelDocs, ZoneDocuments);
-
         ContainerDescription.getChildren().addAll(labelDescription, ZoneDescription);
         leftBox.getChildren().addAll(ContainerDescription);
         leftBox.getChildren().addAll(contenaireDocuments, sauvegarderButton);
