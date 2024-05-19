@@ -51,9 +51,7 @@ public class GestionnaireProjet {
     }
 
     // Method to retrieve a projet by its ID
-    public Document lireProjet(String id) {
-        return this.daoProjet.read(id);
-    }
+
 
     public LinkedHashMap<String,Boolean> getTaches(String listeId) {
         return daoProjet.getTaches(listeId);
@@ -117,6 +115,10 @@ public class GestionnaireProjet {
 
     public String getLastProjetId() {
        return this.daoProjet.getLastProjetId();
+    }
+
+    public Document getProjetById(String id) {
+       return this.daoProjet.read(id);
     }
 
 }

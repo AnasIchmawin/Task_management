@@ -1,17 +1,25 @@
 package mygroup.presentation.seance;
 
-import java.util.List;
+
+import java.util.LinkedHashMap;
 
 public class SeanceModel {
-    String titre;
-    String description;
-    String dateDebut;
-    String dateFin;
-    String note;
-    List<String> documents;
+    private String Id;
+    private String titre;
+    private String description;
+    private String dateDebut;
+    private String dateFin;
+    private String note;
+    private LinkedHashMap<String, String> documents;
+    private String pathDocClicked;
+
+
+    public SeanceModel() {
+        this.documents = new LinkedHashMap<>();
+    }
 
     public SeanceModel(String titre, String description, String dateDebut, String dateFin, String note,
-            List<String> documents) {
+            LinkedHashMap<String, String> documents) {
         this.titre = titre;
         this.description = description;
         this.dateDebut = dateDebut;
@@ -42,7 +50,7 @@ public class SeanceModel {
         return note;
     }
 
-    public List<String> getDocuments() {
+    public LinkedHashMap<String, String> getDocuments() {
         return documents;
     }
 
@@ -68,7 +76,28 @@ public class SeanceModel {
         this.note = note;
     }
 
-    public void setDocuments(List<String> documents) {
+    public void setDocuments(LinkedHashMap<String, String> documents) {
         this.documents = documents;
+    }
+
+    public void addDocToSeance(String idLastDoc, String titre) {
+        documents.put(idLastDoc, titre);
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
+
+
+    public void setDocPathCLicked(String docPath) {
+        this.pathDocClicked = docPath;
+    }
+
+    public String getDocPathClicked() {
+        return pathDocClicked;
     }
 }

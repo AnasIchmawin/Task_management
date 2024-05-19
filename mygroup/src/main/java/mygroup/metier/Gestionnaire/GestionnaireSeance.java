@@ -92,4 +92,8 @@ public class GestionnaireSeance {
     public void setProjetId(List<String> seanceIds, String lastProjetId) {
         daoSeance.setProjetId(seanceIds, lastProjetId);
     }
+
+    public Document getSeanceById(String id) {
+        return daoSeance.read(id);
+    }
 }

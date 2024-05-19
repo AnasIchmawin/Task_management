@@ -26,10 +26,9 @@ public class SeanceFormView extends Application {
     private Button listesButton;
     private Button projectsButton;
     private Button archiveButton;
-    @SuppressWarnings("unused")
     private SeanceFormController controller;
     private BorderPane root;
-    GridPane ZoneListes;
+    private GridPane ZoneDocuments;
     private HBox buttonsBar;
     private HBox leftButtonBox;
     private HBox navbar;
@@ -49,18 +48,19 @@ public class SeanceFormView extends Application {
     private HBox centerContainer;
     private VBox leftside;
     private VBox rightside;
-    private String labelNote;
-    private String descNote;
+    private Label labelNote;
+    private Label descNote;
     private VBox SectionDocs;
     private Button ajoutDocButton;
     private Button sauvegardButton;
+    private Label descriptionLabel;
 
     public SeanceFormView() {
-        this.controller = new SeanceFormController(this);
         Initialiser();
         Styler();
         Dessiner();
         Action();
+        this.controller = new SeanceFormController(this);
     }
 
     @Override
@@ -84,7 +84,10 @@ public class SeanceFormView extends Application {
         mainContentContainer = new VBox();
         mainContentContainer.setSpacing(15);
         container = new StackPane();
-        scrollPane = createScrollPane(ZoneListes);
+        ZoneDocuments = new GridPane();
+        ZoneDocuments.setVgap(8);
+        ZoneDocuments.setHgap(8);
+        scrollPane = createScrollPane(ZoneDocuments);
         Listes = new VBox();
         Listes.setSpacing(15);
         topContainer = new HBox();
@@ -97,14 +100,15 @@ public class SeanceFormView extends Application {
         dateFin = new Label("21/12/2021");
         HeadBox = boxHead(titre, dateDebut, dateFin);
         descriptionContainer = BoxDescription("This is a description");
-        labelNote = "Note";
-        descNote = "This is a note";
+        labelNote = new Label("Note");
+        descNote = new Label("This is a note description");
         noteContainer = creareVBoxSpecial(labelNote, descNote);
         leftside = new VBox();
         leftside.setSpacing(20);
         rightside = new VBox();
         centerContainer = new HBox();
-        ajoutDocButton = createButton("Ajouter un document", "file:./mygroup/src/main/java/Pictures/addIcon.png", 20, 20);
+        ajoutDocButton = createButton("Ajouter un document", "file:./mygroup/src/main/java/Pictures/addIcon.png", 20,
+                20);
         sauvegardButton = createButton("Sauvegarder", "file:./mygroup/src/main/java/Pictures/save.png", 15, 15);
         SectionDocs = createSeancesBox();
 
@@ -147,16 +151,15 @@ public class SeanceFormView extends Application {
 
     }
 
-    private VBox creareVBoxSpecial(String string, String string2) {
+    private VBox creareVBoxSpecial(Label note, Label labelnotedesc) {
         VBox SpecialContainer = new VBox();
-        Label label = new Label(string);
-        label.getStyleClass().add("head-label");
+        note.getStyleClass().add("head-label");
         VBox containerNotelabel = new VBox();
-        containerNotelabel.getChildren().add(label);
+        containerNotelabel.getChildren().add(note);
         containerNotelabel.setAlignment(Pos.TOP_CENTER);
-        Label label2 = new Label(string2);
-        label2.getStyleClass().add("noteDesc-style");
-        SpecialContainer.getChildren().addAll(containerNotelabel, label2);
+        labelnotedesc.getStyleClass().add("noteDesc-style");
+        labelnotedesc.setWrapText(true);
+        SpecialContainer.getChildren().addAll(containerNotelabel, labelnotedesc);
         SpecialContainer.setSpacing(10);
         return SpecialContainer;
 
@@ -171,14 +174,12 @@ public class SeanceFormView extends Application {
             label.getStyleClass().add("head-label");
         }
 
-        Label labelDebutDate = new Label(dateDebut.getText());
-        Label labelFinDate = new Label(dateFin.getText());
-        labelDebutDate.getStyleClass().add("date-style");
-        labelFinDate.getStyleClass().add("date-style");
+        dateDebut.getStyleClass().add("date-style");
+        dateFin.getStyleClass().add("date-style");
 
         VBox[] containers = { new VBox(), new VBox() };
-        containers[0].getChildren().addAll(labels[0], labelDebutDate);
-        containers[1].getChildren().addAll(labels[1], labelFinDate);
+        containers[0].getChildren().addAll(labels[0], dateDebut);
+        containers[1].getChildren().addAll(labels[1], dateFin);
         for (VBox container : containers) {
             container.setAlignment(Pos.TOP_CENTER);
         }
@@ -199,7 +200,7 @@ public class SeanceFormView extends Application {
         Label indexdescription = new Label("Description ");
         indexdescription.getStyleClass().add("index-style");
 
-        Label descriptionLabel = new Label(description);
+         descriptionLabel = new Label(description);
         descriptionLabel.setWrapText(true);
         VBox vboxDesc = new VBox();
         vboxDesc.setAlignment(Pos.TOP_LEFT); // Align the VBox to the top left
@@ -227,9 +228,7 @@ public class SeanceFormView extends Application {
         return newButton;
     }
 
-    public GridPane getZoneListes() {
-        return ZoneListes;
-    }
+
 
     public void SurveillerButton(Button button, String width, String height, String color) {
         button.setOnMouseEntered(event -> {
@@ -261,7 +260,7 @@ public class SeanceFormView extends Application {
     }
 
     private VBox createSeancesBox() {
-        ScrollPane scrollTask = createScrollPane(ZoneListes);
+        ScrollPane scrollTask = createScrollPane(ZoneDocuments);
         scrollTask.getStyleClass().add("scroll-Style");
         VBox contenaireTaches = new VBox();
         contenaireTaches.setSpacing(5);
@@ -278,19 +277,22 @@ public class SeanceFormView extends Application {
     // Action des boutons
     private void Action() {
         leftButton.setOnAction(event -> {
-          //  controller.goToHome();
+            // controller.goToHome();
         });
         listesButton.setOnAction(event -> {
-            //controller.goToListes(event);
+            controller.goToListes(event);
         });
         projectsButton.setOnAction(event -> {
-           // controller.goToProjects(event);
+            controller.goToProjects(event);
         });
         archiveButton.setOnAction(event -> {
-           // controller.goToArchive(event);
+            controller.goToArchive(event);
         });
         ajoutDocButton.setOnAction(event -> {
-          //  controller.goToAjoutDoc(event);
+            controller.goToAjoutDoc(event);
+        });
+        sauvegardButton.setOnAction(event -> {
+            controller.handleSaveButtonAction();
         });
     }
 
@@ -311,43 +313,40 @@ public class SeanceFormView extends Application {
         descriptionContainer.getChildren().add(BoxDescription(nouvelleDescription));
     }
 
-    public void setNoteLabel(String nouvelleNoteLabel) {
+    public void setNoteLabel(Label nouvelleNoteLabel) {
         labelNote = nouvelleNoteLabel;
     }
 
-    public void setNoteDescription(String nouvelleNoteDescription) {
-        descNote = nouvelleNoteDescription;
-    }
-    // getters
 
-    public String getTitre() {
-        return titre.getText();
+    public Label getTitre() {
+        return titre;
     }
 
-    public String getDateDebut() {
-        return dateDebut.getText();
+    public Label getDateDebut() {
+        return dateDebut ;
     }
 
-    public String getDateFin() {
-        return dateFin.getText();
+
+
+    public Label getDateFin() {
+        return dateFin;
     }
 
-    public String getDescription() {
-        return ((Label) ((VBox) descriptionContainer.getChildren().get(1)).getChildren().get(0)).getText();
+    public Label getDescription() {
+        return descriptionLabel;
     }
 
-    public String getNoteLabel() {
-        return labelNote;
+
+
+    public Label getNoteLabel() {
+        return descNote;
     }
 
     public VBox getNoteContainer() {
         return noteContainer;
     }
-
-   
-
- 
-
-
-
+    public GridPane getZoneDocuments() {
+        return ZoneDocuments;
+    }
+    
 }

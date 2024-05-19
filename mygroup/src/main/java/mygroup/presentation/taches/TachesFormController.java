@@ -423,4 +423,10 @@ public class TachesFormController {
     public String getTaskSelectedId() {
         return tacheModel.getTaskSelectedId();
     }
+
+
+    public void addTask(String tacheId, String titre) {
+        tacheModel.addTask(tacheId, titre);
+        createTask(titre, false, tacheId);
+    }
 }

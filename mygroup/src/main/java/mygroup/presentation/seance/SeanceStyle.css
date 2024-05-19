@@ -94,7 +94,8 @@
 .noteContainer{
     -fx-background-color: #8E9EB2;
     -fx-padding: 5px 5px 5px 5px;
-    -fx-min-height: 280px;
+    -fx-min-height: 400px;
+    -fx-min-width: 200px;
 
 }
 
@@ -125,7 +126,7 @@
 }
 
 .scroll-Style {
-    -fx-min-height: 50px;
+    -fx-min-height: 120px;
     -fx-background-color: transparent;
 }
 

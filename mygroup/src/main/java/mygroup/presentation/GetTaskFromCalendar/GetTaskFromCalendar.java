@@ -29,14 +29,13 @@ public class GetTaskFromCalendar {
     private Button confirmButton;
     private Button cancelButton;
     private ScrollPane scrollPane;
-    private HBox buttonContainer ;
+    private HBox buttonContainer;
     GridPane ZoneTasks;
     TableViewPane tableViewPane;
 
-
     public GetTaskFromCalendar(TachesFormController tachesFormController) {
         this.tachesFormController = tachesFormController;
-        this.controller = new GetTaskFromCalenderController(this) ;
+        this.controller = new GetTaskFromCalenderController(this);
         init();
         style();
         dessiner();
@@ -45,7 +44,7 @@ public class GetTaskFromCalendar {
 
     public GetTaskFromCalendar(ProjetDetailController projetDetailController) {
         this.projetDetailController = projetDetailController;
-        this.controller = new GetTaskFromCalenderController(this) ;
+        this.controller = new GetTaskFromCalenderController(this);
         init();
         style();
         action();
@@ -71,7 +70,7 @@ public class GetTaskFromCalendar {
         tableViewPane = new TableViewPane(this.controller.getDataTasks());
         scrollPane.setContent(tableViewPane);
         root.setCenter(scrollPane);
-         buttonContainer = createHBox(25, Pos.CENTER);
+        buttonContainer = createHBox(25, Pos.CENTER);
 
     }
 
@@ -161,13 +160,13 @@ public class GetTaskFromCalendar {
         });
 
     }
-    // public String getDateTask() {
-    //     return this.tachesFormController.getDateTaskFormated(); 
-        
-    // }
-    public String getDateTask() {
-        return this.projetDetailController.getDateTaskFormated(); 
-    }
 
+    public String getDateTask() {
+        return this.tachesFormController.getDateTaskFormated();
+
+    }
+    // public String getDateTask() {
+    // return this.projetDetailController.getDateTaskFormated();
+    // }
 
 }
