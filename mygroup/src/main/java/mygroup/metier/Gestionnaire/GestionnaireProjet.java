@@ -2,10 +2,16 @@ package mygroup.metier.Gestionnaire ;
 import mygroup.metier.POJO.POJOProjet;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 
 import mygroup.metier.Errors.*;
+import mygroup.persistence.DBConnection;
 import mygroup.persistence.DAO.DAOProjet;
 
 public class GestionnaireProjet {
@@ -47,6 +53,10 @@ public class GestionnaireProjet {
         return this.daoProjet.read(id);
     }
 
+    public LinkedHashMap<String,Boolean> getTaches(String listeId) {
+        return daoProjet.getTaches(listeId);
+    }
+
     // mettreAJourProjet
     public void mettreAJourProjet(String id, String nom, String description, List<Document> taches) {
         this.daoProjet.update(id, nom, description, taches);
@@ -62,6 +72,33 @@ public class GestionnaireProjet {
         }
     }
 
+
+    public String getProjetTitle(String id) {
+        return daoProjet.getProjetTitle(id);
+    }
+
+    //getProjetDescription
+    public String getProjetDescription(String id) {
+        return daoProjet.getProjetDescription(id);
+    }
+
+    public String getStartDate(String id) {
+        return daoProjet.getStartDate(id);
+    }
+
+    public String getEndDate(String id) {
+        return daoProjet.getEndDate(id);
+    }
+
+    public String getCategory(String id) {
+        return daoProjet.getCategory(id);
+    }
+
+    public String getType(String id) {
+        return daoProjet.getType(id);
+    }
+
+
     // obtenirToutesLesProjets
     public List<Document> obtenirToutesLesProjets() {
         return this.daoProjet.getAllProjects();
@@ -72,9 +109,16 @@ public class GestionnaireProjet {
         return this.daoProjet.read(id);
     }
 
+    public void deleteTacheFromProjet(String projetId, String tacheId) {
+        daoProjet.deleteTacheFromProjet(projetId , tacheId);
+    }
+
+
+    public void setTacheToProjet(String projetId, String tacheId) {
+        daoProjet.setTacheToProjet(projetId, tacheId);
+    }
 
     public LinkedHashMap<String, String> getProjetsArchiver() {
         return this.daoProjet.getArchivedProjects();
     }
-
 }

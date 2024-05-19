@@ -21,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import mygroup.presentation.NewList.AddListController;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.taches.TachesFormController;
 import javafx.scene.control.ComboBox;
 
@@ -47,6 +48,7 @@ public class addTacheview {
     private Button ajouterDocButton;
     private Button importButton;
     private GridPane ZoneDocuments;
+    // private ControllerFromTacheAjout controller;
     private ControllerFromTacheAjout controller;
     private BorderPane root;
     private AddListController addlistController;
@@ -60,6 +62,13 @@ public class addTacheview {
 
     public addTacheview(ControllerFromTacheAjout controllerFromTacheAjout) {
         this.controller = controllerFromTacheAjout;
+        init();
+        style();
+        action();
+    }
+
+    public addTacheview(ProjetDetailController controller) {
+        this.controller = new ControllerFromTacheAjout(this, controller);
         init();
         style();
         action();

@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import mygroup.presentation.NewList.AddListController;
 import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 
 public class GetTasksView {
 
@@ -35,6 +36,12 @@ public class GetTasksView {
         style();
         action();
         this.controller = new GetTasksController(this, addListController, controllerFromTacheAjout);
+    }
+    public GetTasksView(ProjetDetailController projetDetailController) {
+        init();
+        style();
+        action();
+       this.controller = new GetTasksController(this, projetDetailController);
     }
 
     public GetTasksView(AddProjetController addProjetController) {
