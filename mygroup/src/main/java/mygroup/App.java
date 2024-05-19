@@ -73,8 +73,8 @@ public class App extends Application {
         // view.start(primaryStage) ;
 
         // SceanceFormController con = new SceanceFormController() ;
-        SeanceFormView view = new SeanceFormView() ;
-        view.start(primaryStage) ;
+        // SeanceFormView view = new SeanceFormView() ;
+        // view.start(primaryStage) ;
 
         // addTacheview vue = new addTacheview() ;
         // ControllerFromTacheAjout con = new ControllerFromTacheAjout(vue) ;
@@ -84,8 +84,8 @@ public class App extends Application {
         // LoginFormView view = new LoginFormView(primaryStage) ;
         // view.start(primaryStage) ;
 
-        // ListeFormView view = new ListeFormView();
-        // view.start(primaryStage);
+        ListeFormView view = new ListeFormView();
+        view.start(primaryStage);
 
         // presentation.tache_detail.screen view = new
         // presentation.tache_detail.screen() ;

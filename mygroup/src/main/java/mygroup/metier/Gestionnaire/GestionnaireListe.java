@@ -103,5 +103,9 @@ public class GestionnaireListe {
     public String getLastListId() {
         return daoListe.getLastListId();
     }
+
+    public void addtaskid(String listId, String taskid) {
+        daoListe.addtaskid(listId, taskid);
+    }
 }
 
