@@ -21,7 +21,7 @@ public class DAOProjet {
 
     // Create
     public void create(String titre, String description, String categorie, String type, String dateDebut,
-            String dateFin, List<String> taches, List<String> documents, List<String> seances) {
+            String dateFin, List<Document> taches, List<Document> documents, List<Document> seances) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
             Document doc = new Document("titre", titre).append("description", description)
@@ -31,6 +31,7 @@ public class DAOProjet {
                     .append("documents", documents)
                     .append("seances", seances);
             collection.insertOne(doc);
+            System.out.println("Projet créé avec succès !");
         } catch (Exception e) {
             System.err.println("Erreur lors de la création du projet : " + e.getMessage());
         }
@@ -328,7 +329,7 @@ public void deleteTacheFromProjet(String listId, String tacheId) {
                 List<Document> seancesList = (List<Document>) projet.get("seances");
                 if (seancesList != null) {
                     for (Document seance : seancesList) {
-                        seances.add(seance.getString("id"));
+                        seances.add(seance.getString("Id"));
                     }
                 }
             } else {

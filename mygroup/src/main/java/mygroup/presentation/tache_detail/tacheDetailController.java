@@ -1,11 +1,17 @@
 package mygroup.presentation.tache_detail;
 
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
 import mygroup.presentation.listes.ListeFormView;
 import mygroup.presentation.taches.TachesFormController;
+import mygroup.presentation.projets.*;
+import mygroup.presentation.archive.*;
+import mygroup.presentation.NewDocument.*;
 
 public class tacheDetailController {
     private tacheDetailModel model;
@@ -38,7 +44,6 @@ public class tacheDetailController {
         String Type = model.getType();
         String Description = model.getDescription();
 
-        System.out.println("Title : " +Title);
 
         view.setTitleLabel(Title);
         view.setDateDebutLabel(DateDebut);
@@ -65,4 +70,40 @@ public class tacheDetailController {
         listes.start(stage);
     }
 
+    public void projectsButtonAction(ActionEvent event) {
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        ProjetsFormView projets = new ProjetsFormView();
+        projets.start(stage);
+    }
+
+    public void archiveButtonAction(ActionEvent event) {
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        ArchiveFormView archive = new ArchiveFormView();
+        archive.start(stage);
+    }
+
+    
+
+    public void addDocToTache(String idLastDoc, String titre , String description, String url) {
+        this.model.addDocToTache(idLastDoc, titre, description, url);
+        System.out.println("Document ajouté à la tâche avec succès");
+        displayDocuments();
+    }
+
+    public void displayDocuments() {
+        LinkedHashMap<String, ArrayList<String>> documents = model.getListOfDocuments();
+        for (String id : documents.keySet()) {
+            System.out.println("ID Document : " + id);
+            System.out.println("Titre Document : " + documents.get(id).get(0));
+            System.out.println("Description Document : " + documents.get(id).get(1));
+            System.out.println("URL Document : " + documents.get(id).get(2));
+        }
+    }
+
+    public void addDocButtonAction() {
+        System.out.println("Ajouter Button Clicked");
+        AddDocumentView view = new AddDocumentView(this);
+        Stage stage = new Stage();
+        view.start(stage);
+    }
 }

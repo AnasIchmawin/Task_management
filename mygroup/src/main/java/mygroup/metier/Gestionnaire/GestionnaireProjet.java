@@ -3,16 +3,12 @@ package mygroup.metier.Gestionnaire;
 import mygroup.metier.POJO.POJOProjet;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
+
 
 import mygroup.metier.Errors.*;
-import mygroup.persistence.DBConnection;
 import mygroup.persistence.DAO.DAOProjet;
 
 public class GestionnaireProjet {
@@ -46,15 +42,18 @@ public class GestionnaireProjet {
         }
         daoProjet.create(this.projet.getTitre(), this.projet.getDescription(), this.projet.getCategorie(),
                 this.projet.getType(),
-                this.projet.getDateDebut(), this.projet.getDateFin(), this.projet.getTaches(),
-                this.projet.getDocuments(), this.projet.getSeances());
+                this.projet.getDateDebut(), this.projet.getDateFin(), 
+                this.projet.getTaches(),
+                this.projet.getDocuments(),
+                this.projet.getSeances());
+                
     }
 
     // Method to retrieve a projet by its ID
 
 
-    public LinkedHashMap<String,Boolean> getTaches(String listeId) {
-        return daoProjet.getTaches(listeId);
+    public LinkedHashMap<String,Boolean> getTaches(String projetId) {
+        return daoProjet.getTaches(projetId);
     }
 
     // mettreAJourProjet
@@ -129,6 +128,10 @@ public int NmbrDocumentParProjet(String projetId) {
 
     public List<String> getSeances(String selectedProjetId) {
         return this.daoProjet.getSeances(selectedProjetId);
+    }
+
+    public void setTacheToProjet(String IdProjet, String tacheId) {
+        this.daoProjet.setTacheToProjet(IdProjet, tacheId);
     }
 
 }

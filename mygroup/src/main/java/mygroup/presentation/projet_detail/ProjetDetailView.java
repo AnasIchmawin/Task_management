@@ -4,10 +4,8 @@ package mygroup.presentation.projet_detail;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -21,13 +19,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import mygroup.presentation.NewProjet.AddProjetController;
+import mygroup.presentation.projets.ProjetsFormController;
 import mygroup.presentation.taches.TachesFormView;
 
 
 public class ProjetDetailView extends Application {
 
     private static final Pos RIGHT = Pos.BOTTOM_RIGHT;
-    private static final Pos CENTER_RIGHT = Pos.CENTER_RIGHT;
     private static final Pos BOTTOM = Pos.BOTTOM_CENTER;
 
     @SuppressWarnings("unused")
@@ -56,7 +54,7 @@ public class ProjetDetailView extends Application {
     private String type;
     private TachesFormView tacheView;
     private AddProjetController addProjetController;
-    private GridPane gridPane;
+    private GridPane ZoneSeances;
     private VBox contenaireSeances;
 
 
@@ -64,7 +62,14 @@ public class ProjetDetailView extends Application {
         init();
         style();
         action();    
-        this.controller = new ProjetDetailController(this);
+        // this.controller = new ProjetDetailController(this);
+    }
+
+    public ProjetDetailView(ProjetsFormController projetsFormController) {
+        init();
+        style();
+        action();    
+        this.controller = new ProjetDetailController(this , projetsFormController);
     }
     
     @Override
@@ -144,7 +149,7 @@ public class ProjetDetailView extends Application {
 
         VBox contenaireButton = new VBox();
 
-        ScrollPane scrollSeance = createScrollPane(gridPane);
+        ScrollPane scrollSeance = createScrollPane(ZoneSeances);
         scrollSeance.getStyleClass().add("Docs-Style");
 
         HBox.setHgrow(ajouterSeanceButton, Priority.ALWAYS);
@@ -363,7 +368,7 @@ public class ProjetDetailView extends Application {
         archiveButton = new Button("Archive");
         ZoneListes = createGridPane();
         ZoneTaches = createGridPane();
-        gridPane = creatZoneDocs();
+        ZoneSeances = creatZoneDocs();
         scrollPane = createScrollPane(ZoneListes);
         descriptionLabel = new Label();
         ContainerGoogleCalendar = new VBox();
@@ -634,7 +639,7 @@ public void setAddProjetController(AddProjetController addProjetController) {
 }
 
 public GridPane getZoneSeances() {
-    return gridPane;
+    return ZoneSeances;
 }
 
 

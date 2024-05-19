@@ -29,7 +29,7 @@ public class tacheDetailView extends Application {
     private VBox vbox2;
     private VBox vbox3;
     private VBox vbox4;
-    private Button leftButton;
+    private Button returnButton;
     private Button listesButton;
     private Button projectsButton;
     private Button archiveButton;
@@ -96,8 +96,8 @@ public class tacheDetailView extends Application {
 
     private VBox createNavbarContainer() {
         HBox buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
-        HBox leftButtonBox = new HBox(20, leftButton);
-        HBox navbar = new HBox(30, leftButtonBox, buttonsBar);
+        HBox returnButtonBox = new HBox(20, returnButton);
+        HBox navbar = new HBox(30, returnButtonBox, buttonsBar);
         navbar.setPadding(new Insets(10, 20, 10, 20)); // 20px padding left and right, 10px padding top and bottom
         navbar.getStyleClass().add("navbar");
         VBox navbarContainer = new VBox(navbar);
@@ -169,7 +169,7 @@ public class tacheDetailView extends Application {
     }
 
     public void initButton(){
-        leftButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
+        returnButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
@@ -191,7 +191,7 @@ public class tacheDetailView extends Application {
 
 
     private void style() {
-        leftButton.getStyleClass().add("left-btn-style");
+        returnButton.getStyleClass().add("left-btn-style");
         listesButton.getStyleClass().add("button-style");
         projectsButton.getStyleClass().add("button-style");
         archiveButton.getStyleClass().add("button-style");
@@ -223,6 +223,8 @@ public class tacheDetailView extends Application {
         }
         return button;
     }
+
+
 
     private VBox DocumentSection() {
         VBox DocSection = new VBox(20);
@@ -357,6 +359,14 @@ public class tacheDetailView extends Application {
         Update.setOnAction(event -> {
             controller.UpdateButtonAction(event);
         });
+        projectsButton.setOnAction(event -> {
+            controller.projectsButtonAction(event);
+        });
+        archiveButton.setOnAction(event -> {
+            controller.archiveButtonAction(event);
+        });
+        addDocButton.setOnAction(event -> {
+            controller.addDocButtonAction();
+        });
     }
-
 }

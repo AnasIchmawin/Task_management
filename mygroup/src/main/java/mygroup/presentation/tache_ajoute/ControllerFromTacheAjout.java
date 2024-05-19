@@ -61,7 +61,7 @@ public class ControllerFromTacheAjout {
     private GestionnaireProjet gestionnaireProjet;
     private addTacheview addTacheview;
     private GetDocModel model;
-    ProjetDetailController controleur;
+    private ProjetDetailController projetDetailController;
     private ModuleFromTacheAjout moduleFromTacheAjout;
     private AddListController addListController;
     private AddProjetController addProjetController;
@@ -103,14 +103,12 @@ public class ControllerFromTacheAjout {
 
     }
 
-    public ControllerFromTacheAjout(addTacheview addTacheview, ProjetDetailController controleur) {
-        this.controleur = controleur;
+    public ControllerFromTacheAjout(addTacheview addTacheview, ProjetDetailController projetDetailcontroleur) {
+        this.projetDetailController = projetDetailcontroleur;
         this.addTacheview = addTacheview;
         this.model = new GetDocModel();
-        this.moduleFromTacheAjout = new ModuleFromTacheAjout(controleur.getProjetId());
         this.gestionnaireTache = new GestionnaireTache();
         this.gestionnaireProjet = new GestionnaireProjet();
-
     }
 
     public void handleListesButton() {
@@ -151,7 +149,6 @@ public class ControllerFromTacheAjout {
 
     public void addDocToTache(String id, String doc) {
         this.model.addDocumentToSeance(id, doc);
-        System.out.println("Document added to Tache: " + doc);
         displayDocuments();
     }
 
@@ -207,6 +204,9 @@ public class ControllerFromTacheAjout {
             if (this.moduleFromTacheAjout != null) {
                 liste = moduleFromTacheAjout.getIdListe();
             }
+            if (this.projetDetailController != null) {
+                projet = this.projetDetailController.getProjetId();
+            }
             POJOTache tache = new POJOTache(titre, etat, categorie, description, dateDebut, TempsDebut, dateFin,
                     TempsFin,
                     IdsDoc, projet, liste);
@@ -216,6 +216,10 @@ public class ControllerFromTacheAjout {
             if (liste != "") {
                 gestionnaireListe.setTacheToListe(liste, tacheId);
             }
+            if (projet != "") {
+                gestionnaireProjet.setTacheToProjet(projet, tacheId);
+            }
+
             if (addProjetController != null) {
                 LinkedHashMap<String, String> task = new LinkedHashMap<>();
                 task.put(tacheId, titre);
@@ -225,13 +229,16 @@ public class ControllerFromTacheAjout {
             alert("Tache créée", "La tache a été créée avec succès");
             // get stage et close
             if (this.addListController != null) {
-                System.out.println("id" + tacheId + "titre" + titre);
                 addListController.addNewTask(tacheId, titre);
                 addListController.displayTasks();
             }
             if(this.tachesFormController != null) {
                 tachesFormController.addTask(tacheId, titre);
                 tachesFormController.displayedTasks(false);
+            }
+            if (this.projetDetailController != null) {
+                projetDetailController.addTask(tacheId, titre);
+                projetDetailController.displayedTasks();
             }
 
         } catch (Exception e) {

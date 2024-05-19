@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.bson.Document;
+
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
@@ -28,6 +30,7 @@ public class AddProjetController {
     private GestionnaireTache gestionnaireTache;
     private GestionnaireDocument gestionnaireDocument;
     private GestionnaireSeance gestionnaireSeance;
+    @SuppressWarnings("unused")
     private AddDocumentController addDocumentController;
     private AddProjetView addProjetView;
     private AddProjetModel addProjetModel;
@@ -52,9 +55,32 @@ public class AddProjetController {
             nouveauProjet.setCategorie(addProjetView.getCategorie());
             nouveauProjet.setType(addProjetView.getType());
 
-            nouveauProjet.setTaches(getTachesIds());
-            nouveauProjet.setDocuments(getDocumentsIds());
-            nouveauProjet.setSeances(getSeancesIds());
+            List<Document> documents = new ArrayList<>();
+            List<Document> taches = new ArrayList<>();
+            List<Document> seances = new ArrayList<>();
+
+            for (String id : getTachesIds()) {
+                Document task = new Document();
+                task.append("Id", id);
+                taches.add(task);
+            }
+
+            for (String id : getDocumentsIds()) {
+                Document doc = new Document();
+                doc.append("Id", id);
+                documents.add(doc);
+            }
+
+            for (String id : getSeancesIds()) {
+                Document seance = new Document();
+                seance.append("Id", id);
+                seances.add(seance);
+            }
+
+            nouveauProjet.setDocuments(documents);
+            nouveauProjet.setTaches(taches);
+            nouveauProjet.setSeances(seances);
+
             this.gestionnaireProjet.setProjet(nouveauProjet);
 
             try {
@@ -99,7 +125,6 @@ public class AddProjetController {
     }
 
     public void displayTasks() {
-        System.out.println("displayTasks");
         clearTasks();
         List<String> mesTaches = new ArrayList<>(getTachesTitles());
 

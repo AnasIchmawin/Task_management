@@ -93,7 +93,6 @@ public class GetDocController {
                 if (checkBox.isSelected()) {
                     String task = checkBox.getText();
                     String id = getIdFromMap(GridCaseInfos, GridPane.getRowIndex(node), GridPane.getColumnIndex(node));
-                    System.out.println("Task selected: " + task + " with id: " + id);
                     this.sceanceAjouteController.addDocToSeance(id, task);
                 }
             }
