@@ -40,7 +40,6 @@ public class tacheDetailView extends Application {
     private Label indexDebut;
     private Label indexFin;
     private Label indexCategorie;
-    private Label indexType;
     private Label dateFinLabel;
     private Label categorieLabel;
     private Label typeLabel;
@@ -122,7 +121,6 @@ public class tacheDetailView extends Application {
         vbox1.getChildren().addAll(indexDebut, dateDebutLabel);
         vbox2.getChildren().addAll(indexFin, dateFinLabel);
         vbox3.getChildren().addAll(indexCategorie, categorieLabel);
-        vbox4.getChildren().addAll(indexType, typeLabel);
         hbox1.getChildren().add(titleabel);
         HeadBox.getChildren().addAll(hbox1, hbox2);
         hbox2.getChildren().addAll(vbox1, vbox2, vbox3, vbox4);
@@ -167,7 +165,6 @@ public class tacheDetailView extends Application {
         indexDebut = new Label("Debut");
         indexFin = new Label("Fin");
         indexCategorie = new Label("Categorie");
-        indexType = new Label("Type");
         indexdescription = new Label("Description");
     }
 
@@ -205,7 +202,6 @@ public class tacheDetailView extends Application {
         indexDebut.getStyleClass().add("index-style");
         indexFin.getStyleClass().add("index-style");
         indexCategorie.getStyleClass().add("index-style");
-        indexType.getStyleClass().add("index-style");
         indexdescription.getStyleClass().add("index-style");
         descriptionLabel.getStyleClass().add("description-style");
         descriptionLabel.getStyleClass().add("description-label");
