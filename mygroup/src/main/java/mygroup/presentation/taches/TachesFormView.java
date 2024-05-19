@@ -23,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mygroup.presentation.listes.ListeFormController;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
@@ -51,8 +52,10 @@ public class TachesFormView extends Application {
         init();
         style();
         Action();
-        this.controller = new TachesFormController(this, listeFormController);
+        this.controller = new TachesFormController(this , listeFormController);
+
     }
+    
 
     @Override
     public void start(Stage primaryStage) {
@@ -246,7 +249,7 @@ public class TachesFormView extends Application {
         ScrollPane descriptionScrollPane = new ScrollPane(description);
         descriptionScrollPane.setFitToWidth(true);
         descriptionScrollPane.setStyle("-fx-background-color: transparent;");
-        descriptionScrollPane.setPadding(new Insets(0, 40, 0, 10));
+        descriptionScrollPane.setPadding(new Insets(0, 40, 0, 10));//-----------------
         descriptionScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         return descriptionScrollPane;
     }
@@ -301,8 +304,9 @@ public class TachesFormView extends Application {
         descriptionLabel.getStyleClass().add("description-style");
         descriptionLabel.setWrapText(true);
         VBox vbox = new VBox();
-        vbox.setPrefHeight(340);
-        vbox.setPrefWidth(1000);
+        // vbox.setPrefHeight(340);
+        vbox.setPrefWidth(1200);
+        vbox.setPadding(new Insets(0, 0, 0, 40));
         vbox.getChildren().addAll(descriptionLabel);
         return vbox;
     }

@@ -24,6 +24,29 @@
     -fx-max-height: 20px;
     -fx-background-radius: 25px;
 }
+.google-calendar-style {
+    -fx-background-color: #3F72AF;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-max-width: 150px; /* Adjust to make it less wide */
+    -fx-max-height: 350px;
+}
+
+.Docs-Style {
+    -fx-border-width: 0px;
+    -fx-focus-color: transparent;
+    -fx-min-width: 750px;
+    -fx-min-height: 250px;
+}
+
+
+
+.google-calendar-label-style {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+}
+
 
 .navbar {
     -fx-pref-width: 50px; /* Largeur préférée de la barre de navigation */

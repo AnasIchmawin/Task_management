@@ -16,6 +16,7 @@ import mygroup.metier.Gestionnaire.GestionnaireTache;
 import mygroup.presentation.NewList.AddListController;
 import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.NewProjet.AddProjetView;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.projets.ProjetsFormController;
 import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
 import mygroup.presentation.tache_ajoute.addTacheview;
@@ -24,6 +25,7 @@ public class GetTasksController {
     private GestionnaireTache gestionnaireTache;
     private ControllerFromTacheAjout controllerFromTacheAjout;
     private AddProjetController addProjetController;
+    private ProjetDetailController projetDetailController;
     private LinkedHashMap<List<Integer>, List<String>> GridCaseInfos;
     private ProjetsFormController projetsFormController;
     private GetTasksView getTasksView;
@@ -34,7 +36,14 @@ public class GetTasksController {
         this.gestionnaireTache = new GestionnaireTache();
         this.controllerFromTacheAjout = controllerFromTacheAjout;
         this.addListController = addListController;
-        this.displayTasksForList();
+        this.displayTasks();
+    }
+
+    public GetTasksController(GetTasksView getTasksView, ProjetDetailController projetDetailController) {
+        this.getTasksView = getTasksView;
+        this.gestionnaireTache = new GestionnaireTache();
+        this.projetDetailController = projetDetailController;
+        this.displayTasks();
     }
 
     public GetTasksController(GetTasksView getTasksView, AddProjetController addProjetController , ControllerFromTacheAjout controllerFromTacheAjout) {

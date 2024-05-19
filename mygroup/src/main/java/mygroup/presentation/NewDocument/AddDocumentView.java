@@ -17,6 +17,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
 import mygroup.presentation.NewProjet.AddProjetController;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.seance_ajoute.SceanceAjouteController;
 
 

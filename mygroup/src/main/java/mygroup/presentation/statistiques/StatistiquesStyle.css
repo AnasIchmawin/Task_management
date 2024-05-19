@@ -1,0 +1,42 @@
+.chart {
+    -fx-padding: 10;
+    -fx-background-color: #f4f4f4;
+}
+
+.label {
+    -fx-font-size: 16px;
+    -fx-padding: 10;
+}
+
+.pie-chart {
+    -fx-background-color: #e0e0e0;
+    -fx-padding: 20;
+    -fx-background-radius: 20px;
+}
+
+.line-chart {
+    -fx-background-color: #e0e0e0;
+    -fx-padding: 20;
+    -fx-background-radius: 20px;
+}
+/* .nav-bar {
+    background-color: #333;
+    padding: 10px;
+}
+
+.nav-button {
+    background-color: #555;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.nav-button:hover {
+    background-color: #777;
+} */

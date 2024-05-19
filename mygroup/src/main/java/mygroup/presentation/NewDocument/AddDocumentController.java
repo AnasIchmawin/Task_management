@@ -9,6 +9,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import mygroup.metier.POJO.POJODocument;
 import mygroup.presentation.projet_detail.ProjetDetailController;
+import mygroup.presentation.projet_detail.Projet_Detail_View;
 import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
 import mygroup.presentation.taches.TachesFormController;
 import mygroup.metier.Gestionnaire.GestionnaireDocument;
@@ -24,6 +25,7 @@ public class AddDocumentController {
     private tacheDetailController controllerFromTacheDetail;
     private SceanceAjouteController SceanceAjouteController;
     private AddProjetController addProjetController;
+    private ProjetDetailController projetDetailController;
 
     public AddDocumentController(AddDocumentView view, ControllerFromTacheAjout controllerFromTacheAjout) {
         this.view = view;
@@ -34,6 +36,12 @@ public class AddDocumentController {
     public AddDocumentController(AddDocumentView view, tacheDetailController controllerFromTacheDetail) {
         this.view = view;
         this.controllerFromTacheDetail = controllerFromTacheDetail;
+        gestionnaireDocument = new GestionnaireDocument();
+    }
+
+    public AddDocumentController(AddDocumentView view, ProjetDetailController projetDetailController) {
+        this.view = view;
+        this.projetDetailController = projetDetailController;
         gestionnaireDocument = new GestionnaireDocument();
     }
 

@@ -13,11 +13,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import mygroup.metier.Gestionnaire.GestionnaireListe;
+import mygroup.metier.Gestionnaire.GestionnaireProjet;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
 import mygroup.presentation.GetTaskFromCalendar.GetTaskFromCalendar;
 import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormController;
 import mygroup.presentation.listes.ListeFormView;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.projets.ProjetsFormView;
 import mygroup.presentation.tache_ajoute.addTacheview;
 import mygroup.presentation.tache_detail.tacheDetailView;
@@ -38,14 +40,11 @@ public class TachesFormController {
         this.tacheModel = new TachesFormModel(getTacheMap());
         this.FillChamps();
     }
+     
 
     public void handleAjouterButtonAction() {
         addTacheview view = new addTacheview(this);
         view.start(new Stage());
-    }
-
-    public void handleSaveButtonAction() {
-        // gestionnaireTache.updateTask(getListId(), );//id,title,description
     }
 
     // handleOrdonnerButtonAction
@@ -98,12 +97,17 @@ public class TachesFormController {
         return taskButton;
     }
 
+    
+
+
+
     private void FillChamps() {
         this.tacheView.setTitle(getListTitle());
         this.tacheView.setDescription(getListDescription());
         this.displayedTasks(false);
         this.ServeillerButtons();
     }
+
 
     private void ServeillerButtons() {
         SurveillerButton(tacheView.getListesButton(), "100", "40", "#3F72AF");
@@ -348,6 +352,7 @@ public class TachesFormController {
     public String getListId() {
         return listeFormController.getListId();
     }
+
 
     public void handleConfirmerButtonAction() {
         try {

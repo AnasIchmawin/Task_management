@@ -6,8 +6,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -17,11 +19,16 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import mygroup.presentation.NewProjet.AddProjetController;
+import mygroup.presentation.taches.TachesFormView;
 
 
 public class Projet_Detail_View extends Application {
 
-    private static final Pos CENTRE = Pos.CENTER;
+    private static final Pos RIGHT = Pos.BOTTOM_RIGHT;
+    private static final Pos CENTER_RIGHT = Pos.CENTER_RIGHT;
+    private static final Pos BOTTOM = Pos.BOTTOM_CENTER;
+
     @SuppressWarnings("unused")
     private Button addDocButton;
     private Button leftButton;
@@ -31,19 +38,33 @@ public class Projet_Detail_View extends Application {
     private Button projectsButton;
     private Button archiveButton;
     private BorderPane root;
+    private GridPane ZoneListes;
+    private GridPane ZoneTaches;
     private Button ajouterDocButton;
     private Label descriptionLabel;
+    private String Title;
     private GridPane ZoneDocuments;
+    private VBox ContainerGoogleCalendar;
+    private VBox description;
+    private Button confirmerButton;
     private ProjetDetailController controller ;
+    private ScrollPane scrollPane;
+    private String dateDebut;
+    private String dateFin;
+    private String categorie;
+    private String type;
+    private TachesFormView tacheView;
+    private AddProjetController addProjetController;
 
-    // Constructor
+
     public Projet_Detail_View() {
-        this.controller = new ProjetDetailController(this);
+        
         init();
         style();
-        action();
+        action();    
+        this.controller = new ProjetDetailController(this);
     }
-
+    
     @Override
     public void start(Stage primaryStage) {
         // Create the nnavigation bar
@@ -58,7 +79,7 @@ public class Projet_Detail_View extends Application {
         scene.getStylesheets().add(getClass().getResource("TacheStyle.css").toExternalForm());
         // Set the scene
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Tache details");
+        primaryStage.setTitle("Projet details");
         primaryStage.show();
     }
 
@@ -91,7 +112,7 @@ public class Projet_Detail_View extends Application {
         // 20px padding bottom, 55px padding left
 
         // Créer un conteneur VBox pour contenir les éléments principaux
-        HBox HeadBox = BoxHead("Mon Projet", "12/21/2021", "13/12/2023", "Encadrement", "PFE");
+        HBox HeadBox = BoxHead(Title,dateDebut,dateFin, categorie,type);
         HBox Descr_Seances = Descr_Seances();
         HBox Taches_doc = Taches_doc();
 
@@ -104,9 +125,9 @@ public class Projet_Detail_View extends Application {
 
     private HBox Descr_Seances() {
         HBox hbox = new HBox(200);
-        VBox vbox1 = BoxDescription("on cont  la bureautiquela bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautiquela bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautiquela bureautique");
+        HBox descriptionContainer = createDescriptionContainer();
         VBox Seances = createSeancesBox();
-        hbox.getChildren().addAll(vbox1, Seances);
+        hbox.getChildren().addAll(descriptionContainer, Seances);
         return hbox;
     }
 
@@ -132,7 +153,7 @@ public class Projet_Detail_View extends Application {
 
         // Action for AjouterButton
         ajouterSeanceButton.setOnAction(event -> {
-            controller.handleAjouterButtonAction(gridPane);
+            controller.handleAjouterSeanceButton(event);
         });
 
         contenaireSeances.getChildren().addAll(scrollSeance);
@@ -148,7 +169,7 @@ public class Projet_Detail_View extends Application {
 
     private GridPane creatZoneDocs() {
         GridPane grid = new GridPane();
-        // grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(8);
         grid.setHgap(1);
         grid.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
@@ -159,16 +180,18 @@ public class Projet_Detail_View extends Application {
 
 
     private HBox Taches_doc() {
-
-        VBox contenaireDocuments = CreateVbox(1, CENTRE);
+        VBox Zonevertical = CreateVbox(100, RIGHT);
         VBox ZoneDocuments = createDocumentsSection();
-        contenaireDocuments.getChildren().addAll( ZoneDocuments);
-        HBox hbox = new HBox(200);
-        VBox vbox1 = creatTasksbox();
+        ScrollPane scrollPane = createScrollPane(ZoneTaches);
+        VBox tasks = createTasksContainer(scrollPane);
+    
+        Zonevertical.getChildren().addAll(ZoneDocuments);
+        HBox hbox = new HBox(340);
+        hbox.getChildren().addAll(tasks, Zonevertical);
         
-        hbox.getChildren().addAll(vbox1, contenaireDocuments);
         return hbox;
     }
+    
 
     private VBox createDocumentsSection() {
         ZoneDocuments = creatZoneDocs();
@@ -177,9 +200,12 @@ public class Projet_Detail_View extends Application {
 
         VBox contenaireDocuments = CreateVbox(5, Pos.CENTER);
         contenaireDocuments.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
+        ajouterDocButton.setAlignment(BOTTOM);
         contenaireDocuments.getChildren().addAll(scrollDocs, ajouterDocButton);
         contenaireDocuments.setPadding(new Insets(10, 10, 10, 10));
-
+        contenaireDocuments.setSpacing(20);
+        contenaireDocuments.setMinWidth(200);
+        contenaireDocuments.setMinHeight(160);
         return contenaireDocuments;
     }
 
@@ -190,81 +216,82 @@ public class Projet_Detail_View extends Application {
         return vbox;
     }
 
-    private VBox creatTasksbox() {
-        GridPane gridPane = creatZoneDocs();
-        VBox contenaire = new VBox();
-        contenaire.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
-
-        VBox contenaireTaches = new VBox(40);
-
-        contenaireTaches.setAlignment(Pos.CENTER);
-
-        HBox contenaireButton = new HBox();
-
-        // contenaireTaches.setAlignment(Pos.TOP_CENTER);
-
-        ScrollPane scrollTache = createScrollPane(gridPane);
-        scrollTache.getStyleClass().add("Docs-Style");
-
-        HBox.setHgrow(ajouterTacheButton, Priority.ALWAYS);
-
-        contenaireButton.getChildren().add(ajouterTacheButton);
-        contenaireButton.setAlignment(Pos.CENTER);
-
-        contenaireTaches.setPadding(new Insets(0, 0, 0, 0));
-
-        // Action for AjouterButton
-        ajouterTacheButton.setOnAction(event -> {
-            controller.handleAjouterTacheButtonAction(gridPane);
-        });
-        contenaireTaches.setSpacing(20);
-        contenaireTaches.getChildren().addAll(scrollTache);
-        contenaireTaches.setPrefHeight(235);
-
-        contenaire.setMinWidth(500);
-        contenaire.setMinHeight(250);
-
-        contenaire.getChildren().addAll(contenaireTaches, contenaireButton);
-
-        return contenaire;
+    private VBox createTasksContainer(ScrollPane scrollPane) {
+        VBox tasks = new VBox();
+        tasks.getChildren().addAll(scrollPane, ajouterTacheButton); // Add the ajouterTacheButton to the tasks VBox
+    
+        // Set the same styles as the contenaire VBox
+        tasks.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
+        tasks.setPadding(new Insets(8, 8, 8, 8));
+        tasks.setSpacing(20);
+        tasks.setMinWidth(580);
+        tasks.setMinHeight(160);
+    
+        // Set alignment and margin
+        tasks.setAlignment(Pos.CENTER);
+        VBox.setMargin(tasks, new Insets(30, 0, 0, 0));
+    
+        return tasks;
     }
+    
 
     private ScrollPane createScrollPane(GridPane gridPane) {
         ScrollPane scrollPane = new ScrollPane(gridPane);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
-        scrollPane.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide vertical scrollbar
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide horizontal scrollbar
         return scrollPane;
     }
-
     
-  
 
+    private HBox createDescriptionContainer() {
+        HBox descriptionContainer = new HBox();
+        ScrollPane descriptionScrollPane = createDescriptionScrollPane(description);
+        descriptionContainer.getChildren().addAll( descriptionScrollPane);
+        descriptionContainer.setAlignment(Pos.TOP_RIGHT);
+        return descriptionContainer;
+    }
+
+    private ScrollPane createDescriptionScrollPane(VBox description) {
+        ScrollPane descriptionScrollPane = new ScrollPane(description);
+        descriptionScrollPane.setFitToWidth(true);
+        descriptionScrollPane.setStyle("-fx-background-color: transparent;");
+        descriptionScrollPane.setPadding(new Insets(0, 40, 0, 10));
+        descriptionScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        return descriptionScrollPane;
+    }
     private VBox BoxDescription(String description) {
-        Label indexdescription = new Label("Description: ");
-        indexdescription.getStyleClass().add("index-style");
-        Label descriptionLabel = new Label(description);
-        descriptionLabel.setWrapText(true);
+        TextArea descriptionLabel = new TextArea(description);
         descriptionLabel.getStyleClass().add("description-style");
+        descriptionLabel.setWrapText(true);
         VBox vbox = new VBox();
-        vbox.getChildren().addAll(indexdescription, descriptionLabel);
+        vbox.setPrefHeight(340);
+        vbox.setPrefWidth(1000);
+        vbox.getChildren().addAll(descriptionLabel);
         return vbox;
     }
 
     private HBox BoxHead(String title, String dateDebut, String dateFin, String categorie, String type) {
 
         // Titre
-        Label titleabel = new Label(title);
+        Label titre = new Label(Title);
+        settitle("titre de mon projet");
 
         // labels
         Label dateDebutLabel = new Label(dateDebut);
+        setDateDebut("titre de mon projet");
         Label dateFinLabel = new Label(dateFin);
+        setDateFin("titre de mon projet");
         Label categorieLabel = new Label(categorie);
+        setCategorie("titre de mon projet");
         Label typeLabel = new Label(type);
+        setType("titre de mon projet");
+        
         // Style
-        titleabel.getStyleClass().add("index1-style");
+
+
+        titre.getStyleClass().add("index1-style");
         dateDebutLabel.getStyleClass().add("title-style");
         dateFinLabel.getStyleClass().add("title-style");
         categorieLabel.getStyleClass().add("title-style");
@@ -309,7 +336,7 @@ public class Projet_Detail_View extends Application {
         vbox2.getChildren().addAll(indexFin, dateFinLabel);
         vbox3.getChildren().addAll(indexCategorie, categorieLabel);
         vbox4.getChildren().addAll(indexType, typeLabel);
-        hbox1.getChildren().add(titleabel);
+        hbox1.getChildren().addAll(titre);
 
         HBox.setHgrow(hbox1, javafx.scene.layout.Priority.ALWAYS);
         HBox.setHgrow(hbox2, javafx.scene.layout.Priority.ALWAYS);
@@ -330,7 +357,15 @@ public class Projet_Detail_View extends Application {
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
+        ZoneListes = createGridPane();
+        ZoneTaches = createGridPane();
+        scrollPane = createScrollPane(ZoneListes);
         descriptionLabel = new Label();
+        ContainerGoogleCalendar = new VBox();
+        ContainerGoogleCalendar.setPadding(new Insets(2, 2, 2, 2));
+        ContainerGoogleCalendar.setSpacing(5);
+        confirmerButton =  createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/confirmer.png", 29, 29);
+        description = new VBox();
         
     }
 
@@ -340,15 +375,44 @@ public class Projet_Detail_View extends Application {
         projectsButton.getStyleClass().add("button-style");
         archiveButton.getStyleClass().add("button-style");
         descriptionLabel.getStyleClass().add("description-label");
-        ajouterDocButton.getStyleClass().add("AjouterTache-style");
+        ajouterDocButton.getStyleClass().add("ajout-style");
         ajouterSeanceButton.getStyleClass().add("ajout-style");
         ajouterTacheButton.getStyleClass().add("ajout-style");
+        scrollPane.getStyleClass().add("scroll-pane");
+        ContainerGoogleCalendar.getStyleClass().add("google-calendar-style");
+        confirmerButton.getStyleClass().add("confirm-btn-style");
     }
 
     private void action() {
         ajouterDocButton.setOnAction(event -> {
             this.controller.handleAjouterDocButtonAction();
         });
+        // confirmerButton.setOnAction(event -> {
+        //     controller.handleConfirmerButtonAction();
+        // });
+        // listesButton.setOnAction(event -> {
+        //     this.controller.handleListesButtonAction();
+        // });
+
+        // archiveButton.setOnAction(event -> {
+        //     this.controller.handleArchiveButtonAction();
+        // });
+
+        // projectsButton.setOnAction(event -> {
+        //     this.controller.handleProjectsButtonAction();
+        // });
+        ajouterTacheButton.setOnAction(event -> {
+            controller.getTasksView(event);
+        });
+    }
+
+    private GridPane createGridPane() {
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(30);
+        gridPane.setHgap(20);
+        gridPane.setPrefHeight(350);
+        gridPane.setStyle("-fx-background-color: #8E9EB2;");
+        return gridPane;
     }
 
 
@@ -365,8 +429,205 @@ public class Projet_Detail_View extends Application {
         }
         return button;
     }
+    // Getters
 
-    public GridPane getZoneDocuments() {
-        return ZoneDocuments;
+    public GridPane getZoneTaches() {
+        return ZoneTaches;
     }
+
+public Button getAddDocButton() {
+    return addDocButton;
+}
+
+public Button getLeftButton() {
+    return leftButton;
+}
+
+public Button getAjouterTacheButton() {
+    return ajouterTacheButton;
+}
+
+public Button getAjouterSeanceButton() {
+    return ajouterSeanceButton;
+}
+
+public Button getListesButton() {
+    return listesButton;
+}
+
+public Button getProjectsButton() {
+    return projectsButton;
+}
+
+public Button getArchiveButton() {
+    return archiveButton;
+}
+
+public BorderPane getRoot() {
+    return root;
+}
+
+public GridPane getZoneListes() {
+    return ZoneListes;
+}
+
+public Button getAjouterDocButton() {
+    return ajouterDocButton;
+}
+
+public Label getDescriptionLabel() {
+    return descriptionLabel;
+}
+
+public String gettitle() {
+    return Title;
+}
+
+public String getcategorie() {
+    return categorie;
+}
+
+public String gettype() {
+    return type;
+}
+
+public GridPane getZoneDocuments() {
+    return ZoneDocuments;
+}
+
+public VBox getContainerGoogleCalendar() {
+    return ContainerGoogleCalendar;
+}
+
+public String getDescription() {
+    return description.getChildren().get(0).toString();
+}
+
+public Button getConfirmerButton() {
+    return confirmerButton;
+}
+
+public ProjetDetailController getController() {
+    return controller;
+}
+
+public ScrollPane getScrollPane() {
+    return scrollPane;
+}
+
+public String getDateDebut() {
+    return dateDebut;
+}
+
+public String getDateFin() {
+    return dateFin;
+}
+
+public TachesFormView getTacheView() {
+    return tacheView;
+}
+
+public AddProjetController getAddProjetController() {
+    return addProjetController;
+}
+
+// Setters
+public void setAddDocButton(Button addDocButton) {
+    this.addDocButton = addDocButton;
+}
+
+public void setLeftButton(Button leftButton) {
+    this.leftButton = leftButton;
+}
+
+public void setAjouterTacheButton(Button ajouterTacheButton) {
+    this.ajouterTacheButton = ajouterTacheButton;
+}
+
+public void setAjouterSeanceButton(Button ajouterSeanceButton) {
+    this.ajouterSeanceButton = ajouterSeanceButton;
+}
+
+public void setListesButton(Button listesButton) {
+    this.listesButton = listesButton;
+}
+
+public void setProjectsButton(Button projectsButton) {
+    this.projectsButton = projectsButton;
+}
+
+public void setArchiveButton(Button archiveButton) {
+    this.archiveButton = archiveButton;
+}
+
+public void setRoot(BorderPane root) {
+    this.root = root;
+}
+
+public void setZoneListes(GridPane zoneListes) {
+    this.ZoneListes = zoneListes;
+}
+
+public void setAjouterDocButton(Button ajouterDocButton) {
+    this.ajouterDocButton = ajouterDocButton;
+}
+
+public void setDescription(String description) {
+    this.description.getChildren().clear();
+    this.description.getChildren().add(BoxDescription(description));
+}
+
+public void setDateDebut(String dateDebut) {
+    this.dateDebut = dateDebut;
+}
+
+public void setDateFin(String dateFin) {
+    this.dateFin = dateFin;
+}
+
+public void setCategorie(String categorie) {
+    this.categorie = categorie;
+}
+
+public void setType(String type) {
+    this.type = type;
+}
+
+public void setZoneDocuments(GridPane zoneDocuments) {
+    this.ZoneDocuments = zoneDocuments;
+}
+
+public void setContainerGoogleCalendar(VBox containerGoogleCalendar) {
+    this.ContainerGoogleCalendar = containerGoogleCalendar;
+}
+
+
+public void setConfirmerButton(Button confirmerButton) {
+    this.confirmerButton = confirmerButton;
+}
+
+public void setController(ProjetDetailController controller) {
+    this.controller = controller;
+}
+
+public void setScrollPane(ScrollPane scrollPane) {
+    this.scrollPane = scrollPane;
+}
+
+public void settitle(String Title) {
+    this.Title = Title;
+}
+
+
+
+public void setTacheView(TachesFormView tacheView) {
+    this.tacheView = tacheView;
+}
+
+public void setAddProjetController(AddProjetController addProjetController) {
+    this.addProjetController = addProjetController;
+}
+
+
+
 }

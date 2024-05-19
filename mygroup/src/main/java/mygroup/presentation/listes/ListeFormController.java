@@ -25,6 +25,7 @@ public class ListeFormController {
     private GestionnaireListe gestionnaireListe;
     private ListeFormView listView;
     private ListModel listModel;
+
     private static final int MAX_COLUMNS = 5;
     private static final int BUTTON_WIDTH = 170;
     private static final int BUTTON_HEIGHT = 60;
