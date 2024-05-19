@@ -116,9 +116,10 @@
 }
 
 .Docs-Style {
-    -fx-border-width: 0px;
+    -fx-border-width: 5px;
+    -fx-background-color: #3F72AF;
     -fx-focus-color: transparent;
-    -fx-pref-width: 750px;
+    -fx-max-width: 200px;
     -fx-pref-height: 250px;
 }
 

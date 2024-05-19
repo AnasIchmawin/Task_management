@@ -61,4 +61,8 @@ public class GestionnaireDocument {
         daoDocument.setProjetId(documentsIds, lastProjetId);
     }
 
+    public Document getDocumentById(String document) {
+        return daoDocument.read(document);
+    }
+
 }

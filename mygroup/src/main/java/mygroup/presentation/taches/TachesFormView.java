@@ -23,7 +23,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mygroup.presentation.listes.ListeFormController;
-import mygroup.presentation.projet_detail.ProjetDetailController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 

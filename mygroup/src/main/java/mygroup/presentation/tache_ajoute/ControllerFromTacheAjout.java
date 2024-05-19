@@ -229,6 +229,10 @@ public class ControllerFromTacheAjout {
                 addListController.addNewTask(tacheId, titre);
                 addListController.displayTasks();
             }
+            if(this.tachesFormController != null) {
+                tachesFormController.addTask(tacheId, titre);
+                tachesFormController.displayedTasks(false);
+            }
 
         } catch (Exception e) {
             Alert alert = new Alert(AlertType.ERROR);
