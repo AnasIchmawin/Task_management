@@ -12,26 +12,29 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import mygroup.metier.Gestionnaire.GestionnaireListe;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
 import mygroup.presentation.NewList.AddListController;
 import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.NewProjet.AddProjetView;
-import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.projets.ProjetsFormController;
 import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
 import mygroup.presentation.tache_ajoute.addTacheview;
+import mygroup.presentation.taches.TachesFormController;
 
 public class GetTasksController {
     private GestionnaireTache gestionnaireTache;
     private ControllerFromTacheAjout controllerFromTacheAjout;
     private AddProjetController addProjetController;
-    private ProjetDetailController projetDetailController;
     private LinkedHashMap<List<Integer>, List<String>> GridCaseInfos;
     private ProjetsFormController projetsFormController;
     private GetTasksView getTasksView;
     private AddListController addListController;
+    private TachesFormController tachesFormController;
+    private GestionnaireListe gestionnaireListe ;
 
-    public GetTasksController(GetTasksView getTasksView,AddListController addListController, ControllerFromTacheAjout controllerFromTacheAjout) {
+    public GetTasksController(GetTasksView getTasksView, AddListController addListController,
+            ControllerFromTacheAjout controllerFromTacheAjout) {
         this.getTasksView = getTasksView;
         this.gestionnaireTache = new GestionnaireTache();
         this.controllerFromTacheAjout = controllerFromTacheAjout;
@@ -39,9 +42,8 @@ public class GetTasksController {
         this.displayTasksForList();
     }
 
-
-
-    public GetTasksController(GetTasksView getTasksView, AddProjetController addProjetController , ControllerFromTacheAjout controllerFromTacheAjout) {
+    public GetTasksController(GetTasksView getTasksView, AddProjetController addProjetController,
+            ControllerFromTacheAjout controllerFromTacheAjout) {
         this.getTasksView = getTasksView;
         this.gestionnaireTache = new GestionnaireTache();
         this.addProjetController = addProjetController;
@@ -49,18 +51,56 @@ public class GetTasksController {
         this.displayTasksForProject();
     }
 
+    public GetTasksController(GetTasksView getTasksView, TachesFormController tachesFormController,ControllerFromTacheAjout controllerFromTacheAjout) {
+        this.getTasksView = getTasksView;
+        this.gestionnaireTache = new GestionnaireTache();
+        this.gestionnaireListe = new GestionnaireListe();
+        this.tachesFormController = tachesFormController;
+        this.controllerFromTacheAjout = controllerFromTacheAjout;
+        this.displayTasksForWindowTasks();
+    }
+
+    private void displayTasksForWindowTasks() {
+            System.out.println("Displaying tasks");
+            GridCaseInfos = new LinkedHashMap<>();
+    
+            if (getTasksMapForListDestail().isEmpty()) {
+                System.out.println("No tasks available");
+                return;
+            }
+    
+            int colCount = 0;
+            int rowCount = 0;
+    
+            for (Map.Entry<String, String> entry : getTasksMapForListDestail().entrySet()) {
+                String taskTitle = entry.getValue();
+    
+                CheckBox checkBox = createCheckBox(taskTitle);
+                this.getTasksView.getZoneTasks().add(checkBox, colCount, rowCount);
+    
+                GridCaseInfos.put(List.of(rowCount, colCount), List.of(entry.getKey(), taskTitle));
+                colCount++;
+                if (colCount == 4) {
+                    colCount = 0;
+                    rowCount++;
+                }
+            }
+        }
+
+
     // Method to get all tasks
     public LinkedHashMap<String, String> getTasksMapForList() {
         LinkedHashMap<String, String> tasksMap = new LinkedHashMap<>();
         List<Document> tasks = this.gestionnaireTache.getAllTasks();
-    
+
         for (Document task : tasks) {
             // Récupérer l'identifiant et le titre de la tâche
             String id = task.getObjectId("_id").toString();
             String title = task.getString("titre");
             String liste = task.getString("liste");
-    
-            // Vérifier si le titre n'est pas null et pas vide, et si le champ 'liste' est vide
+
+            // Vérifier si le titre n'est pas null et pas vide, et si le champ 'liste' est
+            // vide
             if (title != null && !title.trim().isEmpty() && (liste == null || liste.trim().isEmpty())) {
                 tasksMap.put(id, title);
             }
@@ -71,22 +111,42 @@ public class GetTasksController {
     public LinkedHashMap<String, String> getTasksMapForProjet() {
         LinkedHashMap<String, String> tasksMap = new LinkedHashMap<>();
         List<Document> tasks = this.gestionnaireTache.getAllTasks();
-    
+
         for (Document task : tasks) {
             // Récupérer l'identifiant et le titre de la tâche
             String id = task.getObjectId("_id").toString();
             String title = task.getString("titre");
             String projet = task.getString("projet");
-    
-            // Vérifier si le titre n'est pas null et pas vide, et si le champ 'liste' est vide
+
+            // Vérifier si le titre n'est pas null et pas vide, et si le champ 'liste' est
+            // vide
             if (title != null && !title.trim().isEmpty() && (projet == null || projet.trim().isEmpty())) {
                 tasksMap.put(id, title);
             }
         }
         return tasksMap;
     }
-    
-    
+
+    public LinkedHashMap<String, String> getTasksMapForListDestail() {
+        LinkedHashMap<String, String> tasksMap = new LinkedHashMap<>();
+        List<Document> tasks = this.gestionnaireTache.getAllTasks();
+
+        for (Document task : tasks) {
+            // Récupérer l'identifiant et le titre de la tâche
+            String id = task.getObjectId("_id").toString();
+            String title = task.getString("titre");
+            String projet = task.getString("projet");
+            String liste = task.getString("liste");
+
+            // Vérifier si le titre n'est pas null et pas vide, et si le champ 'liste' est
+            // vide
+            if (title != null && !title.trim().isEmpty() && (projet == null || projet.trim().isEmpty())
+                    && (liste == null || liste.trim().isEmpty())) {
+                tasksMap.put(id, title);
+            }
+        }
+        return tasksMap;
+    }
 
     // Method to handle cancel button
     public void handleCancelButton(ActionEvent eventAddList) {
@@ -94,7 +154,12 @@ public class GetTasksController {
             Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
             addTacheview view = new addTacheview(this.controllerFromTacheAjout);
             view.start(stage);
-        } if(this.addProjetController != null) {
+        }
+        else if (this.addProjetController != null) {
+            AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
+            Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
+            view.start(stage);
+        }else if (this.tachesFormController != null) {
             AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
             Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
             view.start(stage);
@@ -164,29 +229,39 @@ public class GetTasksController {
                 if (checkBox.isSelected()) {
                     String task = checkBox.getText();
                     String id = getIdFromMap(GridCaseInfos, GridPane.getRowIndex(node), GridPane.getColumnIndex(node));
-                    System.out.println("Task selected: " + task + " with id: " + id);
-                    System.out.println("AddListController: " + this.addListController);
-                    System.out.println("AddProjetController: " + this.addProjetController);
                     if (this.addListController != null) {
-                        System.out.println("AddListController is not null");
                         this.addListController.addNewTask(id, task);
                         this.addListController.displayTasks();
                         this.closerWindow(eventAddList);
-                    } if(this.addProjetController != null) {
-                        System.out.println("AddProjetController is not null");
+                    }
+                    else if (this.addProjetController != null) {
                         LinkedHashMap<String, String> taskprojet = new LinkedHashMap<>();
                         taskprojet.put(id, task);
                         this.addProjetController.addTask(taskprojet);
                         this.addProjetController.displayTasks();
                         this.closerWindow(eventAddList);
                     }
+                    else if(this.tachesFormController != null) {
+                        System.out.println("Adding task to taches form");
+                        this.tachesFormController.addTask(id, task);
+                        System.out.println("titre"+task);
+                        this.gestionnaireTache.updateIdListForTask(id, this.tachesFormController.getListId());
+                        this.gestionnaireListe.addtaskid(this.tachesFormController.getListId(), id);
+                        this.tachesFormController.displayedTasks(false);
+                        this.closerWindow(eventAddList);
+                    }
+                    else {
+                        System.out.println("No controller found");
+                    }
                 }
             }
         }
         // if(this.addProjetController != null) {
-        //     AddProjetView view = new AddProjetView(this.addProjetController, this.projetsFormController);
-        //     Stage stage = (Stage) ((Node) eventAddList.getSource()).getScene().getWindow();
-        //     view.start(stage);
+        // AddProjetView view = new AddProjetView(this.addProjetController,
+        // this.projetsFormController);
+        // Stage stage = (Stage) ((Node)
+        // eventAddList.getSource()).getScene().getWindow();
+        // view.start(stage);
         // }
     }
 
