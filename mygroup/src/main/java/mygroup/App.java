@@ -23,7 +23,7 @@ import mygroup.presentation.listes.ListeFormView;
 import mygroup.presentation.login.LoginController;
 import mygroup.presentation.login.LoginFormView;
 import mygroup.presentation.projet_detail.ProjetDetailController;
-import mygroup.presentation.projet_detail.Projet_Detail_View;
+import mygroup.presentation.projet_detail.ProjetDetailView;
 import mygroup.presentation.projets.ProjetsFormController;
 import mygroup.presentation.projets.ProjetsFormView;
 import mygroup.presentation.seance.SeanceFormController;
@@ -58,9 +58,6 @@ public class App extends Application {
         // addTacheview view = new addTacheview();
         // view.start(primaryStage);
 
-        // ProjetDetailController con = new ProjetDetailController() ;
-        // Projet_Detail_View view = new Projet_Detail_View(con) ;
-        // view.start(primaryStage) ;
 
         // SeanceFormView seance = new SeanceFormView();
         // seance.start(primaryStage);
@@ -68,8 +65,6 @@ public class App extends Application {
         // SeanceFormView view = new SeanceFormView();
         // view.start(primaryStage);
 
-        // Projet_Detail_View view = new Projet_Detail_View();
-        // view.start(primaryStage);
 
         // SceanceAjouteView view = new SceanceAjouteView();
         // view.start(primaryStage);
@@ -89,8 +84,8 @@ public class App extends Application {
         // LoginFormView view = new LoginFormView(primaryStage) ;
         // view.start(primaryStage) ;
 
-        ListeFormView view = new ListeFormView();
-        view.start(primaryStage);
+        // ListeFormView view = new ListeFormView();
+        // view.start(primaryStage);
 
         // presentation.tache_detail.screen view = new
         // presentation.tache_detail.screen() ;
@@ -99,6 +94,9 @@ public class App extends Application {
         // view.start(primaryStage) ;
 
         // tacheDetailController con = new tacheDetailController("663bbacc6d8e33b7e243ded3", primaryStage) ;
+
+        ProjetDetailView view = new ProjetDetailView();
+        view.start(primaryStage);
     }
 
     @Override

@@ -119,4 +119,8 @@ public class GestionnaireProjet {
        return this.daoProjet.getLastProjetId();
     }
 
+    public List<String> getSeances(String selectedProjetId) {
+        return this.daoProjet.getSeances(selectedProjetId);
+    }
+
 }

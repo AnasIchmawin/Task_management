@@ -4,6 +4,7 @@ package mygroup.presentation.projet_detail;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -23,7 +24,7 @@ import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.taches.TachesFormView;
 
 
-public class Projet_Detail_View extends Application {
+public class ProjetDetailView extends Application {
 
     private static final Pos RIGHT = Pos.BOTTOM_RIGHT;
     private static final Pos CENTER_RIGHT = Pos.CENTER_RIGHT;
@@ -55,9 +56,11 @@ public class Projet_Detail_View extends Application {
     private String type;
     private TachesFormView tacheView;
     private AddProjetController addProjetController;
+    private GridPane gridPane;
+    private VBox contenaireSeances;
 
 
-    public Projet_Detail_View() {
+    public ProjetDetailView() {
         init();
         style();
         action();    
@@ -107,13 +110,15 @@ public class Projet_Detail_View extends Application {
         // le background de la page gris
         StackPane container = new StackPane();
         container.getStyleClass().add("container");
-        container.setPadding(new Insets(20, 20, 20, 10)); // 15px padding top, 70px padding right,
+        container.setPadding(new Insets(20, 0, 20, 0));
         // 20px padding bottom, 55px padding left
 
         // Créer un conteneur VBox pour contenir les éléments principaux
         HBox HeadBox = BoxHead(Title,dateDebut,dateFin, categorie,type);
         HBox Descr_Seances = Descr_Seances();
+        Descr_Seances.setPadding(new Insets(0, 10, 0, 0));
         HBox Taches_doc = Taches_doc();
+        Taches_doc.setPadding(new Insets(0, 10, 0, 10));
 
         // Création du VBox
         VBox vbox = new VBox(30); // Espacement vertical entre les HBox
@@ -131,11 +136,10 @@ public class Projet_Detail_View extends Application {
     }
 
     private VBox createSeancesBox() {
-        GridPane gridPane = creatZoneDocs();
         VBox contenaire = new VBox();
         contenaire.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
 
-        VBox contenaireSeances = new VBox(30);    
+        contenaireSeances = new VBox(30);    
         contenaireSeances.setSpacing(20);
 
         VBox contenaireButton = new VBox();
@@ -276,6 +280,7 @@ public class Projet_Detail_View extends Application {
         // Titre
         Label titre = new Label(Title);
         settitle("titre de mon projet");
+        titre.setPadding(new Insets(0, 0, 0, 10));
 
         // labels
         Label dateDebutLabel = new Label(dateDebut);
@@ -324,7 +329,7 @@ public class Projet_Detail_View extends Application {
         hbox1.setAlignment(Pos.CENTER_LEFT);
         hbox1.setPadding(new Insets(0, 0, 0, 0));
         hbox2.setAlignment(Pos.CENTER_RIGHT);
-        hbox2.setPadding(new Insets(0, 0, 0, 0));
+        hbox2.setPadding(new Insets(0, 8, 0, 0));
         vbox1.setAlignment(Pos.CENTER);
         vbox2.setAlignment(Pos.CENTER);
         vbox3.setAlignment(Pos.CENTER);
@@ -358,6 +363,7 @@ public class Projet_Detail_View extends Application {
         archiveButton = new Button("Archive");
         ZoneListes = createGridPane();
         ZoneTaches = createGridPane();
+        gridPane = creatZoneDocs();
         scrollPane = createScrollPane(ZoneListes);
         descriptionLabel = new Label();
         ContainerGoogleCalendar = new VBox();
@@ -389,17 +395,17 @@ public class Projet_Detail_View extends Application {
         // confirmerButton.setOnAction(event -> {
         //     controller.handleConfirmerButtonAction();
         // });
-        // listesButton.setOnAction(event -> {
-        //     this.controller.handleListesButtonAction();
-        // });
+        listesButton.setOnAction(event -> {
+            this.controller.handleListesButtonAction();
+        });
 
-        // archiveButton.setOnAction(event -> {
-        //     this.controller.handleArchiveButtonAction();
-        // });
+        archiveButton.setOnAction(event -> {
+            this.controller.handleArchiveButtonAction();
+        });
 
-        // projectsButton.setOnAction(event -> {
-        //     this.controller.handleProjectsButtonAction();
-        // });
+        projectsButton.setOnAction(event -> {
+            this.controller.handleProjectsButtonAction();
+        });
         ajouterTacheButton.setOnAction(event -> {
             controller.getTasksView(event);
         });
@@ -625,6 +631,10 @@ public void setTacheView(TachesFormView tacheView) {
 
 public void setAddProjetController(AddProjetController addProjetController) {
     this.addProjetController = addProjetController;
+}
+
+public GridPane getZoneSeances() {
+    return gridPane;
 }
 
 
