@@ -9,7 +9,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import mygroup.metier.POJO.POJODocument;
 import mygroup.presentation.projet_detail.ProjetDetailController;
-import mygroup.presentation.projet_detail.Projet_Detail_View;
+import mygroup.presentation.projet_detail.ProjetDetailView;
 import mygroup.presentation.seance.SeanceFormController;
 import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
 import mygroup.presentation.taches.TachesFormController;

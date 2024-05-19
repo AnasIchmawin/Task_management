@@ -13,13 +13,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import mygroup.metier.Gestionnaire.GestionnaireListe;
-import mygroup.metier.Gestionnaire.GestionnaireProjet;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
 import mygroup.presentation.GetTaskFromCalendar.GetTaskFromCalendar;
 import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormController;
 import mygroup.presentation.listes.ListeFormView;
-import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.projets.ProjetsFormView;
 import mygroup.presentation.tache_ajoute.addTacheview;
 import mygroup.presentation.tache_detail.tacheDetailView;
@@ -83,8 +81,8 @@ public class TachesFormController {
 
     // create task
     public Button createTask(String taskName, Boolean isChecked, String tacheId) {
-        Button cloneButton = createButtonWithIcon("file:Pictures/clone.png");
-        Button deleteButton = createButtonWithIcon("file:Pictures/delete.png");
+        Button cloneButton = createButtonWithIcon("file:./mygroup/src/main/java/Pictures/clone.png");
+        Button deleteButton = createButtonWithIcon("file:./mygroup/src/main/java/Pictures/delete.png");
         Button taskButton = new Button("");
         CheckBox taskCheckBox = createTaskCheckBox(taskName, isChecked);
 
@@ -429,4 +427,10 @@ public class TachesFormController {
         tacheModel.addTask(tacheId, titre);
         createTask(titre, false, tacheId);
     }
+
+    public void addTaskforList(String tacheId , String titre){
+        tacheModel.addTask(tacheId, titre);
+    }
+
+    
 }

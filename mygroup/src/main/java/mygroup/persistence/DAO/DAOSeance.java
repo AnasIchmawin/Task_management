@@ -136,6 +136,18 @@ public class DAOSeance {
         } catch (Exception e) {
             System.err.println("Erreur lors de la mise à jour des séances : " + e.getMessage());
         }
+    
+}
 
-    }
+public String getTitle(String seanceId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("seances");
+            ObjectId objId = new ObjectId(seanceId);
+            Document doc = collection.find(Filters.eq("_id", objId)).first();
+            return doc.getString("titre");
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération du titre de la séance : " + e.getMessage());
+            return null;
+        }
+}
 }

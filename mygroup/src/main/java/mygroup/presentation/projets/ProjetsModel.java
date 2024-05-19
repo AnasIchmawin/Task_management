@@ -4,6 +4,7 @@ import java.util.*;
 
 public class ProjetsModel {
     private LinkedHashMap<String, String> projets;
+    private String selectedProjetId="6641251cc5f85d3ab8b28362";
 
     public ProjetsModel(LinkedHashMap<String, String> projets) {
         this.projets = projets;
@@ -34,5 +35,9 @@ public class ProjetsModel {
             sortedList.put(entry.getKey(), entry.getValue());
         }
         this.setProjets(sortedList);
+    }
+
+    public String getSelectedProjetId() {
+        return selectedProjetId;
     }
 }

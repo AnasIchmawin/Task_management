@@ -309,6 +309,16 @@ public class ControllerFromTacheAjout {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             view.start(stage);
         }
+        else if (this.tachesFormController != null) {
+            GetTasksView view = new GetTasksView(this.tachesFormController, this);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            view.start(stage);
+        }
+        else {
+            // GetTasksView view = new GetTasksView(this, this);
+            // Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            // view.start(stage);
+        }
   
 
     }
