@@ -1,7 +1,6 @@
 package mygroup.presentation.projet_detail;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -9,6 +8,7 @@ public class ProjectDetailModel {
     private LinkedHashMap<String, String> displayedTasks;
     private LinkedHashMap<String, String> displayedSeances;
     private LinkedHashMap<String, Boolean> displayedTasksEtat;
+    private String ProjetID;
 
 
     private String title;
