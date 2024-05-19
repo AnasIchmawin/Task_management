@@ -42,7 +42,7 @@ public class ProjetDetailController {
     private GestionnaireProjet gestionnaireProjet;
     private static GestionnaireTache gestionnaireTache;
     private static TachesFormModel tacheModel;
-    private ProjectDetail modele;
+    private ProjectDetail projectDetail;
     private GetDocModel model;
     private Projet_Detail_View view;
 
@@ -53,7 +53,7 @@ public class ProjetDetailController {
         this.view = view;
 
         this.gestionnaireDocument = new GestionnaireDocument();
-        modele = new ProjectDetail(
+        projectDetail = new ProjectDetail(
                 "Project Title",
                 "Project Description",
                 "2024-01-01",
@@ -178,11 +178,11 @@ public class ProjetDetailController {
     }
 
     public String getProjetId() {
-        return "6648b77851ea2825a01cd3de";
+        return this.model.getIdProjet();
     }
 
     public void displayedTasks(boolean isSorted) {
-        tacheModel.setdisplayedTasks(getTacheMap());
+        tacheModel.setDisplayedTasks(getTacheMap());
         if (isSorted) {
             tacheModel.sortTasksByTitle();
         }
@@ -190,9 +190,9 @@ public class ProjetDetailController {
         int colCount = 0;
         int rowCount = 0;
 
-        for (Map.Entry<String, String> entry : tacheModel.getdisplayedTasks().entrySet()) {
+        for (Map.Entry<String, String> entry : tacheModel.getDisplayedTasks().entrySet()) {
             createTask(view.getZoneTaches(), entry.getValue(), getTaskEtat(entry.getKey()), entry.getKey());
-            tacheModel.addGridInfosCase(List.of(rowCount, colCount), entry.getKey());
+            // tacheModel.addGridInfosCase(List.of(rowCount, colCount), entry.getKey());
 
             if (++colCount == 3) {
                 colCount = 0;

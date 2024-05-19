@@ -158,31 +158,27 @@ public String getType(String id) {
 }
 
     public LinkedHashMap<String,Boolean> getTaches(String projetId) {
-                LinkedHashMap<String,Boolean> taches = new LinkedHashMap<>();
-                try {
-                    MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                            .getCollection("projets");
-                    
-                    // Convert listeId to ObjectId
-                    ObjectId objectId = new ObjectId(projetId);
-                    
-                    Document projet = collection.find(Filters.eq("_id", objectId)).first();
-                    if (projet != null) {
-                        @SuppressWarnings("unchecked")
-                        List<Document> tachesList = (List<Document>) projet.get("taches");
-                        if (tachesList != null) {
-                            for (Document tache : tachesList) {
-                                taches.put(tache.getString("id"), tache.getBoolean("checked"));
-                            }
-                        }
-                    } else {
-                        System.err.println("Projet not found with ID: " + projetId);
+        LinkedHashMap<String,Boolean> taches = new LinkedHashMap<>();
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
+            ObjectId objId = new ObjectId(projetId);
+            Document projet = collection.find(Filters.eq("_id", objId)).first();
+            if (projet != null) {
+                @SuppressWarnings("unchecked")
+                List<Document> tachesList = (List<Document>) projet.get("taches");
+                if (tachesList != null) {
+                    for (Document tache : tachesList) {
+                        taches.put(tache.getString("id"), tache.getBoolean("checked"));
                     }
-                } catch (Exception e) {
-                    System.err.println("Error retrieving tasks from the project: " + e.getMessage());
                 }
-                return taches;
+            } else {
+                System.err.println("Projet non trouvée avec l'ID: " + projetId);
             }
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération des taches du projet : " + e.getMessage());
+        }
+        return taches;
+    }
 
     public void setTacheToProjet(String ProjetId, String tacheId) {
         try {
