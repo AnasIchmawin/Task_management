@@ -139,7 +139,7 @@ public class DAOTache {
             if (tache != null) {
                 Document doc = new Document();
                 if (title != null) {
-                    doc.append("title", title);
+                    doc.append("titre", title);
                 }
                 if (description != null) {
                     doc.append("description", description);

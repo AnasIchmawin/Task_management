@@ -1,6 +1,8 @@
 package mygroup.presentation.tache_detail;
 
-
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class tacheDetailModel {
     private String title;
@@ -9,6 +11,7 @@ public class tacheDetailModel {
     private String categorie;
     private String type;
     private String description;
+    private LinkedHashMap<String, ArrayList<String>> ListOfDocuments;
 
     // Constructor
     public tacheDetailModel(String title, String dateDebut, String dateFin, String categorie, String type, String description) {
@@ -67,4 +70,14 @@ public class tacheDetailModel {
     public void setDescription(String description) {
         this.description = description;
     }
+    public void addDocToTache(String idLastDoc, String titre, String description2, String url) {
+        ArrayList<String> doc = new ArrayList<>();
+        doc.add(titre);
+        doc.add(description2);
+        doc.add(url);
+        ListOfDocuments.put(idLastDoc, doc);
+    }
+    public LinkedHashMap<String, ArrayList<String>> getListOfDocuments() {
+        return ListOfDocuments;
+        }
 }

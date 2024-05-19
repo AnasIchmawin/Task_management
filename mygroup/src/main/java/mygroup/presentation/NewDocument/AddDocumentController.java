@@ -41,6 +41,7 @@ public class AddDocumentController {
         gestionnaireDocument = new GestionnaireDocument();
     }
 
+
     public AddDocumentController(AddDocumentView view, ProjetDetailController projetDetailController) {
         this.view = view;
         this.projetDetailController = projetDetailController;
@@ -66,20 +67,20 @@ public class AddDocumentController {
     }
 
     // public void saveDocumentFromTacheDetail() {
-    // String titre = view.getTitreField();
-    // String url = view.getURL();
-    // String desc = view.getDescription();
+    //     String titre = view.getTitreField();
+    //     String url = view.getURL();
+    //     String desc = view.getDescription();
 
-    // // Vérifiez si l'URL est accessible
-    // if (gestionnaireDocument.isUrlAccessible(url)) {
-    // System.out.println("L'URL est accessible.");
-    // BienEnregistre();
-    // POJODocument document = new POJODocument(titre, desc, url);
-    // this.gestionnaireDocument.setPojoDocument(document);
-    // this.gestionnaireDocument.creerDocument();
-    // } else {
-    // NonEnregistre();
-    // }
+    //     // Vérifiez si l'URL est accessible
+    //     if (gestionnaireDocument.isUrlAccessible(url)) {
+    //         System.out.println("L'URL est accessible.");
+    //         BienEnregistre();
+    //         POJODocument document = new POJODocument(titre, desc, url);
+    //         this.gestionnaireDocument.setPojoDocument(document);
+    //         this.gestionnaireDocument.creerDocument();
+    //     } else {
+    //         NonEnregistre();
+    //     }
     // }
 
     public void handleSaveButtonAction() {
@@ -101,7 +102,7 @@ public class AddDocumentController {
                 addProjetController.displayDocuments();
             } else if (projetDetailController != null) {
                 // projetDetailController.addDocument(doc);
-                // projetDetailController.displayDocuments();
+                projetDetailController.displayDocuments();
             } else if (SceanceAjouteController != null) {
                 SceanceAjouteController.addDocToSeance(this.gestionnaireDocument.getIdLastDoc(), titre);
                 SceanceAjouteController.displayDocuments();
@@ -109,9 +110,9 @@ public class AddDocumentController {
                 controllerFromTacheAjout.addDocToTache(this.gestionnaireDocument.getIdLastDoc(), titre);
                 controllerFromTacheAjout.displayDocuments();
             } else if (controllerFromTacheDetail != null) {
-                // controllerFromTacheDetail.addDocToTache(this.gestionnaireDocument.getIdLastDoc(),
-                // titre);
-                // controllerFromTacheDetail.displayDocuments();
+                controllerFromTacheDetail.addDocToTache(this.gestionnaireDocument.getIdLastDoc(),
+                titre, desc, url);
+                controllerFromTacheDetail.displayDocuments();
             } else if (SeanceFormController != null) {
                 SeanceFormController.addDocToSeance(titre, this.gestionnaireDocument.getIdLastDoc());
                 SeanceFormController.displayAvailableDocuments();

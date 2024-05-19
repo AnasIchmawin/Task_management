@@ -408,4 +408,10 @@ public class ProjetDetailController {
         projets.start(stage);
     }
 
+	public void addTask(String tacheId, String titre) {
+        projectDetailModel.addTask(tacheId, titre);
+        Button taskButton = createTask(projetDetailView.getZoneTaches(), titre, false, tacheId);
+        projetDetailView.getZoneTaches().getChildren().add(taskButton);
+	}
+
 }
