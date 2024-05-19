@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mygroup.presentation.NewList.AddListController;
 import mygroup.presentation.NewProjet.AddProjetController;
+import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
 import mygroup.presentation.projet_detail.ProjetDetailController;
 
 public class GetTasksView {
@@ -30,18 +31,11 @@ public class GetTasksView {
     private ScrollPane scrollPane;
     private GridPane ZoneTasks;
 
-    // public GetTasksView(AddListController addListController) {
-    //     init();
-    //     style();
-    //     action();
-    //     this.controller = new GetTasksController(this, addListController);
-    // }
-
-    public GetTasksView(AddProjetController addProjetController) {
+    public GetTasksView(AddListController addListController ,ControllerFromTacheAjout controllerFromTacheAjout) {
         init();
         style();
         action();
-       this.controller = new GetTasksController(this, addProjetController);
+        this.controller = new GetTasksController(this, addListController, controllerFromTacheAjout);
     }
     public GetTasksView(ProjetDetailController projetDetailController) {
         init();
@@ -50,26 +44,14 @@ public class GetTasksView {
        this.controller = new GetTasksController(this, projetDetailController);
     }
 
+    public GetTasksView(AddProjetController addProjetController) {
+        init();
+        style();
+        action();
+        this.controller = new GetTasksController(this, addProjetController);
+    }
 
     public void start(Stage primaryStage) {
-        VBox taskContainer = createVBox(5, Pos.TOP_CENTER);
-        taskContainer.setPadding(new Insets(20, 0, 0, 20));
-
-        // Adding ScrollPane to the center of BorderPane
-        root.setCenter(scrollPane);
-
-        HBox buttonContainer = createHBox(25, Pos.CENTER);
-        buttonContainer.getChildren().addAll(confirmButton, cancelButton);
-
-        root.setTop(titleLabel);
-        root.setBottom(buttonContainer);
-        BorderPane.setAlignment(titleLabel, Pos.CENTER);
-
-        Insets buttonMargin = new Insets(0, 0, 20, 0);
-
-        // Applying margins to button container
-        BorderPane.setMargin(buttonContainer, buttonMargin);
-
         Scene scene = new Scene(root, 550, 520);
         scene.getStylesheets().add(getClass().getResource("GetTaskStyle.css").toExternalForm());
         primaryStage.setScene(scene);
@@ -83,6 +65,16 @@ public class GetTasksView {
         confirmButton = createButton("Confirmer", "file:./mygroup/src/main/java/Pictures/confirmer.png", 16, 16);
         cancelButton = createButton("Annuler", "file:./mygroup/src/main/java/Pictures/annuler.png", 20, 20);
         scrollPane = createScrollPane(createTaskGridPane());
+        VBox taskContainer = createVBox(5, Pos.TOP_CENTER);
+        taskContainer.setPadding(new Insets(20, 0, 0, 20));
+        root.setCenter(scrollPane);
+        HBox buttonContainer = createHBox(25, Pos.CENTER);
+        buttonContainer.getChildren().addAll(confirmButton, cancelButton);
+        root.setTop(titleLabel);
+        root.setBottom(buttonContainer);
+        BorderPane.setAlignment(titleLabel, Pos.CENTER);
+        Insets buttonMargin = new Insets(0, 0, 20, 0);
+        BorderPane.setMargin(buttonContainer, buttonMargin);
     }
 
     private void style() {

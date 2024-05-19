@@ -1,5 +1,6 @@
 package mygroup.presentation.NewList;
 
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -30,12 +31,15 @@ public class AddListView {
     private AddListController addListController;
     private Button ajouterTacheButton;
     private StackPane containerContent;
+    @SuppressWarnings("unused")
+    private ListeFormController listeFormController;
 
     public AddListView(ListeFormController listeFormController) {
         init();
         style();
         action();
         this.addListController = new AddListController(this, listeFormController);
+        this.listeFormController = listeFormController;
     }
 
     public AddListView(AddListController addListController) {
@@ -243,6 +247,11 @@ public class AddListView {
         ZoneTaches = newZoneTaches;
     }
 
+    // get root
+    public BorderPane getRoot() {
+        return root;
+    }
+
     private void action() {
         Annuler.setOnAction(event -> {
             try {
@@ -265,4 +274,8 @@ public class AddListView {
         });
     }
 
+    // getStage
+    public Stage getStage(){
+        return (Stage) root.getScene().getWindow();
+      }
 }

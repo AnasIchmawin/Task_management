@@ -113,6 +113,14 @@
   </dependency>
   
 
+  
+    <dependency>
+      <groupId>io.janusproject</groupId>
+      <artifactId>io.janusproject.plugin</artifactId>
+      <version>0.10.1</version>
+    </dependency>
+  
+
   </dependencies>
 
   <build>

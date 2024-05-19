@@ -1,17 +1,17 @@
-package mygroup.presentation.GetTaskFromCalendar;
+package mygroup.presentation.GetSeanceFromCalendar;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Item {
+public class ItemSeance {
     private final SimpleStringProperty title;
     private final SimpleStringProperty description;
     private final SimpleStringProperty startDate;
     private final SimpleStringProperty endDate;
     private final BooleanProperty selected;
 
-    public Item(boolean selected, String title, String description, String startDate, String endDate) {
+    public ItemSeance(boolean selected, String title, String description, String startDate, String endDate) {
         this.selected = selected ? new SimpleBooleanProperty(true) : new SimpleBooleanProperty(false);
         this.title = title == null ? new SimpleStringProperty("") : new SimpleStringProperty(title);
         this.description = description == null ? new SimpleStringProperty("") : new SimpleStringProperty(description);

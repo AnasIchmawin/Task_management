@@ -230,4 +230,46 @@ public class DAOListe {
                         return null;
                 }
         }
+
+        public void updateListe(String listId, String title, String description) {
+                try {
+                    MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                            .getCollection("listes");
+                    
+                    // Convert listId to ObjectId
+                    ObjectId objectId = new ObjectId(listId);
+                    
+                    Document liste = collection.find(Filters.eq("_id", objectId)).first();
+                    if (liste != null) {
+                        Document doc = new Document();
+                        if (title != null) {
+                            doc.append("titre", title);
+                        }
+                        if (description != null) {
+                            doc.append("description", description);
+                        }
+                        collection.updateOne(Filters.eq("_id", objectId), new Document("$set", doc));
+                    } else {
+                        System.err.println("List not found with ID: " + listId);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error updating the list: " + e.getMessage());
+                }
+        }
+
+        public String getLastListId() {
+                try {
+                        MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                                        .getCollection("listes");
+                        Document lastList = collection.find().sort(new Document("_id", -1)).first();
+                        if (lastList != null) {
+                                return lastList.getObjectId("_id").toString();
+                        } else {
+                                System.err.println("Aucune liste trouvée");
+                        }
+                } catch (Exception e) {
+                        System.err.println("Erreur lors de la récupération de l'ID de la dernière liste : " + e.getMessage());
+                }
+                return null;
+        }
 }

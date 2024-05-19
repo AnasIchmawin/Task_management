@@ -2,6 +2,7 @@ package mygroup.metier.Gestionnaire ;
 import mygroup.metier.POJO.POJOProjet;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -115,5 +116,9 @@ public class GestionnaireProjet {
 
     public void setTacheToProjet(String projetId, String tacheId) {
         daoProjet.setTacheToProjet(projetId, tacheId);
+    }
+
+    public LinkedHashMap<String, String> getProjetsArchiver() {
+        return this.daoProjet.getArchivedProjects();
     }
 }

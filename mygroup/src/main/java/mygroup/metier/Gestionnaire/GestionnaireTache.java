@@ -116,6 +116,11 @@ public class GestionnaireTache {
     public void deleteTask(String tacheId) {
         daoTache.delete(tacheId);
     }
+
+    public void updateTask(String title, String description, String idTache) {
+        daoTache.updateTask(title, description, idTache);
+    }
+
     // GetAllTask
     public List<Document> getAllTasks() {
         return daoTache.getAllTaches();
@@ -126,10 +131,40 @@ public class GestionnaireTache {
         return daoTache.getTitre(tacheId);
     }
 
+    // getDescription
+    public String getDescription(String tacheId) {
+        return daoTache.getDescription(tacheId);
+    }
+
+    // getStartDate
+    public String getStartDate(String tacheId) {
+        return daoTache.getDateDebut(tacheId);
+    }
+
+    // getEndDate
+    public String getEndDate(String tacheId) {
+        return daoTache.getDateFin(tacheId);
+    }
+
+    // get type
+    public String getType(String tacheId) {
+        return daoTache.getType(tacheId);
+    }
+
+    // get categorie
+    public String getCategorie(String tacheId) {
+        return daoTache.getCategorie(tacheId);
+    }
+
+
+    
+
     // getTaskEtat
     public Boolean getTaskEtat(String tacheId) {
         return daoTache.getEtat(tacheId);
     }
+
+    
 
     // setTaskEtat
     public void setTaskEtat(String tacheId, Boolean etat) {
@@ -149,5 +184,22 @@ public class GestionnaireTache {
     public void cloneTask(String tacheId) {
         daoTache.cloneTask(tacheId);
     }
+
+    public void createTacheCalendar() {
+        try{
+        daoTache.create(this.pojoTache.gettitre(), this.pojoTache.getetat(), this.pojoTache.getCategorie(),
+                this.pojoTache.getDescription(), this.pojoTache.getDateDebut(), this.pojoTache.getTempsDebut(),
+                this.pojoTache.getDateFin(), this.pojoTache.getTempsFin(), this.pojoTache.getDocuments(),
+                this.pojoTache.getprojet(), this.pojoTache.getliste());
+        }catch(Exception e){
+            System.out.println("Erreur lors de la création de la tâche calendrier");
+            e.printStackTrace();
+        }
+    }
+
+    public void updateIdListForTask(String Task_ID , String List_ID){
+        if(!Task_ID.isEmpty())
+        this.daoTache.updateListId(Task_ID , List_ID) ;
+      }
 
 }

@@ -3,17 +3,22 @@ package mygroup.presentation.GetTaskFromCalendar;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
 import mygroup.metier.POJO.POJOTache;
 
 public class GetTaskFromCalenderController {
     private String dateTask;
     private GestionnaireTache gestionnaireTache;
-    private ObservableList<Item> listTasItems;
+    private ObservableList<ItemTask> listTasItems;
     private GetTaskFromCalendar getTaskCalendar;
 
     public GetTaskFromCalenderController(GetTaskFromCalendar getTaskCalendar) {
@@ -25,19 +30,19 @@ public class GetTaskFromCalenderController {
     public void handleConfirmButton(ActionEvent event) {
         System.out.println("Confirm Button Clicked");
         System.out.println("Selected Tasks : ");
-        for (Item item : listTasItems) {
+        for (ItemTask item : listTasItems) {
             if (item.isSelected()) {
                 try {
                     POJOTache tache = new POJOTache();
                     tache.setTitre(item.getTitle());
                     tache.setDescription(item.getDescription());
                     tache.setDateDebut(item.getStartDate());
-                    tache.setDateFin(item.getEndDate());
                     this.gestionnaireTache.setTache(tache);
-                    gestionnaireTache.createTache();
-
+                    gestionnaireTache.createTacheCalendar() ;
+                    alert("Tâche ajoutée", "La tâche a été ajoutée avec succès");
+                    this.handleCancelButtonAction(event);
                 } catch (Exception e) {
-                    System.out.println("Erreur lors de la création de la tâche");
+                    alert("Erreur", "Une erreur s'est produite lors de l'ajout de la tâche");
                     e.printStackTrace();
                 }
             }
@@ -51,7 +56,7 @@ public class GetTaskFromCalenderController {
 
     }
 
-    public ObservableList<Item> getDataTasks() {
+    public ObservableList<ItemTask> getDataTasks() {
         GetTaskFromCalendarModel model = new GetTaskFromCalendarModel();
         listTasItems = model.getDataFromGoogle(this.dateTask);
         return listTasItems;
@@ -61,6 +66,19 @@ public class GetTaskFromCalenderController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
         return dateTime;
+    }
+
+      public void alert(String titre, String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(titre);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+
+        // Créer une pause de 1 secondes avant de fermer l'alerte
+        PauseTransition delay = new PauseTransition(Duration.seconds(1));
+        delay.setOnFinished(e -> alert.close()); // Utilise close() pour fermer l'alerte
+        delay.play();
     }
 
 }

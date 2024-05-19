@@ -46,6 +46,7 @@ public class TachesFormView extends Application {
     private VBox navbarContainer;
     private TextField title;
     private VBox description;
+    private Button titleConfButton;
 
     public TachesFormView(ListeFormController listeFormController) {
         init();
@@ -76,6 +77,7 @@ public class TachesFormView extends Application {
         ajouterButton = createButton("Ajouter une tache", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
+        titleConfButton = createButton("", "file:./mygroup/src/main/java/Pictures/check-mark.png", 12, 12);
         ZoneTaches = createGridPane();
         ContainerGoogleCalendar = new VBox();
         ContainerGoogleCalendar.setPadding(new Insets(2, 2, 2, 2));
@@ -186,10 +188,9 @@ public class TachesFormView extends Application {
     private HBox createTitleContainer() {
         title = createTextField();
         HBox titleContainer = new HBox();
-        Button titleConfButton = createButton("", "file:./mygroup/src/main/java/Pictures/check-mark.png", 12, 12);
         titleConfButton.setStyle("-fx-background-color: #transparant; -fx-border-radius: 50px; -fx-background-radius: 50px;");
         titleContainer.getChildren().addAll(titleConfButton, title);
-        HBox.setMargin(titleConfButton, new Insets(10, 0, 0, 30));//
+        HBox.setMargin(titleConfButton, new Insets(10, 0, 0, 30));
         HBox.setMargin(title, new Insets(0, 0, 10, 5));
         titleContainer.setAlignment(Pos.TOP_LEFT);
         return titleContainer;
@@ -351,22 +352,21 @@ public class TachesFormView extends Application {
     }
 
     public String getDescription() {
-        return description.getChildren().get(0).toString();
+        return ((TextArea) description.getChildren().get(0)).getText();
     }
 
     public void setDescription(String description) {
-        this.description.getChildren().clear();
-        this.description.getChildren().add(BoxDescription(description));
+        ((TextArea) this.description.getChildren().get(0)).setText(description);
     }
 
     // Action
     private void Action() {
         ajouterButton.setOnAction(event -> {
-            controller.handleAjouterButtonAction();
+            this.controller.handleAjouterButtonAction();
         });
 
         ordonnerButton.setOnAction(event -> {
-            controller.handleOrdonnerButtonAction();
+            this.controller.handleOrdonnerButtonAction();
         });
 
         listesButton.setOnAction(event -> {
@@ -377,11 +377,15 @@ public class TachesFormView extends Application {
             this.controller.handleArchiveButtonAction();
         });
 
+        titleConfButton.setOnAction(event -> {
+            controller.handleTitleConfButtonAction();
+        });
+
         projectsButton.setOnAction(event -> {
             this.controller.handleProjectsButtonAction();
         });
         confirmerButton.setOnAction(event -> {
-            controller.handleConfirmerButtonAction();
+            this.controller.handleConfirmerButtonAction();
         });
         searchField.textProperty().addListener(new ChangeListener<String>() {
             @Override

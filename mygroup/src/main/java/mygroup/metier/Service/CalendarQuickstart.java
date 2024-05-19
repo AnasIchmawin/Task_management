@@ -1,3 +1,4 @@
+
 package mygroup.metier.Service;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -8,23 +9,16 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
-import com.google.api.services.tasks.Tasks;
-import com.google.api.services.tasks.TasksScopes;
-import com.google.api.services.tasks.model.Task;
-import com.google.api.services.tasks.model.TaskList;
-import com.google.api.services.tasks.model.TaskLists;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import mygroup.presentation.GetTaskFromCalendar.Item;
+import mygroup.presentation.GetSeanceFromCalendar.ItemSeance;
 import com.google.api.client.util.DateTime;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,33 +27,65 @@ import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
+import java.io.File;
 
 public class CalendarQuickstart {
     private static final String APPLICATION_NAME = "Task-Management";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    @SuppressWarnings("unused")
-    private static final String TOKENS_DIRECTORY_PATH = "tokens";
+    private static final String DATA_STORE_DIR = "tokens1";
     private static final List<String> SCOPES_CALENDAR = Arrays.asList(CalendarScopes.CALENDAR_READONLY);
-    private static final List<String> SCOPES_TASKS = Arrays.asList(TasksScopes.TASKS_READONLY);
     private static final String CREDENTIALS_FILE_PATH = "credentials.json";
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT, List<String> scopes)
             throws IOException {
-        InputStream in = CalendarQuickstart.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        InputStream in = TaskQuickstart.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+        java.io.File dataStoreDir = new java.io.File(DATA_STORE_DIR);
+        System.out.println(dataStoreDir.getAbsolutePath());
+        FileDataStoreFactory dataStoreFactory = new FileDataStoreFactory(dataStoreDir);
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, scopes)
+                .setDataStoreFactory(dataStoreFactory)
                 .setAccessType("offline")
                 .build();
+
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
-        return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+        Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+
+        try {
+            // Try to refresh the token
+            if (credential.refreshToken()) {
+                System.out.println("Token refreshed successfully.");
+            } else {
+                throw new IOException("Token refresh failed.");
+            }
+        } catch (IOException e) {
+            // Redirect to the browser to get new permissions
+            credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+        }
+
+        return credential;
     }
 
-    public static ObservableList<Item> getEvents(NetHttpTransport HTTP_TRANSPORT, String date)
+    public static boolean hasPermissions(NetHttpTransport HTTP_TRANSPORT, List<String> scopes)
+            throws IOException {
+        Credential credential = getCredentials(HTTP_TRANSPORT, scopes);
+        if (credential != null && credential.refreshToken()) {
+            return true;
+        }
+        return false;
+    }
+
+    public static ObservableList<ItemSeance> getEvents(NetHttpTransport HTTP_TRANSPORT, String date)
             throws IOException, GeneralSecurityException {
+        if (!hasPermissions(HTTP_TRANSPORT, SCOPES_CALENDAR)) {
+            // Rediriger l'utilisateur vers le navigateur pour obtenir les autorisations
+            return null;
+        }
+
         Credential credential = getCredentials(HTTP_TRANSPORT, SCOPES_CALENDAR);
         Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
@@ -73,64 +99,19 @@ public class CalendarQuickstart {
                 .setSingleEvents(true)
                 .execute();
         List<Event> eventItems = events.getItems();
-        ObservableList<Item> items = FXCollections.observableArrayList();
+        ObservableList<ItemSeance> items = FXCollections.observableArrayList();
         if (!eventItems.isEmpty()) {
             for (Event event : eventItems) {
-                @SuppressWarnings("unused")
                 String title = event.getSummary();
+                String description = event.getDescription();
                 String startDate = getFormattedDateTime(event.getStart());
                 String endDate = getFormattedDateTime(event.getEnd());
                 if (startDate.contains(date) || endDate.contains(date)) {
-                    System.out.println("valid date");
-                    // items.add(new Item(false, title, startDate, endDate));
+                    items.add(new ItemSeance(false, title, description, startDate, endDate));
                 }
             }
         }
         return items;
-    }
-
-    public static ObservableList<Item> getTasks(NetHttpTransport HTTP_TRANSPORT, String date)
-            throws IOException, GeneralSecurityException {
-
-        // Obtain the credentials
-        Credential credential = getCredentials(HTTP_TRANSPORT, SCOPES_TASKS);
-
-        // Build the tasks service
-        Tasks tasksService = new Tasks.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
-                .setApplicationName(APPLICATION_NAME)
-                .build();
-
-        // Fetch the list of task lists
-        TaskLists taskLists = tasksService.tasklists().list().execute();
-        ObservableList<Item> items = FXCollections.observableArrayList();
-        for (TaskList taskList : taskLists.getItems()) {
-            com.google.api.services.tasks.model.Tasks tasks = tasksService.tasks().list(taskList.getId()).execute();
-            for (Task task : tasks.getItems()) {
-                String title = task.getTitle();
-                String description = task.getNotes();
-                String dueDate = getFormattedDateTime(task.getDue());
-                // if (dueDate != null && dueDate.contains(date)) {
-                System.out.println("Valid date: " + dueDate);
-                items.add(new Item(false, title, description, dueDate, dueDate));
-            }
-        }
-        // }
-
-        return items;
-    }
-
-    private static String getFormattedDueDate(DateTime dueDate) {
-        if (dueDate == null) {
-            return "";
-        }
-
-        long milliseconds = dueDate.getValue();
-        Date date = new Date(milliseconds);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // Remplacez "GMT" par votre fuseau horaire
-
-        return sdf.format(date);
     }
 
     private static String getFormattedDateTime(EventDateTime eventDateTime) {
@@ -145,16 +126,21 @@ public class CalendarQuickstart {
         return dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0] + " " + timeParts[0] + ":" + timeParts[1];
     }
 
-    @SuppressWarnings("unused")
-    private static String getFormattedDateTime(DateTime taskDateTime) {
-        if (taskDateTime == null) {
-            return "";
+    public static void clearTokenContent() {
+        // Chemin vers le répertoire de stockage des données du token
+        String tokenDirPath = DATA_STORE_DIR;
+        File tokenDir = new File(tokenDirPath);
+        
+        // Vérifiez si le répertoire existe
+        if (tokenDir.exists() && tokenDir.isDirectory()) {
+            // Supprimez tous les fichiers du répertoire
+            File[] files = tokenDir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    file.delete();
+                }
+            }
         }
-        String dateTimeString = (taskDateTime != null) ? taskDateTime.toString()
-                : taskDateTime.toString();
-        String[] dateTimeParts = dateTimeString.split("T");
-        String[] dateParts = dateTimeParts[0].split("-");
-        String[] timeParts = dateTimeParts[1].split(":");
-        return dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0] + " " + timeParts[0] + ":" + timeParts[1];
     }
+    
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public class AddListModel {
     private String Titre;
     private String Description;
-    private LinkedHashMap<String, String> TachesSelectionnees;
+    private LinkedHashMap<String, String> TachesSelectionnees;  // id, titre
 
     public AddListModel(String titre, String description, LinkedHashMap<String, String> tachesSelectionnees) {
         Titre = titre;
@@ -43,9 +43,16 @@ public class AddListModel {
         return new ArrayList<>(getTachesSelectionnees().values());
     }
 
+    public void addTask(String id, String title) {
+        this.TachesSelectionnees.put(id, title);
+    }
+
     public void addList(String titre, String Description, LinkedHashMap<String, String> tachesSelectionnees) {
         this.Titre = titre;
         this.Description = Description;
         this.TachesSelectionnees = tachesSelectionnees;
     }
+
+
+
 }

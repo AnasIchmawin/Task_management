@@ -15,6 +15,7 @@ import mygroup.metier.Gestionnaire.GestionnaireSeance;
 import mygroup.metier.POJO.POJOSeance;
 import mygroup.presentation.GetDocument.GetDocModel;
 import mygroup.presentation.GetDocument.GetDocView;
+import mygroup.presentation.GetSeanceFromCalendar.GetSeanceFromCalendar;
 import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormView;
@@ -26,6 +27,7 @@ public class SceanceAjouteController {
     private GetDocModel model;
     private GestionnaireSeance gestionnaireSeance;
     private AddProjetController addProjetController;
+    private String dateSeanceFormated;
     private ProjetDetailController projetDetailController;
 
     // public SceanceAjouteController(SceanceAjouteView seanceAjouteView, AddProjetController addProjetController) {
@@ -143,5 +145,33 @@ public class SceanceAjouteController {
         PauseTransition delay = new PauseTransition(Duration.seconds(1));
         delay.setOnFinished(e -> alert.close()); // Utilise close() pour fermer l'alerte
         delay.play();
+    }
+
+    public String getDateSeanceFormated() {
+        return dateSeanceFormated;
+    }
+
+    public void setDateSeanceFormated(String dateSeanceFormated) {
+        this.dateSeanceFormated = dateSeanceFormated;
+    }
+
+    public void handleConfirmerButtonAction() {
+          try {
+            String dateSeance = this.seanceAjouteView.getDateSeance();
+            // convert format to DD/MM/YYYY
+            System.out.println("Date Seance: " + dateSeance);
+            String[] date = dateSeance.split("-");
+            this.setDateSeanceFormated(date[2] + "/" + date[1] + "/" + date[0]);
+            GetSeanceFromCalendar GetSeanceFromCalendar = new GetSeanceFromCalendar(this);
+            GetSeanceFromCalendar.start(new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur de saisie");
+            alert.setContentText("Veuillez saisir une date valide");
+            alert.showAndWait();
+        }
+      
     }
 }

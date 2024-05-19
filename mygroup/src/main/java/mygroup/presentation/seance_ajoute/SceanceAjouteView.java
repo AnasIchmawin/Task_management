@@ -19,6 +19,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.projet_detail.ProjetDetailController;
@@ -43,6 +45,9 @@ public class SceanceAjouteView extends Application {
     private DatePicker dateFin;
     private GridPane ZoneDocuments;
     private TextArea ZoneNote;
+    private VBox ContainerGoogleCalendar;
+    private DatePicker dateSeance;
+    Button confirmerButton;
 
     // Constructor
     // public SceanceAjouteView(AddProjetController addProjetController) {
@@ -74,14 +79,18 @@ public class SceanceAjouteView extends Application {
     }
 
     public void init() {
-        leftButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
+        leftButton = createButton("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
         titreField = new TextField();
         titreField.setPromptText("Entrer le titre de la séance");
-        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./mygroup/src/main/java/Pictures/addIcon.png", 20, 20);
+        ajouterDocButton = createButton("Ajouter Document", "file:./mygroup/src/main/java/Pictures/addIcon.png", 20, 20);
         sauvegarderButton = new Button("Sauvegarder");
+        ContainerGoogleCalendar = new VBox();
+        ContainerGoogleCalendar.setPadding(new Insets(2, 2, 2, 2));
+        ContainerGoogleCalendar.setSpacing(5);
+        confirmerButton = createButton("", "file:./mygroup/src/main/java/Pictures/confirmer.png", 29, 29);
 
     }
 
@@ -97,6 +106,8 @@ public class SceanceAjouteView extends Application {
         SurveillerButton(leftButton, "60", "40px", "#3F72AF");
         titreField.getStyleClass().add("Titre-style");
         sauvegarderButton.getStyleClass().add("footBtn-style");
+        ContainerGoogleCalendar.getStyleClass().add("google-calendar-style");
+        confirmerButton.getStyleClass().add("confirm-btn-style");
     }
 
     private BorderPane createBorderPane( StackPane container) {
@@ -162,10 +173,13 @@ public class SceanceAjouteView extends Application {
         ContainerDescription.getChildren().addAll(labelDescription, ZoneDescription);
         leftBox.getChildren().addAll(ContainerDescription);
         leftBox.getChildren().addAll(contenaireDocuments, sauvegarderButton);
-        VBox rightBox = CreateVbox(0, TOP_CENTER);
+        VBox rightBox = CreateVbox(30, TOP_CENTER);
         Label labelNote = createLabel("Note");
         ZoneNote = createTextArea("Ajouter une note", "ZoneNote-Style");
-        rightBox.getChildren().addAll(labelNote, ZoneNote);
+        ContainerGoogleCalendar = createGoogleCalendarContainer();
+        VBox ContainerNote = CreateVbox(0, TOP_CENTER);
+        ContainerNote.getChildren().addAll(labelNote, ZoneNote);
+        rightBox.getChildren().addAll(ContainerNote, ContainerGoogleCalendar);
         rightBox.getStyleClass().add("rightBox-style");
         centerContainer.getChildren().addAll(leftBox, rightBox);
         mainContentContainer.getChildren().add(centerContainer);
@@ -181,6 +195,32 @@ public class SceanceAjouteView extends Application {
         return grid;
     }
 
+    private VBox createGoogleCalendarContainer() {
+        VBox containerGoogleCalendar = new VBox();
+        containerGoogleCalendar.setPadding(new Insets(10, 10, 10, 10));
+        containerGoogleCalendar.setSpacing(5);
+        containerGoogleCalendar.getStyleClass().add("google-calendar-style");
+        Label labelGoogleCalender = new Label("  Importer depuis  Google Calendrier");
+        labelGoogleCalender.getStyleClass().add("google-calendar-label-style");
+        labelGoogleCalender.setWrapText(true);
+        HBox dateGoogleCalendar = createDateGoogleCalendar();
+        containerGoogleCalendar.getChildren().addAll(labelGoogleCalender, dateGoogleCalendar);
+        HBox.setMargin(ContainerGoogleCalendar, new Insets(100, 70, 0, 0));
+        return containerGoogleCalendar;
+    }
+
+    private HBox createDateGoogleCalendar() {
+        HBox dateGoogleCalendar = new HBox();
+        dateGoogleCalendar.setAlignment(Pos.TOP_LEFT);
+        dateGoogleCalendar.setSpacing(5);
+        dateSeance = new DatePicker();
+        dateSeance.setPromptText("YYYY-MM-DD");
+        dateSeance.setPrefWidth(130);
+        HBox.setMargin(confirmerButton, new Insets(2, 0, 0, 0));
+        dateGoogleCalendar.getChildren().addAll(dateSeance, confirmerButton);
+        return dateGoogleCalendar;
+    }
+
     private ScrollPane createScrollPane(GridPane gridPane) {
         ScrollPane scrollPane = new ScrollPane(gridPane);
         scrollPane.setFitToWidth(true);
@@ -191,18 +231,22 @@ public class SceanceAjouteView extends Application {
         return scrollPane;
     }
 
-    private Button createButtonWithIcon(String name, String string, int i, int j) {
-        Button button = new Button(name);
+      private Button createButton(String name, String path, int width, int height) {
+        Button newButton = new Button();
         try {
-            Image icon = new Image(string);
-            ImageView iconView = new ImageView(icon);
-            iconView.setFitWidth(i);
-            iconView.setFitHeight(j);
-            button.setGraphic(iconView);
+            ImageView icon = new ImageView(new Image(path));
+            icon.setFitWidth(width);
+            icon.setFitHeight(height);
+            Text buttonText = new Text(name);
+            buttonText.setFill(Color.WHITE);
+            HBox buttonContent = new HBox(buttonText, icon);
+            buttonContent.setAlignment(Pos.CENTER);
+            buttonContent.setSpacing(4);
+            newButton.setGraphic(buttonContent);
         } catch (Exception e) {
-            System.out.println("Error loading the icon: " + e.getMessage());
+            System.out.println("Erreur lors de la création du bouton : " + e.getMessage());
         }
-        return button;
+        return newButton;
     }
 
     private Label createLabel(String text) {
@@ -318,6 +362,9 @@ public class SceanceAjouteView extends Application {
         sauvegarderButton.setOnAction(event -> {
             this.controller.handleSauvegarderButtonAction();
         });
+        confirmerButton.setOnAction(event -> {
+            this.controller.handleConfirmerButtonAction();
+        });
     }
     public String getTitre() {
         return titreField.getText();
@@ -353,6 +400,10 @@ public class SceanceAjouteView extends Application {
 
     public Stage getStage() {
         return (Stage) root.getScene().getWindow();
+    }
+
+    public String getDateSeance() {
+        return dateSeance.getValue().toString();
     }
 
     public void close() {

@@ -95,5 +95,13 @@ public class GestionnaireListe {
     public void deleteTacheFromListe(String listeId, String tacheId) {
         daoListe.deleteTacheFromListe(listeId, tacheId);
     }
+
+    public void updateListe(String listId, String title, String description) {
+        daoListe.updateListe(listId, title, description);
+    }
+
+    public String getLastListId() {
+        return daoListe.getLastListId();
+    }
 }
 

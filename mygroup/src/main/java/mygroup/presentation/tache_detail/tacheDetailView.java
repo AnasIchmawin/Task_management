@@ -3,13 +3,18 @@ package mygroup.presentation.tache_detail;
 import java.io.File;
 import java.io.IOException;
 import java.awt.Desktop;
+// import java.awt.TextField; // Remove this line
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField; // Add this line
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -17,134 +22,67 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import mygroup.presentation.taches.TachesFormController;
 
 public class tacheDetailView extends Application {
+    private VBox vbox1;
+    private VBox vbox2;
+    private VBox vbox3;
+    private VBox vbox4;
     private Button leftButton;
     private Button listesButton;
     private Button projectsButton;
     private Button archiveButton;
     private BorderPane root;
-    private Label descriptionLabel;
     private tacheDetailController controller;
-    Button addDocButton;
-    Label titleabel ;
-    Label indexDebut;
-    Label indexFin;
-    Label indexCategorie;
-    Label indexType ;
-    Label dateDebutLabel;
-    Label dateFinLabel;
-    Label indexdescription;
-    Label categorieLabel;
-    Label typeLabel;
-    public Label getTitleabel() {
-        return titleabel;
-    }
-
-    public Label getDateDebutLabel() {
-        return dateDebutLabel;
-    }
-
-    public Label getDateFinLabel() {
-        return dateFinLabel;
-    }
-
-    public Label getCategorieLabel() {
-        return categorieLabel;
-    }
-
-    public Label getTypeLabel() {
-        return typeLabel;
-    }
-
-    public Label getDescriptionLabel() {
-        return descriptionLabel;
-    }
+    private Button addDocButton;
+    private Label indexdescription;
+    private Label indexDebut;
+    private Label indexFin;
+    private Label indexCategorie;
+    private Label indexType;
+    private Label dateFinLabel;
+    private Label categorieLabel;
+    private Label typeLabel;
+    private Label dateDebutLabel;
+    private TextField titleabel;
+    private TextField descriptionLabel;
+    private HBox HeadBox;
+    private HBox hbox1;
+    private HBox hbox2;
+    private VBox DescriptionBox;
+    private VBox DocSection;
+    private VBox vbox;
+    private StackPane container;
+    private Button Update;
 
     // Constructor
-    public tacheDetailView() {
+    public tacheDetailView(TachesFormController tachesFormController) {
         init();
         style();
-        controller = new tacheDetailController(this, new tacheDetailModel());
         action();
+        this.controller = new tacheDetailController(this, tachesFormController) ;
     }
-
-    private void action() {
-        listesButton.setOnAction(event -> {
-            controller.listesButtonAction(event);
-        });
-    }
-
-    public HBox Designe(){
-        
-
-        // Titre labels
-        Label indexDebut = new Label("Debut");
-        Label indexFin = new Label("Fin");
-        Label indexCategorie = new Label("Categorie");
-        Label indexType = new Label();
-
-        // Style
-        indexDebut.getStyleClass().add("index-style");
-        indexFin.getStyleClass().add("index-style");
-        indexCategorie.getStyleClass().add("index-style");
-        indexType.getStyleClass().add("index-style");
-
-        // Create Head Box
-        HBox hboxHead = new HBox(10);
-
-        HBox hbox1 = new HBox(10);
-        HBox hbox2 = new HBox(30);
-
-        // Create HBox for labels
-        VBox vbox1 = new VBox(5);
-        VBox vbox2 = new VBox(5);
-        VBox vbox3 = new VBox(5);
-        VBox vbox4 = new VBox(5);
-
-        // centering
-        hbox1.setAlignment(Pos.CENTER_LEFT);
-        hbox1.setPadding(new Insets(0, 0, 0, 30));
-        hbox2.setAlignment(Pos.CENTER_RIGHT);
-        hbox2.setPadding(new Insets(0, 30, 0, 0));
-        vbox1.setAlignment(Pos.CENTER);
-        vbox2.setAlignment(Pos.CENTER);
-        vbox3.setAlignment(Pos.CENTER);
-        vbox4.setAlignment(Pos.CENTER);
-
-        // Add labels to VBoxes
-        vbox1.getChildren().addAll(indexDebut, dateDebutLabel);
-        vbox2.getChildren().addAll(indexFin, dateFinLabel);
-        vbox3.getChildren().addAll(indexCategorie, categorieLabel);
-        vbox4.getChildren().addAll(indexType, typeLabel);
-        hbox1.getChildren().add(titleabel);
-
-        HBox.setHgrow(hbox1, javafx.scene.layout.Priority.ALWAYS);
-        HBox.setHgrow(hbox2, javafx.scene.layout.Priority.ALWAYS);
-
-        hboxHead.getChildren().addAll(hbox1, hbox2);
-
-        // Add VBoxes to HBox
-        hbox2.getChildren().addAll(vbox1, vbox2, vbox3, vbox4);
-        return hboxHead;
-    } 
 
     @Override
     public void start(Stage primaryStage) {
-        // Create the nnavigation bar
-        VBox navbarContainer = createNavbarContainer();
-        // Create the main content
-        StackPane container = Designer();
-        // Create the root layout
-        root = createBorderPane(navbarContainer, container);
-        // Create the scene
         Scene scene = new Scene(root, 1160, 652);
-        // Add the CSS file
         scene.getStylesheets().add(getClass().getResource("TacheStyle.css").toExternalForm());
-        // Set the scene
         primaryStage.setScene(scene);
         primaryStage.setTitle("Tache details");
         primaryStage.show();
+    }
+
+    public void init() {
+        initLabels();
+        initIndexes();
+        initButton();
+        initBoxes();
+        VBox navbarContainer = createNavbarContainer();
+        StackPane container = Designer();
+        getChildren();
+        Alignement();
+        root = createBorderPane(navbarContainer, container);
     }
 
     private BorderPane createBorderPane(VBox navbarContainer, StackPane container) {
@@ -168,51 +106,126 @@ public class tacheDetailView extends Application {
         return navbarContainer;
     }
 
-    private StackPane Designer(){
-        StackPane container = new StackPane();
+    private StackPane Designer() {
+        container = new StackPane();
+        HBox.setHgrow(hbox1, javafx.scene.layout.Priority.ALWAYS);
+        HBox.setHgrow(hbox2, javafx.scene.layout.Priority.ALWAYS);
         container.getStyleClass().add("container");
-        container.setPadding(new Insets(20, 20, 20, 25)); 
-        HBox HeadBox = new HBox();
-        HBox hbox1 = new HBox(10);
-        HBox hbox2 = new HBox(30);
-         // Create HBox for labels
-         VBox vbox1 = new VBox(5);
-         VBox vbox2 = new VBox(5);
-         VBox vbox3 = new VBox(5);
-         VBox vbox4 = new VBox(5);
-
-        //centring
-        hbox1.setAlignment(Pos.CENTER_LEFT);
+        container.setPadding(new Insets(20, 20, 20, 25));        
         hbox1.setPadding(new Insets(0, 0, 0, 30));
-        hbox2.setAlignment(Pos.CENTER_RIGHT);
         hbox2.setPadding(new Insets(0, 30, 0, 0));
-        vbox1.setAlignment(Pos.CENTER);
-        vbox2.setAlignment(Pos.CENTER);
-        vbox3.setAlignment(Pos.CENTER);
-        vbox4.setAlignment(Pos.CENTER);
+        DocSection = DocumentSection();
+        return container;
+    }
 
-
+    public void getChildren() {
         vbox1.getChildren().addAll(indexDebut, dateDebutLabel);
         vbox2.getChildren().addAll(indexFin, dateFinLabel);
         vbox3.getChildren().addAll(indexCategorie, categorieLabel);
         vbox4.getChildren().addAll(indexType, typeLabel);
         hbox1.getChildren().add(titleabel);
-
-        HBox.setHgrow(hbox1, javafx.scene.layout.Priority.ALWAYS);
-        HBox.setHgrow(hbox2, javafx.scene.layout.Priority.ALWAYS);
-
         HeadBox.getChildren().addAll(hbox1, hbox2);
-
         hbox2.getChildren().addAll(vbox1, vbox2, vbox3, vbox4);
-        VBox DescriptionBox = new VBox();
-        descriptionLabel.setWrapText(true);
-        DescriptionBox.getChildren().addAll(indexdescription, descriptionLabel);
-        VBox DocSection = DocumentSection();
-        VBox vbox = new VBox(30);
-        vbox.getChildren().addAll(HeadBox,DescriptionBox, DocSection);
+        DescriptionBox.getChildren().addAll(indexdescription);
+        DescriptionBox.getChildren().add(descriptionLabel);
+        vbox.getChildren().addAll(HeadBox, DescriptionBox, DocSection);
         container.getChildren().add(vbox);
+        container.getChildren().add(Update);
+    }
 
-        return container;
+    public void Alignement() {
+        vbox1.setAlignment(Pos.CENTER);
+        vbox2.setAlignment(Pos.CENTER);
+        vbox3.setAlignment(Pos.CENTER);
+        vbox4.setAlignment(Pos.CENTER);
+        hbox1.setAlignment(Pos.CENTER_LEFT);
+        hbox2.setAlignment(Pos.CENTER_RIGHT);
+        Update.setAlignment(Pos.BOTTOM_RIGHT);
+    }
+
+    private ScrollPane createScrollPaneWithButton(HBox hboxContainer) {
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(hboxContainer);
+        return scrollPane;
+    }
+
+
+   
+
+    public void initLabels() {
+        descriptionLabel = new TextField();
+        titleabel = new TextField();
+        descriptionLabel = new TextField();
+        dateDebutLabel = new Label();
+        dateFinLabel = new Label();
+        categorieLabel = new Label();
+        typeLabel = new Label();
+        descriptionLabel = new TextField();       
+    }
+
+    public void initIndexes(){
+        indexDebut = new Label("Debut");
+        indexFin = new Label("Fin");
+        indexCategorie = new Label("Categorie");
+        indexType = new Label("Type");
+        indexdescription = new Label("Description");
+    }
+
+    public void initButton(){
+        leftButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
+        listesButton = new Button("Listes");
+        projectsButton = new Button("Projets");
+        archiveButton = new Button("Archive");
+        Update = new Button("Save Changes");
+    }
+
+
+    public void initBoxes(){
+        hbox1 = new HBox(10);
+        hbox2 = new HBox(30);
+        vbox1 = new VBox(5);
+        vbox2 = new VBox(5);
+        vbox3 = new VBox(5);
+        vbox4 = new VBox(5);
+        vbox = new VBox(30);
+        HeadBox = new HBox();
+        DescriptionBox = new VBox();
+    }
+
+
+    private void style() {
+        leftButton.getStyleClass().add("left-btn-style");
+        listesButton.getStyleClass().add("button-style");
+        projectsButton.getStyleClass().add("button-style");
+        archiveButton.getStyleClass().add("button-style");
+        dateDebutLabel.getStyleClass().add("title-style");
+        dateFinLabel.getStyleClass().add("title-style");
+        categorieLabel.getStyleClass().add("title-style");
+        typeLabel.getStyleClass().add("title-style");
+        indexDebut.getStyleClass().add("index-style");
+        indexFin.getStyleClass().add("index-style");
+        indexCategorie.getStyleClass().add("index-style");
+        indexType.getStyleClass().add("index-style");
+        indexdescription.getStyleClass().add("index-style");
+        descriptionLabel.getStyleClass().add("description-style");
+        descriptionLabel.getStyleClass().add("description-label");
+        titleabel.getStyleClass().add("index-style");
+        Update.getStyleClass().add("ajout-style");
+        // descriptionLabel.setWrapText(true);
+    }
+
+    private Button createButtonWithIcon(String name, String string, int i, int j) {
+        Button button = new Button(name);
+        try {
+            Image icon = new Image(string);
+            ImageView iconView = new ImageView(icon);
+            iconView.setFitWidth(i);
+            iconView.setFitHeight(j);
+            button.setGraphic(iconView);
+        } catch (Exception e) {
+            System.out.println("Error loading the icon: " + e.getMessage());
+        }
+        return button;
     }
 
     private VBox DocumentSection() {
@@ -225,7 +238,7 @@ public class tacheDetailView extends Application {
         Documentsplat.setPrefHeight(220);
         hboxContainer.setSpacing(10); // Espacement horizontal entre les VBox
 
-        Button addDocButton = new Button("Ajouter un document");
+        addDocButton = new Button("Ajouter un document");
         addDocButton.getStyleClass().add("ajout-style");
 
         // Gestionnaire d'événements pour le bouton
@@ -242,7 +255,7 @@ public class tacheDetailView extends Application {
 
             Systeme.setOnAction(e -> {
                 // Chemin vers le fichier PDF
-                String cheminPDF = "src/presentation/tache_detail/systeme.pdf";
+                String cheminPDF = "mygroup\\src\\main\\java\\mygroup\\presentation\\tache_detail\\systeme.pdf";
 
                 // Vérifier si Desktop est pris en charge par la plateforme
                 if (Desktop.isDesktopSupported()) {
@@ -283,63 +296,71 @@ public class tacheDetailView extends Application {
         return DocSection;
     }
 
-    private ScrollPane createScrollPaneWithButton(HBox hboxContainer) {
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(hboxContainer); 
-        return scrollPane;
-    }
-//----------------------------------------------------------------------------------
-    public void init() {
-        leftButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
-        listesButton = new Button("Listes");
-        projectsButton = new Button("Projets");
-        archiveButton = new Button("Archive");
-        descriptionLabel = new Label();
-        titleabel = new Label();
-        descriptionLabel = new Label();
-        dateDebutLabel = new Label();
-        dateFinLabel = new Label();
-        categorieLabel = new Label();
-        typeLabel = new Label();
-        indexDebut = new Label("Debut");
-        indexFin = new Label("Fin");
-        indexCategorie = new Label("Categorie");
-        indexType = new Label("Type");
-        indexdescription = new Label("Description");
-        descriptionLabel = new Label();
+    void showAlert(String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
-    private void style() {
-        leftButton.getStyleClass().add("left-btn-style");
-        listesButton.getStyleClass().add("button-style");
-        projectsButton.getStyleClass().add("button-style");
-        archiveButton.getStyleClass().add("button-style");
-        descriptionLabel.getStyleClass().add("description-label");
-        titleabel.getStyleClass().add("index-style");
-        dateDebutLabel.getStyleClass().add("title-style");
-        dateFinLabel.getStyleClass().add("title-style");
-        categorieLabel.getStyleClass().add("title-style");
-        typeLabel.getStyleClass().add("title-style");
-        indexDebut.getStyleClass().add("index-style");
-        indexFin.getStyleClass().add("index-style");
-        indexCategorie.getStyleClass().add("index-style");
-        indexType.getStyleClass().add("index-style");
-        indexdescription.getStyleClass().add("index-style");
-        descriptionLabel.getStyleClass().add("description-style");
+
+    public String getTitleLabel() {
+        return titleabel.getText();
     }
 
-    private Button createButtonWithIcon(String name, String string, int i, int j) {
-        Button button = new Button(name);
-        try {
-            Image icon = new Image(string);
-            ImageView iconView = new ImageView(icon);
-            iconView.setFitWidth(i);
-            iconView.setFitHeight(j);
-            button.setGraphic(iconView);
-        } catch (Exception e) {
-            System.out.println("Error loading the icon: " + e.getMessage());
-        }
-        return button;
+    public String getDateFinLabel() {
+        return dateFinLabel.getText();
+    }
+
+    public String getDateDebutLabel() {
+        return dateDebutLabel.getText();
+    }
+
+    public String getCategorieLabel() {
+        return categorieLabel.getText();
+    }
+
+    public String getTypeLabel() {
+        return typeLabel.getText();
+    }
+
+    public String getDescriptionLabel() {
+        return descriptionLabel.getText();
+    }
+
+    public void setTitleLabel(String titleabel) {
+        this.titleabel.setText(titleabel);
+    }
+    
+
+    public void setDateFinLabel(String dateFinLabel) {
+        this.dateFinLabel.setText(dateFinLabel);
+    }
+
+    public void setDateDebutLabel(String dateDebutLabel) {
+        this.dateDebutLabel.setText(dateDebutLabel);
+    }
+
+    public void setCategorieLabel(String categorieLabel) {
+        this.categorieLabel.setText(categorieLabel);
+    }
+
+    public void setTypeLabel(String typeLabel) {
+        this.typeLabel.setText(typeLabel);
+    }
+
+    public void setDescriptionLabel(String descriptionLabel) {
+        this.descriptionLabel.setText(descriptionLabel);
+    }
+
+    private void action() {
+        listesButton.setOnAction(event -> {
+            controller.listesButtonAction(event);
+        });
+        Update.setOnAction(event -> {
+            controller.UpdateButtonAction(event);
+        });
     }
 
 }

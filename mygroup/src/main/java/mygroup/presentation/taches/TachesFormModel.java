@@ -8,7 +8,8 @@ import java.util.Map;
 public class TachesFormModel {
     private LinkedHashMap<String, String> displayedTasks;
     private LinkedHashMap<String, Boolean> displayedTasksEtat;
-    private LinkedHashMap<List<Integer>, String> gridInfosCase;
+    private LinkedHashMap<Integer, String> gridInfosCase;
+    private String TaskSelectedId;
 
     public TachesFormModel(LinkedHashMap<String, String> displayedTasks) {
         this.displayedTasks = displayedTasks;
@@ -16,31 +17,27 @@ public class TachesFormModel {
         this.gridInfosCase = new LinkedHashMap<>();
     }
 
-    public TachesFormModel() {
-        super();
-    }
-
-    public LinkedHashMap<String, String> getdisplayedTasks() {
+    public LinkedHashMap<String, String> getDisplayedTasks() {
         return displayedTasks;
     }
 
-    public void setdisplayedTasks(LinkedHashMap<String, String> displayedTasks) {
+    public void setDisplayedTasks(LinkedHashMap<String, String> displayedTasks) {
         this.displayedTasks = displayedTasks;
     }
 
-    public Boolean getdisplayedTasksEtat(String id) {
+    public Boolean getDisplayedTaskEtat(String id) {
         return displayedTasksEtat.get(id);
     }
 
-    public void setdisplayedTasksEtat(String id, Boolean etat) {
+    public void setDisplayedTaskEtat(String id, Boolean etat) {
         this.displayedTasksEtat.put(id, etat);
     }
 
-    public LinkedHashMap<List<Integer>, String> getGridInfosCase() {
+    public LinkedHashMap<Integer, String> getGridInfosCase() {
         return gridInfosCase;
     }
 
-    public void setGridInfosCase(LinkedHashMap<List<Integer>, String> gridInfosCase) {
+    public void setGridInfosCase(LinkedHashMap<Integer, String> gridInfosCase) {
         this.gridInfosCase = gridInfosCase;
     }
 
@@ -50,6 +47,7 @@ public class TachesFormModel {
 
     public void removeTask(String id) {
         displayedTasks.remove(id);
+        displayedTasksEtat.remove(id); // Remove corresponding task state
     }
 
     public void updateTask(String id, String title) {
@@ -72,8 +70,17 @@ public class TachesFormModel {
         displayedTasksEtat.put(id, etat);
     }
 
-    public void addGridInfosCase(List<Integer> caseId, String taskId) {
-        gridInfosCase.put(caseId, taskId);
+    public String getTaskSelectedId() {
+        return TaskSelectedId;
+    }
+
+    public void setTaskSelectedId(String id){
+        TaskSelectedId = id ;
+    }
+
+    // getvaluer infoscase par key
+    public String getValueGrid(Integer row) {
+        return this.gridInfosCase.get(row);
     }
 
     // sortdisplayedTasks
@@ -83,5 +90,14 @@ public class TachesFormModel {
         displayedTasks.clear();
         list.forEach(entry -> displayedTasks.put(entry.getKey(), entry.getValue()));
     }
+
+    public LinkedHashMap<Integer, String> getGridInfoCase() {
+        return gridInfosCase;
+    }
+
+    public void putInGridInfoCase(Integer Row, String id) {
+        gridInfosCase.put(Row, id);
+    }
+
 
 }

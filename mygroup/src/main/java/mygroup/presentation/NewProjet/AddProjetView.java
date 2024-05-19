@@ -45,19 +45,19 @@ public class AddProjetView {
     private ComboBox<String> comboBox2;
 
     public AddProjetView(ProjetsFormController projetFormController) {
+        init();
+        style();
+        action();
         this.projetFormController = projetFormController;
         this.addProjetController = new AddProjetController(this);
-        init();
-        style();
-        action();
     }
 
-    public AddProjetView(AddProjetController controleur, ProjetsFormController projetFormController) {
-        this.projetFormController = projetFormController;
-        this.addProjetController = controleur;
+    public AddProjetView(AddProjetController controleur, ProjetsFormController projetFormController) {      
         init();
         style();
-        action();
+        action(); 
+        this.projetFormController = projetFormController;
+        this.addProjetController = controleur;
         this.addProjetController.updateView(this);
         this.addProjetController.displayTasks(ZoneTaches);
         // this.controleur.displayDocuments(ZoneDocument);

@@ -1,6 +1,8 @@
 package mygroup.presentation.archive ;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,25 +14,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ArchiveFormView extends Application {
-    private Button leftButton;
     private Button listesButton;
     private Button projectsButton;
     private Button archiveButton;
-    private Button ordonnerButton;
-    private Button filtrerButton;
     private Button searchButton;
     private TextField searchField;
     private ArchiveFormController controller;
     private BorderPane root;
     private ImageView RecycleIconView;
-    private GridPane ZoneListes;
+    private GridPane ZoneProjets;
 
     // Constructor
     public ArchiveFormView() {
@@ -69,8 +66,8 @@ public class ArchiveFormView extends Application {
 
     private VBox createNavbarContainer() {
         HBox buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
-        HBox leftButtonBox = new HBox(20, leftButton);
-        HBox navbar = new HBox(30, leftButtonBox, buttonsBar);
+        buttonsBar.setPadding(new Insets(0, 0, 0, 55));
+        HBox navbar = new HBox(30, buttonsBar);
         navbar.setPadding(new Insets(10, 20, 10, 20)); // 20px padding left and right, 10px padding top and bottom
         navbar.getStyleClass().add("navbar");
         VBox navbarContainer = new VBox(navbar);
@@ -89,38 +86,33 @@ public class ArchiveFormView extends Application {
         
         VBox Recycle = new VBox();
         Recycle.getChildren().add(RecycleIconView);
-        Recycle.setPadding(new Insets(20, 0, 0, 0));
+        Recycle.setPadding(new Insets(20, 50, 0, 0));
 
-        // Create GridPane for list items
-        ZoneListes = createGridPane();
-        ScrollPane scrollPane = createScrollPane(ZoneListes);
+        // Create GridPane for projet items
+        ScrollPane scrollPane = createScrollPane(ZoneProjets);
 
-        VBox Listes = new VBox();
-        Listes.setSpacing(15);
-        Listes.getChildren().addAll(scrollPane); // Add description area
-        Listes.setPadding(new Insets(0, 40, 0, 40)); // Set padding for description area
+        VBox Projets = new VBox();
+        Projets.setSpacing(15);
+        Projets.getChildren().addAll(scrollPane); // Add description area
+        Projets.setPadding(new Insets(0, 40, 0, 40)); // Set padding for description area
 
         StackPane searchPane = new StackPane();
         searchPane.setAlignment(Pos.TOP_RIGHT);
         searchPane.getChildren().addAll(searchField, searchButton);
+        searchPane.setPadding(new Insets(0, 0, 0, 300));
 
         HBox topContainer = new HBox();
-        topContainer.setAlignment(Pos.TOP_LEFT); // Align elements at top left
-        topContainer.getChildren().addAll(ordonnerButton,filtrerButton,searchPane); // Add "Ordonner" button
+        topContainer.setAlignment(Pos.TOP_RIGHT); // Align elements at top left
+        topContainer.getChildren().addAll(searchPane); // Add "Ordonner" button
 
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS); // Make spacer grow as much as possible
-        topContainer.getChildren().add(spacer);
         topContainer.getChildren().add(Recycle); // Add StackPane containing search field and search button
 
-        mainContentContainer.getChildren().addAll(topContainer, Listes); // Add top container and
+        mainContentContainer.getChildren().addAll(topContainer, Projets); // Add top container and
                                                                                           // Listes
 
         // Add les éléments à la StackPane
         container.getChildren().addAll(mainContentContainer);
 
-        HBox.setMargin(ordonnerButton, new Insets(30, 0, 20, 70));
-        HBox.setMargin(filtrerButton, new Insets(30, 0, 20, 20));
         HBox.setMargin(searchPane, new Insets(30, 70, 20, 20));
 
         listesButton.setOnAction(event -> {
@@ -129,6 +121,13 @@ public class ArchiveFormView extends Application {
 
         projectsButton.setOnAction(event -> {
             this.controller.handleProjectsButtonAction();
+        });
+
+        searchField.textProperty().addListener(new ChangeListener<String>(){
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    controller.SearchProjet(newValue);
+            }
         });
 
         return container;
@@ -155,26 +154,21 @@ public class ArchiveFormView extends Application {
     }
 
     public void init() {
-        leftButton = createButtonWithIcon("", "file:./Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
-        ordonnerButton = createButtonWithIcon("Ordonner", "file:./mygroup/src/main/java/Pictures/folder.png", 20, 20);
-        filtrerButton = createButtonWithIcon("filtrer", "file:./mygroup/src/main/java/Pictures/folder.png", 20, 20);
         searchButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/loupe.png", 20, 20);
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
         RecycleIconView = createIcon("file:./mygroup/src/main/java/Pictures/recycle.png", 130, 54);
+        ZoneProjets = createGridPane();
     }
 
     private void style() {
-        leftButton.getStyleClass().add("left-btn-style");
         searchButton.getStyleClass().add("left-btn-style");
         listesButton.getStyleClass().add("button-style");
         projectsButton.getStyleClass().add("button-style");
         archiveButton.getStyleClass().add("button-clicked-style");
-        ordonnerButton.getStyleClass().add("ordonner-btn-style");
-        filtrerButton.getStyleClass().add("ordonner-btn-style");
         searchField.getStyleClass().add("search-field-style");
     }
 
@@ -201,8 +195,9 @@ public class ArchiveFormView extends Application {
     }
 
     // getZoneListes
-    public GridPane getZoneListes() {
-        return ZoneListes;
+    public GridPane getZoneProjets() {
+        return ZoneProjets;
     }
 
 }
+
