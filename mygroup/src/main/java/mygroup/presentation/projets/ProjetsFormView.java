@@ -26,7 +26,6 @@ import javafx.stage.Stage;
 
 
 public class ProjetsFormView extends Application {
-    private Button leftButton;
     private Button listesButton;
     private Button projectsButton;
     private Button archiveButton;
@@ -73,7 +72,6 @@ public class ProjetsFormView extends Application {
     }
 
     private void Initialiser() {
-        leftButton = createButton("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
@@ -86,7 +84,7 @@ public class ProjetsFormView extends Application {
         TypeBox = createComboBox("Type", "Tous","These", "PFE", "Cours", "Examen", "Autres");
         CategorieBox = createComboBox("Categorie", "Tous","Enseignement", "Encadrement", "Autres");
         filterLabel = new Label("     Filtrer");
-        navbar = new HBox(30, leftButton, listesButton, projectsButton, archiveButton);
+        navbar = new HBox(30, listesButton, projectsButton, archiveButton);
         navbarContainer = new VBox(navbar);
         mainContentContainer = new VBox();
         container = new StackPane();
@@ -108,7 +106,6 @@ public class ProjetsFormView extends Application {
     }
 
     private void Styler() {
-        leftButton.getStyleClass().add("left-btn-style");
         searchButton.getStyleClass().add("left-btn-style");
         listesButton.getStyleClass().add("button-style");
         projectsButton.getStyleClass().add("button-clicked-style");
@@ -131,7 +128,6 @@ public class ProjetsFormView extends Application {
 
     private void Dessiner() {
         navbar.setPadding(new Insets(10, 20, 10, 20));
-        HBox.setMargin(leftButton, new Insets(0, 0, 0, 0));
         BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 20));
         topContainer.setAlignment(Pos.TOP_LEFT); 
         scrollPane.setPadding(new Insets(0, 50, 0, 50));

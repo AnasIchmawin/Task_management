@@ -96,7 +96,7 @@ public class ProjetDetailController {
 
     
 
-    private void displayedTasks() {
+    public void displayedTasks() {
         projectDetailModel.setDisplayedTasks(getTacheMap());
         projetDetailView.getZoneTaches().getChildren().clear();
         int colCount = 0;
@@ -261,7 +261,6 @@ public class ProjetDetailController {
     }
 
     public void getTasksView(ActionEvent event){
-
         addTacheview View = new addTacheview(this);
         Stage stage = new Stage();
                 View.start(stage);
@@ -428,5 +427,11 @@ public class ProjetDetailController {
         ProjetsFormView projets = new ProjetsFormView();
         projets.start(stage);
     }
+
+	public void addTask(String tacheId, String titre) {
+        projectDetailModel.addTask(tacheId, titre);
+        Button taskButton = createTask(projetDetailView.getZoneTaches(), titre, false, tacheId);
+        projetDetailView.getZoneTaches().getChildren().add(taskButton);
+	}
 
 }

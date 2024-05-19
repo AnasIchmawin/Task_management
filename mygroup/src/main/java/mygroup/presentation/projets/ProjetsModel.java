@@ -4,7 +4,7 @@ import java.util.*;
 
 public class ProjetsModel {
     private LinkedHashMap<String, String> projets;
-    private String selectedProjetId="6641251cc5f85d3ab8b28362";
+    private String selectedProjetId="664a4834ea23091eee57a01a";
 
     public ProjetsModel(LinkedHashMap<String, String> projets) {
         this.projets = projets;

@@ -125,4 +125,8 @@ public class GestionnaireProjet {
         return this.daoProjet.getSeances(selectedProjetId);
     }
 
+    public void setTacheToProjet(String IdProjet, String tacheId) {
+        this.daoProjet.setTacheToProjet(IdProjet, tacheId);
+    }
+
 }

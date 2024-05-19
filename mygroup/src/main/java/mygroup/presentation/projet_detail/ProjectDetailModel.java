@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ProjectDetailModel {
-    private String ProjetID = "6641251cc5f85d3ab8b28362";
+    private String ProjetID = "664a4834ea23091eee57a01a";
     private LinkedHashMap<String, String> displayedTasks;
     private LinkedHashMap<String, String> displayedSeances;
     private LinkedHashMap<String, Boolean> displayedTasksEtat;
@@ -146,6 +146,10 @@ public class ProjectDetailModel {
 
     public LinkedHashMap<String, String> getDisplayedSeances() {
         return displayedSeances;
+    }
+
+    public void addTask(String tacheId, String titre) {
+        this.displayedTasks.put(tacheId, titre);
     }
 
 
