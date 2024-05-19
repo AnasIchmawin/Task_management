@@ -107,9 +107,9 @@ public class TachesFormView extends Application {
     private BorderPane createBorderPane(VBox navbarContainer, StackPane container) {
         BorderPane root = new BorderPane();
         root.setStyle("-fx-background-color: white;");
-        BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 20));
+        BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 10));
         root.setTop(navbarContainer);
-        BorderPane.setMargin(container, new Insets(20, 20, 20, 20));
+        BorderPane.setMargin(container, new Insets(20, 20, 20, 10));
         root.setCenter(container);
         return root;
     }

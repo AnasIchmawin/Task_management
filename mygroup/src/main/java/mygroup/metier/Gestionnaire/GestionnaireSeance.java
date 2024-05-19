@@ -96,4 +96,8 @@ public class GestionnaireSeance {
     public Document getSeanceById(String id) {
         return daoSeance.read(id);
     }
+
+    public String getTitle(String seanceId) {
+        return daoSeance.getTitle(seanceId);
+    }
 }

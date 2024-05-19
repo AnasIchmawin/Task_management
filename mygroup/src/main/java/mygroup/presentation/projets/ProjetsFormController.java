@@ -39,6 +39,11 @@ public class ProjetsFormController {
         this.projetsModel = new ProjetsModel(getProjetsMap());
     }
 
+    public ProjetsFormController() {
+        this.gestionnaireProjet = new GestionnaireProjet();
+        this.projetsModel = new ProjetsModel(getProjetsMap());
+    }
+
 
     // Affiche le formulaire d'ajout de projet
     public void handleAjouterButtonAction() {
@@ -197,6 +202,11 @@ public class ProjetsFormController {
                 }
             }
         }
+    }
+
+    //getSelectedProjetId
+    public String getSelectedProjetId(){
+        return projetsModel.getSelectedProjetId();
     }
 
 }

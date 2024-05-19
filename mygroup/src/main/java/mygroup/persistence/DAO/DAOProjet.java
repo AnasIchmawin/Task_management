@@ -310,4 +310,27 @@ public void deleteTacheFromProjet(String listId, String tacheId) {
         }
         return lastProjetId;
     }
+
+    public List<String> getSeances(String selectedProjetId) {
+        List<String> seances = new ArrayList<>();
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
+            ObjectId objId = new ObjectId(selectedProjetId);
+            Document projet = collection.find(Filters.eq("_id", objId)).first();
+            if (projet != null) {
+                @SuppressWarnings("unchecked")
+                List<Document> seancesList = (List<Document>) projet.get("seances");
+                if (seancesList != null) {
+                    for (Document seance : seancesList) {
+                        seances.add(seance.getString("id"));
+                    }
+                }
+            } else {
+                System.err.println("Projet non trouvée avec l'ID: " + selectedProjetId);
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la récupération des seances du projet : " + e.getMessage());
+        }
+        return seances;
+    }
 }
