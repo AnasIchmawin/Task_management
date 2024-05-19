@@ -158,7 +158,6 @@ public class SceanceAjouteController {
         try {
             String dateSeance = this.seanceAjouteView.getDateSeance();
             // convert format to DD/MM/YYYY
-            System.out.println("Date Seance: " + dateSeance);
             String[] date = dateSeance.split("-");
             this.setDateSeanceFormated(date[2] + "/" + date[1] + "/" + date[0]);
             GetSeanceFromCalendar GetSeanceFromCalendar = new GetSeanceFromCalendar(this, addProjetController);

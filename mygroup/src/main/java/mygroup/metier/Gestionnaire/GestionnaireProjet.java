@@ -52,8 +52,8 @@ public class GestionnaireProjet {
     // Method to retrieve a projet by its ID
 
 
-    public LinkedHashMap<String,Boolean> getTaches(String listeId) {
-        return daoProjet.getTaches(listeId);
+    public LinkedHashMap<String,Boolean> getTaches(String projetId) {
+        return daoProjet.getTaches(projetId);
     }
 
     // mettreAJourProjet

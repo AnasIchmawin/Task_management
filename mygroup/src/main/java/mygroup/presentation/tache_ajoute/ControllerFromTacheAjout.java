@@ -149,7 +149,6 @@ public class ControllerFromTacheAjout {
 
     public void addDocToTache(String id, String doc) {
         this.model.addDocumentToSeance(id, doc);
-        System.out.println("Document added to Tache: " + doc);
         displayDocuments();
     }
 
@@ -230,7 +229,6 @@ public class ControllerFromTacheAjout {
             alert("Tache créée", "La tache a été créée avec succès");
             // get stage et close
             if (this.addListController != null) {
-                System.out.println("id" + tacheId + "titre" + titre);
                 addListController.addNewTask(tacheId, titre);
                 addListController.displayTasks();
             }

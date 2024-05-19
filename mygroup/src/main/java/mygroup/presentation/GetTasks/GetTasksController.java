@@ -244,7 +244,6 @@ public class GetTasksController {
                     else if(this.tachesFormController != null) {
                         System.out.println("Adding task to taches form");
                         this.tachesFormController.addTask(id, task);
-                        System.out.println("titre"+task);
                         this.gestionnaireTache.updateIdListForTask(id, this.tachesFormController.getListId());
                         this.gestionnaireListe.addtaskid(this.tachesFormController.getListId(), id);
                         this.tachesFormController.displayedTasks(false);
