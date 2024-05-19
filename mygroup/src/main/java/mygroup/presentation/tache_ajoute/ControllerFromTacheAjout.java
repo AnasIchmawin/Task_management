@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import mygroup.metier.Gestionnaire.GestionnaireListe;
+import mygroup.metier.Gestionnaire.GestionnaireProjet;
 // import metier.GestionnaireProjet;
 // import metier.GestionnaireSeance;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
@@ -32,6 +33,7 @@ import mygroup.presentation.NewDocument.AddDocumentController;
 import mygroup.presentation.archive.ArchiveFormView;
 // import presentation.listes.ListeFormController;
 import mygroup.presentation.listes.ListeFormView;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.projets.ProjetsFormView;
 import mygroup.presentation.taches.TachesFormController;
 
@@ -49,8 +51,10 @@ public class ControllerFromTacheAjout {
     private GestionnaireTache gestionnaireTache;
     private TachesFormController tachesFormController;
     private GestionnaireListe gestionnaireListe;
+    private GestionnaireProjet gestionnaireProjet;
     private addTacheview addTacheview;
     private GetDocModel model;
+    ProjetDetailController controleur;
     private ModuleFromTacheAjout moduleFromTacheAjout;
 
 
@@ -70,6 +74,16 @@ public class ControllerFromTacheAjout {
         this.moduleFromTacheAjout = new ModuleFromTacheAjout(tachesFormController.getListId());
         this.gestionnaireTache = new GestionnaireTache();
         this.gestionnaireListe = new GestionnaireListe();
+
+    }
+
+    public ControllerFromTacheAjout(addTacheview addTacheview, ProjetDetailController controleur) {
+        this.controleur = controleur;
+        this.addTacheview = addTacheview;
+        this.model = new GetDocModel();
+        this.moduleFromTacheAjout = new ModuleFromTacheAjout(controleur.getProjetId());
+        this.gestionnaireTache = new GestionnaireTache();
+        this.gestionnaireProjet = new GestionnaireProjet();
 
     }
 

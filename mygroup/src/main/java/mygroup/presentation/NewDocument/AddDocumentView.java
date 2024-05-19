@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import mygroup.presentation.tache_detail.tacheDetailController;
 import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
 import mygroup.presentation.NewProjet.AddProjetController;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.seance_ajoute.SceanceAjouteController;
 
 public class AddDocumentView extends Application {
@@ -37,6 +38,7 @@ public class AddDocumentView extends Application {
     private tacheDetailController controllerFromTacheDetail;
     private SceanceAjouteController SceanceAjouteController;
     private AddProjetController addProjetController;
+    private ProjetDetailController projetDetailController;
 
     @Override
     public void start(Stage primaryStage) {
@@ -51,6 +53,10 @@ public class AddDocumentView extends Application {
 
     public AddDocumentView(AddProjetController addProjetController) {
         this.controller = new AddDocumentController(this, addProjetController);
+    }
+
+    public AddDocumentView(ProjetDetailController projetDetailController) {
+        this.controller = new AddDocumentController(this, projetDetailController);
     }
 
     private VBox createMainBox() {
@@ -76,7 +82,6 @@ public class AddDocumentView extends Application {
         scene = new Scene(root, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Ajouter un document");
-        primaryStage.setOnCloseRequest(e -> controller.close());
         primaryStage.show();
     }
 

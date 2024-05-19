@@ -17,20 +17,22 @@ import mygroup.presentation.NewList.AddListController;
 import mygroup.presentation.NewList.AddListView;
 import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.NewProjet.AddProjetView;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.projets.ProjetsFormController;
 
 public class GetTasksController {
     private GestionnaireTache gestionnaireTache;
     private AddListController addListController;
     private AddProjetController addProjetController;
+    private ProjetDetailController projetDetailController;
     private LinkedHashMap<List<Integer>, List<String>> GridCaseInfos;
     private ProjetsFormController projetsFormController;
     private GetTasksView getTasksView;
 
-    public GetTasksController(GetTasksView getTasksView, AddListController addListController) {
+    public GetTasksController(GetTasksView getTasksView, ProjetDetailController projetDetailController) {
         this.getTasksView = getTasksView;
         this.gestionnaireTache = new GestionnaireTache();
-        this.addListController = addListController;
+        this.projetDetailController = projetDetailController;
         this.displayTasks();
     }
 

@@ -16,12 +16,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.taches.TachesFormController;
 
 public class GetTaskFromCalendar {
 
     private GetTaskFromCalenderController controller;
     private TachesFormController tachesFormController;
+    private ProjetDetailController projetDetailController;
     private Label titleLabel;
     private BorderPane root;
     private Button confirmButton;
@@ -32,6 +34,14 @@ public class GetTaskFromCalendar {
 
     public GetTaskFromCalendar(TachesFormController tachesFormController) {
         this.tachesFormController = tachesFormController;
+        this.controller = new GetTaskFromCalenderController(this) ;
+        init();
+        style();
+        action();
+    }
+
+    public GetTaskFromCalendar(ProjetDetailController projetDetailController) {
+        this.projetDetailController = projetDetailController;
         this.controller = new GetTaskFromCalenderController(this) ;
         init();
         style();
@@ -151,8 +161,13 @@ public class GetTaskFromCalendar {
         });
 
     }
+    // public String getDateTask() {
+    //     return this.tachesFormController.getDateTaskFormated(); 
+        
+    // }
     public String getDateTask() {
-        return this.tachesFormController.getDateTaskFormated(); 
+        return this.projetDetailController.getDateTaskFormated(); 
     }
+
 
 }

@@ -14,7 +14,8 @@ public class POJOTache {
     private String TempsFin;
     private List<String> documents;
     private String projet;
-    private String liste;
+    private String liste
+    ;
 
     public POJOTache() {
         super();

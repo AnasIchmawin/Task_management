@@ -21,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import mygroup.presentation.NewProjet.AddProjetController;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 
 public class SceanceAjouteView extends Application {
     private static final Pos TOP_CENTER = Pos.TOP_CENTER;
@@ -44,8 +45,15 @@ public class SceanceAjouteView extends Application {
     private TextArea ZoneNote;
 
     // Constructor
-    public SceanceAjouteView(AddProjetController addProjetController) {
-        this.controller = new SceanceAjouteController(this, addProjetController);
+    // public SceanceAjouteView(AddProjetController addProjetController) {
+    //     this.controller = new SceanceAjouteController(this, addProjetController);
+    //     init();
+    //     style();
+    //     Action();
+    // }
+
+    public SceanceAjouteView(ProjetDetailController ProjetDetailController) {
+        this.controller = new SceanceAjouteController(this, ProjetDetailController);
         init();
         style();
         Action();

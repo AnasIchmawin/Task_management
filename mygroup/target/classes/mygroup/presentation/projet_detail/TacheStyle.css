@@ -16,6 +16,47 @@
     -fx-text-fill: #FFFFFF;
 }
 
+.Titre-style {
+    -fx-font-size: 35px;
+    -fx-border-width: 0px;
+    -fx-focus-color: transparent;
+    -fx-pref-width: 200px;
+    -fx-max-width: 200px;
+    -fx-max-height: 10px;
+    -fx-border-radius: 10px;
+
+}
+
+.scroll-pane{
+
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+
+.confirm-btn-style {
+    -fx-background-color: #8E9EB2;
+    -fx-min-width: 25px;
+    -fx-min-height: 20px;
+    -fx-max-width: 25px;
+    -fx-max-height: 20px;
+    -fx-background-radius: 25px;
+}
+.google-calendar-style {
+    -fx-background-color: #3F72AF;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-max-width: 150px; /* Adjust to make it less wide */
+    -fx-max-height: 350px;
+}
+
+.google-calendar-label-style {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+}
+
+
 
 .left-btn-style {
     -fx-background-color: #8E9EB2;
@@ -52,7 +93,11 @@
     -fx-text-fill: #000000;
 }
 
-
+.index1-style {
+    -fx-font-size: 35px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
 
 
 .description-label {
@@ -64,8 +109,8 @@
 .description-style {
     -fx-font-size: 16px;
     -fx-focus-color: transparent;
-    -fx-max-height: 180px;
-    -fx-background-color: #f0f0f0;
+    -fx-background-color: transparent;
+    -fx-control-inner-background: #f0f0f0;
 }
 
 

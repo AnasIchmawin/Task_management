@@ -6,14 +6,14 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
-import mygroup.persistence.Connexion;
+// import mygroup.persistence.Connexion;
 import mygroup.presentation.listes.ListeFormView;
 
 public class tacheDetailController {
     private tacheDetailView sc;
     private tacheDetailModel md;
     private Label titleabel;
-    Connexion con;
+    // Connexion con;
     GestionnaireTache gt;
 
     // labels

@@ -19,11 +19,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mygroup.metier.Gestionnaire.GestionnaireListe;
+import mygroup.metier.Gestionnaire.GestionnaireProjet;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
 import mygroup.presentation.GetTaskFromCalendar.GetTaskFromCalendar;
 import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormController;
 import mygroup.presentation.listes.ListeFormView;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.projets.ProjetsFormView;
 import mygroup.presentation.tache_ajoute.addTacheview;
 
@@ -34,8 +36,11 @@ public class TachesFormController {
     private static TachesFormModel tacheModel;
     private static GestionnaireTache gestionnaireTache;
     private static GestionnaireListe gestionnaireListe;
+    private static GestionnaireProjet gestionnaireProjet;
     private String dateTaskFormated;
     private static ListeFormController listeFormController;
+    private static ProjetDetailController projetDetailController;
+
 
     @SuppressWarnings("static-access")
     public TachesFormController(TachesFormView tacheView, ListeFormController listeFormController) {
@@ -46,14 +51,11 @@ public class TachesFormController {
         this.tacheModel = new TachesFormModel(getTacheMap());
         this.FillChamps();
     }
+     
 
     public void handleAjouterButtonAction() {
         addTacheview view = new addTacheview(this);
         view.start(new Stage());   
-    }
-
-    public void handleSaveButtonAction() {
-        // gestionnaireTache.updateTask(getListId(), );//id,title,description
     }
 
     // handleOrdonnerButtonAction
@@ -81,6 +83,7 @@ public class TachesFormController {
             }
         }
     }
+    
 
     // create task
     public static void createTask(GridPane gridPane, String taskName, Boolean isChecked, String tacheId) {
@@ -95,12 +98,17 @@ public class TachesFormController {
         configureTaskCheckBoxListener(taskCheckBox, deleteButton, cloneButton, tacheId);
     }
 
+    
+
+
+
     private void FillChamps() {
         this.tacheView.setTitle(getListTitle());
         this.tacheView.setDescription(getListDescription());
         this.displayedTasks(true);
         this.ServeillerButtons();
     }
+
 
     private void ServeillerButtons() {
         SurveillerButton(tacheView.getListesButton(), "100", "40", "#3F72AF");
@@ -148,6 +156,7 @@ public class TachesFormController {
         configureCloneButton(gridPane, cloneButton, tacheId);
         configureTaskButton(gridPane, taskButton);
     }
+    
 
     private static void configureDeleteButton(GridPane gridPane, Button deleteButton, Button cloneButton,
             CheckBox taskCheckBox, String tacheId) {
@@ -157,6 +166,7 @@ public class TachesFormController {
             gestionnaireListe.deleteTacheFromListe(listeFormController.getListId(), tacheId);
         });
     }
+    
 
     private static void configureCloneButton(GridPane gridPane, Button cloneButton, String tacheId) {
         cloneButton.setOnAction(e -> {
@@ -175,6 +185,8 @@ public class TachesFormController {
                 "-fx-font-size: 13px;");
         taskButton.setOnAction(e -> displayMessageDialog());
     }
+
+   
 
     private static void configureTaskCheckBoxListener(CheckBox taskCheckBox, Button deleteButton, Button cloneButton,
             String tacheId) {
@@ -309,6 +321,17 @@ public class TachesFormController {
         return tacheMap;
     }
 
+    private LinkedHashMap<String, String> getTacheMap1() {
+        LinkedHashMap<String, Boolean> taches = gestionnaireProjet.getTaches(TachesFormController.projetDetailController.getProjetId());
+
+        LinkedHashMap<String, String> tacheMap = new LinkedHashMap<>();
+        for (String tacheId : taches.keySet()) {
+            String tacheTitle = gestionnaireTache.getTitle(tacheId);
+            tacheMap.put(tacheId, tacheTitle);
+        }
+        return tacheMap;
+    }
+
     // handleListesButtonAction
     public void handleListesButtonAction() {
         Stage stage = (Stage) tacheView.getZoneTaches().getScene().getWindow();
@@ -350,6 +373,7 @@ public class TachesFormController {
     public String getListId() {
         return TachesFormController.listeFormController.getListId();
     }
+
 
     public void handleConfirmerButtonAction() {
         try {

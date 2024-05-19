@@ -21,6 +21,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.taches.TachesFormController;
 import javafx.scene.control.ComboBox;
 //mod
@@ -45,12 +46,20 @@ public class addTacheview {
     private Button archiveButton;
     private Button ajouterDocButton;
     private GridPane ZoneDocuments;
+    // private ControllerFromTacheAjout controller;
     private ControllerFromTacheAjout controller;
     private BorderPane root;
 
 
     public addTacheview() {
         this.controller = new ControllerFromTacheAjout(this);
+        init();
+        style();
+        action();
+    }
+
+    public addTacheview(ProjetDetailController controller) {
+        this.controller = new ControllerFromTacheAjout(this, controller);
         init();
         style();
         action();
@@ -64,14 +73,12 @@ public class addTacheview {
     }
     
     public void start(Stage primaryStage) {
-        // Create the nnavigation bar
-        VBox navbarContainer = createNavbarContainer();
         // Create the main content
         StackPane container = createMainContent();
         // Create the root layout
-        root = createBorderPane(navbarContainer, container);
+        root = createBorderPane(container);
         // Create the scene
-        Scene scene = new Scene(root, 1160, 652);
+        Scene scene = new Scene(root, 850, 500);
         // Add the CSS file
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         // Set the scene
@@ -108,25 +115,11 @@ public class addTacheview {
         
     }
 
-    private BorderPane createBorderPane(VBox navbarContainer, StackPane container) {
+    private BorderPane createBorderPane(StackPane container) {
         BorderPane root = new BorderPane();
         root.setStyle("-fx-background-color: white;");
-        BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 20));
-        root.setTop(navbarContainer);
-        BorderPane.setMargin(container, new Insets(20, 20, 20, 20));
         root.setCenter(container);
         return root;
-    }
-
-    private VBox createNavbarContainer() {
-        HBox buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
-        HBox leftButtonBox = new HBox(20, leftButton);
-        HBox navbar = new HBox(30, leftButtonBox, buttonsBar);
-        navbar.setPadding(new Insets(10, 20, 10, 20)); // 20px padding left and right, 10px padding top and bottom
-        navbar.getStyleClass().add("navbar");
-        VBox navbarContainer = new VBox(navbar);
-        navbarContainer.getStyleClass().add("navbar-container");
-        return navbarContainer;
     }
 
     private StackPane createMainContent() {
@@ -134,7 +127,6 @@ public class addTacheview {
         StackPane container = new StackPane();
         container.getStyleClass().add("container");
         container.setPadding(new Insets(15, 70, 20, 55)); // 15px padding top, 70px padding right,
-                                                          // 20px padding bottom, 55px padding left
         TempsDebut = createTextField();
         TempsFin = createTextField();
 
@@ -146,9 +138,9 @@ public class addTacheview {
         Region Space_element = CreateSPace(50);
 
         Region Space_Btn_Dates = CreateSPace(50);
-        Region verticalSpace = createVerticalSpace(50);
-        Region verticalSpace1 = createVerticalSpace(20);
-        Region verticalSpace2 = createVerticalSpace(20);
+        Region verticalSpace = createVerticalSpace(20);
+        Region verticalSpace1 = createVerticalSpace(15);
+        Region verticalSpace2 = createVerticalSpace(15);
 
         HBox DateDebutComplet = CreateHbox(5, TOP_CENTER);
         dateDebut = DateTache();

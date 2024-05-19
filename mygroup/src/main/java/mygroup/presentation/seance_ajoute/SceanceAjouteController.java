@@ -18,6 +18,7 @@ import mygroup.presentation.GetDocument.GetDocView;
 import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormView;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.projets.ProjetsFormView;
 
 public class SceanceAjouteController {
@@ -25,13 +26,22 @@ public class SceanceAjouteController {
     private GetDocModel model;
     private GestionnaireSeance gestionnaireSeance;
     private AddProjetController addProjetController;
+    private ProjetDetailController projetDetailController;
 
-    public SceanceAjouteController(SceanceAjouteView seanceAjouteView, AddProjetController addProjetController) {
+    // public SceanceAjouteController(SceanceAjouteView seanceAjouteView, AddProjetController addProjetController) {
+    //     this.seanceAjouteView = seanceAjouteView;
+    //     this.addProjetController = addProjetController;
+    //     this.model = new GetDocModel();
+    //     this.gestionnaireSeance = new GestionnaireSeance();
+    // }
+
+    public SceanceAjouteController(SceanceAjouteView seanceAjouteView, ProjetDetailController ProjetDetailController) {
         this.seanceAjouteView = seanceAjouteView;
-        this.addProjetController = addProjetController;
+        this.projetDetailController = projetDetailController;
         this.model = new GetDocModel();
         this.gestionnaireSeance = new GestionnaireSeance();
     }
+
 
     public void handleListesButton() {
         ListeFormView listeFormView = new ListeFormView();

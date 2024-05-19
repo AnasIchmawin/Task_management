@@ -39,6 +39,7 @@ public class ProjetsFormController {
         this.projetsModel = new ProjetsModel(getProjetsMap());
     }
 
+
     // Affiche le formulaire d'ajout de projet
     public void handleAjouterButtonAction() {
         AddProjetView newProjectFormulaire = new AddProjetView(this);

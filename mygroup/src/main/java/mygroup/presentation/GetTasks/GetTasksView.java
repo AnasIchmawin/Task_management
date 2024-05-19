@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mygroup.presentation.NewList.AddListController;
 import mygroup.presentation.NewProjet.AddProjetController;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 
 public class GetTasksView {
 
@@ -29,19 +30,26 @@ public class GetTasksView {
     private ScrollPane scrollPane;
     private GridPane ZoneTasks;
 
-    public GetTasksView(AddListController addListController) {
-        init();
-        style();
-        action();
-        this.controller = new GetTasksController(this, addListController);
-    }
+    // public GetTasksView(AddListController addListController) {
+    //     init();
+    //     style();
+    //     action();
+    //     this.controller = new GetTasksController(this, addListController);
+    // }
 
     public GetTasksView(AddProjetController addProjetController) {
         init();
         style();
         action();
-      //  this.controller = new GetTasksController(this, addProjetController);
+       this.controller = new GetTasksController(this, addProjetController);
     }
+    public GetTasksView(ProjetDetailController projetDetailController) {
+        init();
+        style();
+        action();
+       this.controller = new GetTasksController(this, projetDetailController);
+    }
+
 
     public void start(Stage primaryStage) {
         VBox taskContainer = createVBox(5, Pos.TOP_CENTER);
