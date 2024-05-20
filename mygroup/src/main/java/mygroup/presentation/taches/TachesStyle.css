@@ -7,6 +7,15 @@
     -fx-font-size: 13px; 
 }
 
+.left-btn-style {
+    -fx-background-color: #8E9EB2;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-max-width: 25px;
+    -fx-max-height: 25px;
+    -fx-background-radius: 30px;
+}
+
 .button-clicked-style {
     -fx-background-radius: 10px;
     -fx-pref-width: 100px;
