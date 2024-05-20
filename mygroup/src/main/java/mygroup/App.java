@@ -1,44 +1,11 @@
 package mygroup;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import org.bson.Document;
-
-import com.google.api.services.tasks.model.Task;
-import com.mongodb.client.FindIterable;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import mygroup.metier.Service.CalendarQuickstart;
-import mygroup.persistence.DAO.DAOTache;
-import mygroup.presentation.GetTasks.GetTasksController;
-import mygroup.presentation.GetTasks.GetTasksView;
-import mygroup.presentation.NewDocument.AddDocumentController;
-import mygroup.presentation.NewDocument.AddDocumentView;
-import mygroup.presentation.NewList.AddListController;
-import mygroup.presentation.NewList.AddListView;
-import mygroup.presentation.archive.ArchiveFormController;
-import mygroup.presentation.archive.ArchiveFormView;
-import mygroup.presentation.listes.ListeFormView;
-import mygroup.presentation.login.LoginController;
-import mygroup.presentation.login.LoginFormView;
-import mygroup.presentation.projet_detail.ProjetDetailController;
-import mygroup.presentation.projet_detail.ProjetDetailView;
-import mygroup.presentation.projets.ProjetsFormController;
-import mygroup.presentation.projets.ProjetsFormView;
-import mygroup.presentation.seance.SeanceFormController;
-import mygroup.presentation.seance.SeanceFormView;
-import mygroup.presentation.seance_ajoute.SceanceAjouteController;
-import mygroup.presentation.seance_ajoute.SceanceAjouteView;
-import mygroup.presentation.statistiques.ProjectStatisticsView;
-import mygroup.presentation.seance.SeanceFormView;
-import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
-import mygroup.presentation.tache_ajoute.addTacheview;
-import mygroup.presentation.tache_detail.tacheDetailController;
-import mygroup.presentation.tache_detail.tacheDetailView;
-import mygroup.presentation.taches.TachesFormController;
-import mygroup.presentation.taches.TachesFormView;
 import mygroup.metier.Service.TaskQuickstart;
+import mygroup.presentation.projets.ProjetsFormView;
+
 
 public class App extends Application {
 

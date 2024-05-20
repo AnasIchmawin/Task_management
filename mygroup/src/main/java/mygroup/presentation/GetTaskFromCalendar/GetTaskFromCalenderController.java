@@ -14,17 +14,27 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
 import mygroup.metier.POJO.POJOTache;
+import mygroup.presentation.taches.TachesFormController;
 
 public class GetTaskFromCalenderController {
     private String dateTask;
     private GestionnaireTache gestionnaireTache;
     private ObservableList<ItemTask> listTasItems;
     private GetTaskFromCalendar getTaskCalendar;
+    private TachesFormController tachesFormController;
 
     public GetTaskFromCalenderController(GetTaskFromCalendar getTaskCalendar) {
         this.gestionnaireTache = new GestionnaireTache();
         this.getTaskCalendar = getTaskCalendar;
         this.dateTask = this.getTaskCalendar.getDateTask();
+    }
+
+    public GetTaskFromCalenderController(GetTaskFromCalendar getTaskFromCalendar,
+            TachesFormController tachesFormController) {
+                this.gestionnaireTache = new GestionnaireTache();
+                this.getTaskCalendar = getTaskFromCalendar;
+                this.dateTask = this.getTaskCalendar.getDateTask();
+                this.tachesFormController = tachesFormController;
     }
 
     public void handleConfirmButton(ActionEvent event) {
@@ -39,6 +49,10 @@ public class GetTaskFromCalenderController {
                     tache.setDateDebut(item.getStartDate());
                     this.gestionnaireTache.setTache(tache);
                     gestionnaireTache.createTacheCalendar() ;
+                    // recuperer le dernier id de la tache ajoutée
+                    String idTache = gestionnaireTache.getLastIdTache();
+                    String titleTask = item.getTitle();
+                    this.tachesFormController.addTask(idTache, titleTask);
                     alert("Tâche ajoutée", "La tâche a été ajoutée avec succès");
                     this.handleCancelButtonAction(event);
                 } catch (Exception e) {
