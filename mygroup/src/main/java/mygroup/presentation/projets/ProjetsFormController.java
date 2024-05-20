@@ -20,6 +20,8 @@ import mygroup.presentation.NewProjet.AddProjetView;
 import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormView;
 import mygroup.presentation.projet_detail.ProjetDetailView;
+import mygroup.presentation.statistiques.ProjectStatistics;
+import mygroup.presentation.statistiques.ProjectStatisticsView;
 
 
 public class ProjetsFormController {
@@ -47,6 +49,11 @@ public class ProjetsFormController {
     public ProjetsFormController() {
         this.gestionnaireProjet = new GestionnaireProjet();
         this.projetsModel = new ProjetsModel(getProjetsMap(), new LinkedHashMap<>());
+    }
+
+    public void handlestatistiquesButtonAction() {
+        ProjectStatisticsView view = new ProjectStatisticsView();
+        view.start(new Stage());
     }
 
     // Affiche le formulaire d'ajout de projet

@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 
 public class ProjetsFormView extends Application {
     private Button listesButton;
+    private Button statistiques;
     private Button projectsButton;
     private Button archiveButton;
     private Button ordonnerButton;
@@ -78,6 +79,7 @@ public class ProjetsFormView extends Application {
         ordonnerButton = createButton("Ordonner", "file:./mygroup/src/main/java/Pictures/folder.png", 20, 20);
         searchButton = createButton("", "file:./mygroup/src/main/java/Pictures/loupe.png", 20, 20);
         ajouterButton = createButton("Ajouter", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
+        statistiques = createButton("statistiques", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20); 
         supprimerButton = createButton("Supprimer un Projet", "file:./mygroup/src/main/java/Pictures/delete.png", 20, 20);
         searchField = new TextField();
         searchField.setPromptText("Rechercher");
@@ -101,6 +103,7 @@ public class ProjetsFormView extends Application {
         SurveillerButton(archiveButton,"100px","40px","#3F72AF");
         SurveillerButton(ordonnerButton,"100px","40px","#3F72AF");
         SurveillerButton(ajouterButton,"150px","40px","#3F72AF");
+        SurveillerButton(statistiques,"150px","40px","#3F72AF");
         SurveillerButton(supprimerButton,"150px","40px","#3F72AF");
         this.controller = new ProjetsFormController(this);
     }
@@ -112,6 +115,7 @@ public class ProjetsFormView extends Application {
         archiveButton.getStyleClass().add("button-style");
         ordonnerButton.getStyleClass().add("ordonner-btn-style");
         ajouterButton.getStyleClass().add("button-style");
+        statistiques.getStyleClass().add("button-style");
         supprimerButton.getStyleClass().add("button-style");
         supprimerButton.setStyle("-fx-pref-width : 150px ;");
         searchField.getStyleClass().add("search-field-style");
@@ -137,9 +141,11 @@ public class ProjetsFormView extends Application {
         Projets.setSpacing(15); 
         HBox.setMargin(ajouterButton, new Insets(50, 0, 0, 70));
     
-        buttonContainer.getChildren().addAll(ajouterButton, supprimerButton);
+        buttonContainer.getChildren().addAll(ajouterButton, supprimerButton, statistiques);
         HBox.setMargin(ajouterButton, new Insets(50, 0, 0, 70));
         HBox.setMargin(supprimerButton, new Insets(50, 0, 0, 25));
+        HBox.setMargin(statistiques, new Insets(50, 0, 0, 25));
+
         mainContentContainer.getChildren().addAll(topContainer, Projets, buttonContainer);
         mainContentContainer.setSpacing(10);
         container.getChildren().addAll(mainContentContainer);
@@ -220,6 +226,9 @@ public class ProjetsFormView extends Application {
     private void Action() {
         ajouterButton.setOnAction(event -> {
             this.controller.handleAjouterButtonAction();
+        });
+        statistiques.setOnAction(event -> {
+            this.controller.handlestatistiquesButtonAction();
         });
         ordonnerButton.setOnAction(event -> {
             this.controller.handleOrdonnerButton();

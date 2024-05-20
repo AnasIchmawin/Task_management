@@ -138,7 +138,7 @@ public class ProjectStatisticsView extends Application {
     }
 
     private void style() {
-        listesButton.getStyleClass().add("button-clicked-style");
+        listesButton.getStyleClass().add("button-style");
         projectsButton.getStyleClass().add("button-style");
         archiveButton.getStyleClass().add("button-style");
         navbar.getStyleClass().add("navbar");
