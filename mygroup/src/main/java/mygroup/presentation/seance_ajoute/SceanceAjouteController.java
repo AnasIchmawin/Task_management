@@ -181,7 +181,6 @@ public class SceanceAjouteController {
     public void handleConfirmerButtonAction() {
         try {
             String dateSeance = this.seanceAjouteView.getDateSeance();
-            System.out.println("----------------"+dateSeance);
             // convert format to DD/MM/YYYY
             String[] date = dateSeance.split("-");
             this.setDateSeanceFormated(date[2] + "/" + date[1] + "/" + date[0]);

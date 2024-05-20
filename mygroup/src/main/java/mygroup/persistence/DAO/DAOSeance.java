@@ -39,8 +39,6 @@ public class DAOSeance {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("seances");
             ObjectId objId = new ObjectId(id);
-            System.out.println("ID de la séance ndans dao : " + objId);
-            System.out.println("ID de la séance ndans dao : " +collection.find(Filters.eq("_id", objId)).first());
             return collection.find(Filters.eq("_id", objId)).first();
         } catch (Exception e) {
             System.err.println("Erreur lors de la lecture de la séance : " + e.getMessage());

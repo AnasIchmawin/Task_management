@@ -146,7 +146,6 @@ public class SeanceFormController {
             return;
         }
         seanceFormView.getZoneDocuments().getChildren().clear();
-        System.out.println("documents: " + seanceModel.getDocuments());
         int colCount = 0;
         int rowCount = 0;
 

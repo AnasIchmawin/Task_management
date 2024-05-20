@@ -20,3 +20,25 @@ Launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe
 Launcher args:	--module-path .\javafx-sdk-21.0.2\lib\ --add-modules javafx.controls,javafx.fxml -classpath "C:\Users\ICHMAWIN Anas\3D Objects\Task_management\Task_management.exe;C:\Users\ICHMAWIN Anas\3D Objects\Task_management\javafx-sdk-21.0.2\lib" mygroup.App
 Args length:	247/32768 chars
 Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\Users\ICHMAWIN Anas\3D Objects\Task_management\Task_management.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\ICHMAWIN Anas\3D Objects\Task_management\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	
+Java max ver:	
+Substitute:	JAVA_HOME = C:\Program Files\Java\jdk-21
+Substitute:	PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\java8path;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\MySQL\MySQL Server 8.2\bin;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files (x86)\Microchip\MPLAB C32 Suite\bin;C:\Program Files\php-8.3.7-Win32-vs16-x64;C:\Program Files\apache-maven-3.9.6-bin\apache-maven-3.9.6\bin;C:\Program Files\Java\jdk-21\bin;C:\Users\ICHMAWIN Anas\AppData\Local\Programs\Python\Launcher\;C:\Users\ICHMAWIN Anas\AppData\Local\Microsoft\WindowsApps;C:\Users\ICHMAWIN Anas\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ICHMAWIN Anas\AppData\Roaming\npm;C:\msys64\ucrt64\bin;;C:\Program Files\Java\jdk-21\bin
+JRE paths:	C:\Program Files\Java\jdk-21;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\java8path;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\MySQL\MySQL Server 8.2\bin;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files (x86)\Microchip\MPLAB C32 Suite\bin;C:\Program Files\php-8.3.7-Win32-vs16-x64;C:\Program Files\apache-maven-3.9.6-bin\apache-maven-3.9.6\bin;C:\Program Files\Java\jdk-21\bin;C:\Users\ICHMAWIN Anas\AppData\Local\Programs\Python\Launcher\;C:\Users\ICHMAWIN Anas\AppData\Local\Microsoft\WindowsApps;C:\Users\ICHMAWIN Anas\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ICHMAWIN Anas\AppData\Roaming\npm;C:\msys64\ucrt64\bin;;C:\Program Files\Java\jdk-21\bin
+Check launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe (OK)
+Version string: 1.021.000_002 / 64-Bit (OK)
+Main class:	mygroup.App
+Add classpath:	C:\Users\ICHMAWIN Anas\3D Objects\Task_management\javafx-sdk-21.0.2\lib
+Launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe
+Launcher args:	--module-path .\javafx-sdk-21.0.2\lib\ --add-modules javafx.controls,javafx.fxml -classpath "C:\Users\ICHMAWIN Anas\3D Objects\Task_management\Task_management.exe;C:\Users\ICHMAWIN Anas\3D Objects\Task_management\javafx-sdk-21.0.2\lib" mygroup.App
+Args length:	247/32768 chars
+Exit code:	0
