@@ -71,6 +71,12 @@ public class GestionnaireProjet {
         }
     }
 
+    public int calculerHeuresTravail(String projetId) {
+    return daoProjet.calculerHeuresTravail(projetId);
+}
+public int NmbrDocumentParProjet(String projetId) {
+    return daoProjet.NmbrDocumentParProjet(projetId);
+}
 
     public String getProjetTitle(String id) {
         return daoProjet.getProjetTitle(id);

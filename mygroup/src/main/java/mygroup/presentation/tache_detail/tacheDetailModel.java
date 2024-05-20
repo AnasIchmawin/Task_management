@@ -19,6 +19,7 @@ public class tacheDetailModel {
 
     // Constructor
     public tacheDetailModel(String title, String dateDebut, String dateFin, String categorie, String type, String description) {
+        ListOfDocuments = new LinkedHashMap<String, ArrayList<String>>();
         this.title = title;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;

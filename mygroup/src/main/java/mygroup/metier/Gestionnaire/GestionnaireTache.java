@@ -206,8 +206,8 @@ public class GestionnaireTache {
         this.daoTache.setProjetId(ListTaskIds, lastProjetId);
     }
 
-    public void addDocToTache(String taskSelectedId, String idLastDoc) {
-        this.daoTache.addDocToTache(taskSelectedId, idLastDoc);
+    public void addDocIdToTask(String idTache, String idLastDoc) {
+        this.daoTache.addDocIdToTask(idTache,idLastDoc);
     }
 
 

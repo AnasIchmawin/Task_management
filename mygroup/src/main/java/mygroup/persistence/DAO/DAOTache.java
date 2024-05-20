@@ -373,22 +373,26 @@ public class DAOTache {
         }
     }
 
-    public void addDocToTache(String taskSelectedId, String idLastDoc) {
-        try {
+
+
+
+    public void addDocIdToTask(String idTache, String idLastDoc) {
+        try{
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("taches");
-            Document tache = collection.find(Filters.eq("_id", new ObjectId(taskSelectedId))).first();
-            if (tache != null) {
-                List<String> docs = tache.getList("documents", String.class);
-                docs.add(idLastDoc);
-                collection.updateOne(Filters.eq("_id", new ObjectId(taskSelectedId)),
-                        Updates.set("documents", docs));
-            } else {
-                System.err.println("Task not found with ID: " + taskSelectedId);
-            }
-        } catch (Exception e) {
-            System.err.println("Error adding the document to the task: " + e.getMessage());
+            ObjectId id = new ObjectId(idTache);
+            Document Tache = collection.find(Filters.eq("_id", id)).first();
+            if (Tache != null) {
+                @SuppressWarnings("unchecked")
+                List<String> docs = (List<String>) Tache.get("documents");
+                if (docs != null) {
+                    docs.add(idLastDoc);
+                }
         }
     }
+    catch (Exception e) {
+        System.err.println("Error adding the document ID to the task: " + e.getMessage());
+    }}
+
 
 }
