@@ -36,7 +36,7 @@ public class GestionnaireSeance {
     }
 
     public void createSeance() throws NonValidSeance {
-        if (this.seance.getTitre() == null || this.seance.getDateDebut() == null || this.seance.getHeureDebut() == null
+        if (this.seance.getTitre().isEmpty() || this.seance.getDateDebut() == null || this.seance.getHeureDebut() == null
                 || this.seance.getDateFin() == null || this.seance.getHeureFin() == null) {
             throw new NonValidSeance("Tous les champs de la séance doivent être remplis");
         }

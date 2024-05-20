@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import mygroup.metier.Service.CalendarQuickstart;
 import mygroup.metier.Service.TaskQuickstart;
+import mygroup.presentation.listes.ListeFormView;
+import mygroup.presentation.login.LoginFormView;
 import mygroup.presentation.projets.ProjetsFormView;
 
 
@@ -52,11 +54,11 @@ public class App extends Application {
         // AddDocumentView view = new AddDocumentView(con) ;
         // view.start(primaryStage) ;
 
-        LoginFormView view = new LoginFormView(primaryStage) ;
-        view.start(primaryStage) ;
+        // LoginFormView view = new LoginFormView(primaryStage) ;
+        // view.start(primaryStage) ;
 
-        // ListeFormView view = new ListeFormView();
-        // view.start(primaryStage);
+        ListeFormView view = new ListeFormView();
+        view.start(primaryStage);
         // ListeFormView view = new ListeFormView();
         // view.start(primaryStage);
         // presentation.tache_detail.screen view = new
@@ -74,9 +76,9 @@ public class App extends Application {
     @Override
     public void stop() throws Exception {
         // Appel de la méthode pour effacer le contenu du token
-        TaskQuickstart.clearTokenContent();
-        CalendarQuickstart.clearTokenContent();
-        System.out.println("les tokens sont effacés");
+        // TaskQuickstart.clearTokenContent();
+        // CalendarQuickstart.clearTokenContent();
+        // System.out.println("les tokens sont effacés");
     }
 
     public static void main(String[] args) {

@@ -21,6 +21,7 @@ import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormView;
 import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.projets.ProjetsFormView;
+import mygroup.metier.Errors.NonValidSeance;
 import mygroup.metier.Gestionnaire.GestionnaireProjet;
 
 public class SceanceAjouteController {
@@ -131,7 +132,6 @@ public class SceanceAjouteController {
             this.gestionnaireSeance.createSeance();
 
             if (addProjetController != null) {
-
                 this.addProjetController.setSeance(gestionnaireSeance.getLastSeance());
                 this.addProjetController.displaySeances();
 
