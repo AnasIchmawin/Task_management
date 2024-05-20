@@ -514,7 +514,7 @@ public class ProjetDetailView extends Application {
     }
 
     public GridPane getZoneSeances() {
-        return gridPane;
+        return ZoneSeances;
     }
 
     private void action() {
