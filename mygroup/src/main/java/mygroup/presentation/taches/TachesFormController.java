@@ -66,7 +66,6 @@ public class TachesFormController {
             Button taskButton = createTask(entry.getValue(), getTaskEtat(entry.getKey()), entry.getKey());
             taskButton.setOnAction(event -> handleButtonTaskAction(taskButton));
             tacheModel.putInGridInfoCase(rowTask, entry.getKey());
-            System.out.println("voici le id" + entry.getKey() + "voici le row " + rowTask);
             rowTask++;
 
             if (++colCount == 3) {

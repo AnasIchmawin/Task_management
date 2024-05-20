@@ -44,7 +44,6 @@ public class tacheDetailController {
         String Type = model.getType();
         String Description = model.getDescription();
 
-        System.out.println("Title : " +Title);
 
         view.setTitleLabel(Title);
         view.setDateDebutLabel(DateDebut);

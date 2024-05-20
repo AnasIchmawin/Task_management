@@ -61,7 +61,6 @@ public class GetListsView {
         root.setBottom(buttonContainer);
         Insets buttonMargin = new Insets(0, 0, 20, 0);
         this.ZoneLists = createListGridPane();
-        System.out.println("ZoneLists: " + ZoneLists);
         scrollPane = createScrollPane();
         root.setCenter(scrollPane);
         this.controller = new GetListsController(this, this.listeFormController);

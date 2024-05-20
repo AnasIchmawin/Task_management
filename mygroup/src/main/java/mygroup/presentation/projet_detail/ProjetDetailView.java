@@ -54,7 +54,7 @@ public class ProjetDetailView extends Application {
     private TachesFormView tacheView;
     @SuppressWarnings("unused")
     private AddProjetController addProjetController;
-    private GridPane gridPane;
+    private GridPane ZoneSeances;
     private VBox contenaireSeances;
 
     public ProjetDetailView() {
@@ -148,7 +148,7 @@ public class ProjetDetailView extends Application {
 
         VBox contenaireButton = new VBox();
 
-        ScrollPane scrollSeance = createScrollPane(gridPane);
+        ScrollPane scrollSeance = createScrollPane(ZoneSeances);
         scrollSeance.getStyleClass().add("Docs-Style");
 
         HBox.setHgrow(ajouterSeanceButton, Priority.ALWAYS);
@@ -359,7 +359,7 @@ public class ProjetDetailView extends Application {
         archiveButton = new Button("Archive");
         ZoneListes = createGridPane();
         ZoneTaches = createGridPane();
-        gridPane = creatZoneDocs();
+        ZoneSeances = creatZoneDocs();
         scrollPane = createScrollPane(ZoneListes);
         descriptionLabel = new Label();
         ContainerGoogleCalendar = new VBox();

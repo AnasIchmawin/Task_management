@@ -52,17 +52,11 @@ public class ProjetDetailController {
 
     private void FillChamps() {
         this.projetDetailView.settitle(getProjetTitle());
-        System.out.println("Title : " + getProjetTitle());
         this.projetDetailView.setDescription(getProjetDescription());
-        System.out.println("Description : " + getProjetDescription());
         this.projetDetailView.setDateDebut(getStartDate());
-        System.out.println("Date de début : " + getStartDate());
         this.projetDetailView.setDateFin(getEndDate());
-        System.out.println("Date de fin : " + getEndDate());
         this.projetDetailView.setCategorie(getCategory());
-        System.out.println("Categorie : " + getCategory());
         this.projetDetailView.setType(getType());
-        System.out.println("Type : " + getType());
         this.displayedTasks();
         this.displayedSeances();
         this.ServeillerButtons();
@@ -71,7 +65,6 @@ public class ProjetDetailController {
     public void displayedTasks() {
 
         projectDetailModel.setDisplayedTasks(getTacheMap());
-
         if (projectDetailModel.getDisplayedTasks().isEmpty())
             return;
         else {
@@ -332,10 +325,8 @@ public class ProjetDetailController {
     }
 
     private LinkedHashMap<String, String> getTacheMap() {
-        System.out.println("Projet ID : " + projectDetailModel.getProjetID());
         LinkedHashMap<String, Boolean> taches = gestionnaireProjet
                 .getTaches(projectDetailModel.getProjetID());
-
         if (taches == null)
             return new LinkedHashMap<>();
 

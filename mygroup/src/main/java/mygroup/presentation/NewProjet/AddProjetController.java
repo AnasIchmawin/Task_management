@@ -69,8 +69,6 @@ public class AddProjetController {
                 Document doc = new Document();
                 doc.append("Id", id);
                 documents.add(doc);
-                System.out.println("id : " + id);
-                System.out.println("doc : " + doc);
             }
 
             for (String id : getSeancesIds()) {
@@ -127,7 +125,6 @@ public class AddProjetController {
     }
 
     public void displayTasks() {
-        System.out.println("displayTasks");
         clearTasks();
         List<String> mesTaches = new ArrayList<>(getTachesTitles());
 

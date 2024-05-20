@@ -45,13 +45,11 @@ public class SeanceFormController {
         this.gestionnaireDocument = new GestionnaireDocument();
         this.seanceModel = new SeanceModel();
         seanceModel.setId("664a07fc78e2ce2cfa9dd9bc");
-        System.out.println("ID de la séance : " + seanceModel.getId());
         FillChamps();
         displayAllInfos();
     }
 
     private void FillChamps() {
-        System.out.println("ID de la séance : " + seanceModel.getId());
         Document doc = gestionnaireSeance.getSeanceById(seanceModel.getId());
 
         // Extraire les attributs du document
