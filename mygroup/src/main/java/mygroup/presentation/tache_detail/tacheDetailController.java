@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
-import java.util.List;
 import mygroup.metier.Gestionnaire.GestionnaireTache;
 import mygroup.presentation.listes.ListeFormView;
 import mygroup.presentation.taches.TachesFormController;
@@ -46,7 +45,6 @@ public class tacheDetailController {
         String Type = model.getType();
         String Description = model.getDescription();
 
-        System.out.println("Title : " +Title);
 
         view.setTitleLabel(Title);
         view.setDateDebutLabel(DateDebut);

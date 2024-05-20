@@ -3,6 +3,8 @@ package mygroup.metier.POJO;
 
 import java.util.List;
 
+import org.bson.Document;
+
 public class POJOProjet {
     private String titre;
     private String description;
@@ -10,15 +12,15 @@ public class POJOProjet {
     private String Type;
     private String DateDebut;
     private String DateFin;
-    private List<String> Taches;
-    private List<String> Documents;
-    private List<String> Seances;
+    private List<Document> Taches;
+    private List<Document> Documents;
+    private List<Document> Seances;
 
     public POJOProjet() {
     }
 
     public POJOProjet(String titre, String description, String categorie, String type, String dateDebut, String dateFin,
-            List<String> taches, List<String> documents, List<String> seances) {
+            List<Document> taches, List<Document> documents, List<Document> seances) {
         this.titre = titre;
         this.description = description;
         Categorie = categorie;
@@ -78,27 +80,27 @@ public class POJOProjet {
         DateFin = dateFin;
     }
 
-    public List<String> getTaches() {
+    public List<Document> getTaches() {
         return Taches;
     }
 
-    public void setTaches(List<String> taches) {
+    public void setTaches(List<Document> taches) {
         Taches = taches;
     }
 
-    public List<String> getDocuments() {
+    public List<Document> getDocuments() {
         return Documents;
     }
 
-    public void setDocuments(List<String> documents) {
+    public void setDocuments(List<Document> documents) {
         Documents = documents;
     }
 
-    public List<String> getSeances() {
+    public List<Document> getSeances() {
         return Seances;
     }
 
-    public void setSeances(List<String> seances) {
+    public void setSeances(List<Document> seances) {
         Seances = seances;
     }
 
