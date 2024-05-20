@@ -9,8 +9,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         LoginFormView login = new LoginFormView(primaryStage);
         login.start(primaryStage);
+        
     }
 
     @Override

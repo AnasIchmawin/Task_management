@@ -115,8 +115,8 @@ public class SeanceFormView extends Application {
 
     private void Styler() {
         root.getStyleClass().add("root");
-        listesButton.getStyleClass().add("button-clicked-style");
-        projectsButton.getStyleClass().add("button-style");
+        listesButton.getStyleClass().add("button-style");
+        projectsButton.getStyleClass().add("button-clicked-style");
         archiveButton.getStyleClass().add("button-style");
         navbar.getStyleClass().add("navbar");
         navbarContainer.getStyleClass().add("navbar-container");
@@ -131,7 +131,7 @@ public class SeanceFormView extends Application {
     }
 
     private void Dessiner() {
-        navbar.setPadding(new Insets(10, 20, 10, 80));
+        navbar.setPadding(new Insets(10, 20, 10, 52));
         BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 20));
         container.getChildren().addAll(mainContentContainer);
         BorderPane.setMargin(container, new Insets(20, 20, 20, 20));
