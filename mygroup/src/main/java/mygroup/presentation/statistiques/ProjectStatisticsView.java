@@ -111,7 +111,7 @@ public class ProjectStatisticsView extends Application {
         mainContentContainer.getChildren().add(tablesContainer);
         mainContentContainer.setAlignment(Pos.CENTER);
 
-        Scene scene = new Scene(root, 1160, 652);
+        Scene scene = new Scene(root, 900, 600);
         scene.getStylesheets().add(getClass().getResource("StatistiquesStyle.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Project Statistics");
