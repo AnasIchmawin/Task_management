@@ -21,6 +21,8 @@ import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormView;
 import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.projets.ProjetsFormView;
+import mygroup.presentation.taches.TachesFormController;
+import mygroup.metier.Errors.NonValidSeance;
 import mygroup.metier.Gestionnaire.GestionnaireProjet;
 
 public class SceanceAjouteController {
@@ -131,7 +133,6 @@ public class SceanceAjouteController {
             this.gestionnaireSeance.createSeance();
 
             if (addProjetController != null) {
-
                 this.addProjetController.setSeance(gestionnaireSeance.getLastSeance());
                 this.addProjetController.displaySeances();
 
@@ -184,8 +185,10 @@ public class SceanceAjouteController {
             // convert format to DD/MM/YYYY
             String[] date = dateSeance.split("-");
             this.setDateSeanceFormated(date[2] + "/" + date[1] + "/" + date[0]);
+            if(addProjetController != null){
             GetSeanceFromCalendar GetSeanceFromCalendar = new GetSeanceFromCalendar(this, addProjetController);
             GetSeanceFromCalendar.start(new Stage());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
