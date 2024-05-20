@@ -1,6 +1,6 @@
 .button-style {
     -fx-background-radius: 10px;
-    -fx-pref-width: 100px;
+    -fx-pref-width: 150px;
     -fx-background-color: #3F72AF;
     -fx-text-fill: white;
     -fx-font-weight: bold; 
