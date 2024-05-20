@@ -424,7 +424,8 @@ public class TachesFormController {
 
     public void addTask(String tacheId, String titre) {
         tacheModel.addTask(tacheId, titre);
-        createTask(titre, false, tacheId);
+        createTask(titre, false, tacheId );
+        gestionnaireListe.setTacheToListe(listeFormController.getListId(), tacheId);
     }
 
     public void addTaskforList(String tacheId , String titre){

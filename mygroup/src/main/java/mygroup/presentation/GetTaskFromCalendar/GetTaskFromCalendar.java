@@ -36,7 +36,7 @@ public class GetTaskFromCalendar {
 
     public GetTaskFromCalendar(TachesFormController tachesFormController) {
         this.tachesFormController = tachesFormController;
-        this.controller = new GetTaskFromCalenderController(this);
+        this.controller = new GetTaskFromCalenderController(this , tachesFormController);
         init();
         style();
         dessiner();

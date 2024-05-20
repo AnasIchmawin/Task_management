@@ -216,6 +216,10 @@ public class GestionnaireTache {
         return this.daoTache.getDocuments(taskSelectedId);
     }
 
+    public String getLastIdTache() {
+        
+        return this.daoTache.getLastIdTache();}
+
 
 
 }
