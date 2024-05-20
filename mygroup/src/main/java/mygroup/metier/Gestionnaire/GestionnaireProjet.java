@@ -128,4 +128,8 @@ public class GestionnaireProjet {
         this.daoProjet.setTacheToProjet(IdProjet, tacheId);
     }
 
+    public void addSeanceToProjet(String ProjectID , String SeancesIds) {
+        this.daoProjet.addSeance(ProjectID, SeancesIds);
+    }
+
 }

@@ -21,6 +21,7 @@ import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormView;
 import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.projets.ProjetsFormView;
+import mygroup.metier.Gestionnaire.GestionnaireProjet;
 
 public class SceanceAjouteController {
     private SceanceAjouteView seanceAjouteView;
@@ -30,6 +31,7 @@ public class SceanceAjouteController {
     private String dateSeanceFormated;
     @SuppressWarnings("unused")
     private ProjetDetailController projetDetailController;
+    private GestionnaireProjet gestionnaireProjet;
 
     public SceanceAjouteController(SceanceAjouteView seanceAjouteView, AddProjetController addProjetController) {
         this.seanceAjouteView = seanceAjouteView;
@@ -38,8 +40,14 @@ public class SceanceAjouteController {
         this.gestionnaireSeance = new GestionnaireSeance();
     }
 
-
-
+    public SceanceAjouteController(SceanceAjouteView seanceAjouteView,
+            ProjetDetailController projetDetailController) {
+        this.seanceAjouteView = seanceAjouteView;
+        this.model = new GetDocModel();
+        this.gestionnaireSeance = new GestionnaireSeance();
+        this.gestionnaireProjet = new GestionnaireProjet();
+        this.projetDetailController = projetDetailController;
+    }
 
     public void handleListesButton() {
         ListeFormView listeFormView = new ListeFormView();
@@ -121,14 +129,30 @@ public class SceanceAjouteController {
                     description, note, IdsDoc);
             this.gestionnaireSeance.setSeance(seance);
             this.gestionnaireSeance.createSeance();
-            this.addProjetController.setSeance(gestionnaireSeance.getLastSeance());
-            this.addProjetController.displaySeances();
+
+            if (addProjetController != null) {
+
+                this.addProjetController.setSeance(gestionnaireSeance.getLastSeance());
+                this.addProjetController.displaySeances();
+
+            } else if (projetDetailController != null) {
+
+                System.out.println("ProjetDetailController is not null");
+                this.projetDetailController.addSeanceFromProjet(gestionnaireSeance.getLastSeance());
+                // prend le id de last seance
+                String ProjectID = this.projetDetailController.getProjetId();
+                String SeanceID = gestionnaireSeance.getLastSeance().keySet().stream().findFirst().get();
+                this.gestionnaireProjet.addSeanceToProjet(ProjectID, SeanceID);
+                this.projetDetailController.displayedSeances();
+
+            }
             alert("Séance créée", "La séance a été créée avec succès");
             seanceAjouteView.close();
         } catch (Exception e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Erreur");
             alert.setHeaderText("Erreur lors de la création de la séance : les champs ne sont pas valides");
+            System.out.println(e.getMessage());
             alert.showAndWait();
         }
     }
