@@ -443,8 +443,5 @@ public class tacheDetailView extends Application {
         });
     }
 
-    public void displayDocuments(LinkedHashMap<String, ArrayList<String>> documents) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'displayDocuments'");
-    }
+
 }

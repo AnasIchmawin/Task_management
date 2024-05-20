@@ -373,11 +373,8 @@ public class DAOTache {
         }
     }
 
-
-
-
     public void addDocIdToTask(String idTache, String idLastDoc) {
-        try{
+        try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("taches");
             ObjectId id = new ObjectId(idTache);
@@ -388,11 +385,12 @@ public class DAOTache {
                 if (docs != null) {
                     docs.add(idLastDoc);
                 }
+                collection.updateOne(Filters.eq("_id", id),
+                        new Document("$set", new Document("documents", docs)));
+            }
+        } catch (Exception e) {
+            System.err.println("Error adding the document ID to the task: " + e.getMessage());
         }
     }
-    catch (Exception e) {
-        System.err.println("Error adding the document ID to the task: " + e.getMessage());
-    }}
-
 
 }
