@@ -97,10 +97,14 @@ public class tacheDetailController {
 
 
 
+    @SuppressWarnings("null")
     public void displayDocuments() {
         //clear the container
         view.clearDocumentContainer();
         LinkedHashMap<String, ArrayList<String>> documents = model.getListOfDocuments();
+        if(documents == null){
+            return ;
+        }
         for (String id : documents.keySet()) {
             String title = documents.get(id).get(0);
             String description = documents.get(id).get(1);

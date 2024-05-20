@@ -49,6 +49,7 @@ public class GetTaskFromCalenderController {
                     tache.setDateDebut(item.getStartDate());
                     this.gestionnaireTache.setTache(tache);
                     gestionnaireTache.createTacheCalendar() ;
+
                     // recuperer le dernier id de la tache ajoutée
                     String idTache = gestionnaireTache.getLastIdTache();
                     String titleTask = item.getTitle();
