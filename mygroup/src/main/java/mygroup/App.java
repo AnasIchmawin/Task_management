@@ -45,8 +45,8 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        ProjetsFormView projets = new ProjetsFormView();
-        projets.start(primaryStage);
+        // ProjetsFormView projets = new ProjetsFormView();
+        // projets.start(primaryStage);
 
         // ListeFormController controller = new ListeFormController();
 
@@ -85,8 +85,8 @@ public class App extends Application {
         // AddDocumentView view = new AddDocumentView(con) ;
         // view.start(primaryStage) ;
 
-        // LoginFormView view = new LoginFormView(primaryStage) ;
-        // view.start(primaryStage) ;
+        LoginFormView view = new LoginFormView(primaryStage) ;
+        view.start(primaryStage) ;
 
         // ListeFormView view = new ListeFormView();
         // view.start(primaryStage);
@@ -107,9 +107,9 @@ public class App extends Application {
     @Override
     public void stop() throws Exception {
         // Appel de la méthode pour effacer le contenu du token
-        // TaskQuickstart.clearTokenContent();
-        // CalendarQuickstart.clearTokenContent();
-        // System.out.println("les tokens sont effacés");
+        TaskQuickstart.clearTokenContent();
+        CalendarQuickstart.clearTokenContent();
+        System.out.println("les tokens sont effacés");
     }
 
     public static void main(String[] args) {
