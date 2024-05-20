@@ -10,6 +10,7 @@ import com.mongodb.client.model.Updates;
 
 import mygroup.persistence.DBConnection;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 //mod
@@ -390,6 +391,37 @@ public class DAOTache {
             }
         } catch (Exception e) {
             System.err.println("Error adding the document ID to the task: " + e.getMessage());
+        }
+    }
+
+    public LinkedHashMap<String, ArrayList<String>> getDocuments(String taskSelectedId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            Document tache = collection.find(Filters.eq("_id", new ObjectId(taskSelectedId))).first();
+            if (tache != null) {
+                @SuppressWarnings("unchecked")
+                List<String> docs = (List<String>) tache.get("documents");
+                LinkedHashMap<String, ArrayList<String>> documents = new LinkedHashMap<>();
+                for (String docId : docs) {
+                    Document doc = DBConnection.getInstance().getDatabase().getCollection("documents")
+                            .find(Filters.eq("_id", new ObjectId(docId))).first();
+                    if (doc != null) {
+                        ArrayList<String> docInfo = new ArrayList<>();
+                        docInfo.add(doc.getString("titre"));
+                        docInfo.add(doc.getString("description"));
+                        docInfo.add(doc.getString("path"));
+                        documents.put(docId, docInfo);
+                    }
+                }
+                return documents;
+            } else {
+                System.err.println("Task not found with ID: " + taskSelectedId);
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Error getting the documents of the task: " + e.getMessage());
+            return null;
         }
     }
 

@@ -11,7 +11,7 @@ public class tacheDetailModel {
     private String categorie;
     private String type;
     private String description;
-    private LinkedHashMap<String, ArrayList<String>> ListOfDocuments;
+    public LinkedHashMap<String, ArrayList<String>> ListOfDocuments;
 
     public tacheDetailModel() {
         ListOfDocuments = new LinkedHashMap<>();
