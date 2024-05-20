@@ -218,7 +218,6 @@ public class ProjetDetailController {
         SurveillerButton(projetDetailView.getListesButton(), "100", "40", "#3F72AF");
         SurveillerButton(projetDetailView.getProjectsButton(), "100", "40", "#3F72AF");
         SurveillerButton(projetDetailView.getArchiveButton(), "100", "40", "#3F72AF");
-        SurveillerButton(projetDetailView.getLeftButton(), "150", "40", "#3F72AF");
     }
 
     public void handleAjouterDocButtonAction() {

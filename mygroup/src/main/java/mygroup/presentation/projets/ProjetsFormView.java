@@ -84,7 +84,7 @@ public class ProjetsFormView extends Application {
         TypeBox = createComboBox("Type", "Tous","These", "PFE", "Cours", "Examen", "Autres");
         CategorieBox = createComboBox("Categorie", "Tous","Enseignement", "Encadrement", "Autres");
         filterLabel = new Label("     Filtrer");
-        navbar = new HBox(30, listesButton, projectsButton, archiveButton);
+        navbar = new HBox(20, listesButton, projectsButton, archiveButton);
         navbarContainer = new VBox(navbar);
         mainContentContainer = new VBox();
         container = new StackPane();
@@ -127,7 +127,7 @@ public class ProjetsFormView extends Application {
     }
 
     private void Dessiner() {
-        navbar.setPadding(new Insets(10, 20, 10, 20));
+        navbar.setPadding(new Insets(10, 20, 10, 80));
         BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 20));
         topContainer.setAlignment(Pos.TOP_LEFT); 
         scrollPane.setPadding(new Insets(0, 50, 0, 50));

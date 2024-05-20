@@ -30,7 +30,6 @@ public class ProjetDetailView extends Application {
 
     @SuppressWarnings("unused")
     private Button addDocButton;
-    private Button leftButton;
     private Button ajouterTacheButton;
     private Button ajouterSeanceButton;
     private Button listesButton;
@@ -93,18 +92,17 @@ public class ProjetDetailView extends Application {
     private BorderPane createBorderPane(VBox navbarContainer, StackPane container) {
         BorderPane root = new BorderPane();
         root.setStyle("-fx-background-color: white;");
-        BorderPane.setMargin(navbarContainer, new Insets(0, 10, 0, 10));
+        BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 20));
         root.setTop(navbarContainer);
-        BorderPane.setMargin(container, new Insets(10, 10, 10, 10));
+        BorderPane.setMargin(container, new Insets(20, 20, 20, 20));
         root.setCenter(container);
         return root;
     }
 
     private VBox createNavbarContainer() {
         HBox buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
-        HBox leftButtonBox = new HBox(20, leftButton);
-        HBox navbar = new HBox(30, leftButtonBox, buttonsBar);
-        navbar.setPadding(new Insets(10, 20, 10, 20)); // 20px padding left and right, 10px padding top and bottom
+        HBox navbar = new HBox(30, buttonsBar);
+        navbar.setPadding(new Insets(10, 20, 10, 80)); // 20px padding left and right, 10px padding top and bottom
         navbar.getStyleClass().add("navbar");
         VBox navbarContainer = new VBox(navbar);
         navbarContainer.getStyleClass().add("navbar-container");
@@ -115,15 +113,14 @@ public class ProjetDetailView extends Application {
         // le background de la page gris
         StackPane container = new StackPane();
         container.getStyleClass().add("container");
-        container.setPadding(new Insets(20, 0, 20, 0));
         // 20px padding bottom, 55px padding left
 
         // Créer un conteneur VBox pour contenir les éléments principaux
         HBox HeadBox = BoxHead(Title,dateDebut,dateFin, categorie,type);
         HBox Descr_Seances = Descr_Seances();
-        Descr_Seances.setPadding(new Insets(0, 10, 0, 0));
+        Descr_Seances.setPadding(new Insets(0, 20, 0, 20));
         HBox Taches_doc = Taches_doc();
-        Taches_doc.setPadding(new Insets(0, 10, 0, 10));
+        Taches_doc.setPadding(new Insets(0, 20, 20, 20));
 
         // Création du VBox
         VBox vbox = new VBox(30); // Espacement vertical entre les HBox
@@ -133,7 +130,7 @@ public class ProjetDetailView extends Application {
     }
 
     private HBox Descr_Seances() {
-        HBox hbox = new HBox(200);
+        HBox hbox = new HBox();
         HBox descriptionContainer = createDescriptionContainer();
         VBox Seances = createSeancesBox();
         hbox.getChildren().addAll(descriptionContainer, Seances);
@@ -188,15 +185,14 @@ public class ProjetDetailView extends Application {
 
 
     private HBox Taches_doc() {
-        VBox Zonevertical = CreateVbox(100, RIGHT);
+        VBox Zonevertical = CreateVbox(0, RIGHT);
         VBox ZoneDocuments = createDocumentsSection();
         ScrollPane scrollPane = createScrollPane(ZoneTaches);
         VBox tasks = createTasksContainer(scrollPane);
-    
-        Zonevertical.getChildren().addAll(ZoneDocuments);
-        HBox hbox = new HBox(340);
-        hbox.getChildren().addAll(tasks, Zonevertical);
         
+        Zonevertical.getChildren().addAll(ZoneDocuments);
+        HBox hbox = new HBox(200);
+        hbox.getChildren().addAll(tasks, Zonevertical);
         return hbox;
     }
     
@@ -210,9 +206,8 @@ public class ProjetDetailView extends Application {
         contenaireDocuments.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
         ajouterDocButton.setAlignment(BOTTOM);
         contenaireDocuments.getChildren().addAll(scrollDocs, ajouterDocButton);
-        contenaireDocuments.setPadding(new Insets(10, 10, 10, 10));
         contenaireDocuments.setSpacing(20);
-        contenaireDocuments.setMinWidth(200);
+        contenaireDocuments.setMinWidth(300);
         contenaireDocuments.setMinHeight(160);
         return contenaireDocuments;
     }
@@ -358,11 +353,9 @@ public class ProjetDetailView extends Application {
     }
 
     public void init() {
-        leftButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
         ajouterSeanceButton = createButtonWithIcon("Ajouter une Seance", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
         ajouterTacheButton = createButtonWithIcon("Ajouter une Tache", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
-        leftButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
@@ -380,9 +373,8 @@ public class ProjetDetailView extends Application {
     }
 
     private void style() {
-        leftButton.getStyleClass().add("left-btn-style");
         listesButton.getStyleClass().add("button-style");
-        projectsButton.getStyleClass().add("button-style");
+        projectsButton.getStyleClass().add("button-clicked-style");
         archiveButton.getStyleClass().add("button-style");
         descriptionLabel.getStyleClass().add("description-label");
         ajouterDocButton.getStyleClass().add("ajout-style");
@@ -447,10 +439,6 @@ public class ProjetDetailView extends Application {
 
 public Button getAddDocButton() {
     return addDocButton;
-}
-
-public Button getLeftButton() {
-    return leftButton;
 }
 
 public Button getAjouterTacheButton() {
@@ -546,9 +534,6 @@ public void setAddDocButton(Button addDocButton) {
     this.addDocButton = addDocButton;
 }
 
-public void setLeftButton(Button leftButton) {
-    this.leftButton = leftButton;
-}
 
 public void setAjouterTacheButton(Button ajouterTacheButton) {
     this.ajouterTacheButton = ajouterTacheButton;

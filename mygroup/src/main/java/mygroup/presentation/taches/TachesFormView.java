@@ -27,7 +27,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 public class TachesFormView extends Application {
-    private Button leftButton;
     private Button listesButton;
     private Button projectsButton;
     private Button archiveButton;
@@ -67,7 +66,6 @@ public class TachesFormView extends Application {
 
     // Initialisation
     public void init() {
-        leftButton = createButton("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
@@ -90,9 +88,8 @@ public class TachesFormView extends Application {
 
     // Style
     private void style() {
-        leftButton.getStyleClass().add("left-btn-style");
         searchButton.getStyleClass().add("left-btn-style");
-        listesButton.getStyleClass().add("button-style");
+        listesButton.getStyleClass().add("button-clicked-style");
         projectsButton.getStyleClass().add("button-style");
         archiveButton.getStyleClass().add("button-style");
         ordonnerButton.getStyleClass().add("ordonner-btn-style");
@@ -107,18 +104,17 @@ public class TachesFormView extends Application {
     private BorderPane createBorderPane(VBox navbarContainer, StackPane container) {
         BorderPane root = new BorderPane();
         root.setStyle("-fx-background-color: white;");
-        BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 10));
+        BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 20));
         root.setTop(navbarContainer);
-        BorderPane.setMargin(container, new Insets(20, 20, 20, 10));
+        BorderPane.setMargin(container, new Insets(20, 20, 20, 20));
         root.setCenter(container);
         return root;
     }
 
     private VBox createNavbarContainer() {
         HBox buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
-        HBox leftButtonBox = new HBox(20, leftButton);
-        HBox navbar = new HBox(30, leftButtonBox, buttonsBar);
-        navbar.setPadding(new Insets(10, 20, 10, 20));
+        HBox navbar = new HBox(30, buttonsBar);
+        navbar.setPadding(new Insets(10, 20, 10, 80));
         navbar.getStyleClass().add("navbar");
         VBox navbarContainer = new VBox(navbar);
         navbarContainer.getStyleClass().add("navbar-container");
@@ -321,10 +317,6 @@ public class TachesFormView extends Application {
 
     public Button getOrdonnerButton() {
         return ordonnerButton;
-    }
-
-    public Button getLeftButton() {
-        return leftButton;
     }
 
     public Button getListesButton() {
