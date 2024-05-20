@@ -1,7 +1,9 @@
 package mygroup.presentation.projet_detail;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -115,11 +117,19 @@ public class ProjetDetailController {
         }
     }
 
-    // private void handleButtonAickedSeancection(Button seanceButton) {
-    //     String SeanceId = getSeanceIdFromButton(seanceButton);
-    //     projectDetailModel.setSeanceClicked(SeanceId);
-    //     System.out.println("Seance ID: " + SeanceId);
-    // }
+    private void handleButtoClickedSeancenAction(Button seanceButton) {
+        String SeanceId = getSeanceIdFromButton(seanceButton);
+        projectDetailModel.setSeanceClicked(SeanceId);
+        System.out.println("Seance ID: " + SeanceId);
+    }
+
+     private String getSeanceIdFromButton(Button button) {
+        List<List<String>> caseInfo = new LinkedList<>();
+        caseInfo.add(Arrays.asList(GridPane.getRowIndex(button).toString(),
+                GridPane.getColumnIndex(button).toString()));
+        return projectDetailModel.getGridInfoCase().get(caseInfo);
+    }
+
 
     private Button createSeanceButton(String title) {
         Button newTaskButton = new Button(title);

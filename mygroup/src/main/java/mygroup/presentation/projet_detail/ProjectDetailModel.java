@@ -8,6 +8,7 @@ public class ProjectDetailModel {
     private LinkedHashMap<String, String> displayedTasks;
     private LinkedHashMap<String, String> displayedSeances;
     private LinkedHashMap<String, Boolean> displayedTasksEtat;
+    private LinkedHashMap<String, String> gridInfoCase;
     private String ProjetID;
     private String title;
     private String description;
@@ -35,6 +36,7 @@ public class ProjectDetailModel {
         this.displayedTasksEtat = new LinkedHashMap<>();
         this.displayedTasks = displayedTasks;
         this.displayedSeances = displayedSeances;
+        this.gridInfoCase = new LinkedHashMap<>();
     }
 
     public ProjectDetailModel() {
@@ -44,6 +46,7 @@ public class ProjectDetailModel {
         taches = new ArrayList<>();
         documents = new ArrayList<>();
         seances = new ArrayList<>();
+        gridInfoCase
 
     }
 
@@ -170,6 +173,10 @@ public class ProjectDetailModel {
     public void putInGridInfoCaseForSeance(int rowCount, int colCount, String key) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'putInGridInfoCaseForSeance'");
+    }
+
+    public LinkedHashMap<String, String> getGridInfoCase() {
+        
     }
 
 }

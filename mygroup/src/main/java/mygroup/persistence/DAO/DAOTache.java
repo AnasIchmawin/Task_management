@@ -1,4 +1,4 @@
-package mygroup.persistence.DAO ;
+package mygroup.persistence.DAO;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -12,35 +12,32 @@ import mygroup.persistence.DBConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-
 //mod
 public class DAOTache {
 
     // Create tache
-    public void create(String titre, Boolean etat, String categorie, String description, String dateDebut, String TempsDebut,
-                   String dateFin, String TempsFin, List<String> documents, String projet, String liste) {
-    try {
-        MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("taches");
-        Document doc = new Document()
-                .append("titre", titre)
-                .append("categorie", categorie)
-                .append("description", description)
-                .append("etat", etat)
-                .append("dateDebut", dateDebut)
-                .append("TempsDebut", TempsDebut)
-                .append("dateFin", dateFin)
-                .append("TempsFin", TempsFin)
-                .append("documents", documents)
-                .append("projet", projet)
-                .append("liste", liste);       
-        collection.insertOne(doc);
-    } catch (Exception e) {
-        System.err.println("Error creating task: " + e.getMessage());
+    public void create(String titre, Boolean etat, String categorie, String description, String dateDebut,
+            String TempsDebut,
+            String dateFin, String TempsFin, List<String> documents, String projet, String liste) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("taches");
+            Document doc = new Document()
+                    .append("titre", titre)
+                    .append("categorie", categorie)
+                    .append("description", description)
+                    .append("etat", etat)
+                    .append("dateDebut", dateDebut)
+                    .append("TempsDebut", TempsDebut)
+                    .append("dateFin", dateFin)
+                    .append("TempsFin", TempsFin)
+                    .append("documents", documents)
+                    .append("projet", projet)
+                    .append("liste", liste);
+            collection.insertOne(doc);
+        } catch (Exception e) {
+            System.err.println("Error creating task: " + e.getMessage());
+        }
     }
-}
-
-
-
 
     // Read
     public Document read(String id) {
@@ -57,9 +54,9 @@ public class DAOTache {
     }
 
     // Update
-    public void update(String titre,Boolean etat , String categorie, String description, 
-    String dateDebut, String tempsDebut, String dateFin,
-    String tempsFin, List<String> docs, String projet, String liste) {
+    public void update(String titre, Boolean etat, String categorie, String description,
+            String dateDebut, String tempsDebut, String dateFin,
+            String tempsFin, List<String> docs, String projet, String liste) {
         try {
             // Récupérer la collection "taches"
             @SuppressWarnings("unused")
@@ -108,17 +105,17 @@ public class DAOTache {
         }
     }
 
-    public void updateListId(String task_Id , String list_Id) {
+    public void updateListId(String task_Id, String list_Id) {
         try {
             ObjectId taskObjectId = new ObjectId(task_Id);
-    
+
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("taches");
-    
+
             Document updateDoc = new Document("$set", new Document("liste", list_Id));
-    
+
             collection.updateOne(Filters.eq("_id", taskObjectId), updateDoc);
-    
+
         } catch (IllegalArgumentException e) {
             System.err.println("Invalid ObjectId format: " + e.getMessage());
         } catch (Exception e) {
@@ -126,15 +123,14 @@ public class DAOTache {
         }
     }
 
-
     public void updateTask(String title, String description, String taskId) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("taches");
-            
+
             // Convert taskId to ObjectId
             ObjectId objectId = new ObjectId(taskId);
-            
+
             Document tache = collection.find(Filters.eq("_id", objectId)).first();
             if (tache != null) {
                 Document doc = new Document();
@@ -167,7 +163,7 @@ public class DAOTache {
         }
     }
 
-    // GetAllTache return Map value and titre : 
+    // GetAllTache return Map value and titre :
     public List<Document> getAllTaches() {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
@@ -184,15 +180,15 @@ public class DAOTache {
         }
     }
 
-    //GetEtat
+    // GetEtat
     public Boolean getEtat(String tacheId) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("taches");
-            
+
             // Convert tacheId to ObjectId
             ObjectId objectId = new ObjectId(tacheId);
-            
+
             Document tache = collection.find(Filters.eq("_id", objectId)).first();
             if (tache != null) {
                 return tache.getBoolean("etat");
@@ -211,17 +207,17 @@ public class DAOTache {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("taches");
-            
+
             // Convert tacheId to ObjectId
             ObjectId objectId = new ObjectId(tacheId);
-            
+
             collection.updateOne(Filters.eq("_id", objectId), Updates.set("etat", etat));
         } catch (Exception e) {
             System.err.println("Error setting the state of the task: " + e.getMessage());
         }
     }
 
-    //get date debut
+    // get date debut
     public String getDateDebut(String tacheId) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
@@ -239,7 +235,7 @@ public class DAOTache {
         }
     }
 
-    //get titre
+    // get titre
     public String getTitre(String tacheId) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
@@ -257,7 +253,7 @@ public class DAOTache {
         }
     }
 
-    //get date fin
+    // get date fin
     public String getDateFin(String tacheId) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
@@ -275,7 +271,7 @@ public class DAOTache {
         }
     }
 
-    //get categorie
+    // get categorie
     public String getCategorie(String tacheId) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
@@ -293,7 +289,7 @@ public class DAOTache {
         }
     }
 
-    //get description
+    // get description
     public String getDescription(String tacheId) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
@@ -311,7 +307,7 @@ public class DAOTache {
         }
     }
 
-    //get type
+    // get type
     public String getType(String tacheId) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
@@ -329,7 +325,7 @@ public class DAOTache {
         }
     }
 
-    //getLastTacheId
+    // getLastTacheId
     public String getLastTacheId() {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
@@ -346,9 +342,6 @@ public class DAOTache {
         }
     }
 
-
-
-
     public void cloneTask(String tacheId) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
@@ -357,7 +350,7 @@ public class DAOTache {
             if (tache != null) {
                 Document clone = new Document(tache);
                 clone.remove("_id");
-                //change the title of the cloned task
+                // change the title of the cloned task
                 clone.append("titre", tache.getString("titre"));
                 collection.insertOne(clone);
             } else {
@@ -367,10 +360,6 @@ public class DAOTache {
             System.err.println("Error cloning the task: " + e.getMessage());
         }
     }
-
-
-
-
 
     public void setProjetId(List<String> listTaskIds, String lastProjetId) {
         try {
@@ -384,8 +373,22 @@ public class DAOTache {
         }
     }
 
+    public void addDocToTache(String taskSelectedId, String idLastDoc) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            Document tache = collection.find(Filters.eq("_id", new ObjectId(taskSelectedId))).first();
+            if (tache != null) {
+                List<String> docs = tache.getList("documents", String.class);
+                docs.add(idLastDoc);
+                collection.updateOne(Filters.eq("_id", new ObjectId(taskSelectedId)),
+                        Updates.set("documents", docs));
+            } else {
+                System.err.println("Task not found with ID: " + taskSelectedId);
+            }
+        } catch (Exception e) {
+            System.err.println("Error adding the document to the task: " + e.getMessage());
+        }
+    }
 
-
-
-       
 }
