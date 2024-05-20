@@ -1,6 +1,5 @@
 package mygroup.presentation.projet_detail;
 
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,7 +20,6 @@ import javafx.stage.Stage;
 import mygroup.presentation.NewProjet.AddProjetController;
 import mygroup.presentation.projets.ProjetsFormController;
 import mygroup.presentation.taches.TachesFormView;
-
 
 public class ProjetDetailView extends Application {
 
@@ -46,32 +44,33 @@ public class ProjetDetailView extends Application {
     private VBox ContainerGoogleCalendar;
     private VBox description;
     private Button confirmerButton;
-    private ProjetDetailController controller ;
+    private ProjetDetailController controller;
     private ScrollPane scrollPane;
     private String dateDebut;
     private String dateFin;
     private String categorie;
     private String type;
+    @SuppressWarnings("unused")
     private TachesFormView tacheView;
+    @SuppressWarnings("unused")
     private AddProjetController addProjetController;
     private GridPane ZoneSeances;
     private VBox contenaireSeances;
 
-
     public ProjetDetailView() {
         init();
         style();
-        action();    
+        action();
         // this.controller = new ProjetDetailController(this);
     }
 
     public ProjetDetailView(ProjetsFormController projetsFormController) {
         init();
         style();
-        action();    
-        this.controller = new ProjetDetailController(this , projetsFormController);
+        action();
+        this.controller = new ProjetDetailController(this, projetsFormController);
     }
-    
+
     @Override
     public void start(Stage primaryStage) {
         // Create the nnavigation bar
@@ -119,7 +118,7 @@ public class ProjetDetailView extends Application {
         // 20px padding bottom, 55px padding left
 
         // Créer un conteneur VBox pour contenir les éléments principaux
-        HBox HeadBox = BoxHead(Title,dateDebut,dateFin, categorie,type);
+        HBox HeadBox = BoxHead(Title, dateDebut, dateFin, categorie, type);
         HBox Descr_Seances = Descr_Seances();
         Descr_Seances.setPadding(new Insets(0, 10, 0, 0));
         HBox Taches_doc = Taches_doc();
@@ -127,7 +126,7 @@ public class ProjetDetailView extends Application {
 
         // Création du VBox
         VBox vbox = new VBox(30); // Espacement vertical entre les HBox
-        vbox.getChildren().addAll(HeadBox, Descr_Seances,Taches_doc);
+        vbox.getChildren().addAll(HeadBox, Descr_Seances, Taches_doc);
         container.getChildren().add(vbox);
         return container;
     }
@@ -144,7 +143,7 @@ public class ProjetDetailView extends Application {
         VBox contenaire = new VBox();
         contenaire.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
 
-        contenaireSeances = new VBox(30);    
+        contenaireSeances = new VBox(30);
         contenaireSeances.setSpacing(20);
 
         VBox contenaireButton = new VBox();
@@ -159,11 +158,6 @@ public class ProjetDetailView extends Application {
 
         contenaireSeances.setPadding(new Insets(8, 8, 8, 8));
 
-        // Action for AjouterButton
-        ajouterSeanceButton.setOnAction(event -> {
-            controller.handleAjouterSeanceButton(event);
-        });
-
         contenaireSeances.getChildren().addAll(scrollSeance);
         contenaireSeances.setPrefHeight(120);
 
@@ -173,7 +167,7 @@ public class ProjetDetailView extends Application {
         contenaire.getChildren().addAll(contenaireSeances, contenaireButton);
 
         return contenaire;
-    } 
+    }
 
     private GridPane creatZoneDocs() {
         GridPane grid = new GridPane();
@@ -184,22 +178,18 @@ public class ProjetDetailView extends Application {
         return grid;
     }
 
-
-
-
     private HBox Taches_doc() {
         VBox Zonevertical = CreateVbox(100, RIGHT);
         VBox ZoneDocuments = createDocumentsSection();
         ScrollPane scrollPane = createScrollPane(ZoneTaches);
         VBox tasks = createTasksContainer(scrollPane);
-    
+
         Zonevertical.getChildren().addAll(ZoneDocuments);
         HBox hbox = new HBox(340);
         hbox.getChildren().addAll(tasks, Zonevertical);
-        
+
         return hbox;
     }
-    
 
     private VBox createDocumentsSection() {
         ZoneDocuments = creatZoneDocs();
@@ -227,21 +217,20 @@ public class ProjetDetailView extends Application {
     private VBox createTasksContainer(ScrollPane scrollPane) {
         VBox tasks = new VBox();
         tasks.getChildren().addAll(scrollPane, ajouterTacheButton); // Add the ajouterTacheButton to the tasks VBox
-    
+
         // Set the same styles as the contenaire VBox
         tasks.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
         tasks.setPadding(new Insets(8, 8, 8, 8));
         tasks.setSpacing(20);
         tasks.setMinWidth(580);
         tasks.setMinHeight(160);
-    
+
         // Set alignment and margin
         tasks.setAlignment(Pos.CENTER);
         VBox.setMargin(tasks, new Insets(30, 0, 0, 0));
-    
+
         return tasks;
     }
-    
 
     private ScrollPane createScrollPane(GridPane gridPane) {
         ScrollPane scrollPane = new ScrollPane(gridPane);
@@ -251,12 +240,11 @@ public class ProjetDetailView extends Application {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Hide horizontal scrollbar
         return scrollPane;
     }
-    
 
     private HBox createDescriptionContainer() {
         HBox descriptionContainer = new HBox();
         ScrollPane descriptionScrollPane = createDescriptionScrollPane(description);
-        descriptionContainer.getChildren().addAll( descriptionScrollPane);
+        descriptionContainer.getChildren().addAll(descriptionScrollPane);
         descriptionContainer.setAlignment(Pos.TOP_RIGHT);
         return descriptionContainer;
     }
@@ -269,6 +257,7 @@ public class ProjetDetailView extends Application {
         descriptionScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         return descriptionScrollPane;
     }
+
     private VBox BoxDescription(String description) {
         TextArea descriptionLabel = new TextArea(description);
         descriptionLabel.getStyleClass().add("description-style");
@@ -296,9 +285,8 @@ public class ProjetDetailView extends Application {
         setCategorie("titre de mon projet");
         Label typeLabel = new Label(type);
         setType("titre de mon projet");
-        
-        // Style
 
+        // Style
 
         titre.getStyleClass().add("index1-style");
         dateDebutLabel.getStyleClass().add("title-style");
@@ -359,9 +347,12 @@ public class ProjetDetailView extends Application {
 
     public void init() {
         leftButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
-        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
-        ajouterSeanceButton = createButtonWithIcon("Ajouter une Seance", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
-        ajouterTacheButton = createButtonWithIcon("Ajouter une Tache", "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
+        ajouterDocButton = createButtonWithIcon("Ajouter Document", "file:./mygroup/src/main/java/Pictures/add.png", 20,
+                20);
+        ajouterSeanceButton = createButtonWithIcon("Ajouter une Seance",
+                "file:./mygroup/src/main/java/Pictures/add.png", 20, 20);
+        ajouterTacheButton = createButtonWithIcon("Ajouter une Tache", "file:./mygroup/src/main/java/Pictures/add.png",
+                20, 20);
         leftButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
@@ -374,9 +365,9 @@ public class ProjetDetailView extends Application {
         ContainerGoogleCalendar = new VBox();
         ContainerGoogleCalendar.setPadding(new Insets(2, 2, 2, 2));
         ContainerGoogleCalendar.setSpacing(5);
-        confirmerButton =  createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/confirmer.png", 29, 29);
+        confirmerButton = createButtonWithIcon("", "file:./mygroup/src/main/java/Pictures/confirmer.png", 29, 29);
         description = new VBox();
-        
+
     }
 
     private void style() {
@@ -393,29 +384,6 @@ public class ProjetDetailView extends Application {
         confirmerButton.getStyleClass().add("confirm-btn-style");
     }
 
-    private void action() {
-        ajouterDocButton.setOnAction(event -> {
-            this.controller.handleAjouterDocButtonAction();
-        });
-        // confirmerButton.setOnAction(event -> {
-        //     controller.handleConfirmerButtonAction();
-        // });
-        listesButton.setOnAction(event -> {
-            this.controller.handleListesButtonAction();
-        });
-
-        archiveButton.setOnAction(event -> {
-            this.controller.handleArchiveButtonAction();
-        });
-
-        projectsButton.setOnAction(event -> {
-            this.controller.handleProjectsButtonAction();
-        });
-        ajouterTacheButton.setOnAction(event -> {
-            controller.getTasksView(event);
-        });
-    }
-
     private GridPane createGridPane() {
         GridPane gridPane = new GridPane();
         gridPane.setVgap(30);
@@ -424,7 +392,6 @@ public class ProjetDetailView extends Application {
         gridPane.setStyle("-fx-background-color: #8E9EB2;");
         return gridPane;
     }
-
 
     private Button createButtonWithIcon(String name, String string, int i, int j) {
         Button button = new Button(name);
@@ -445,203 +412,135 @@ public class ProjetDetailView extends Application {
         return ZoneTaches;
     }
 
-public Button getAddDocButton() {
-    return addDocButton;
-}
+    public Button getAjouterTacheButton() {
+        return ajouterTacheButton;
+    }
 
-public Button getLeftButton() {
-    return leftButton;
-}
+    public Button getListesButton() {
+        return listesButton;
+    }
 
-public Button getAjouterTacheButton() {
-    return ajouterTacheButton;
-}
+    public Button getProjectsButton() {
+        return projectsButton;
+    }
 
-public Button getAjouterSeanceButton() {
-    return ajouterSeanceButton;
-}
+    public Button getArchiveButton() {
+        return archiveButton;
+    }
 
-public Button getListesButton() {
-    return listesButton;
-}
+    public BorderPane getRoot() {
+        return root;
+    }
 
-public Button getProjectsButton() {
-    return projectsButton;
-}
+    public GridPane getZoneListes() {
+        return ZoneListes;
+    }
 
-public Button getArchiveButton() {
-    return archiveButton;
-}
+    public Label getDescriptionLabel() {
+        return descriptionLabel;
+    }
 
-public BorderPane getRoot() {
-    return root;
-}
+    public String gettitle() {
+        return Title;
+    }
 
-public GridPane getZoneListes() {
-    return ZoneListes;
-}
+    public String getcategorie() {
+        return categorie;
+    }
 
-public Button getAjouterDocButton() {
-    return ajouterDocButton;
-}
+    public String gettype() {
+        return type;
+    }
 
-public Label getDescriptionLabel() {
-    return descriptionLabel;
-}
+    public GridPane getZoneDocuments() {
+        return ZoneDocuments;
+    }
 
-public String gettitle() {
-    return Title;
-}
+    public VBox getContainerGoogleCalendar() {
+        return ContainerGoogleCalendar;
+    }
 
-public String getcategorie() {
-    return categorie;
-}
+    public String getDescription() {
+        return description.getChildren().get(0).toString();
+    }
 
-public String gettype() {
-    return type;
-}
+    public String getDateDebut() {
+        return dateDebut;
+    }
 
-public GridPane getZoneDocuments() {
-    return ZoneDocuments;
-}
+    public String getDateFin() {
+        return dateFin;
+    }
 
-public VBox getContainerGoogleCalendar() {
-    return ContainerGoogleCalendar;
-}
+    public void setRoot(BorderPane root) {
+        this.root = root;
+    }
 
-public String getDescription() {
-    return description.getChildren().get(0).toString();
-}
+    public void setZoneListes(GridPane zoneListes) {
+        this.ZoneListes = zoneListes;
+    }
 
-public Button getConfirmerButton() {
-    return confirmerButton;
-}
+    public void setDescription(String description) {
+        this.description.getChildren().clear();
+        this.description.getChildren().add(BoxDescription(description));
+    }
 
-public ProjetDetailController getController() {
-    return controller;
-}
+    public void setDateDebut(String dateDebut) {
+        this.dateDebut = dateDebut;
+    }
 
-public ScrollPane getScrollPane() {
-    return scrollPane;
-}
+    public void setDateFin(String dateFin) {
+        this.dateFin = dateFin;
+    }
 
-public String getDateDebut() {
-    return dateDebut;
-}
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
+    }
 
-public String getDateFin() {
-    return dateFin;
-}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-public TachesFormView getTacheView() {
-    return tacheView;
-}
+    public void setZoneDocuments(GridPane zoneDocuments) {
+        this.ZoneDocuments = zoneDocuments;
+    }
 
-public AddProjetController getAddProjetController() {
-    return addProjetController;
-}
+    public void setContainerGoogleCalendar(VBox containerGoogleCalendar) {
+        this.ContainerGoogleCalendar = containerGoogleCalendar;
+    }
 
-// Setters
-public void setAddDocButton(Button addDocButton) {
-    this.addDocButton = addDocButton;
-}
+    public void settitle(String Title) {
+        this.Title = Title;
+    }
 
-public void setLeftButton(Button leftButton) {
-    this.leftButton = leftButton;
-}
+    public GridPane getZoneSeances() {
+        return ZoneSeances;
+    }
 
-public void setAjouterTacheButton(Button ajouterTacheButton) {
-    this.ajouterTacheButton = ajouterTacheButton;
-}
+    private void action() {
+        ajouterDocButton.setOnAction(event -> {
+            this.controller.handleAjouterDocButtonAction();
+        });
+        // confirmerButton.setOnAction(event -> {
+        // controller.handleConfirmerButtonAction();
+        // });
+        listesButton.setOnAction(event -> {
+            this.controller.handleListesButtonAction();
+        });
 
-public void setAjouterSeanceButton(Button ajouterSeanceButton) {
-    this.ajouterSeanceButton = ajouterSeanceButton;
-}
+        archiveButton.setOnAction(event -> {
+            this.controller.handleArchiveButtonAction();
+        });
 
-public void setListesButton(Button listesButton) {
-    this.listesButton = listesButton;
-}
-
-public void setProjectsButton(Button projectsButton) {
-    this.projectsButton = projectsButton;
-}
-
-public void setArchiveButton(Button archiveButton) {
-    this.archiveButton = archiveButton;
-}
-
-public void setRoot(BorderPane root) {
-    this.root = root;
-}
-
-public void setZoneListes(GridPane zoneListes) {
-    this.ZoneListes = zoneListes;
-}
-
-public void setAjouterDocButton(Button ajouterDocButton) {
-    this.ajouterDocButton = ajouterDocButton;
-}
-
-public void setDescription(String description) {
-    this.description.getChildren().clear();
-    this.description.getChildren().add(BoxDescription(description));
-}
-
-public void setDateDebut(String dateDebut) {
-    this.dateDebut = dateDebut;
-}
-
-public void setDateFin(String dateFin) {
-    this.dateFin = dateFin;
-}
-
-public void setCategorie(String categorie) {
-    this.categorie = categorie;
-}
-
-public void setType(String type) {
-    this.type = type;
-}
-
-public void setZoneDocuments(GridPane zoneDocuments) {
-    this.ZoneDocuments = zoneDocuments;
-}
-
-public void setContainerGoogleCalendar(VBox containerGoogleCalendar) {
-    this.ContainerGoogleCalendar = containerGoogleCalendar;
-}
-
-
-public void setConfirmerButton(Button confirmerButton) {
-    this.confirmerButton = confirmerButton;
-}
-
-public void setController(ProjetDetailController controller) {
-    this.controller = controller;
-}
-
-public void setScrollPane(ScrollPane scrollPane) {
-    this.scrollPane = scrollPane;
-}
-
-public void settitle(String Title) {
-    this.Title = Title;
-}
-
-
-
-public void setTacheView(TachesFormView tacheView) {
-    this.tacheView = tacheView;
-}
-
-public void setAddProjetController(AddProjetController addProjetController) {
-    this.addProjetController = addProjetController;
-}
-
-public GridPane getZoneSeances() {
-    return ZoneSeances;
-}
-
-
+        projectsButton.setOnAction(event -> {
+            this.controller.handleProjectsButtonAction();
+        });
+        ajouterTacheButton.setOnAction(event -> {
+            controller.getTasksView(event);
+        });
+        ajouterSeanceButton.setOnAction(event -> {
+            controller.getSeanceView();
+        });
+    }
 
 }

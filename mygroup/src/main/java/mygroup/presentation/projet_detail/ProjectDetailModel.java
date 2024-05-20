@@ -160,4 +160,16 @@ public class ProjectDetailModel {
         this.displayedTasks.put(tacheId, titre);
     }
 
+    public void addSeance(LinkedHashMap<String, String> SeanceMap) {
+        String seanceId = SeanceMap.keySet().stream().findFirst().get();
+        System.out.println("Seance ID: " + seanceId);
+        System.out.println("Seance titre: " + SeanceMap.get(seanceId));
+        this.displayedSeances.put(seanceId, SeanceMap.get(seanceId));
+    }
+
+    public void putInGridInfoCaseForSeance(int rowCount, int colCount, String key) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'putInGridInfoCaseForSeance'");
+    }
+
 }

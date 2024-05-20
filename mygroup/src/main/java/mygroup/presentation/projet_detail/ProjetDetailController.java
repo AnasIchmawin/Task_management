@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.crypto.SealedObject;
+
 import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -13,7 +15,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import mygroup.metier.Gestionnaire.GestionnaireDocument;
 import mygroup.metier.Gestionnaire.GestionnaireProjet;
@@ -24,6 +25,7 @@ import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormView;
 import mygroup.presentation.projets.ProjetsFormController;
 import mygroup.presentation.projets.ProjetsFormView;
+import mygroup.presentation.seance_ajoute.SceanceAjouteView;
 
 public class ProjetDetailController {
     @SuppressWarnings("unused")
@@ -48,22 +50,6 @@ public class ProjetDetailController {
 
     }
 
-    public void handleAjouterButtonAction(GridPane gridPane) {
-        Button newListButton = new Button("Seance  1");
-        newListButton.getStyleClass().add("AjouterSeance-Style");
-        GridPane.setHgrow(newListButton, Priority.ALWAYS); // Définir la croissance horizontale pour occuper toute la
-                                                           // largeur disponible
-
-        int colIndex = gridPane.getChildren().size() % 1; // Calcul de l'indice de colonne
-        int rowIndex = gridPane.getChildren().size() / 1; // Calcul de l'indice de ligne
-
-        gridPane.add(newListButton, colIndex, rowIndex);
-    }
-
-    public void handleSaveButton(GridPane gridPane) {
-        // Save button;
-    }
-
     private void FillChamps() {
         this.projetDetailView.settitle(getProjetTitle());
         this.projetDetailView.setDescription(getProjetDescription());
@@ -82,8 +68,8 @@ public class ProjetDetailController {
         if (projectDetailModel.getDisplayedTasks().isEmpty())
             return;
         else {
-           System.out.println("-------on a des taches-------");
-            
+            System.out.println("-------on a des taches-------");
+
         }
         projetDetailView.getZoneTaches().getChildren().clear();
         int colCount = 0;
@@ -104,22 +90,36 @@ public class ProjetDetailController {
         }
     }
 
-    private void displayedSeances() {
+    public void displayedSeances() {
         projectDetailModel.setDisplayedSeances(getSeanceMap());
-        GridPane gridPane = projetDetailView.getZoneSeances();
-        List<String> mesSeances = new ArrayList<>(getSeancesTitles());
+        if (projectDetailModel.getDisplayedSeances().isEmpty()) {
+            System.out.println("-------on a pas de seances-------");
+            return;
+        }
 
-        for (String title : mesSeances) {
-            Button newSeanceButton = createSeanceButton(title);
-            int colIndex = gridPane.getChildren().size() % 2; // Calculating column index
-            int rowIndex = gridPane.getChildren().size() / 2; // Calculating row index
-            gridPane.add(newSeanceButton, colIndex, rowIndex);
+        this.projetDetailView.getZoneSeances().getChildren().clear();
+
+        int colCount = 0;
+        int rowCount = 0;
+
+        for (Map.Entry<String, String> entry : projectDetailModel.getDisplayedSeances().entrySet()) {
+            @SuppressWarnings("unused")
+            Button seanceButton = createSeanceButton(entry.getValue());
+            seanceButton.setOnAction(event -> handleButtoClickedSeancenAction(seanceButton));
+            projectDetailModel.putInGridInfoCaseForSeance(colCount, rowCount, entry.getKey());
+
+            if (++colCount == 2) {
+                colCount = 0;
+                rowCount++;
+            }
         }
     }
 
-    private List<String> getSeancesTitles() {
-        return new ArrayList<>(this.projectDetailModel.getDisplayedSeances().values());
-    }
+    // private void handleButtonAickedSeancection(Button seanceButton) {
+    //     String SeanceId = getSeanceIdFromButton(seanceButton);
+    //     projectDetailModel.setSeanceClicked(SeanceId);
+    //     System.out.println("Seance ID: " + SeanceId);
+    // }
 
     private Button createSeanceButton(String title) {
         Button newTaskButton = new Button(title);
@@ -218,7 +218,6 @@ public class ProjetDetailController {
         SurveillerButton(projetDetailView.getListesButton(), "100", "40", "#3F72AF");
         SurveillerButton(projetDetailView.getProjectsButton(), "100", "40", "#3F72AF");
         SurveillerButton(projetDetailView.getArchiveButton(), "100", "40", "#3F72AF");
-        SurveillerButton(projetDetailView.getLeftButton(), "150", "40", "#3F72AF");
     }
 
     public void handleAjouterDocButtonAction() {
@@ -425,6 +424,16 @@ public class ProjetDetailController {
         projectDetailModel.addTask(tacheId, titre);
         Button taskButton = createTask(projetDetailView.getZoneTaches(), titre, false, tacheId);
         projetDetailView.getZoneTaches().getChildren().add(taskButton);
+    }
+
+    public void getSeanceView() {
+        SceanceAjouteView view = new SceanceAjouteView(this);
+        Stage stage = new Stage();
+        view.start(stage);
+    }
+
+    public void addSeanceFromProjet(LinkedHashMap<String, String> lastSeance) {
+        projectDetailModel.addSeance(lastSeance);
     }
 
 }

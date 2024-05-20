@@ -30,8 +30,6 @@ import mygroup.presentation.seance.SeanceFormController;
 import mygroup.presentation.seance.SeanceFormView;
 import mygroup.presentation.seance_ajoute.SceanceAjouteController;
 import mygroup.presentation.seance_ajoute.SceanceAjouteView;
-import mygroup.presentation.statistiques.ProjectStatistics;
-import mygroup.presentation.statistiques.ProjectStatisticsView;
 import mygroup.presentation.seance.SeanceFormView;
 import mygroup.presentation.tache_ajoute.ControllerFromTacheAjout;
 import mygroup.presentation.tache_ajoute.addTacheview;
@@ -50,9 +48,6 @@ public class App extends Application {
         // projets.start(primaryStage);
 
         // ListeFormController controller = new ListeFormController();
-
-        // ProjectStatisticsView prjt = new ProjectStatisticsView();
-        // prjt.start(primaryStage);
 
         // ArchiveFormView archive = new ArchiveFormView();
         // archive.start(primaryStage);
@@ -89,6 +84,8 @@ public class App extends Application {
         // LoginFormView view = new LoginFormView(primaryStage) ;
         // view.start(primaryStage) ;
 
+        ListeFormView view = new ListeFormView();
+        view.start(primaryStage);
         ListeFormView view = new ListeFormView();
         view.start(primaryStage);
 
