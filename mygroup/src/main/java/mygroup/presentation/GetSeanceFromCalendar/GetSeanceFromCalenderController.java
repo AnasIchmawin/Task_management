@@ -15,9 +15,7 @@ import javafx.util.Duration;
 import mygroup.metier.Gestionnaire.GestionnaireSeance;
 import mygroup.metier.POJO.POJOSeance;
 import mygroup.presentation.NewProjet.AddProjetController;
-import mygroup.presentation.seance.SeanceFormController;
 import mygroup.presentation.seance_ajoute.SceanceAjouteController;
-import mygroup.presentation.seance_ajoute.SeanceAjouteModel;
 
 public class GetSeanceFromCalenderController {
     private String dateSeance;
@@ -34,7 +32,7 @@ public class GetSeanceFromCalenderController {
         this.dateSeance = this.getSeanceFromCalendar.getDateSeance();
     }
 
-    public void handleConfirmButton(ActionEvent event , SceanceAjouteController sceanceAjouteController) {
+    public void handleConfirmButton(ActionEvent event, SceanceAjouteController sceanceAjouteController) {
         System.out.println("Confirm Button Clicked");
         System.out.println("Selected events : ");
         for (ItemSeance item : listTasItems) {
