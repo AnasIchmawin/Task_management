@@ -384,6 +384,23 @@ public class DAOProjet {
 
     }
 
+    public int getNumberOftachesPerProject(String projetId) {
+        int nbr = 0;
+        MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
+       ObjectId objId = new ObjectId(projetId);
+        Document projet = collection.find(Filters.eq("_id", objId)).first();
+        @SuppressWarnings("unchecked")
+        List<String> taches = (List<String>) projet.get("taches");
+
+                if (taches != null) {
+                    for (String tache : taches) {
+                        nbr = nbr +1;
+                    }
+                }
+                return nbr;
+
+    }
+
     
 
 

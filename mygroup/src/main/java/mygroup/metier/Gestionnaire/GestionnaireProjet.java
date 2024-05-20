@@ -78,6 +78,10 @@ public int NmbrDocumentParProjet(String projetId) {
     return daoProjet.NmbrDocumentParProjet(projetId);
 }
 
+public int getNumberOftachesPerProject(String projetId) {
+    return daoProjet.getNumberOftachesPerProject(projetId);
+}
+
     public String getProjetTitle(String id) {
         return daoProjet.getProjetTitle(id);
     }

@@ -2,11 +2,17 @@ package mygroup.presentation.statistiques;
 
 import java.util.List;
 import org.bson.Document;
+
+import javafx.stage.Stage;
 import mygroup.metier.Gestionnaire.GestionnaireProjet;
+import mygroup.presentation.archive.ArchiveFormView;
+import mygroup.presentation.listes.ListeFormView;
+import mygroup.presentation.projets.ProjetsFormView;
 
 public class ProjectStatistics {
 
     private GestionnaireProjet gestionnaireProjet;
+    private ProjectStatisticsView projectStatisticsView;
 
     public ProjectStatistics() {
         gestionnaireProjet = new GestionnaireProjet();
@@ -20,6 +26,21 @@ public class ProjectStatistics {
             totalWorkHours += gestionnaireProjet.calculerHeuresTravail(projectId);
         }
         return totalWorkHours;
+    }
+
+
+    // navigation vers la page de projets
+    public void handleProjectsButton() {
+        Stage stage = (Stage) projectStatisticsView.getZonestats().getScene().getWindow();
+        ProjetsFormView projets = new ProjetsFormView();
+        projets.start(stage);
+    }
+
+    // navigation vers la page d'archivage
+    public void handleArchiveButton() {
+        Stage stage = (Stage) projectStatisticsView.getZonestats().getScene().getWindow();
+        ArchiveFormView archiveFormView = new ArchiveFormView();
+        archiveFormView.start(stage);
     }
 
     public int getTotalWorkHoursForCategory(String category) {
@@ -54,6 +75,10 @@ public class ProjectStatistics {
 
     public int getNumberOfDocumentsPerProject(String projectId) {
         return gestionnaireProjet.NmbrDocumentParProjet(projectId);
+    }
+
+    public int getNumberOftachesPerProject(String projectId) {
+        return gestionnaireProjet.getNumberOftachesPerProject(projectId);
     }
 
     public double calculatePercentageOfWorkHours(int totalWorkHours, int totalHours) {
