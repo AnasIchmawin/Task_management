@@ -2,8 +2,6 @@ package mygroup.presentation.tache_detail;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.awt.Desktop;
 // import java.awt.TextField; // Remove this line
 
@@ -91,6 +89,7 @@ public class tacheDetailView extends Application {
     }
 
     public void addDocumentToContainer(String title, String description, String url) {
+        System.out.println(url);
         VBox newVBox = new VBox(20);
         newVBox.setPrefSize(170, 200);
         newVBox.setStyle("-fx-border-color: #bdbdbd; -fx-border-width: 3px; -fx-border-radius: 15px; ");
@@ -180,17 +179,6 @@ public class tacheDetailView extends Application {
         return navbarContainer;
     }
 
-    // private StackPane Designer() {
-    //     container = new StackPane();
-    //     HBox.setHgrow(hbox1, javafx.scene.layout.Priority.ALWAYS);
-    //     HBox.setHgrow(hbox2, javafx.scene.layout.Priority.ALWAYS);
-    //     container.getStyleClass().add("container");
-    //     container.setPadding(new Insets(20, 20, 20, 25));        
-    //     hbox1.setPadding(new Insets(0, 0, 0, 30));
-    //     hbox2.setPadding(new Insets(0, 30, 0, 0));
-    //     DocumentSection();
-    //     return container;
-    // }
 
     public void getChildren() {
         vbox1.getChildren().addAll(indexDebut, dateDebutLabel);
@@ -301,72 +289,6 @@ public class tacheDetailView extends Application {
 
 
 
-    // private void DocumentSection() {
-    //     DocSection = new VBox(20);
-    //     HBox hboxContainer = new HBox(); // Utiliser HBox pour disposer les VBox horizontalement
-    //     ScrollPane Documentsplat = createScrollPaneWithButton(hboxContainer); // Créer le ScrollPane avec le HBox
-    //     Documentsplat.getStyleClass().add("scroll-pane-style");
-    //     Documentsplat.setPrefHeight(220);
-    //     hboxContainer.setSpacing(10); // Espacement horizontal entre les VBox
-
-    //     addDocButton = new Button("Ajouter un document");
-    //     addDocButton.getStyleClass().add("ajout-style");
-
-    //     // Gestionnaire d'événements pour le bouton
-    //     addDocButton.setOnAction(event -> {
-    //         VBox newVBox = new VBox(20);
-    //         newVBox.setPrefSize(170, 200);
-    //         newVBox.setStyle("-fx-border-color: #bdbdbd; -fx-border-width: 3px; -fx-border-radius: 15px; ");
-
-    //         // Ajouter un Label de texte à la nouvelle VBox
-    //         Button Systeme = new Button("Systeme d'exploitation 12.12.2023");
-    //         // wrap text
-    //         Systeme.setWrapText(true);
-    //         Systeme.setAlignment(Pos.CENTER);
-
-    //         Systeme.setOnAction(e -> {
-    //             // Chemin vers le fichier PDF
-    //             String cheminPDF = "mygroup\\src\\main\\java\\mygroup\\presentation\\tache_detail\\systeme.pdf";
-
-    //             // Vérifier si Desktop est pris en charge par la plateforme
-    //             if (Desktop.isDesktopSupported()) {
-    //                 Desktop desktop = Desktop.getDesktop();
-    //                 try {
-    //                     desktop.open(new File(cheminPDF));
-    //                 } catch (IOException ex) {
-    //                     ex.printStackTrace();
-    //                 }
-    //             } else {
-    //                 // Si Desktop n'est pas pris en charge, afficher un message d'erreur
-    //                 System.out.println("Desktop n'est pas pris en charge");
-    //             }
-    //         });
-
-    //         newVBox.getChildren().add(Systeme);
-    //         Label description = new Label(
-    //                 "la bureautique informatique, sans que son cont  la bureautique informatique, sans que son cont  la bureautiquela bureautique informatiqu");
-    //         newVBox.getChildren().add(description);
-
-    //         newVBox.setPadding(new Insets(3, 5, 5, 5));
-    //         description.setWrapText(true);
-    //         // text aligne center
-    //         description.setAlignment(Pos.CENTER);
-    //         description.setPadding(new Insets(0, 0, 0, 10));
-    //         // Ajouter des marges entre les VBox
-    //         VBox.setMargin(newVBox, new Insets(0, 10, 0, 0)); // Marge droite de 10 pixels
-
-    //         // Ajouter la nouvelle VBox à droite de l'ancienne dans le HBox container
-    //         hboxContainer.getChildren().add(newVBox);
-    //         Systeme.setStyle(
-    //                 "-fx-min-height: 50px;-fx-font-size: 14px; -fx-max-height: 50px;-fx-min-width: 200px; -fx-max-width: 200px;-fx-font-weight: bold;-fx-background-color: #bdbdbd; -fx-background-radius: 10px;");
-    //     });
-
-    //     // Ajouter le ScrollPane et le bouton à la VBox principale
-    //     HBox h = new HBox(10);
-    //     h.getChildren().addAll(addDocButton, Update);
-    //     DocSection.getChildren().addAll(Documentsplat, h);
-    // }
-
     void showAlert(String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
@@ -443,8 +365,9 @@ public class tacheDetailView extends Application {
         });
     }
 
-    public void displayDocuments(LinkedHashMap<String, ArrayList<String>> documents) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'displayDocuments'");
+    public void clearDocumentContainer() {
+        hboxContainer.getChildren().clear();
     }
+
+
 }

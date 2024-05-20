@@ -66,7 +66,7 @@ public class ArchiveFormView extends Application {
 
     private VBox createNavbarContainer() {
         HBox buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
-        buttonsBar.setPadding(new Insets(0, 0, 0, 55));
+        buttonsBar.setPadding(new Insets(0, 0, 0, 60));
         HBox navbar = new HBox(30, buttonsBar);
         navbar.setPadding(new Insets(10, 20, 10, 20)); // 20px padding left and right, 10px padding top and bottom
         navbar.getStyleClass().add("navbar");

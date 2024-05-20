@@ -21,6 +21,7 @@ import mygroup.metier.Gestionnaire.GestionnaireSeance;
 import mygroup.presentation.NewDocument.AddDocumentView;
 import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormView;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.projets.ProjetsFormView;
 
 public class SeanceFormController {
@@ -39,12 +40,12 @@ public class SeanceFormController {
             + "-fx-text-fill: #ffffff; "
             + "-fx-font-size: 18px;";
 
-    SeanceFormController(SeanceFormView view) {
-        this.seanceFormView = view;
+    public SeanceFormController(SeanceFormView seanceFormView, ProjetDetailController projetDetailController) {
+        this.seanceFormView = seanceFormView;
         this.gestionnaireSeance = new GestionnaireSeance();
         this.gestionnaireDocument = new GestionnaireDocument();
         this.seanceModel = new SeanceModel();
-        seanceModel.setId("664a07fc78e2ce2cfa9dd9bc");
+        seanceModel.setId(projetDetailController.getSeanceClicked());
         FillChamps();
         displayAllInfos();
     }
@@ -145,14 +146,14 @@ public class SeanceFormController {
         System.out.println("documents: " + seanceModel.getDocuments());
         int colCount = 0;
         int rowCount = 0;
-    
+
         for (Map.Entry<String, String> entry : seanceModel.getDocuments().entrySet()) {
             Button newListButton = createDocButton(entry.getValue());
             newListButton.setOnAction(event -> {
                 String docTitle = newListButton.getText();
                 String docUrl = seanceModel.getDocuments().get(docTitle);
                 System.out.println("Ouverture du document : " + docUrl);
-    
+
                 // Vérifier si Desktop est pris en charge par la plateforme
                 if (Desktop.isDesktopSupported()) {
                     Desktop desktop = Desktop.getDesktop();
@@ -174,7 +175,7 @@ public class SeanceFormController {
                 }
             });
             addtaskbutton(newListButton, colCount, rowCount);
-    
+
             if (++colCount == MAX_COLUMNS) {
                 colCount = 0;
                 rowCount++;
@@ -182,12 +183,9 @@ public class SeanceFormController {
         }
     }
 
-
     private void addtaskbutton(Button newListButton, int colCount, int rowCount) {
         seanceFormView.getZoneDocuments().add(newListButton, colCount, rowCount);
     }
-
-
 
     private Button createDocButton(String title) {
         Button newListButton = new Button(title);
@@ -225,6 +223,6 @@ public class SeanceFormController {
     }
 
     public void handleSaveButtonAction() {
-       
+
     }
 }

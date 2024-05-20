@@ -290,4 +290,5 @@ public class AddProjetController {
         addProjetView.getZoneSeances().getChildren().clear();
     }
 
+
 }

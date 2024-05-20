@@ -1,6 +1,7 @@
 package mygroup.presentation.projet_detail;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -8,6 +9,7 @@ public class ProjectDetailModel {
     private LinkedHashMap<String, String> displayedTasks;
     private LinkedHashMap<String, String> displayedSeances;
     private LinkedHashMap<String, Boolean> displayedTasksEtat;
+    private LinkedHashMap<List<List<String>>, String> gridInfoCase;
     private String ProjetID;
     private String title;
     private String description;
@@ -18,6 +20,7 @@ public class ProjectDetailModel {
     private List<String> taches;
     private List<String> documents;
     private List<String> seances;
+    private String seanceClicked;
 
     public ProjectDetailModel(String title, String description, String categorie, String type, String dateDebut,
             String dateFin, List<String> taches, List<String> documents, List<String> seances,
@@ -35,6 +38,7 @@ public class ProjectDetailModel {
         this.displayedTasksEtat = new LinkedHashMap<>();
         this.displayedTasks = displayedTasks;
         this.displayedSeances = displayedSeances;
+        this.gridInfoCase = new LinkedHashMap<>();
     }
 
     public ProjectDetailModel() {
@@ -44,6 +48,7 @@ public class ProjectDetailModel {
         taches = new ArrayList<>();
         documents = new ArrayList<>();
         seances = new ArrayList<>();
+        gridInfoCase = new LinkedHashMap<>();
 
     }
 
@@ -144,8 +149,10 @@ public class ProjectDetailModel {
         this.displayedTasksEtat.put(tacheId, etat);
     }
 
-    public void putInGridInfoCase(int rowCount, String key) {
-        this.displayedTasks.put(key, key);
+    public void putInGridInfoCase(Integer Row, Integer Column, String id) {
+        List<List<String>> caseInfo = new ArrayList<>();
+        caseInfo.add(Arrays.asList(Row.toString(), Column.toString()));
+        gridInfoCase.put(caseInfo, id);
     }
 
     public void setDisplayedSeances(LinkedHashMap<String, String> seanceMap) {
@@ -167,9 +174,25 @@ public class ProjectDetailModel {
         this.displayedSeances.put(seanceId, SeanceMap.get(seanceId));
     }
 
-    public void putInGridInfoCaseForSeance(int rowCount, int colCount, String key) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'putInGridInfoCaseForSeance'");
+ 
+
+    public LinkedHashMap<List<List<String>>, String> getGridInfoCase() {
+        return gridInfoCase;
     }
+
+    public void setGridInfoCase(LinkedHashMap<List<List<String>>, String> gridInfoCase) {
+        this.gridInfoCase = gridInfoCase;
+    }
+
+    public String getSeanceClicked() {
+        return seanceClicked;
+    }
+
+    public void setSeanceClicked(String seanceClicked) {
+        this.seanceClicked = seanceClicked;
+    }
+
+   
+
 
 }

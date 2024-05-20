@@ -8,6 +8,8 @@ import mygroup.persistence.DAO.DAOTache;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 //mod
 public class GestionnaireTache {
@@ -208,6 +210,10 @@ public class GestionnaireTache {
 
     public void addDocIdToTask(String idTache, String idLastDoc) {
         this.daoTache.addDocIdToTask(idTache,idLastDoc);
+    }
+
+    public LinkedHashMap<String, ArrayList<String>> getDocuments(String taskSelectedId) {
+        return this.daoTache.getDocuments(taskSelectedId);
     }
 
 

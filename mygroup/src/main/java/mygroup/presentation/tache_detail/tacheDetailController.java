@@ -25,6 +25,8 @@ public class tacheDetailController {
         this.tachesFormController = tachesFormController;
         gestionnaireTache = new GestionnaireTache();
         Fillcahmps();
+        model.ListOfDocuments = gestionnaireTache.getDocuments(tachesFormController.getTaskSelectedId());
+        System.out.println(model.getListOfDocuments());
         implementView();
         displayDocuments();
     }
@@ -94,18 +96,10 @@ public class tacheDetailController {
     }
 
 
-    // afficher dans viewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-    // public void displayDocuments() {
-    //     LinkedHashMap<String, ArrayList<String>> documents = model.getListOfDocuments();
-    //     for (String id : documents.keySet()) {
-    //         System.out.println("ID Document : " + id);
-    //         System.out.println("Titre Document : " + documents.get(id).get(0));
-    //         System.out.println("Description Document : " + documents.get(id).get(1));
-    //         System.out.println("URL Document : " + documents.get(id).get(2));
-    //     }
-    // }
 
     public void displayDocuments() {
+        //clear the container
+        view.clearDocumentContainer();
         LinkedHashMap<String, ArrayList<String>> documents = model.getListOfDocuments();
         for (String id : documents.keySet()) {
             String title = documents.get(id).get(0);

@@ -11,7 +11,11 @@ public class tacheDetailModel {
     private String categorie;
     private String type;
     private String description;
-    private LinkedHashMap<String, ArrayList<String>> ListOfDocuments;
+    public LinkedHashMap<String, ArrayList<String>> ListOfDocuments;
+
+    public tacheDetailModel() {
+        ListOfDocuments = new LinkedHashMap<>();
+    }
 
     // Constructor
     public tacheDetailModel(String title, String dateDebut, String dateFin, String categorie, String type, String description) {
@@ -22,6 +26,7 @@ public class tacheDetailModel {
         this.categorie = categorie;
         this.type = type;
         this.description = description;
+        ListOfDocuments = new LinkedHashMap<>();
     }
     // Getters and Setters
     public String getTitleLable() {
