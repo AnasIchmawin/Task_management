@@ -61,19 +61,19 @@ public class AddProjetController {
 
             for (String id : getTachesIds()) {
                 Document task = new Document();
-                task.append("Id", id);
+                task.append("id", id);
                 taches.add(task);
             }
 
             for (String id : getDocumentsIds()) {
                 Document doc = new Document();
-                doc.append("Id", id);
+                doc.append("id", id);
                 documents.add(doc);
             }
 
             for (String id : getSeancesIds()) {
                 Document seance = new Document();
-                seance.append("Id", id);
+                seance.append("id", id);
                 seances.add(seance);
             }
 

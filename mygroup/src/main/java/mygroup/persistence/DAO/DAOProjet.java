@@ -328,7 +328,7 @@ public class DAOProjet {
                 List<Document> seancesList = (List<Document>) projet.get("seances");
                 if (seancesList != null) {
                     for (Document seance : seancesList) {
-                        seances.add(seance.getString("Id"));
+                        seances.add(seance.getString("id"));
                     }
                 }
             } else {
@@ -351,7 +351,7 @@ public class DAOProjet {
                 List<Document> seances = (List<Document>) projet.get("seances");
                 if (seances != null) {
                     Document seance = new Document();
-                    seance.append("Id", SeanceID);
+                    seance.append("id", SeanceID);
                     seances.add(seance);
                     collection.updateOne(Filters.eq("_id", objId),
                             new Document("$set", new Document("seances", seances)));
