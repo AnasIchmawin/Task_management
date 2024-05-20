@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mygroup.presentation.NewProjet.AddProjetController;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.seance_ajoute.SceanceAjouteController;
 
 public class GetSeanceFromCalendar {
@@ -31,9 +32,19 @@ public class GetSeanceFromCalendar {
     GridPane ZoneTasks;
     TableViewPane tableViewPane;
 
-    public GetSeanceFromCalendar(SceanceAjouteController sceanceAjouteController ,AddProjetController addProjetController) {
+    public GetSeanceFromCalendar(SceanceAjouteController sceanceAjouteController,
+            AddProjetController addProjetController) {
         this.sceanceAjouteController = sceanceAjouteController;
-        this.controller = new GetSeanceFromCalenderController(this , addProjetController);
+        this.controller = new GetSeanceFromCalenderController(this, addProjetController);
+        init();
+        style();
+        action();
+    }
+
+    public GetSeanceFromCalendar(SceanceAjouteController sceanceAjouteController,
+            ProjetDetailController projetDetailController) {
+        this.sceanceAjouteController = sceanceAjouteController;
+        this.controller = new GetSeanceFromCalenderController(this, projetDetailController);
         init();
         style();
         action();
@@ -44,7 +55,7 @@ public class GetSeanceFromCalendar {
         taskContainer.setPadding(new Insets(20, 0, 0, 20));
 
         tableViewPane = new TableViewPane(this.controller.getDataSeance());
-       scrollPane.setContent(tableViewPane);
+        scrollPane.setContent(tableViewPane);
         root.setCenter(scrollPane);
 
         HBox buttonContainer = createHBox(25, Pos.CENTER);
@@ -144,7 +155,7 @@ public class GetSeanceFromCalendar {
 
     private void action() {
         confirmButton.setOnAction(event -> {
-            this.controller.handleConfirmButton(event , this.sceanceAjouteController);
+            this.controller.handleConfirmButton(event, this.sceanceAjouteController);
         });
 
         cancelButton.setOnAction(event -> {

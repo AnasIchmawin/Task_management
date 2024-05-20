@@ -289,6 +289,7 @@ public class SeanceFormView extends Application {
         sauvegardButton.setOnAction(event -> {
             controller.handleSaveButtonAction();
         });
+
     }
 
     public void setTitre(String nouveauTitre) {

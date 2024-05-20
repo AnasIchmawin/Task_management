@@ -21,8 +21,6 @@ import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormView;
 import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.projets.ProjetsFormView;
-import mygroup.presentation.taches.TachesFormController;
-import mygroup.metier.Errors.NonValidSeance;
 import mygroup.metier.Gestionnaire.GestionnaireProjet;
 
 public class SceanceAjouteController {
@@ -45,10 +43,11 @@ public class SceanceAjouteController {
     public SceanceAjouteController(SceanceAjouteView seanceAjouteView,
             ProjetDetailController projetDetailController) {
         this.seanceAjouteView = seanceAjouteView;
+        this.projetDetailController = projetDetailController;
         this.model = new GetDocModel();
         this.gestionnaireSeance = new GestionnaireSeance();
         this.gestionnaireProjet = new GestionnaireProjet();
-        this.projetDetailController = projetDetailController;
+
     }
 
     public void handleListesButton() {
@@ -182,12 +181,16 @@ public class SceanceAjouteController {
     public void handleConfirmerButtonAction() {
         try {
             String dateSeance = this.seanceAjouteView.getDateSeance();
+            System.out.println("----------------"+dateSeance);
             // convert format to DD/MM/YYYY
             String[] date = dateSeance.split("-");
             this.setDateSeanceFormated(date[2] + "/" + date[1] + "/" + date[0]);
-            if(addProjetController != null){
-            GetSeanceFromCalendar GetSeanceFromCalendar = new GetSeanceFromCalendar(this, addProjetController);
-            GetSeanceFromCalendar.start(new Stage());
+            if (addProjetController != null) {
+                GetSeanceFromCalendar GetSeanceFromCalendar = new GetSeanceFromCalendar(this, addProjetController);
+                GetSeanceFromCalendar.start(new Stage());
+            } else if (projetDetailController != null) {
+                GetSeanceFromCalendar GetSeanceFromCalendar = new GetSeanceFromCalendar(this, projetDetailController);
+                GetSeanceFromCalendar.start(new Stage());
             }
         } catch (Exception e) {
             e.printStackTrace();

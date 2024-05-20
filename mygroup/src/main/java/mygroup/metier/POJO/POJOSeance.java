@@ -2,6 +2,8 @@ package mygroup.metier.POJO ;
 
 import java.util.List;
 
+import org.bson.Document;
+
 public class POJOSeance {
     private String titre;
     private String dateDebut;
@@ -82,6 +84,7 @@ public class POJOSeance {
                 + dateFin + ", heureFin=" + heureFin + ", description=" + description + ", note=" + note
                 + ", documents=" + documents + "]";
     }
+
 
     
 

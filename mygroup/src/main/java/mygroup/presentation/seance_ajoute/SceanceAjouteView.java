@@ -58,10 +58,12 @@ public class SceanceAjouteView extends Application {
     }
 
     public SceanceAjouteView(ProjetDetailController projetDetailController) {
+
         init();
         style();
         Action();
         this.controller = new SceanceAjouteController(this, projetDetailController);
+
     }
 
     @Override

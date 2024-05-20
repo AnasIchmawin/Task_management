@@ -1,4 +1,5 @@
-package mygroup.metier.Gestionnaire ;
+package mygroup.metier.Gestionnaire;
+
 import mygroup.metier.POJO.POJOSeance;
 
 import java.time.LocalDate;
@@ -7,6 +8,7 @@ import org.bson.Document;
 import mygroup.metier.Errors.*;
 import mygroup.persistence.DAO.DAOSeance;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -36,10 +38,12 @@ public class GestionnaireSeance {
     }
 
     public void createSeance() throws NonValidSeance {
-        if (this.seance.getTitre().isEmpty() || this.seance.getDateDebut() == null || this.seance.getHeureDebut() == null
+        if (this.seance.getTitre().isEmpty() || this.seance.getDateDebut() == null
+                || this.seance.getHeureDebut() == null
                 || this.seance.getDateFin() == null || this.seance.getHeureFin() == null) {
             throw new NonValidSeance("Tous les champs de la séance doivent être remplis");
         }
+
         this.daoSeance.create(this.seance.getTitre(),
                 this.seance.getDateDebut(),
                 this.seance.getHeureDebut(),
@@ -49,8 +53,6 @@ public class GestionnaireSeance {
                 this.seance.getNote(),
                 this.seance.getDocuments());
     }
-
-   
 
     public static boolean validateDate(String date) {
         try {

@@ -15,6 +15,7 @@ import javafx.util.Duration;
 import mygroup.metier.Gestionnaire.GestionnaireSeance;
 import mygroup.metier.POJO.POJOSeance;
 import mygroup.presentation.NewProjet.AddProjetController;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 import mygroup.presentation.seance_ajoute.SceanceAjouteController;
 
 public class GetSeanceFromCalenderController {
@@ -23,6 +24,7 @@ public class GetSeanceFromCalenderController {
     private ObservableList<ItemSeance> listTasItems;
     private GetSeanceFromCalendar getSeanceFromCalendar;
     private AddProjetController addProjetController;
+    private ProjetDetailController projetDetailController;
 
     public GetSeanceFromCalenderController(GetSeanceFromCalendar getSeanceFromCalendar,
             AddProjetController addProjetController) {
@@ -30,6 +32,16 @@ public class GetSeanceFromCalenderController {
         this.gestionnaireSeance = new GestionnaireSeance();
         this.getSeanceFromCalendar = getSeanceFromCalendar;
         this.dateSeance = this.getSeanceFromCalendar.getDateSeance();
+    }
+
+    public GetSeanceFromCalenderController(GetSeanceFromCalendar getSeanceFromCalendar2,
+            ProjetDetailController projetDetailController) {
+        this.projetDetailController = projetDetailController;
+        System.out.println("ProjetDetailController nest pas nul dans le constructeur : " + projetDetailController);
+        this.gestionnaireSeance = new GestionnaireSeance();
+        this.getSeanceFromCalendar = getSeanceFromCalendar2;
+        this.dateSeance = this.getSeanceFromCalendar.getDateSeance();
+
     }
 
     public void handleConfirmButton(ActionEvent event, SceanceAjouteController sceanceAjouteController) {
@@ -56,10 +68,23 @@ public class GetSeanceFromCalenderController {
                     gestionnaireSeance.createSeance();
                     alert("Seance ajoutée", "La tâche a été ajoutée avec succès");
 
+                    if(this.addProjetController != null )
+                     {
                     this.addProjetController.addSeance(getLastSeance());
                     this.addProjetController.displaySeances();
                     sceanceAjouteController.closeWindow();
                     this.handleCancelButtonAction(event);
+
+                      }else if(this.projetDetailController != null){
+                        System.out.println("ProjetDetailController nest pas nul dans le handleConfirmButton : " + projetDetailController);
+                        this.projetDetailController.addSeance(getLastSeance());
+                        System.out.println(getLastSeance());
+                        
+                        this.projetDetailController.addSeanceFromProjet(getLastSeance());
+                        this.projetDetailController.displayedSeances();
+                        sceanceAjouteController.closeWindow();
+                        this.handleCancelButtonAction(event);
+                      }
 
                 } catch (Exception e) {
                     alert("Erreur", "Une erreur s'est produite lors de l'ajout de la seance");

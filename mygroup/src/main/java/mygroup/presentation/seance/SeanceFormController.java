@@ -51,7 +51,12 @@ public class SeanceFormController {
     }
 
     private void FillChamps() {
+
         Document doc = gestionnaireSeance.getSeanceById(seanceModel.getId());
+        if (doc == null) {
+            System.err.println("Erreur: Le document pour l'ID " + seanceModel.getId() + " est nul.");
+            return;
+        }
 
         // Extraire les attributs du document
         String titre = doc.getString("titre");
@@ -62,12 +67,12 @@ public class SeanceFormController {
 
         // Formater les dates
         if (dateDebut != null) {
-            String[] dateDebutSplit = dateDebut.split("-");
+            String[] dateDebutSplit = dateDebut.split("/");
             dateDebut = dateDebutSplit[2] + "/" + dateDebutSplit[1] + "/" + dateDebutSplit[0];
         }
 
         if (dateFin != null) {
-            String[] dateFinSplit = dateFin.split("-");
+            String[] dateFinSplit = dateFin.split("/");
             dateFin = dateFinSplit[2] + "/" + dateFinSplit[1] + "/" + dateFinSplit[0];
         }
 
@@ -87,8 +92,6 @@ public class SeanceFormController {
                 }
             }
         }
-
-        seanceModel.setDocuments(documents);
         seanceModel.setTitre(titre);
         seanceModel.setDescription(description);
         seanceModel.setNote(note);

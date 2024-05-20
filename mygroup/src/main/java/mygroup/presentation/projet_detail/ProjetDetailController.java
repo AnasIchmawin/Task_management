@@ -92,7 +92,7 @@ public class ProjetDetailController {
             System.out.println("-------on a pas de seances-------");
             return;
         }
-
+        System.out.println("-------on a des seances-------");
         this.projetDetailView.getZoneSeances().getChildren().clear();
 
         int colCount = 0;
@@ -448,6 +448,11 @@ public class ProjetDetailController {
 
     public void addSeanceFromProjet(LinkedHashMap<String, String> lastSeance) {
         projectDetailModel.addSeance(lastSeance);
+        gestionnaireProjet.addSeanceToProjet(projectDetailModel.getProjetID(), lastSeance.keySet().iterator().next());
+    }
+
+    public void addSeance(LinkedHashMap<String, String> lastSeance) {
+       this.projectDetailModel.addSeance(lastSeance);
     }
 
 }
