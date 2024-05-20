@@ -86,8 +86,8 @@ public class App extends Application {
 
         ListeFormView view = new ListeFormView();
         view.start(primaryStage);
-        ListeFormView view = new ListeFormView();
-        view.start(primaryStage);
+        // ListeFormView view = new ListeFormView();
+        // view.start(primaryStage);
 
         // presentation.tache_detail.screen view = new
         // presentation.tache_detail.screen() ;
