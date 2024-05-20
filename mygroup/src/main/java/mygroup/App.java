@@ -84,9 +84,10 @@ public class App extends Application {
         // LoginFormView view = new LoginFormView(primaryStage) ;
         // view.start(primaryStage) ;
 
+        ListeFormView view = new ListeFormView();
+        view.start(primaryStage);
         // ListeFormView view = new ListeFormView();
         // view.start(primaryStage);
-
         // presentation.tache_detail.screen view = new
         // presentation.tache_detail.screen() ;
         // presentation.tache_detail.controleur con = new
@@ -95,7 +96,8 @@ public class App extends Application {
 
         // tacheDetailController con = new tacheDetailController("663bbacc6d8e33b7e243ded3", primaryStage) ;
 
-
+        // ProjetDetailView view = new ProjetDetailView();
+        // view.start(primaryStage);
     }
 
     @Override
