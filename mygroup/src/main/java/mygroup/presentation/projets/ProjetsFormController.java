@@ -151,7 +151,7 @@ public class ProjetsFormController {
         });
 
         try {
-            Image projetIcon = new Image("file:./Pictures/to-do.png");
+            Image projetIcon = new Image("file:./mygroup/src/main/java/Pictures/folder.png");
             ImageView projetIconView = new ImageView(projetIcon);
             projetIconView.setFitWidth(15);
             projetIconView.setFitHeight(15);

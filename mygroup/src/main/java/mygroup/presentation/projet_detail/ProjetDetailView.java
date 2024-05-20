@@ -169,8 +169,8 @@ public class ProjetDetailView extends Application {
     private GridPane creatZoneDocs() {
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.setVgap(8);
-        grid.setHgap(1);
+        grid.setVgap(5);
+        grid.setHgap(5);
         grid.setStyle("-fx-background-color: #8E9EB2; -fx-background-radius: 20px;");
         return grid;
     }

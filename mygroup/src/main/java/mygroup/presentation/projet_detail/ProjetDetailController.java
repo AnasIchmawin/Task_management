@@ -1,13 +1,10 @@
 package mygroup.presentation.projet_detail;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import javax.crypto.SealedObject;
 
 import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
@@ -27,6 +24,7 @@ import mygroup.presentation.archive.ArchiveFormView;
 import mygroup.presentation.listes.ListeFormView;
 import mygroup.presentation.projets.ProjetsFormController;
 import mygroup.presentation.projets.ProjetsFormView;
+import mygroup.presentation.seance.SeanceFormView;
 import mygroup.presentation.seance_ajoute.SceanceAjouteView;
 
 public class ProjetDetailController {
@@ -69,20 +67,16 @@ public class ProjetDetailController {
         projectDetailModel.setDisplayedTasks(getTacheMap());
         if (projectDetailModel.getDisplayedTasks().isEmpty())
             return;
-        else {
-            System.out.println("-------on a des taches-------");
 
-        }
         projetDetailView.getZoneTaches().getChildren().clear();
         int colCount = 0;
         int rowCount = 0;
-        // int rowTask = 0;
 
         for (Map.Entry<String, String> entry : projectDetailModel.getDisplayedTasks().entrySet()) {
             @SuppressWarnings("unused")
             Button taskButton = createTask(projetDetailView.getZoneTaches(), entry.getValue(),
                     getTaskEtat(entry.getKey()), entry.getKey());
-            projectDetailModel.putInGridInfoCase(rowCount, entry.getKey());
+            projectDetailModel.putInGridInfoCase(colCount, rowCount, entry.getKey());
 
             // rowTask++;
             if (++colCount == 3) {
@@ -105,10 +99,10 @@ public class ProjetDetailController {
         int rowCount = 0;
 
         for (Map.Entry<String, String> entry : projectDetailModel.getDisplayedSeances().entrySet()) {
-            @SuppressWarnings("unused")
             Button seanceButton = createSeanceButton(entry.getValue());
             seanceButton.setOnAction(event -> handleButtoClickedSeancenAction(seanceButton));
-            projectDetailModel.putInGridInfoCaseForSeance(colCount, rowCount, entry.getKey());
+            this.projetDetailView.getZoneSeances().add(seanceButton, colCount, rowCount);
+            projectDetailModel.putInGridInfoCase(colCount, rowCount, entry.getKey());
 
             if (++colCount == 2) {
                 colCount = 0;
@@ -120,37 +114,43 @@ public class ProjetDetailController {
     private void handleButtoClickedSeancenAction(Button seanceButton) {
         String SeanceId = getSeanceIdFromButton(seanceButton);
         projectDetailModel.setSeanceClicked(SeanceId);
-        System.out.println("Seance ID: " + SeanceId);
+        startviewSeance();
     }
 
-     private String getSeanceIdFromButton(Button button) {
+    private void startviewSeance() {
+        SeanceFormView seanceFormView = new SeanceFormView(this);
+        Stage stage = (Stage) projetDetailView.getZoneSeances().getScene().getWindow();
+        seanceFormView.start(stage);
+    }
+
+    private String getSeanceIdFromButton(Button button) {
         List<List<String>> caseInfo = new LinkedList<>();
         caseInfo.add(Arrays.asList(GridPane.getRowIndex(button).toString(),
                 GridPane.getColumnIndex(button).toString()));
         return projectDetailModel.getGridInfoCase().get(caseInfo);
     }
 
-
     private Button createSeanceButton(String title) {
-        Button newTaskButton = new Button(title);
-        newTaskButton.setStyle("-fx-background-color: #112D4E; " +
+        Button newSeanceButton = new Button(title);
+        newSeanceButton.setStyle("-fx-background-color: #112D4E; " +
                 "-fx-background-radius: 10px; " +
                 "-fx-min-width: 50px; " +
                 "-fx-max-height: 20px;" +
                 "-fx-text-fill: #ffffff;" +
                 "-fx-font-size: 18px;");
+        newSeanceButton.setCursor(javafx.scene.Cursor.HAND);
 
         try {
             Image listIcon = new Image("file:./mygroup/src/main/java/Pictures/seance.png");
             ImageView listIconView = new ImageView(listIcon);
             listIconView.setFitWidth(15);
             listIconView.setFitHeight(15);
-            newTaskButton.setGraphic(listIconView);
+            newSeanceButton.setGraphic(listIconView);
         } catch (Exception e) {
             System.out.println("Erreur de chargement de l'icône de la liste : " + e.getMessage());
         }
 
-        return newTaskButton;
+        return newSeanceButton;
     }
 
     private Button createTask(GridPane zoneTaches, String value, Boolean taskEtat, String tacheId) {
@@ -386,6 +386,10 @@ public class ProjetDetailController {
                     "-fx-font-size: 13px;");
             button.setCursor(javafx.scene.Cursor.DEFAULT);
         });
+    }
+
+    public String getSeanceClicked() {
+        return projectDetailModel.getSeanceClicked();
     }
 
     public String getProjetTitle() {

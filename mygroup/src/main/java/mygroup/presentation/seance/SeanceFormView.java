@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import mygroup.presentation.projet_detail.ProjetDetailController;
 
 public class SeanceFormView extends Application {
     private Button leftButton;
@@ -55,12 +56,12 @@ public class SeanceFormView extends Application {
     private Button sauvegardButton;
     private Label descriptionLabel;
 
-    public SeanceFormView() {
+    public SeanceFormView(ProjetDetailController projetDetailController) {
         Initialiser();
         Styler();
         Dessiner();
         Action();
-        this.controller = new SeanceFormController(this);
+        this.controller = new SeanceFormController(this , projetDetailController);
     }
 
     @Override
