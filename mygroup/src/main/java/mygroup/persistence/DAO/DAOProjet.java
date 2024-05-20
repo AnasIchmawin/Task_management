@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.client.FindIterable;
@@ -84,91 +86,91 @@ public class DAOProjet {
 
     public String getProjetTitle(String id) {
         try {
-                MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                                .getCollection("projets");
-                ObjectId objId = new ObjectId(id);
-                Document Projet = collection.find(Filters.eq("_id", objId)).first();
-                if (Projet != null) {
-                        return Projet.getString("titre");
-                } else {
-                        System.err.println("Projet non trouvée avec l'ID: " + id);
-                }
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("projets");
+            ObjectId objId = new ObjectId(id);
+            Document Projet = collection.find(Filters.eq("_id", objId)).first();
+            if (Projet != null) {
+                return Projet.getString("titre");
+            } else {
+                System.err.println("Projet non trouvée avec l'ID: " + id);
+            }
         } catch (Exception e) {
-                System.err.println("Erreur lors de la récupération du titre de la Projet : " + e.getMessage());
+            System.err.println("Erreur lors de la récupération du titre de la Projet : " + e.getMessage());
         }
         return null;
-}
+    }
 
-public String getStartDate(String id) {
-    try {
+    public String getStartDate(String id) {
+        try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                            .getCollection("projets");
+                    .getCollection("projets");
             ObjectId objId = new ObjectId(id);
             Document Projet = collection.find(Filters.eq("_id", objId)).first();
             if (Projet != null) {
-                    return Projet.getString("dateDebut");
+                return Projet.getString("dateDebut");
             } else {
-                    System.err.println("Projet non trouvée avec l'ID: " + id);
+                System.err.println("Projet non trouvée avec l'ID: " + id);
             }
-    } catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Erreur lors de la récupération de la date du Debut de la Projet : " + e.getMessage());
+        }
+        return null;
     }
-    return null;
-}
 
-public String getEndDate(String id) {
-    try {
+    public String getEndDate(String id) {
+        try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                            .getCollection("projets");
+                    .getCollection("projets");
             ObjectId objId = new ObjectId(id);
             Document Projet = collection.find(Filters.eq("_id", objId)).first();
             if (Projet != null) {
-                    return Projet.getString("dateFin");
+                return Projet.getString("dateFin");
             } else {
-                    System.err.println("Projet non trouvée avec l'ID: " + id);
+                System.err.println("Projet non trouvée avec l'ID: " + id);
             }
-    } catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Erreur lors de la récupération de la date du fin de la Projet : " + e.getMessage());
+        }
+        return null;
     }
-    return null;
-}
- 
-public String getCategory(String id) {
-    try {
+
+    public String getCategory(String id) {
+        try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                            .getCollection("projets");
+                    .getCollection("projets");
             ObjectId objId = new ObjectId(id);
             Document Projet = collection.find(Filters.eq("_id", objId)).first();
             if (Projet != null) {
-                    return Projet.getString("categorie");
+                return Projet.getString("categorie");
             } else {
-                    System.err.println("Projet non trouvée avec l'ID: " + id);
+                System.err.println("Projet non trouvée avec l'ID: " + id);
             }
-    } catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Erreur lors de la récupération de la categorie du Projet : " + e.getMessage());
+        }
+        return null;
     }
-    return null;
-}
 
-public String getType(String id) {
-    try {
+    public String getType(String id) {
+        try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                            .getCollection("projets");
+                    .getCollection("projets");
             ObjectId objId = new ObjectId(id);
             Document Projet = collection.find(Filters.eq("_id", objId)).first();
             if (Projet != null) {
-                    return Projet.getString("type");
+                return Projet.getString("type");
             } else {
-                    System.err.println("Projet non trouvée avec l'ID: " + id);
+                System.err.println("Projet non trouvée avec l'ID: " + id);
             }
-    } catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Erreur lors de la récupération du type du Projet : " + e.getMessage());
+        }
+        return null;
     }
-    return null;
-}
 
-    public LinkedHashMap<String,Boolean> getTaches(String projetId) {
-        LinkedHashMap<String,Boolean> taches = new LinkedHashMap<>();
+    public LinkedHashMap<String, Boolean> getTaches(String projetId) {
+        LinkedHashMap<String, Boolean> taches = new LinkedHashMap<>();
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
             ObjectId objId = new ObjectId(projetId);
@@ -194,10 +196,10 @@ public String getType(String id) {
         try {
             MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
                     .getCollection("projets");
-            
+
             // Convert projetId to ObjectId
             ObjectId objectId = new ObjectId(ProjetId);
-            
+
             Document projet = collection.find(Filters.eq("_id", objectId)).first();
             if (projet != null) {
                 @SuppressWarnings("unchecked")
@@ -206,7 +208,8 @@ public String getType(String id) {
                     Document tache = new Document();
                     tache.append("id", tacheId);
                     taches.add(tache);
-                    collection.updateOne(Filters.eq("_id", objectId), new Document("$set", new Document("taches", taches)));
+                    collection.updateOne(Filters.eq("_id", objectId),
+                            new Document("$set", new Document("taches", taches)));
                 }
             } else {
                 System.err.println("List not found with ID: " + ProjetId);
@@ -216,51 +219,52 @@ public String getType(String id) {
         }
     }
 
-public String getProjetDescription(String id) {
+    public String getProjetDescription(String id) {
         try {
-                MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                                .getCollection("projets");
-                ObjectId objId = new ObjectId(id);
-                Document Projet = collection.find(Filters.eq("_id", objId)).first();
-                if (Projet != null) {
-                        return Projet.getString("description");
-                } else {
-                        System.err.println("Projet non trouvée avec l'ID: " + id);
-                }
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("projets");
+            ObjectId objId = new ObjectId(id);
+            Document Projet = collection.find(Filters.eq("_id", objId)).first();
+            if (Projet != null) {
+                return Projet.getString("description");
+            } else {
+                System.err.println("Projet non trouvée avec l'ID: " + id);
+            }
         } catch (Exception e) {
-                System.err.println("Erreur lors de la récupération de la description de la Projet : " + e.getMessage());
+            System.err.println("Erreur lors de la récupération de la description de la Projet : " + e.getMessage());
         }
         return null;
-}
-
-public void deleteTacheFromProjet(String listId, String tacheId) {
-    try {
-        MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                .getCollection("projets");
-        
-        // Convert listId to ObjectId
-        ObjectId objectId = new ObjectId(listId);
-        
-        Document projet = collection.find(Filters.eq("_id", objectId)).first();
-        if (projet != null) {
-            @SuppressWarnings("unchecked")
-            List<Document> taches = (List<Document>) projet.get("taches");
-            if (taches != null) {
-                for (Document tache : taches) {
-                    if (tache.getString("id").equals(tacheId)) {
-                        taches.remove(tache);
-                        break;
-                    }
-                }
-                collection.updateOne(Filters.eq("_id", objectId), new Document("$set", new Document("taches", taches)));
-            }
-        } else {
-            System.err.println("List not found with ID: " + listId);
-        }
-    } catch (Exception e) {
-        System.err.println("Error deleting task from the project: " + e.getMessage());
     }
-}
+
+    public void deleteTacheFromProjet(String listId, String tacheId) {
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("projets");
+
+            // Convert listId to ObjectId
+            ObjectId objectId = new ObjectId(listId);
+
+            Document projet = collection.find(Filters.eq("_id", objectId)).first();
+            if (projet != null) {
+                @SuppressWarnings("unchecked")
+                List<Document> taches = (List<Document>) projet.get("taches");
+                if (taches != null) {
+                    for (Document tache : taches) {
+                        if (tache.getString("id").equals(tacheId)) {
+                            taches.remove(tache);
+                            break;
+                        }
+                    }
+                    collection.updateOne(Filters.eq("_id", objectId),
+                            new Document("$set", new Document("taches", taches)));
+                }
+            } else {
+                System.err.println("List not found with ID: " + listId);
+            }
+        } catch (Exception e) {
+            System.err.println("Error deleting task from the project: " + e.getMessage());
+        }
+    }
 
     public List<Document> getAllProjects() {
         List<Document> allProjets = new ArrayList<>();
@@ -279,12 +283,12 @@ public void deleteTacheFromProjet(String listId, String tacheId) {
 
     public Document getLastProjet() {
         try {
-                MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
-                                .getCollection("projets");
-                return collection.find().sort(new Document("_id", -1)).first();
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("projets");
+            return collection.find().sort(new Document("_id", -1)).first();
         } catch (Exception e) {
-                System.err.println("Erreur lors de la récupération du dernier projet : " + e.getMessage());
-                return null;
+            System.err.println("Erreur lors de la récupération du dernier projet : " + e.getMessage());
+            return null;
         }
     }
 
@@ -340,13 +344,29 @@ public void deleteTacheFromProjet(String listId, String tacheId) {
         }
         return seances;
     }
-    // public List<String> everyproject(){
-    //     // MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
-    //     // List<String> everyproject;
-    //     // return everyproject;
-
-    // }
-        
+    public void addSeance(String ProjectID, String SeanceID) {
+        // add id seance to the project dans le champ List<Document> seances
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
+            ObjectId objId = new ObjectId(ProjectID);
+            Document projet = collection.find(Filters.eq("_id", objId)).first();
+            if (projet != null) {
+                @SuppressWarnings("unchecked")
+                List<Document> seances = (List<Document>) projet.get("seances");
+                if (seances != null) {
+                    Document seance = new Document();
+                    seance.append("Id", SeanceID);
+                    seances.add(seance);
+                    collection.updateOne(Filters.eq("_id", objId),
+                            new Document("$set", new Document("seances", seances)));
+                }
+            } else {
+                System.err.println("Projet non trouvée avec l'ID: " + ProjectID);
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors de l'ajout de la séance au projet : " + e.getMessage());
+        }
+    }
     public int NmbrDocumentParProjet(String projetId) {
         int nbr = 0;
         MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
@@ -441,7 +461,4 @@ public void deleteTacheFromProjet(String listId, String tacheId) {
         return 0; // Return 0 or handle the error according to your requirements
     }
 }
-        
-    
-    
 }

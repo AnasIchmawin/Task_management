@@ -23,7 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mygroup.presentation.NewProjet.AddProjetController;
-
+import mygroup.presentation.projet_detail.ProjetDetailController;
 
 public class SceanceAjouteView extends Application {
     private static final Pos TOP_CENTER = Pos.TOP_CENTER;
@@ -57,7 +57,12 @@ public class SceanceAjouteView extends Application {
         Action();
     }
 
-
+    public SceanceAjouteView(ProjetDetailController projetDetailController) {
+        init();
+        style();
+        Action();
+        this.controller = new SceanceAjouteController(this, projetDetailController);
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -67,7 +72,7 @@ public class SceanceAjouteView extends Application {
         scene.getStylesheets().add(getClass().getResource("SeanceStyle.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Formulaire de Séance");
-        //set position of show in screen
+        // set position of show in screen
         primaryStage.setX(180);
         primaryStage.setY(70);
         primaryStage.show();
@@ -80,7 +85,8 @@ public class SceanceAjouteView extends Application {
         archiveButton = new Button("Archive");
         titreField = new TextField();
         titreField.setPromptText("Entrer le titre de la séance");
-        ajouterDocButton = createButton("Ajouter Document", "file:./mygroup/src/main/java/Pictures/addIcon.png", 20, 20);
+        ajouterDocButton = createButton("Ajouter Document", "file:./mygroup/src/main/java/Pictures/addIcon.png", 20,
+                20);
         sauvegarderButton = new Button("Sauvegarder");
         ContainerGoogleCalendar = new VBox();
         ContainerGoogleCalendar.setPadding(new Insets(2, 2, 2, 2));
@@ -105,7 +111,7 @@ public class SceanceAjouteView extends Application {
         confirmerButton.getStyleClass().add("confirm-btn-style");
     }
 
-    private BorderPane createBorderPane( StackPane container) {
+    private BorderPane createBorderPane(StackPane container) {
         root = new BorderPane();
         root.setStyle("-fx-background-color: #112D4E;");
         root.setPadding(new Insets(20, 20, 20, 20));
@@ -113,7 +119,6 @@ public class SceanceAjouteView extends Application {
         return root;
     }
 
-    
     private StackPane createMainContent() {
         // le background de la page gris
         StackPane container = new StackPane();
@@ -223,7 +228,7 @@ public class SceanceAjouteView extends Application {
         return scrollPane;
     }
 
-      private Button createButton(String name, String path, int width, int height) {
+    private Button createButton(String name, String path, int width, int height) {
         Button newButton = new Button();
         try {
             ImageView icon = new ImageView(new Image(path));
@@ -358,6 +363,7 @@ public class SceanceAjouteView extends Application {
             this.controller.handleConfirmerButtonAction();
         });
     }
+
     public String getTitre() {
         return titreField.getText();
     }
