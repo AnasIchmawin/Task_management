@@ -159,7 +159,7 @@ public class DAOProjet {
                 System.err.println("Projet non trouvée avec l'ID: " + id);
             }
         } catch (Exception e) {
-            System.err.println("Erreur lors de la récupération du type du Projet : " + e.getMessage());
+            System.err.println("Erreur lors de la récupération du type de la Projet : " + e.getMessage());
         }
         return null;
     }
@@ -370,11 +370,16 @@ public class DAOProjet {
         ObjectId objId = new ObjectId(projetId);
         Document projet = collection.find(Filters.eq("_id", objId)).first();
         @SuppressWarnings("unchecked")
-        List<String> documents = (List<String>) projet.get("documents");
-
+        List<Document> documents = (List<Document>) projet.get("documents");
+        List<String> documentsid = new ArrayList<>();
+        if (documents != null) {
+            for (Document document : documents) {
+                documentsid.add(document.getString("id"));
+            }
+        }
         if (documents != null) {
             for (@SuppressWarnings("unused")
-            String document : documents) {
+            String document : documentsid) {
                 nbr = nbr + 1;
             }
         }
@@ -388,14 +393,20 @@ public class DAOProjet {
        ObjectId objId = new ObjectId(projetId);
         Document projet = collection.find(Filters.eq("_id", objId)).first();
         @SuppressWarnings("unchecked")
-        List<String> taches = (List<String>) projet.get("taches");
+        List<Document> taches = (List<Document>) projet.get("taches");
+        List<String> tachesid = new ArrayList<>();
+        if (taches != null) {
+            for (Document tache : taches) {
+                tachesid.add(tache.getString("id"));
+            }
+        }
 
-                if (taches != null) {
-                    for (String tache : taches) {
-                        nbr = nbr +1;
-                    }
-                }
-                return nbr;
+        if (tachesid != null) {
+            for (String tache : tachesid) {
+                nbr = nbr +1;
+            }
+        }
+        return nbr;
 
     }
 
@@ -411,7 +422,13 @@ public class DAOProjet {
                 // Calculate hours from tasks
                 @SuppressWarnings("unchecked")
 
-                List<String> taches = (List<String>) projet.get("taches");
+                List<Document> tachesDoc = (List<Document>) projet.get("taches");
+                List<String> taches = new ArrayList<>();
+                if (tachesDoc != null) {
+                    for (Document tache : tachesDoc) {
+                        taches.add(tache.getString("id"));
+                    }
+                }
 
                 if (taches != null) {
                     for (String tache : taches) {
@@ -432,7 +449,13 @@ public class DAOProjet {
 
                 // Calculate hours from sessions
                 @SuppressWarnings("unchecked")
-                List<String> seances = (List<String>) projet.get("seances");
+                List<Document> seancesDoc = (List<Document>) projet.get("seances");
+                List<String> seances = new ArrayList<>();
+                if (seancesDoc != null) {
+                    for (Document seance : seancesDoc) {
+                        seances.add(seance.getString("id"));
+                    }
+                }
 
                 if (seances != null) {
                     for (@SuppressWarnings("unused")

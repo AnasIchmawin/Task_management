@@ -23,7 +23,6 @@ import javafx.stage.Stage;
 import mygroup.presentation.projet_detail.ProjetDetailController;
 
 public class SeanceFormView extends Application {
-    private Button leftButton;
     private Button listesButton;
     private Button projectsButton;
     private Button archiveButton;
@@ -74,12 +73,11 @@ public class SeanceFormView extends Application {
     }
 
     private void Initialiser() {
-        leftButton = createButton("", "file:./mygroup/src/main/java/Pictures/left-arrow.png", 35, 35);
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
         buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
-        leftButtonBox = new HBox(20, leftButton);
+        leftButtonBox = new HBox(20);
         navbar = new HBox(30, leftButtonBox, buttonsBar);
         navbarContainer = new VBox(navbar);
         mainContentContainer = new VBox();
@@ -117,7 +115,6 @@ public class SeanceFormView extends Application {
 
     private void Styler() {
         root.getStyleClass().add("root");
-        leftButton.getStyleClass().add("left-btn-style");
         listesButton.getStyleClass().add("button-clicked-style");
         projectsButton.getStyleClass().add("button-style");
         archiveButton.getStyleClass().add("button-style");
@@ -134,7 +131,7 @@ public class SeanceFormView extends Application {
     }
 
     private void Dessiner() {
-        navbar.setPadding(new Insets(10, 20, 10, 20));
+        navbar.setPadding(new Insets(10, 20, 10, 80));
         BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 20));
         container.getChildren().addAll(mainContentContainer);
         BorderPane.setMargin(container, new Insets(20, 20, 20, 20));
@@ -277,9 +274,6 @@ public class SeanceFormView extends Application {
 
     // Action des boutons
     private void Action() {
-        leftButton.setOnAction(event -> {
-            // controller.goToHome();
-        });
         listesButton.setOnAction(event -> {
             controller.goToListes(event);
         });

@@ -18,7 +18,6 @@ public class ProjectStatisticsView extends Application {
     private Button listesButton;
     private Button projectsButton;
     private Button archiveButton;
-    private HBox buttonsBar;
     private GridPane zonestats;
     private BorderPane root;
     private ScrollPane scrollPane;
@@ -124,9 +123,6 @@ public class ProjectStatisticsView extends Application {
         listesButton = new Button("Listes");
         projectsButton = new Button("Projets");
         archiveButton = new Button("Archive");
-        buttonsBar = new HBox(20, listesButton, projectsButton, archiveButton);
-        navbar = new HBox(buttonsBar);
-        navbarContainer = new VBox(navbar);
         mainContentContainer = new VBox();
         mainContentContainer.setSpacing(10);
         container = new StackPane();
@@ -141,19 +137,14 @@ public class ProjectStatisticsView extends Application {
         listesButton.getStyleClass().add("button-style");
         projectsButton.getStyleClass().add("button-style");
         archiveButton.getStyleClass().add("button-style");
-        navbar.getStyleClass().add("navbar");
-        navbarContainer.getStyleClass().add("navbar-container");
         container.getStyleClass().add("container");
         scrollPane.getStyleClass().add("scroll-pane");
     }
 
     private void draw() {
-        navbar.setPadding(new Insets(10, 20, 10, 20));
-        BorderPane.setMargin(navbarContainer, new Insets(0, 20, 0, 20));
         container.getChildren().addAll(mainContentContainer);
         BorderPane.setMargin(container, new Insets(20, 20, 20, 20));
         scrollPane.setPadding(new Insets(0, 50, 0, 50));
-        root.setTop(navbarContainer);
         root.setCenter(container);
     }
 

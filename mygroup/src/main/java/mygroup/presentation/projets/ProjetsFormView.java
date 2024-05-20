@@ -114,8 +114,8 @@ public class ProjetsFormView extends Application {
         projectsButton.getStyleClass().add("button-clicked-style");
         archiveButton.getStyleClass().add("button-style");
         ordonnerButton.getStyleClass().add("ordonner-btn-style");
-        ajouterButton.getStyleClass().add("button-style");
-        statistiques.getStyleClass().add("button-style");
+        ajouterButton.getStyleClass().add("button-style-ajouter");
+        statistiques.getStyleClass().add("button-style-ajouter");
         supprimerButton.getStyleClass().add("button-style");
         supprimerButton.setStyle("-fx-pref-width : 150px ;");
         searchField.getStyleClass().add("search-field-style");
