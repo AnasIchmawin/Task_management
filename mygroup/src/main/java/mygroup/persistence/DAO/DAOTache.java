@@ -387,5 +387,23 @@ public class DAOTache {
 
 
 
-       
+    public void addDocIdToTask(String idTache, String idLastDoc) {
+        try{
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase()
+                    .getCollection("taches");
+            ObjectId id = new ObjectId(idTache);
+            Document Tache = collection.find(Filters.eq("_id", id)).first();
+            if (Tache != null) {
+                @SuppressWarnings("unchecked")
+                List<String> docs = (List<String>) Tache.get("documents");
+                if (docs != null) {
+                    docs.add(idLastDoc);
+                }
+        }
+    }
+    catch (Exception e) {
+        System.err.println("Error adding the document ID to the task: " + e.getMessage());
+    }}
+
+
 }

@@ -95,8 +95,8 @@ public class App extends Application {
 
         // tacheDetailController con = new tacheDetailController("663bbacc6d8e33b7e243ded3", primaryStage) ;
 
-        ProjetDetailView view = new ProjetDetailView();
-        view.start(primaryStage);
+        // ProjetDetailView view = new ProjetDetailView();
+        // view.start(primaryStage);
     }
 
     @Override

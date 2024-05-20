@@ -102,7 +102,7 @@ public class AddDocumentController {
                 addProjetController.displayDocuments();
             } else if (projetDetailController != null) {
                 // projetDetailController.addDocument(doc);
-                projetDetailController.displayDocuments();
+                // projetDetailController.displayDocuments();
             } else if (SceanceAjouteController != null) {
                 SceanceAjouteController.addDocToSeance(this.gestionnaireDocument.getIdLastDoc(), titre);
                 SceanceAjouteController.displayDocuments();

@@ -96,7 +96,7 @@ public class GetSeancesController {
                     String seance = checkBox.getText();
                     String id = getIdFromMap(GridCaseInfos, GridPane.getRowIndex(node), GridPane.getColumnIndex(node));
                     System.out.println("Seance selected: " + seance + " with id: " + id);
-                    this.addProjetController.addTaskToList(id, seance);
+                    // this.addProjetController.addTaskToList(id, seance);
                 }
             }
         }
