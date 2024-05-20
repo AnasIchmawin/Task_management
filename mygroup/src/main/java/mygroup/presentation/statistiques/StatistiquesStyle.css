@@ -1,42 +1,31 @@
-.chart {
-    -fx-padding: 10;
-    -fx-background-color: #f4f4f4;
+.root {
+    -fx-background-color: #f0f0f0;
 }
 
-.label {
-    -fx-font-size: 16px;
-    -fx-padding: 10;
+.navbar {
+    -fx-pref-width: 50px;
+    -fx-background-color: #112D4E;
+    -fx-background-radius: 10px;
 }
 
-.pie-chart {
-    -fx-background-color: #e0e0e0;
-    -fx-padding: 20;
-    -fx-background-radius: 20px;
+.left-btn-style {
+    -fx-background-color: #8E9EB2;
+    -fx-min-width: 30px;
+    -fx-min-height: 30px;
+    -fx-max-width: 30px;
+    -fx-max-height: 30px;
+    -fx-background-radius: 30px;
 }
 
-.line-chart {
-    -fx-background-color: #e0e0e0;
-    -fx-padding: 20;
-    -fx-background-radius: 20px;
-}
-/* .nav-bar {
-    background-color: #333;
-    padding: 10px;
+.navbar-buttons {
+    -fx-padding: 10px 20px;
 }
 
-.nav-button {
-    background-color: #555;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 8px;
+.button-style {
+    -fx-background-radius: 10px;
+    -fx-pref-width: 100px;
+    -fx-background-color: #3F72AF;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
 }
-
-.nav-button:hover {
-    background-color: #777;
-} */

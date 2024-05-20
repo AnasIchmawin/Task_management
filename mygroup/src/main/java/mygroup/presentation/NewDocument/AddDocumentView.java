@@ -54,7 +54,6 @@ public class AddDocumentView extends Application {
 
     public AddDocumentView(tacheDetailController tacheDetailController) {
         this.controller = new AddDocumentController(this, tacheDetailController);
-        this.tachedetailController = tacheDetailController;
     }
 
     public AddDocumentView(AddProjetController addProjetController) {

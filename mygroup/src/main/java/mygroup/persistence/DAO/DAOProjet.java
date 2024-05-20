@@ -1,5 +1,9 @@
 package mygroup.persistence.DAO;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,6 +14,8 @@ import org.bson.types.ObjectId;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import mygroup.persistence.DBConnection;
 
@@ -338,7 +344,6 @@ public class DAOProjet {
         }
         return seances;
     }
-
     public void addSeance(String ProjectID, String SeanceID) {
         // add id seance to the project dans le champ List<Document> seances
         try {
@@ -362,4 +367,98 @@ public class DAOProjet {
             System.err.println("Erreur lors de l'ajout de la séance au projet : " + e.getMessage());
         }
     }
+    public int NmbrDocumentParProjet(String projetId) {
+        int nbr = 0;
+        MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
+       ObjectId objId = new ObjectId(projetId);
+        Document projet = collection.find(Filters.eq("_id", objId)).first();
+        @SuppressWarnings("unchecked")
+        List<String> documents = (List<String>) projet.get("documents");
+
+                if (documents != null) {
+                    for (String document : documents) {
+                        nbr = nbr +1;
+                    }
+                }
+                return nbr;
+
+    }
+
+    
+
+
+    public int calculerHeuresTravail(String projetId) {
+        int heuresTravail = 0;
+        
+        try {
+            MongoCollection<Document> collection = DBConnection.getInstance().getDatabase().getCollection("projets");
+            ObjectId objId = new ObjectId(projetId);
+            Document projet = collection.find(Filters.eq("_id", objId)).first();
+            if (projet != null) {
+                
+                
+                // Calculate hours from tasks
+                @SuppressWarnings("unchecked")
+                
+                List<String> taches = (List<String>) projet.get("taches");
+
+                if (taches != null) {
+                    for (String tache : taches) {
+                        MongoCollection<Document> collection2 = DBConnection.getInstance().getDatabase().getCollection("taches");
+
+                        ObjectId id = new ObjectId(tache);
+                        Document Tache = collection2.find(Filters.eq("_id", id)).first();
+                        Boolean etat = Tache.getBoolean("etat");
+                        if (etat != true) {
+                        String dateDebut = Tache.getString("dateDebut");
+            
+                        String dateFin = Tache.getString("dateFin");
+                        heuresTravail =+ calculerDureeTravail(dateDebut, dateFin);}
+                    }
+                }
+
+                // Calculate hours from sessions
+                @SuppressWarnings("unchecked")
+                List<String> seances = (List<String>) projet.get("seances");
+               
+                if (seances != null) {
+                    for (String seance : seances){
+                    //   MongoCollection<Document> collection3 = DBConnection.getInstance().getDatabase().getCollection("seances");
+
+                    
+                    heuresTravail = heuresTravail +  4; 
+                }
+            } else {
+                System.err.println("Projet non trouvé avec l'ID: " + projetId);
+            }
+        } }catch (Exception e) {
+            System.err.println("Erreur lors du calcul des heures de travail pour le projet : " + e.getMessage());
+        }
+        
+    return heuresTravail;
+    }
+
+    
+        public int calculerDureeTravail(String dateDebut, String dateFin) {
+    try {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        // Trim any leading or trailing spaces from the date strings
+        dateDebut = dateDebut.trim();
+        dateFin = dateFin.trim();
+        LocalDate startDate = LocalDate.parse(dateDebut, formatter);
+        LocalDate endDate = LocalDate.parse(dateFin, formatter);
+        
+        // Calculate the duration between startDate and endDate
+        long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(startDate, endDate);
+        
+        // Assuming each day represents 8 hours of work, calculate total work hours
+        int totalHours = (int) daysBetween * 24;
+        
+        return totalHours;
+    } catch (Exception e) {
+        System.err.println("Error calculating work duration: " + e.getMessage());
+        e.printStackTrace(); // Print the stack trace for debugging
+        return 0; // Return 0 or handle the error according to your requirements
+    }
+}
 }

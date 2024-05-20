@@ -26,6 +26,7 @@ public class tacheDetailController {
         gestionnaireTache = new GestionnaireTache();
         Fillcahmps();
         implementView();
+        displayDocuments();
     }
 
     public void Fillcahmps() {
@@ -86,17 +87,31 @@ public class tacheDetailController {
 
     public void addDocToTache(String idLastDoc, String titre , String description, String url) {
         this.model.addDocToTache(idLastDoc, titre, description, url);
+        String idTache = tachesFormController.getTaskSelectedId();
+        this.gestionnaireTache.addDocIdToTask(idTache,idLastDoc);
         System.out.println("Document ajouté à la tâche avec succès");
-        displayDocuments();
+        
     }
+
+
+    // afficher dans viewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+    // public void displayDocuments() {
+    //     LinkedHashMap<String, ArrayList<String>> documents = model.getListOfDocuments();
+    //     for (String id : documents.keySet()) {
+    //         System.out.println("ID Document : " + id);
+    //         System.out.println("Titre Document : " + documents.get(id).get(0));
+    //         System.out.println("Description Document : " + documents.get(id).get(1));
+    //         System.out.println("URL Document : " + documents.get(id).get(2));
+    //     }
+    // }
 
     public void displayDocuments() {
         LinkedHashMap<String, ArrayList<String>> documents = model.getListOfDocuments();
         for (String id : documents.keySet()) {
-            System.out.println("ID Document : " + id);
-            System.out.println("Titre Document : " + documents.get(id).get(0));
-            System.out.println("Description Document : " + documents.get(id).get(1));
-            System.out.println("URL Document : " + documents.get(id).get(2));
+            String title = documents.get(id).get(0);
+            String description = documents.get(id).get(1);
+            String url = documents.get(id).get(2);
+            view.addDocumentToContainer(title, description, url);
         }
     }
 
